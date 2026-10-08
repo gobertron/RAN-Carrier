@@ -1,0 +1,1022 @@
+{
+  "title": "Royal Australian Navy carrier game design",
+  "schema_version": 1,
+  "design_date": "2026-10-08",
+  "status": "Original gameplay and geometry design; not an installable or tested Sea Power mod",
+  "coordinate_scale_reference": {
+    "metres_per_approximate_obj_game_unit": 68.62816721363632,
+    "basis": "217 m length in Majestic sample INI / 3.161967 Z units in its OBJ; approximate calibration, no native certification",
+    "reference_workshop_item": "3574957049",
+    "reference_maker": "Peter Garrett"
+  },
+  "designs": [
+    {
+      "id": "ran_cvl_endeavour_1944",
+      "name": "Endeavour class — 1940s early",
+      "era": "1940s early",
+      "year": 1944,
+      "propulsion": "Steam",
+      "length_m": 192,
+      "deck_width_m": 32,
+      "estimated_hull_beam_m": 20.8,
+      "aircraft_capacity": 30,
+      "planned_air_group": [
+        {
+          "role": "seafire",
+          "count": 18
+        },
+        {
+          "role": "swordfish",
+          "count": 9
+        },
+        {
+          "role": "walrus",
+          "count": 3
+        }
+      ],
+      "deck_park_slots": 16,
+      "physical_elevators": 2,
+      "catapult_tracks": 1,
+      "historical_cue": "British 1942 Design Light Fleet Carrier programme (Colossus)",
+      "proposed_systems": {
+        "air_search": "Type 281",
+        "surface_search": "Type 277",
+        "air_defence": "4 x twin 40 mm Bofors",
+        "active_sonar": "Type 144 active-sonar design fit",
+        "anti_submarine": "Embarked ASW aircraft and helicopters",
+        "acoustic_decoys": "Towed acoustic-decoy design target; native behavior unverified",
+        "laser_status": "Not fitted"
+      },
+      "offensive_ecm": null,
+      "laser_design_mounts": 0,
+      "game_mesh": {
+        "vertices": 948,
+        "min_xyz": [
+          -0.26024299824884795,
+          -0.13114148847926269,
+          -1.370865692903226
+        ],
+        "max_xyz": [
+          0.2593687216589862,
+          0.604707974654378,
+          1.398842543778802
+        ],
+        "length_z_units": 2.769708236682028
+      },
+      "flight_deck_donor_candidate": "ran_majestic_melb98",
+      "ship_mod_status": "Experimental design reference; no in-game trials"
+    },
+    {
+      "id": "ran_cvl_sydney_1948",
+      "name": "Sydney class — 1940s late",
+      "era": "1940s late",
+      "year": 1948,
+      "propulsion": "Steam",
+      "length_m": 211,
+      "deck_width_m": 34,
+      "estimated_hull_beam_m": 22.1,
+      "aircraft_capacity": 30,
+      "planned_air_group": [
+        {
+          "role": "sea_fury",
+          "count": 18
+        },
+        {
+          "role": "firefly",
+          "count": 10
+        },
+        {
+          "role": "sea_otter",
+          "count": 2
+        }
+      ],
+      "deck_park_slots": 16,
+      "physical_elevators": 2,
+      "catapult_tracks": 1,
+      "historical_cue": "British Majestic light fleet carrier",
+      "proposed_systems": {
+        "air_search": "Type 293",
+        "surface_search": "Type 277",
+        "air_defence": "4 x twin 40 mm Bofors",
+        "active_sonar": "Type 144 active-sonar design fit",
+        "anti_submarine": "Embarked ASW aircraft and helicopters",
+        "acoustic_decoys": "Towed acoustic-decoy design target; native behavior unverified",
+        "laser_status": "Not fitted"
+      },
+      "offensive_ecm": null,
+      "laser_design_mounts": 0,
+      "game_mesh": {
+        "vertices": 948,
+        "min_xyz": [
+          -0.27423142368663594,
+          -0.13114148847926269,
+          -1.5065242770967744
+        ],
+        "max_xyz": [
+          0.27102574285714287,
+          0.604707974654378,
+          1.5372696705069127
+        ],
+        "length_z_units": 3.043793947603687
+      },
+      "flight_deck_donor_candidate": "ran_majestic_melb98",
+      "ship_mod_status": "Experimental design reference; no in-game trials"
+    },
+    {
+      "id": "ran_cvl_melbourne_1952",
+      "name": "Melbourne class — 1950s early",
+      "era": "1950s early",
+      "year": 1952,
+      "propulsion": "Steam",
+      "length_m": 211,
+      "deck_width_m": 34,
+      "estimated_hull_beam_m": 22.1,
+      "aircraft_capacity": 30,
+      "planned_air_group": [
+        {
+          "role": "sea_fury",
+          "count": 16
+        },
+        {
+          "role": "firefly",
+          "count": 10
+        },
+        {
+          "role": "sycamore",
+          "count": 4
+        }
+      ],
+      "deck_park_slots": 16,
+      "physical_elevators": 2,
+      "catapult_tracks": 1,
+      "historical_cue": "British Majestic; straight flight deck",
+      "proposed_systems": {
+        "air_search": "Type 960",
+        "surface_search": "Type 293",
+        "air_defence": "4 x twin 40 mm Bofors; 2 x twin 3-inch AA",
+        "active_sonar": "Type 177 active-sonar design fit",
+        "anti_submarine": "Embarked ASW aircraft and helicopters",
+        "acoustic_decoys": "Towed acoustic-decoy design target; native behavior unverified",
+        "laser_status": "Not fitted"
+      },
+      "offensive_ecm": null,
+      "laser_design_mounts": 0,
+      "game_mesh": {
+        "vertices": 964,
+        "min_xyz": [
+          -0.27423142368663594,
+          -0.13114148847926269,
+          -1.5065242770967744
+        ],
+        "max_xyz": [
+          0.27102574285714287,
+          0.6411361658986175,
+          1.5372696705069127
+        ],
+        "length_z_units": 3.043793947603687
+      },
+      "flight_deck_donor_candidate": "ran_majestic_melb98",
+      "ship_mod_status": "Experimental design reference; no in-game trials"
+    },
+    {
+      "id": "ran_cvl_melbourne_1959",
+      "name": "Melbourne class — 1950s late",
+      "era": "1950s late",
+      "year": 1959,
+      "propulsion": "Steam",
+      "length_m": 217,
+      "deck_width_m": 38,
+      "estimated_hull_beam_m": 24.7,
+      "aircraft_capacity": 30,
+      "planned_air_group": [
+        {
+          "role": "sea_vixen",
+          "count": 8
+        },
+        {
+          "role": "sea_venom",
+          "count": 4
+        },
+        {
+          "role": "gannet_asw",
+          "count": 10
+        },
+        {
+          "role": "gannet_aew",
+          "count": 4
+        },
+        {
+          "role": "h34_sar",
+          "count": 4
+        }
+      ],
+      "deck_park_slots": 16,
+      "physical_elevators": 2,
+      "catapult_tracks": 2,
+      "historical_cue": "British wartime light-fleet-carrier design, with an enlarged reinforced deck for the fictional RAN jet conversion",
+      "proposed_systems": {
+        "air_search": "Type 965",
+        "surface_search": "Type 1006",
+        "air_defence": "4 x twin 40 mm Bofors; 2 x twin 3-inch AA",
+        "active_sonar": "Type 177 active-sonar design fit",
+        "anti_submarine": "Embarked ASW aircraft and helicopters",
+        "acoustic_decoys": "Towed acoustic-decoy design target; native behavior unverified",
+        "laser_status": "Not fitted"
+      },
+      "offensive_ecm": null,
+      "laser_design_mounts": 0,
+      "game_mesh": {
+        "vertices": 974,
+        "min_xyz": [
+          -0.3045396788018433,
+          -0.13114148847926269,
+          -1.5809835
+        ],
+        "max_xyz": [
+          0.2943397852534562,
+          0.6411361658986175,
+          1.5809835
+        ],
+        "length_z_units": 3.161967
+      },
+      "flight_deck_donor_candidate": "ran_majestic_melb98",
+      "ship_mod_status": "Experimental design reference; no in-game trials"
+    },
+    {
+      "id": "ran_cva_australia_1963",
+      "name": "Australia class — 1960s early",
+      "era": "1960s early",
+      "year": 1963,
+      "propulsion": "Steam",
+      "length_m": 326,
+      "deck_width_m": 86,
+      "estimated_hull_beam_m": 40.42,
+      "aircraft_capacity": 68,
+      "planned_air_group": [
+        {
+          "role": "sea_vixen",
+          "count": 24
+        },
+        {
+          "role": "buccaneer_s1",
+          "count": 24
+        },
+        {
+          "role": "gannet_asw",
+          "count": 12
+        },
+        {
+          "role": "gannet_aew",
+          "count": 4
+        },
+        {
+          "role": "wessex",
+          "count": 4
+        }
+      ],
+      "deck_park_slots": 36,
+      "physical_elevators": 4,
+      "catapult_tracks": 4,
+      "historical_cue": "US Kitty Hawk conventional CATOBAR",
+      "proposed_systems": {
+        "air_search": "SPS-39 / SPS-37",
+        "surface_search": "SPS-10",
+        "air_defence": "4 x twin 3-inch AA",
+        "active_sonar": "SQS-23 active-sonar design fit",
+        "anti_submarine": "Mk 32 lightweight torpedoes and embarked ASW aircraft",
+        "acoustic_decoys": "Expendable noisemakers, with a towed-decoy design target from the 1980s",
+        "laser_status": "Not fitted"
+      },
+      "offensive_ecm": null,
+      "laser_design_mounts": 0,
+      "game_mesh": {
+        "vertices": 1070,
+        "min_xyz": [
+          -0.6892213783410138,
+          -0.13114148847926269,
+          -2.375118069124424
+        ],
+        "max_xyz": [
+          0.6323934,
+          0.7067069101382489,
+          2.375118069124424
+        ],
+        "length_z_units": 4.750236138248848
+      },
+      "flight_deck_donor_candidate": "usn_cv_kitty_hawk",
+      "ship_mod_status": "Experimental design reference; no in-game trials"
+    },
+    {
+      "id": "ran_cvn_federation_1968",
+      "name": "Federation class — 1960s late",
+      "era": "1960s late",
+      "year": 1968,
+      "propulsion": "Nuclear",
+      "length_m": 342,
+      "deck_width_m": 78,
+      "estimated_hull_beam_m": 36.66,
+      "aircraft_capacity": 68,
+      "planned_air_group": [
+        {
+          "role": "phantom",
+          "count": 24
+        },
+        {
+          "role": "buccaneer_s2",
+          "count": 24
+        },
+        {
+          "role": "tracker_e",
+          "count": 12
+        },
+        {
+          "role": "gannet_aew",
+          "count": 4
+        },
+        {
+          "role": "wessex",
+          "count": 4
+        }
+      ],
+      "deck_park_slots": 36,
+      "physical_elevators": 4,
+      "catapult_tracks": 4,
+      "historical_cue": "US Enterprise nuclear carrier",
+      "proposed_systems": {
+        "air_search": "SPS-48 / SPS-43",
+        "surface_search": "SPS-10",
+        "air_defence": "2 x early Sea Sparrow launchers; 2 x twin 3-inch AA",
+        "active_sonar": "SQS-26 active-sonar design fit",
+        "anti_submarine": "Australian Ikara and Mk 32 lightweight torpedoes; embarked ASW aircraft",
+        "acoustic_decoys": "Expendable noisemakers, with a towed-decoy design target from the 1980s",
+        "laser_status": "Not fitted"
+      },
+      "offensive_ecm": null,
+      "laser_design_mounts": 0,
+      "game_mesh": {
+        "vertices": 1110,
+        "min_xyz": [
+          -0.6251077617511521,
+          -0.13114148847926269,
+          -2.491688281105991
+        ],
+        "max_xyz": [
+          0.5857653152073734,
+          0.7067069101382489,
+          2.491688281105991
+        ],
+        "length_z_units": 4.983376562211982
+      },
+      "flight_deck_donor_candidate": "usn_cvn_enterprise",
+      "ship_mod_status": "Experimental design reference; no in-game trials"
+    },
+    {
+      "id": "ran_cvn_federation_1972",
+      "name": "Federation class — 1970s early",
+      "era": "1970s early",
+      "year": 1972,
+      "propulsion": "Nuclear",
+      "length_m": 342,
+      "deck_width_m": 78,
+      "estimated_hull_beam_m": 36.66,
+      "aircraft_capacity": 69,
+      "planned_air_group": [
+        {
+          "role": "phantom",
+          "count": 24
+        },
+        {
+          "role": "skyhawk",
+          "count": 24
+        },
+        {
+          "role": "tracker_e",
+          "count": 12
+        },
+        {
+          "role": "hawkeye_early",
+          "count": 4
+        },
+        {
+          "role": "sea_king",
+          "count": 5
+        }
+      ],
+      "deck_park_slots": 36,
+      "physical_elevators": 4,
+      "catapult_tracks": 4,
+      "historical_cue": "US Enterprise; Australian defensive and ASW fit",
+      "proposed_systems": {
+        "air_search": "SPS-48 / SPS-43",
+        "surface_search": "SPS-10",
+        "air_defence": "2 x Sea Sparrow launchers; 2 x twin 3-inch AA",
+        "active_sonar": "SQS-26 active-sonar design fit",
+        "anti_submarine": "Australian Ikara and Mk 32 lightweight torpedoes; embarked ASW aircraft",
+        "acoustic_decoys": "Expendable noisemakers, with a towed-decoy design target from the 1980s",
+        "laser_status": "Not fitted"
+      },
+      "offensive_ecm": {
+        "system_name": "RAN_CARRIER_OECM_1972",
+        "module_count": 1,
+        "aircraft_slots": 0,
+        "kind": "ECM",
+        "type": "Offensive",
+        "frequencies": "S-Band,C-Band,X-Band",
+        "max_range_km_design": 140,
+        "peak_power_kw_design": 650,
+        "gain_db_design": 7,
+        "jam_cone_degrees_design": 180,
+        "reference_generation": "EF-111N 1980 concept",
+        "status": "Ship-mounted game balance proposal; not flight-tested or game-tested"
+      },
+      "laser_design_mounts": 0,
+      "game_mesh": {
+        "vertices": 1134,
+        "min_xyz": [
+          -0.6251077617511521,
+          -0.13114148847926269,
+          -2.491688281105991
+        ],
+        "max_xyz": [
+          0.5857653152073734,
+          0.7169068036866361,
+          2.491688281105991
+        ],
+        "length_z_units": 4.983376562211982
+      },
+      "flight_deck_donor_candidate": "usn_cvn_enterprise",
+      "ship_mod_status": "Experimental design reference; no in-game trials"
+    },
+    {
+      "id": "ran_cvn_canberra_1978",
+      "name": "Canberra class — 1970s late",
+      "era": "1970s late",
+      "year": 1978,
+      "propulsion": "Nuclear",
+      "length_m": 332,
+      "deck_width_m": 76.8,
+      "estimated_hull_beam_m": 36.1,
+      "aircraft_capacity": 69,
+      "planned_air_group": [
+        {
+          "role": "tomcat",
+          "count": 24
+        },
+        {
+          "role": "skyhawk",
+          "count": 24
+        },
+        {
+          "role": "tracker_g",
+          "count": 12
+        },
+        {
+          "role": "hawkeye",
+          "count": 4
+        },
+        {
+          "role": "sea_king",
+          "count": 5
+        }
+      ],
+      "deck_park_slots": 36,
+      "physical_elevators": 4,
+      "catapult_tracks": 4,
+      "historical_cue": "US Nimitz nuclear carrier",
+      "proposed_systems": {
+        "air_search": "SPS-48 / SPS-49",
+        "surface_search": "SPS-55",
+        "air_defence": "2 x Sea Sparrow launchers; 2 x twin 3-inch AA",
+        "active_sonar": "SQS-53 active-sonar design fit",
+        "anti_submarine": "Australian Ikara and Mk 32 lightweight torpedoes; embarked ASW aircraft",
+        "acoustic_decoys": "Expendable noisemakers, with a towed-decoy design target from the 1980s",
+        "laser_status": "Not fitted"
+      },
+      "offensive_ecm": {
+        "system_name": "RAN_CARRIER_OECM_1978",
+        "module_count": 1,
+        "aircraft_slots": 0,
+        "kind": "ECM",
+        "type": "Offensive",
+        "frequencies": "S-Band,C-Band,X-Band",
+        "max_range_km_design": 160,
+        "peak_power_kw_design": 750,
+        "gain_db_design": 7.5,
+        "jam_cone_degrees_design": 180,
+        "reference_generation": "EF-111N 1980 concept",
+        "status": "Ship-mounted game balance proposal; not flight-tested or game-tested"
+      },
+      "laser_design_mounts": 0,
+      "game_mesh": {
+        "vertices": 1134,
+        "min_xyz": [
+          -0.6154907192626728,
+          -0.13114148847926269,
+          -2.418831898617512
+        ],
+        "max_xyz": [
+          0.5787711024884793,
+          0.7169068036866361,
+          2.418831898617512
+        ],
+        "length_z_units": 4.837663797235024
+      },
+      "flight_deck_donor_candidate": "usn_cvn_nimitz",
+      "ship_mod_status": "Experimental design reference; no in-game trials"
+    },
+    {
+      "id": "ran_cvn_commonwealth_1984",
+      "name": "Commonwealth class — 1980s early",
+      "era": "1980s early",
+      "year": 1984,
+      "propulsion": "Nuclear",
+      "length_m": 350,
+      "deck_width_m": 88,
+      "estimated_hull_beam_m": 41.36,
+      "aircraft_capacity": 98,
+      "planned_air_group": [
+        {
+          "role": "tomcat",
+          "count": 24
+        },
+        {
+          "role": "hornet",
+          "count": 24
+        },
+        {
+          "role": "skyhawk",
+          "count": 24
+        },
+        {
+          "role": "tracker_g",
+          "count": 12
+        },
+        {
+          "role": "hawkeye",
+          "count": 4
+        },
+        {
+          "role": "sea_king",
+          "count": 7
+        },
+        {
+          "role": "prowler",
+          "count": 3
+        }
+      ],
+      "deck_park_slots": 52,
+      "physical_elevators": 4,
+      "catapult_tracks": 4,
+      "historical_cue": "US Nimitz design with enlarged Australian deck and island",
+      "proposed_systems": {
+        "air_search": "SPS-48 / SPS-49",
+        "surface_search": "SPS-55",
+        "air_defence": "2 x Sea Sparrow launchers; 4 x Phalanx",
+        "active_sonar": "Australian Mulloka active-sonar design fit",
+        "anti_submarine": "Australian Ikara and Mk 32 lightweight torpedoes; embarked ASW aircraft",
+        "acoustic_decoys": "Expendable noisemakers, with a towed-decoy design target from the 1980s",
+        "laser_status": "Not fitted"
+      },
+      "offensive_ecm": {
+        "system_name": "RAN_CARRIER_OECM_1984",
+        "module_count": 1,
+        "aircraft_slots": 0,
+        "kind": "ECM",
+        "type": "Offensive",
+        "frequencies": "S-Band,C-Band,X-Band",
+        "max_range_km_design": 180,
+        "peak_power_kw_design": 900,
+        "gain_db_design": 8,
+        "jam_cone_degrees_design": 180,
+        "reference_generation": "EF-111N 1980 concept",
+        "status": "Ship-mounted game balance proposal; not flight-tested or game-tested"
+      },
+      "laser_design_mounts": 0,
+      "game_mesh": {
+        "vertices": 1198,
+        "min_xyz": [
+          -0.7052497824884792,
+          -0.13114148847926269,
+          -2.5499733870967742
+        ],
+        "max_xyz": [
+          0.6440504211981568,
+          0.7169068036866361,
+          2.5499733870967742
+        ],
+        "length_z_units": 5.0999467741935485
+      },
+      "flight_deck_donor_candidate": "usn_cvn_nimitz",
+      "ship_mod_status": "Experimental design reference; no in-game trials"
+    },
+    {
+      "id": "ran_cvn_commonwealth_1988",
+      "name": "Commonwealth class — 1980s late",
+      "era": "1980s late",
+      "year": 1988,
+      "propulsion": "Nuclear",
+      "length_m": 354,
+      "deck_width_m": 91,
+      "estimated_hull_beam_m": 42.77,
+      "aircraft_capacity": 98,
+      "planned_air_group": [
+        {
+          "role": "hornet",
+          "count": 36
+        },
+        {
+          "role": "intruder",
+          "count": 24
+        },
+        {
+          "role": "tomcat",
+          "count": 16
+        },
+        {
+          "role": "viking_a",
+          "count": 12
+        },
+        {
+          "role": "hawkeye",
+          "count": 4
+        },
+        {
+          "role": "sea_king",
+          "count": 6
+        }
+      ],
+      "deck_park_slots": 52,
+      "physical_elevators": 4,
+      "catapult_tracks": 4,
+      "historical_cue": "US Nimitz lineage; Australian island, electronics and sponsons",
+      "proposed_systems": {
+        "air_search": "SPS-48C / SPS-49(V)5",
+        "surface_search": "SPS-55",
+        "air_defence": "2 x Sea Sparrow launchers; 4 x Phalanx",
+        "active_sonar": "Australian Mulloka active-sonar design fit",
+        "anti_submarine": "Australian Ikara and Mk 32 lightweight torpedoes; embarked ASW aircraft",
+        "acoustic_decoys": "Expendable noisemakers, with a towed-decoy design target from the 1980s",
+        "laser_status": "Not fitted"
+      },
+      "offensive_ecm": {
+        "system_name": "RAN_CARRIER_OECM_1988",
+        "module_count": 1,
+        "aircraft_slots": 0,
+        "kind": "ECM",
+        "type": "Offensive",
+        "frequencies": "S-Band,C-Band,X-Band",
+        "max_range_km_design": 190,
+        "peak_power_kw_design": 1000,
+        "gain_db_design": 8.5,
+        "jam_cone_degrees_design": 180,
+        "reference_generation": "EF-111N 1985/1990 concept",
+        "status": "Ship-mounted game balance proposal; not flight-tested or game-tested"
+      },
+      "laser_design_mounts": 0,
+      "game_mesh": {
+        "vertices": 1198,
+        "min_xyz": [
+          -0.7292923887096774,
+          -0.13114148847926269,
+          -2.579115940092166
+        ],
+        "max_xyz": [
+          0.6615359529953917,
+          0.7169068036866361,
+          2.579115940092166
+        ],
+        "length_z_units": 5.158231880184332
+      },
+      "flight_deck_donor_candidate": "usn_cvn_nimitz",
+      "ship_mod_status": "Experimental design reference; no in-game trials"
+    },
+    {
+      "id": "ran_cvn_commonwealth_1993",
+      "name": "Commonwealth class — 1990s early",
+      "era": "1990s early",
+      "year": 1993,
+      "propulsion": "Nuclear",
+      "length_m": 356,
+      "deck_width_m": 93,
+      "estimated_hull_beam_m": 43.71,
+      "aircraft_capacity": 98,
+      "planned_air_group": [
+        {
+          "role": "hornet",
+          "count": 40
+        },
+        {
+          "role": "tomcat_b",
+          "count": 20
+        },
+        {
+          "role": "intruder",
+          "count": 20
+        },
+        {
+          "role": "viking_b",
+          "count": 8
+        },
+        {
+          "role": "hawkeye",
+          "count": 4
+        },
+        {
+          "role": "seahawk",
+          "count": 6
+        }
+      ],
+      "deck_park_slots": 52,
+      "physical_elevators": 4,
+      "catapult_tracks": 4,
+      "historical_cue": "US Nimitz lineage; Australian combat-system refit",
+      "proposed_systems": {
+        "air_search": "SPS-48E / SPS-49(V)5",
+        "surface_search": "SPS-67",
+        "air_defence": "2 x Sea Sparrow launchers; 4 x Phalanx",
+        "active_sonar": "Australian upgraded Mulloka active-sonar design target",
+        "anti_submarine": "Australian Ikara and Mk 32 lightweight torpedoes; embarked ASW aircraft",
+        "acoustic_decoys": "Expendable noisemakers, with a towed-decoy design target from the 1980s",
+        "laser_status": "Not fitted"
+      },
+      "offensive_ecm": {
+        "system_name": "RAN_CARRIER_OECM_1993",
+        "module_count": 1,
+        "aircraft_slots": 0,
+        "kind": "ECM",
+        "type": "Offensive",
+        "frequencies": "L-Band,S-Band,C-Band,X-Band,Ku-Band",
+        "max_range_km_design": 210,
+        "peak_power_kw_design": 1150,
+        "gain_db_design": 9,
+        "jam_cone_degrees_design": 180,
+        "reference_generation": "EF-111N 1985/1990 concept",
+        "status": "Ship-mounted game balance proposal; not flight-tested or game-tested"
+      },
+      "laser_design_mounts": 0,
+      "game_mesh": {
+        "vertices": 1198,
+        "min_xyz": [
+          -0.7453207928571429,
+          -0.13114148847926269,
+          -2.593687216589862
+        ],
+        "max_xyz": [
+          0.6743586763133641,
+          0.7169068036866361,
+          2.593687216589862
+        ],
+        "length_z_units": 5.187374433179724
+      },
+      "flight_deck_donor_candidate": "usn_cvn_nimitz",
+      "ship_mod_status": "Experimental design reference; no in-game trials"
+    },
+    {
+      "id": "ran_cvn_southern_cross_2002",
+      "name": "Southern Cross class — 2000s early",
+      "era": "2000s early",
+      "year": 2002,
+      "propulsion": "Nuclear",
+      "length_m": 360,
+      "deck_width_m": 95,
+      "estimated_hull_beam_m": 44.65,
+      "aircraft_capacity": 98,
+      "planned_air_group": [
+        {
+          "role": "super_hornet_e",
+          "count": 48
+        },
+        {
+          "role": "super_hornet_f",
+          "count": 24
+        },
+        {
+          "role": "viking_b",
+          "count": 12
+        },
+        {
+          "role": "hawkeye",
+          "count": 4
+        },
+        {
+          "role": "seahawk",
+          "count": 9
+        },
+        {
+          "role": "prowler",
+          "count": 1
+        }
+      ],
+      "deck_park_slots": 52,
+      "physical_elevators": 4,
+      "catapult_tracks": 4,
+      "historical_cue": "Original Australian design; four steam catapults and four lifts",
+      "proposed_systems": {
+        "air_search": "Australian air-search development, native donor profile pending",
+        "surface_search": "Australian surface-search development, native donor profile pending",
+        "air_defence": "Sea Sparrow; 4 x Phalanx",
+        "active_sonar": "Australian bow sonar, native active-sonar profile pending",
+        "anti_submarine": "VL-ASROC design target and lightweight torpedoes; embarked ASW aircraft",
+        "acoustic_decoys": "Expendable noisemakers, with a towed-decoy design target from the 1980s",
+        "laser_status": "Not fitted"
+      },
+      "offensive_ecm": {
+        "system_name": "RAN_CARRIER_OECM_2002",
+        "module_count": 1,
+        "aircraft_slots": 0,
+        "kind": "ECM",
+        "type": "Offensive",
+        "frequencies": "L-Band,S-Band,C-Band,X-Band,Ku-Band",
+        "max_range_km_design": 225,
+        "peak_power_kw_design": 1300,
+        "gain_db_design": 10,
+        "jam_cone_degrees_design": 180,
+        "reference_generation": "EF-111N 1995 concept",
+        "status": "Ship-mounted game balance proposal; not flight-tested or game-tested"
+      },
+      "laser_design_mounts": 0,
+      "game_mesh": {
+        "vertices": 1158,
+        "min_xyz": [
+          -0.7613491970046083,
+          -0.13114148847926269,
+          -2.6228297695852536
+        ],
+        "max_xyz": [
+          0.6877642506912444,
+          0.7169068036866361,
+          2.6228297695852536
+        ],
+        "length_z_units": 5.245659539170507
+      },
+      "flight_deck_donor_candidate": "usn_cvn_nimitz",
+      "ship_mod_status": "Experimental design reference; no in-game trials"
+    },
+    {
+      "id": "ran_cvn_southern_cross_2009",
+      "name": "Southern Cross class — 2000s late",
+      "era": "2000s late",
+      "year": 2009,
+      "propulsion": "Nuclear",
+      "length_m": 363,
+      "deck_width_m": 98,
+      "estimated_hull_beam_m": 46.06,
+      "aircraft_capacity": 98,
+      "planned_air_group": [
+        {
+          "role": "super_hornet_e",
+          "count": 48
+        },
+        {
+          "role": "super_hornet_f",
+          "count": 24
+        },
+        {
+          "role": "viking_b",
+          "count": 8
+        },
+        {
+          "role": "hawkeye",
+          "count": 4
+        },
+        {
+          "role": "seahawk",
+          "count": 13
+        },
+        {
+          "role": "growler",
+          "count": 1
+        }
+      ],
+      "deck_park_slots": 52,
+      "physical_elevators": 4,
+      "catapult_tracks": 4,
+      "historical_cue": "Original Australian design; separated navigation and aviation islands",
+      "proposed_systems": {
+        "air_search": "Australian multifunction phased-array design target",
+        "surface_search": "Dedicated Australian low-level surface-search design target",
+        "air_defence": "ESSM; RAM; 4 x Phalanx",
+        "active_sonar": "Australian bow sonar, native active-sonar profile pending",
+        "anti_submarine": "VL-ASROC design target and lightweight torpedoes; embarked ASW aircraft",
+        "acoustic_decoys": "Expendable noisemakers, with a towed-decoy design target from the 1980s",
+        "laser_status": "Not fitted"
+      },
+      "offensive_ecm": {
+        "system_name": "RAN_CARRIER_OECM_2009",
+        "module_count": 1,
+        "aircraft_slots": 0,
+        "kind": "ECM",
+        "type": "Offensive",
+        "frequencies": "L-Band,S-Band,C-Band,X-Band,Ku-Band",
+        "max_range_km_design": 240,
+        "peak_power_kw_design": 1450,
+        "gain_db_design": 11,
+        "jam_cone_degrees_design": 180,
+        "reference_generation": "EF-111N 2003 concept",
+        "status": "Ship-mounted game balance proposal; not flight-tested or game-tested"
+      },
+      "laser_design_mounts": 0,
+      "game_mesh": {
+        "vertices": 1174,
+        "min_xyz": [
+          -0.7853918032258065,
+          -0.13114148847926269,
+          -2.6446866843317975
+        ],
+        "max_xyz": [
+          0.7078726122580645,
+          0.7169068036866361,
+          2.6446866843317975
+        ],
+        "length_z_units": 5.289373368663595
+      },
+      "flight_deck_donor_candidate": "usn_cvn_nimitz",
+      "ship_mod_status": "Experimental design reference; no in-game trials"
+    },
+    {
+      "id": "ran_cvn_australis_2023",
+      "name": "Australis class — 2020s early",
+      "era": "2020s early",
+      "year": 2023,
+      "propulsion": "Nuclear",
+      "length_m": 370,
+      "deck_width_m": 102,
+      "estimated_hull_beam_m": 47.94,
+      "aircraft_capacity": 99,
+      "planned_air_group": [
+        {
+          "role": "lightning_c",
+          "count": 40
+        },
+        {
+          "role": "super_hornet_e",
+          "count": 24
+        },
+        {
+          "role": "super_hornet_f",
+          "count": 16
+        },
+        {
+          "role": "growler",
+          "count": 4
+        },
+        {
+          "role": "hawkeye_d",
+          "count": 4
+        },
+        {
+          "role": "seahawk_r",
+          "count": 8
+        },
+        {
+          "role": "osprey",
+          "count": 3
+        }
+      ],
+      "deck_park_slots": 52,
+      "physical_elevators": 4,
+      "catapult_tracks": 4,
+      "historical_cue": "Original Australian design; integrated mast, EMALS concept and laser mounts",
+      "proposed_systems": {
+        "air_search": "Australian integrated air/missile surveillance design target",
+        "surface_search": "Dedicated Australian surface/horizon-search design target",
+        "air_defence": "ESSM; RAM; 4 x Phalanx; 4 x laser mounts",
+        "active_sonar": "Australian bow sonar, native active-sonar profile pending",
+        "anti_submarine": "VL-ASROC design target and lightweight torpedoes; embarked ASW aircraft",
+        "acoustic_decoys": "Expendable noisemakers, with a towed-decoy design target from the 1980s",
+        "laser_status": "Four design mounts; supported weapon definition and effects pending"
+      },
+      "offensive_ecm": {
+        "system_name": "RAN_CARRIER_OECM_2023",
+        "module_count": 1,
+        "aircraft_slots": 0,
+        "kind": "ECM",
+        "type": "Offensive",
+        "frequencies": "L-Band,S-Band,C-Band,X-Band,Ku-Band",
+        "max_range_km_design": 260,
+        "peak_power_kw_design": 1750,
+        "gain_db_design": 12,
+        "jam_cone_degrees_design": 180,
+        "reference_generation": "New future shipboard module; no 2050 aircraft",
+        "status": "Ship-mounted game balance proposal; not flight-tested or game-tested"
+      },
+      "laser_design_mounts": 4,
+      "game_mesh": {
+        "vertices": 1238,
+        "min_xyz": [
+          -0.8174486115207374,
+          -0.13114148847926269,
+          -2.695686152073733
+        ],
+        "max_xyz": [
+          0.7346837610138249,
+          0.7169068036866361,
+          2.695686152073733
+        ],
+        "length_z_units": 5.391372304147466
+      },
+      "flight_deck_donor_candidate": "usn_cvn_nimitz",
+      "ship_mod_status": "Experimental design reference; no in-game trials"
+    }
+  ]
+}

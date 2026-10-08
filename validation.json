@@ -1,0 +1,36 @@
+{
+  "design_count": 14,
+  "all_checks_passed": true,
+  "checks_passed": 98,
+  "checked_categories": [
+    "capacity and era",
+    "air groups",
+    "one shipboard ECM per applicable carrier",
+    "laser mounts",
+    "mesh coordinates, faces and materials",
+    "native-style INI templates",
+    "visual decoding",
+    "deterministic conversion"
+  ],
+  "limitations": [
+    "No Sea Power in-game tests",
+    "Actual installed donor INIs from the 5.21 GiB archive remain inaccessible",
+    "No operational beam laser or native deck routing"
+  ],
+  "model_vertex_counts": {
+    "ran_cvl_endeavour_1944": 948,
+    "ran_cvl_sydney_1948": 948,
+    "ran_cvl_melbourne_1952": 964,
+    "ran_cvl_melbourne_1959": 974,
+    "ran_cva_australia_1963": 1070,
+    "ran_cvn_federation_1968": 1110,
+    "ran_cvn_federation_1972": 1134,
+    "ran_cvn_canberra_1978": 1134,
+    "ran_cvn_commonwealth_1984": 1198,
+    "ran_cvn_commonwealth_1988": 1198,
+    "ran_cvn_commonwealth_1993": 1198,
+    "ran_cvn_southern_cross_2002": 1158,
+    "ran_cvn_southern_cross_2009": 1174,
+    "ran_cvn_australis_2023": 1238
+  }
+}
