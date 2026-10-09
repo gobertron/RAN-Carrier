@@ -1,6 +1,21 @@
 # Royal Australian Navy carrier game design — 8 October 2026
 
-Fourteen original Sea Power carrier **designs** covering every edition in the brief. The models and gameplay figures are proposals for an alternate-history RAN fleet. They are not tested as a playable mod.
+Fourteen original Sea Power carrier **designs** covering every edition in the brief. The models and gameplay figures are proposals for an alternate-history RAN fleet. One independent 1959 prototype is now packaged for an in-game registration and deck test; its appearance and flight operations have not yet been verified in Sea Power.
+
+## Original Melbourne 1959 integration milestone
+
+`game-mod/RAN-Carrier-Original-1959/` is a separate local mod with our own carrier OBJ, authored material textures, vessel INI, variants and name entry. It has **no RADF or other Workshop dependency**. It uses only Sea Power's built-in Australian flag and visual optics. The unique game unit ID is `ran_cv_melbourne_1959`; the editor name is **Melbourne 1959 RAN design → Melbourne R21 Original** under **Australia → Light Carrier**.
+
+The prototype defines a 30-aircraft capacity, two lift positions, two bow launch lanes, a helicopter spot, an angled recovery lane, taxi routes and physical colliders. Its air group is intentionally empty while we identify suitable game-native 1950s aircraft. The deck routes, model appearance, combat systems and launch/recovery have not passed in-game QA. The visible radar, AA and sonar fittings on the model are geometry; only basic visual optics are enabled as a sensor in this milestone.
+
+To install from a repository checkout or extracted ZIP on Aram's CachyOS machine:
+
+1. Close Sea Power. Undo the earlier registration bridge with `python3 ~/Downloads/bridge-ran-melbourne-1959.py --undo`. This restores User Data from its backup and leaves RADF untouched.
+2. From the repository root, run `python3 tools/install_original_melbourne_1959.py`. The installer copies the self-contained `game-mod/RAN-Carrier-Original-1959` folder directly under the game's `Sea Power_Data/StreamingAssets` directory. It refuses to replace a different installed folder.
+3. Enable **RAN Carrier Original 1959 Prototype** in the Mod Manager, disable **RAN Melbourne 1959 Carrier Test** and, for a clean independence check, disable **Royal Australian Defence Forces**. Accept changes and fully restart Sea Power.
+4. In the Mission Editor, set Australia and open Light Carrier with Hide Anachronistic off. Report whether **Melbourne 1959 RAN design** appears. If it does, place **Melbourne R21 Original** and inspect its appearance. Flight operations are the next milestone.
+
+`python3 tools/build_melbourne_1959_mod.py` regenerates the package from the original game-scale design OBJ. It renames the authoring mesh `FlightDeck` to `Deck` to avoid colliding with the `[FlightDeck]` gameplay section, adds original propeller/rudder primitives and generates simple self-authored material textures. `python3 tools/validate_melbourne_1959_mod.py` checks references and INI structure locally. Neither script reads or writes any Workshop installation.
 
 | Era | Proposed class | Propulsion | Aircraft | Offensive ECM | Laser |
 |---|---|---|---:|---|---|
@@ -27,7 +42,7 @@ Each edition has a separate design sheet with the proposed air group, dated comb
 
 The 1944–1959 light fleet series follows British wartime light-carrier design cues. The 1963–1993 hulls draw from US conventional and nuclear supercarrier lineages but have newly authored Australian silhouettes and fittings. The 2002–2023 Southern Cross and Australis hulls have distinct Australian decks, islands and sensor/weapon outlines. No third-party hull geometry, textures or INIs are included. `CREDITS.md` records the provenance of the one external scale reference.
 
-The next native integration step is to inspect the **actual installed** carrier definitions and load order, map source aircraft IDs, then build lift, taxi, launch and recovery routes against each final mesh. The 5.21 GiB carrier-source archive in Drive was not accessible through the connector's 256 MiB download cap at the time this package was built. The smaller review ZIPs requested from that archive can ground donor selection and creator credits. Source design geometry may require reshaping for physically safe deck cycles. No in-game flight, radar, sonar, ECM or laser tests have been claimed.
+The next native integration step is to confirm that the first original prototype appears in the editor, inspect its placement and deck geometry, then assign source-verified game-native aircraft IDs and test launch and recovery. Source design geometry may require reshaping for physically safe deck cycles. No in-game flight, radar, sonar, ECM or laser tests have been claimed.
 
 ## Source notes
 
