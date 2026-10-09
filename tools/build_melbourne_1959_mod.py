@@ -49,9 +49,11 @@ def png(rgba: tuple[int, int, int, int]) -> bytes:
             + chunk(b"IEND", b""))
 
 
-def append_box_obj(obj: str, name: str, center: tuple[float, float, float],
+def append_box_obj(obj: str, name: str,
                    extents: tuple[float, float, float], first: int) -> str:
-    x, y, z = center
+    # Main-system meshes are local to their mount; the vessel INI supplies
+    # the world-space Position for each propeller and rudder.
+    x, y, z = 0.0, 0.0, 0.0
     dx, dy, dz = extents
     verts = [(x + sx*dx/2, y + sy*dy/2, z + sz*dz/2)
              for sx, sy, sz in ((-1,-1,-1),(1,-1,-1),(1,1,-1),(-1,1,-1),
@@ -79,7 +81,7 @@ def build_obj() -> str:
         ("Propeller_2", (.075,-.095,-1.35), (.035,.035,.04)),
         ("Rudder", (0,-.09,-1.40), (.018,.10,.08)),
     ):
-        obj = append_box_obj(obj, name, center, extents, first)
+        obj = append_box_obj(obj, name, extents, first)
         first += 8
     return obj
 
@@ -115,10 +117,22 @@ def vessel_ini() -> str:
     mat_parts.update({f"AA_Base_{i}":"island" for i in range(1,5)})
     mat_parts.update({f"AA_Gun_{i}_{s}":"dark" for i in range(1,5) for s in (-1,1)})
     mat_parts.update({"NoisemakerPort":"dark", "NoisemakerStarboard":"dark"})
-    submodels = "\n".join(f"Main_{i}={name}" for i,name in enumerate(mat_parts,1))
+    moving = {"Propeller_1", "Propeller_2", "Rudder"}
+    # Native carrier references register these exclusively as MainSystems.
+    # Listing the same section a second time as Main creates duplicate mounts.
+    submodels = "\n".join(
+        f"Main_{i}={name}"
+        for i,name in enumerate((name for name in mat_parts if name not in moving),1)
+    )
     submodels += "\nMainSystems_1=Propeller_1\nMainSystems_2=Propeller_2\nMainSystems_3=Rudder"
+    moving_positions = {
+        "Propeller_1": vector(-.075,-.095,-1.35),
+        "Propeller_2": vector(.075,-.095,-1.35),
+        "Rudder": vector(0,-.09,-1.40),
+    }
     submodel_sections = "\n\n".join(
         f"[{name}]\nMesh={name}\nMaterial={material}_mat.ini"
+        + (f"\nPosition={moving_positions[name]}" if name in moving else "")
         for name,material in mat_parts.items()
     )
     zones = "\n\n".join(
@@ -468,6 +482,8 @@ ApproximateVersion=0.8.5
     (destination / "README.txt").write_text(
         "RAN Carrier Original 1959 Prototype\n"
         "Original 1959 hull, flight-deck geometry and 30-aircraft capacity.\n"
+        "Rudder mount correction: moving systems use one main-system mount\n"
+        "with an explicit position and local-origin mesh.\n"
         "No RADF or other Workshop dependency. Uses only built-in Sea Power\n"
         "visual optics and Australian flag resources. The air group is\n"
         "unpopulated; launch, recovery, sensors and weapons need game QA.\n"

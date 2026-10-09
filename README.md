@@ -8,10 +8,16 @@ Fourteen original Sea Power carrier **designs** covering every edition in the br
 
 The prototype defines a 30-aircraft capacity, two lift positions, two bow launch lanes, a helicopter spot, an angled recovery lane, taxi routes and physical colliders. Its air group is intentionally empty while we identify suitable game-native 1950s aircraft. The deck routes, model appearance, combat systems and launch/recovery have not passed in-game QA. The visible radar, AA and sonar fittings on the model are geometry; only basic visual optics are enabled as a sensor in this milestone.
 
+### 9 October rudder-mount correction
+
+The first installed prototype was enabled when the Mission Editor stopped with `SeaPower.VesselRudderSystem.init()` and a `NullReferenceException`. The screenshot does not identify which ship was being created, and RADF was also enabled. A review of this package against working carrier examples found that our rudder and propellers were listed twice in `[Submodels]`. The corrected package lists each only under `MainSystems`, gives each a local-origin mesh and an explicit pivot. This change is format-checked locally but **has not been confirmed in Sea Power**.
+
+If the first prototype is already installed, close Sea Power and run `python3 tools/install_original_melbourne_1959.py --upgrade` from this repository root. The installer accepts only an exact copy of the first 25-file release, backs it up under `~/Downloads/RAN-Carrier-Original-1959-backups`, and replaces our own mod folder. It will refuse to overwrite local edits or any other installation. Enable the corrected prototype, leave the old Melbourne Test disabled, and disable RADF for the isolation test. Fully restart the game and open a new blank mission in the editor. If it still fails, disable the original prototype to restore the previous setup and capture the current game log; the rudder stack alone cannot name the failing vessel.
+
 To install from a repository checkout or extracted ZIP on Aram's CachyOS machine:
 
 1. Close Sea Power. Undo the earlier registration bridge with `python3 ~/Downloads/bridge-ran-melbourne-1959.py --undo`. This restores User Data from its backup and leaves RADF untouched.
-2. From the repository root, run `python3 tools/install_original_melbourne_1959.py`. The installer copies the self-contained `game-mod/RAN-Carrier-Original-1959` folder directly under the game's `Sea Power_Data/StreamingAssets` directory. It refuses to replace a different installed folder.
+2. From the repository root, run `python3 tools/install_original_melbourne_1959.py` for the first install, or add `--upgrade` for the exact first release. The installer copies the self-contained `game-mod/RAN-Carrier-Original-1959` folder directly under the game's `Sea Power_Data/StreamingAssets` directory. It refuses to replace an unrecognised or edited folder.
 3. Enable **RAN Carrier Original 1959 Prototype** in the Mod Manager, disable **RAN Melbourne 1959 Carrier Test** and, for a clean independence check, disable **Royal Australian Defence Forces**. Accept changes and fully restart Sea Power.
 4. In the Mission Editor, set Australia and open Light Carrier with Hide Anachronistic off. Report whether **Melbourne 1959 RAN design** appears. If it does, place **Melbourne R21 Original** and inspect its appearance. Flight operations are the next milestone.
 

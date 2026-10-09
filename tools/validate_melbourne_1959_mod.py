@@ -40,7 +40,17 @@ def main() -> None:
     assert len(groups) == len(re.findall(r"(?m)^o (.+)$", geometry))
     assert {"Hull", "Deck", "Elevator_1", "Elevator_2", "Propeller_1", "Propeller_2", "Rudder"} <= groups
     assert not ({"3455404959", "hmas_melbourne", "Melbourne_Old.obj"} & set(geometry.split()))
-    for group in ship["Submodels"].values():
+    submodel_names = list(ship["Submodels"].values())
+    assert len(submodel_names) == len(set(submodel_names)), "A mesh has multiple submodel mounts"
+    assert {ship["Submodels"][f"MainSystems_{i}"] for i in range(1,4)} == {
+        "Propeller_1", "Propeller_2", "Rudder"
+    }
+    assert not {"Propeller_1", "Propeller_2", "Rudder"} & {
+        value for key,value in ship["Submodels"].items() if key.startswith("Main_")
+    }
+    for moving in ("Propeller_1", "Propeller_2", "Rudder"):
+        assert "Position" in ship[moving], f"Moving mount has no pivot: {moving}"
+    for group in submodel_names:
         assert group in groups, f"Submodel missing from own OBJ: {group}"
     for material in {ship["Models"]["ResourcesMaterial"]} | {
         ship[section]["Material"] for section in ship["Submodels"].values()
