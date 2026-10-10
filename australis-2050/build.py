@@ -24,10 +24,10 @@ COLORS.update({
 })
 
 DECK = [
-    (-32, -184), (27, -184), (41, -169), (49, -138),
+    (-32, -185), (27, -185), (41, -169), (49, -138),
     (50, -76), (52, -33), (52, 72), (49, 125),
-    (40, 163), (15, 184), (-15, 184), (-39, 161),
-    (-48, 123), (-48, 60), (-54, -41), (-52, -114),
+    (40, 163), (15, 185), (-15, 185), (-39, 161),
+    (-48, 123), (-48, 60), (-52, -41), (-52, -114),
     (-43, -168),
 ]
 ISLAND_BASE = [
@@ -60,9 +60,9 @@ def scaled_polygon(points, cx, cz, fx, fz):
 
 def geometry():
     m = Mesh()
-    stations = [(-184, 15), (-174, 23), (-148, 27), (-104, 28),
+    stations = [(-185, 15), (-174, 23), (-148, 27), (-104, 28),
                 (-36, 29), (45, 29), (113, 28), (153, 23),
-                (174, 12), (184, 1.3)]
+                (174, 12), (185, 1.3)]
     dry, wet = [], []
     for z, b in stations:
         dry.append([(-.68*b, 0, z), (-b, 3, z), (-.98*b, 12, z),
@@ -220,6 +220,8 @@ def plan_preview(path):
 
 def main():
     spec = json.loads((HERE/"spec.json").read_text())
+    assert max(z for _, z in DECK)-min(z for _, z in DECK) == spec["length_m"]
+    assert max(x for x, _ in DECK)-min(x for x, _ in DECK) == spec["flight_deck_beam_m"]
     mesh = geometry()
     summary = validate({"id": spec["id"], "aircraft_capacity": 99,
                         "air_group": [{"role": "Capacity placeholder", "count": 99}],
