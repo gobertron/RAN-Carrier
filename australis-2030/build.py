@@ -47,6 +47,8 @@ CATAPULTS = [((-15, 59), (-15, 157)), ((8, 55), (8, 161)),
 VERTICAL_SPOTS = [(0, -168), (16, -143), (0, -118), (16, -93)]
 VERTICAL_SPOT_RADIUS = 10.5
 PAD_MARK_ANGLE_DEG = -12
+DECK_UNDERSIDE_Y = 20.3
+DECK_SURFACE_Y = 22.0
 
 
 def loft(mesh, name, rings, material):
@@ -93,20 +95,20 @@ def lateral_gap(left, right, xlo, xhi):
 
 def geometry():
     m = Mesh()
-    stations = [(-185, 15), (-174, 23), (-148, 27), (-104, 28),
-                (-36, 29), (45, 29), (113, 28), (153, 23),
-                (174, 12), (185, 1.3)]
-    dry, wet = [], []
-    for z, b in stations:
-        dry.append([(-.68*b, 0, z), (-b, 3, z), (-.98*b, 12, z),
-                    (-.76*b, 20.3, z), (.76*b, 20.3, z),
-                    (.98*b, 12, z), (b, 3, z), (.68*b, 0, z)])
-        wet.append([(-.68*b, 0, z), (-.96*b, -2.5, z),
-                    (-.64*b, -8, z), (.64*b, -8, z),
-                    (.96*b, -2.5, z), (.68*b, 0, z)])
-    loft(m, "HardChineHull", dry, "hull")
-    loft(m, "UnderwaterBody", wet, "underwater")
-    m.prism("FacetedFlightDeck", DECK, 20.3, 22, "deck")
+    # The first hull ring shares the whole deck underside outline: the hull
+    # rises to the flight deck at the bow, stern, and both sides, then narrows
+    # through faceted chines towards its waterline and keel.
+    chine = scaled_polygon(DECK, 0, 0, .96, .99)
+    shoulder = scaled_polygon(DECK, 0, 0, .90, .96)
+    waterline = scaled_polygon(DECK, 0, 0, .82, .93)
+    keel = scaled_polygon(DECK, 0, 0, .52, .77)
+    loft(m, "HardChineHull", [polygon_at_y(DECK, DECK_UNDERSIDE_Y),
+                              polygon_at_y(chine, 12),
+                              polygon_at_y(shoulder, 4.5),
+                              polygon_at_y(waterline, 0)], "hull")
+    loft(m, "UnderwaterBody", [polygon_at_y(waterline, 0),
+                               polygon_at_y(keel, -8)], "underwater")
+    m.prism("FacetedFlightDeck", DECK, DECK_UNDERSIDE_Y, DECK_SURFACE_Y, "deck")
     for i, (a, b) in enumerate(zip(DECK, DECK[1:] + DECK[:1]), 1):
         m.stripe(f"DeckEdge_{i:02d}", a, b, .28, 22.07, "edge")
 
@@ -357,6 +359,12 @@ def main():
             min_cat_clearance = min(min_cat_clearance, nearest)
             assert nearest >= 12
     mesh = geometry()
+    parts = {name: vertices for name, vertices, _, _ in mesh.parts}
+    n = len(DECK)
+    assert np.array_equal(parts["HardChineHull"][:n],
+                          parts["FacetedFlightDeck"][:n])
+    assert np.array_equal(parts["HardChineHull"][-n:],
+                          parts["UnderwaterBody"][:n])
     summary = validate({"id": spec["id"], "aircraft_capacity": 99,
                         "air_group": [{"role": "Capacity placeholder", "count": 99}],
                         "offensive_ecm_modules": 1}, mesh)
@@ -370,7 +378,8 @@ def main():
                    minimum_spot_edge_spacing_m=round(min_spot_edge_gap, 2),
                    minimum_pad_to_island_lateral_gap_m=round(min_island_gap, 2),
                    minimum_pad_to_lift_lateral_gap_m=round(min_lift_gap, 2),
-                   minimum_catapult_to_obstruction_plan_gap_m=round(min_cat_clearance, 2))
+                   minimum_catapult_to_obstruction_plan_gap_m=round(min_cat_clearance, 2),
+                   hull_deck_perimeter_mates=True)
     source = HERE/"model/source/ran_cvn_australis_2030.obj"
     game = HERE/"model/game-scale/ran_cvn_australis_2030.obj"
     mesh.save(source)

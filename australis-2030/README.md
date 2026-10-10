@@ -6,6 +6,8 @@ command island amidships, a smaller aviation island aft, flush radar faces,
 and four enclosed deck-edge laser positions. Surfaces use
 long aligned planes to give a clean, radar-conscious silhouette. This is a
 visual design choice, not a measured radar signature or a claim of stealth.
+The hull now rises directly to the underside of the flight deck along its
+entire bow, stern and side perimeter; its chines taper inward to the waterline.
 
 | Design target | Value |
 |---|---:|
