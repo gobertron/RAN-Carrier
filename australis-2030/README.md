@@ -65,11 +65,15 @@ hide the four closed hatch objects while inspecting that state. The
 Run `python3 build.py` here to regenerate all geometry, previews and viewer.
 
 **Status:** The components form individually closed geometry, but this is
-concept art, not a seaworthy naval architecture package or an installable Sea
-Power mod. No vessel INI is enabled or shipped here. Mission Editor loading,
-materials, collision, aircraft launch and recovery, radar, ECM and lasers
-have not been integrated or tested. Nothing in this milestone modifies RADF,
-the Workshop, the original game or the earlier Melbourne prototype.
+concept art, not a seaworthy naval architecture package. A separate
+[Sea Power editor-test package](../game-mod/RAN-Carrier-Australis-2030/) now
+ships the original mesh, simple materials, collision sections, four lift
+positions, three catapult launch points, four vertical launch points, five
+recovery points and simple taxi routes. Its 99-aircraft figure is a configured
+capacity, not a demonstrated working air group. Static checks pass, but
+Mission Editor loading, actual aircraft operations, radar, ECM and lasers
+remain untested or unimplemented. See [GAME-TEST.md](GAME-TEST.md). The
+package does not modify RADF, the Workshop, the original game or Melbourne.
 
 ## Design references
 
