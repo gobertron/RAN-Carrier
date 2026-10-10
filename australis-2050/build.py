@@ -5,13 +5,13 @@ No files outside this concept folder are changed. This is not a game installer.
 """
 from pathlib import Path
 import json
-import math
 import sys
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 HERE = Path(__file__).resolve().parent
+sys.dont_write_bytecode = True
 sys.path.insert(0, str(HERE.parent))
 from generate_source_models import Mesh, COLORS, render, validate  # noqa: E402
 from rebuild_game_scale import METRES_PER_UNIT  # noqa: E402
