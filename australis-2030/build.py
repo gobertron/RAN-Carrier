@@ -26,29 +26,33 @@ COLORS.update({
 })
 
 DECK = [
-    (-32, -185), (27, -185), (41, -169), (49, -138),
-    (50, -76), (52, -33), (52, 72), (49, 125),
-    (40, 163), (15, 185), (-15, 185), (-39, 161),
-    (-48, 123), (-48, 60), (-52, -41), (-52, -114),
-    (-43, -168),
+    (-28, -185), (22, -185), (32, -170), (38, -138),
+    (40, -76), (41, -33), (42, 72), (40, 125),
+    (32, 163), (12, 185), (-12, 185), (-32, 161),
+    (-40, 123), (-39, 60), (-46, -41), (-43, -114),
+    (-36, -168),
 ]
 MAIN_ISLAND_BASE = [
-    (31, -30), (40, -33), (47, -23), (48, 28),
-    (39, 39), (31, 32),
+    (26, -30), (33, -33), (39, -23), (39, 28),
+    (33, 39), (26, 32),
 ]
 AFT_ISLAND_BASE = [
-    (33, -110), (41, -112), (48, -104), (48, -74),
-    (41, -66), (33, -69),
+    (26, -110), (33, -112), (39, -104), (39, -74),
+    (33, -66), (26, -69),
 ]
-ELEVATORS = [(50, -50), (51, 69), (-48, 92), (53, -132)]
-LASERS = [(-52, 109), (53, 110), (-58, -125), (55, -160)]
-CATAPULTS = [((-15, 59), (-15, 157)), ((8, 55), (8, 161)),
-             ((23, 52), (28, 144))]
-VERTICAL_SPOTS = [(0, -168), (16, -143), (0, -118), (16, -93)]
+ELEVATORS = [(42, -50), (42, 69), (-42, 92), (41, -132)]
+LASERS = [(-35, 109), (36, 119), (-40, -60), (31, -157)]
+CATAPULTS = [((-13, 59), (-13, 157)), ((6, 55), (6, 161)),
+             ((16, 59), (21, 144))]
+VERTICAL_SPOTS = [(6, -165), (6, -136), (6, -107), (6, -78)]
+LANDING_LANE_A = np.array((-23., -155.))
+LANDING_LANE_B = np.array((-15., 62.))
 VERTICAL_SPOT_RADIUS = 10.5
 PAD_MARK_ANGLE_DEG = -12
 DECK_UNDERSIDE_Y = 20.3
 DECK_SURFACE_Y = 22.0
+WATERLINE_WIDTH_SCALE = .50
+DESIGN_DRAFT_M = 11.5
 
 
 def loft(mesh, name, rings, material):
@@ -103,69 +107,77 @@ def lateral_gap(left, right, xlo, xhi):
     return max(xlo-right, left-xhi, 0)
 
 
-def geometry():
+def geometry(closed_lasers=True):
     m = Mesh()
     # The first hull ring shares the whole deck underside outline: the hull
     # rises to the flight deck at the bow, stern, and both sides, then narrows
     # through faceted chines towards its waterline and keel.
-    chine = hull_outline(.96, .99, .40)
-    shoulder = hull_outline(.90, .98, .12)
-    waterline = hull_outline(.82, .98, .035)
-    keel = hull_outline(.52, .88, .02)
+    chine = hull_outline(.74, .99, .40)
+    shoulder = hull_outline(.58, .98, .12)
+    waterline = hull_outline(WATERLINE_WIDTH_SCALE, .98, .035)
+    keel = hull_outline(.31, .88, .02)
     loft(m, "HardChineHull", [polygon_at_y(DECK, DECK_UNDERSIDE_Y),
                               polygon_at_y(chine, 12),
                               polygon_at_y(shoulder, 4.5),
                               polygon_at_y(waterline, 0)], "hull")
     loft(m, "UnderwaterBody", [polygon_at_y(waterline, 0),
-                               polygon_at_y(keel, -8)], "underwater")
+                               polygon_at_y(keel, -DESIGN_DRAFT_M)], "underwater")
     m.prism("FacetedFlightDeck", DECK, DECK_UNDERSIDE_Y, DECK_SURFACE_Y, "deck")
     for i, (a, b) in enumerate(zip(DECK, DECK[1:] + DECK[:1]), 1):
         m.stripe(f"DeckEdge_{i:02d}", a, b, .28, 22.07, "edge")
 
     # Larger integrated island amidships; the smaller island controls aft aviation.
-    lower_top = scaled_polygon(MAIN_ISLAND_BASE, 39, 3, .82, .82)
+    lower_top = scaled_polygon(MAIN_ISLAND_BASE, 32.5, 3, .82, .82)
     loft(m, "MainRakedIsland",
          [polygon_at_y(MAIN_ISLAND_BASE, 22), polygon_at_y(lower_top, 37)], "island")
-    bridge_base = [(33, -17), (41, -19), (46, -12),
-                   (46, 26), (38, 33), (33, 27)]
-    bridge_top = scaled_polygon(bridge_base, 39, 7, .82, .84)
+    bridge_base = [(28, -17), (34, -19), (38, -12),
+                   (38, 26), (32, 33), (28, 27)]
+    bridge_top = scaled_polygon(bridge_base, 33, 7, .82, .84)
     loft(m, "IntegratedBridge",
          [polygon_at_y(bridge_base, 36.6), polygon_at_y(bridge_top, 44)], "island")
-    m.box("BridgeWindowPort", 32.85, 40, 7, .22, 1.7, 30, "glass")
-    m.box("BridgeWindowStarboard", 45.55, 40, 7, .22, 1.7, 30, "glass")
-    m.box("BridgeWindowForward", 39, 40, 32.2, 9, 1.6, .22, "glass")
-    mast0 = [(35, -3), (41, -4), (44, 1), (44, 19),
-             (38, 24), (35, 18)]
-    mast1 = scaled_polygon(mast0, 39.5, 10, .68, .68)
+    m.box("BridgeWindowPort", 28.25, 40, 7, .22, 1.7, 30, "glass")
+    m.box("BridgeWindowStarboard", 37.75, 40, 7, .22, 1.7, 30, "glass")
+    m.box("BridgeWindowForward", 33, 40, 30, 8, 1.6, .22, "glass")
+    mast0 = [(30, -3), (35, -4), (37, 1), (37, 19),
+             (33, 24), (30, 18)]
+    mast1 = scaled_polygon(mast0, 33.5, 10, .68, .68)
     loft(m, "EnclosedSensorMast",
          [polygon_at_y(mast0, 43.7), polygon_at_y(mast1, 55)], "island")
+    # Conformal radar faces sit against the sides of the command island,
+    # rather than on exposed rotating spars above its roof.
     for face, xyz, dims in [
-        ("Port", (34.8, 49, 10), (.2, 5.5, 9)),
-        ("Starboard", (44.2, 49, 10), (.2, 5.5, 9)),
-        ("Fore", (39.5, 49, 22.2), (6, 5.5, .2)),
-        ("Aft", (39.5, 49, -3.0), (6, 5.5, .2)),
+        ("Port", (28.22, 40, 8), (.18, 3.8, 8)),
+        ("Starboard", (37.78, 40, 8), (.18, 3.8, 8)),
+        ("Fore", (33, 40, 30.05), (6, 3.8, .18)),
+        ("Aft", (33, 40, -16.95), (6, 3.8, .18)),
     ]:
         m.box(f"IntegratedRadar_{face}", *xyz, *dims, "sensor")
     # Two conformal panel faces represent one shipboard ECM installation.
-    m.box("ShipboardECM_Module_PortPanel", 35.2, 53.3, 10, .24, 2.1, 5, "dark")
-    m.box("ShipboardECM_Module_StarboardPanel", 43.7, 53.3, 10, .24, 2.1, 5, "dark")
+    m.box("ShipboardECM_Module_PortPanel", 30.2, 51.3, 10, .24, 2.1, 5, "dark")
+    m.box("ShipboardECM_Module_StarboardPanel", 36.8, 51.3, 10, .24, 2.1, 5, "dark")
 
-    aft_top = scaled_polygon(AFT_ISLAND_BASE, 40.5, -89, .82, .80)
+    aft_top = scaled_polygon(AFT_ISLAND_BASE, 32.5, -89, .82, .80)
     loft(m, "AftAviationIsland",
          [polygon_at_y(AFT_ISLAND_BASE, 22), polygon_at_y(aft_top, 33.5)], "island")
-    aft_bridge = [(35, -104), (41, -105), (46, -98),
-                  (46, -78), (40, -72), (35, -76)]
+    aft_bridge = [(28, -104), (34, -105), (38, -98),
+                  (38, -78), (32, -72), (28, -76)]
     loft(m, "AftAviationBridge",
          [polygon_at_y(aft_bridge, 33.3),
-          polygon_at_y(scaled_polygon(aft_bridge, 40, -88, .8, .82), 39)], "island")
-    m.box("AftAviationWindowPort", 34.85, 36.8, -89, .22, 1.55, 24, "glass")
-    m.box("AftAviationWindowStarboard", 45.75, 36.8, -88, .22, 1.55, 20, "glass")
-    m.box("AftAviationWindowForward", 40, 36.8, -72.2, 8, 1.55, .2, "glass")
-    aft_mast = [(37, -95), (42, -96), (44, -91),
-                (44, -83), (39, -80), (37, -84)]
+          polygon_at_y(scaled_polygon(aft_bridge, 33, -88, .8, .82), 39)], "island")
+    m.box("AftAviationWindowPort", 28.2, 36.8, -89, .22, 1.55, 24, "glass")
+    m.box("AftAviationWindowStarboard", 37.8, 36.8, -88, .22, 1.55, 20, "glass")
+    m.box("AftAviationWindowForward", 33, 36.8, -73.55, 8, 1.55, .2, "glass")
+    for face, xyz, dims in [
+        ("Port", (28.2, 35, -90), (.18, 2.8, 6)),
+        ("Starboard", (37.8, 35, -90), (.18, 2.8, 6)),
+        ("Fore", (33, 35, -74), (5.4, 2.8, .18)),
+    ]:
+        m.box(f"AftSideRadar_{face}", *xyz, *dims, "sensor")
+    aft_mast = [(30, -95), (35, -96), (37, -91),
+                (37, -83), (33, -80), (30, -84)]
     loft(m, "AftEnclosedMast",
          [polygon_at_y(aft_mast, 38.8),
-          polygon_at_y(scaled_polygon(aft_mast, 40.5, -88, .70, .70), 44)],
+          polygon_at_y(scaled_polygon(aft_mast, 33.5, -88, .70, .70), 44)],
          "island")
 
     for i, (x, z) in enumerate(ELEVATORS, 1):
@@ -176,12 +188,19 @@ def geometry():
 
     # Two bow tracks and one angled starboard track; routes come later.
     for i, (start, end) in enumerate(CATAPULTS, 1):
+        # A deck-flush blast-deflector panel is marked behind each launch
+        # point; actuator volume, exhaust flow and clearances remain unknown.
+        sx, sz = start
+        m.box(f"CatapultJetBlastDeflector_{i}",
+              sx, 22.095, sz-5.0, 7, .14, 4, "hatch")
+        m.stripe(f"CatapultJetBlastDeflectorHinge_{i}",
+                 (sx-3.5, sz-3), (sx+3.5, sz-3), .13, 22.18, "edge")
         m.stripe(f"CatapultTrack_{i}", start, end, .52, 22.13, "gold")
         m.stripe(f"CatapultDeckGuide_{i}",
                  (start[0]+1.25, start[1]), (end[0]+1.25, end[1]),
                  .16, 22.14, "edge")
 
-    a, b = np.array((-27., -155.)), np.array((-16., 62.))
+    a, b = LANDING_LANE_A, LANDING_LANE_B
     for side in (-1, 1):
         v = np.array((side*11.3, 0.))
         m.stripe(f"AngledLandingEdge_{side}", a+v, b+v, .34, 22.15, "white")
@@ -192,9 +211,13 @@ def geometry():
     for i, t in enumerate((.31, .39, .47, .55), 1):
         p = a+(b-a)*t
         m.stripe(f"ArrestingWire_{i}", p+(-11, 0), p+(11, 0),
-                 .16, 22.19, "dark")
+                 .24, 22.19, "gold")
+        for side in (-1, 1):
+            m.box(f"ArrestingWireAnchor_{i}_{side}",
+                  p[0]+side*11.25, 22.16, p[1], .85, .20, 1.4, "dark")
+    m.stripe("LandingThresholdStripe", (-33, -154), (-11, -154), .38, 22.16, "white")
 
-    # Four staggered aft spots for vertical takeoff/landing or helicopters.
+    # Four aligned off-centre aft spots for vertical takeoff or helicopters.
     # These are visual positions, not operational flight-deck routing.
     for i, (x, z) in enumerate(VERTICAL_SPOTS, 1):
         rim = [(x+VERTICAL_SPOT_RADIUS*math.cos(2*math.pi*j/20),
@@ -211,25 +234,36 @@ def geometry():
                  pad_mark_point(x, z, 0, 3.5),
                  .48, 22.13, "white")
 
-    # Faceted fairings let the defensive mounts sit outside launch/recovery.
-    for i, (x, z) in enumerate(LASERS, 1):
-        sx = -1 if x < 0 else 1
-        fairing = [(x-sx*5, z-7), (x+sx*2, z-7),
-                   (x+sx*6, z-3), (x+sx*6, z+3),
-                   (x+sx*2, z+7), (x-sx*5, z+7)]
-        m.prism(f"OutboardFairing_{i}", fairing, 17.8, 21.5, "hull")
-        base = [(x-3, z-3.5), (x+3, z-3.5),
-                (x+3.7, z), (x+3, z+3.5),
-                (x-3, z+3.5), (x-3.7, z)]
-        crown = scaled_polygon(base, x, z, .59, .63)
-        loft(m, f"LaserEnclosure_{i}",
-             [polygon_at_y(base, 21.5), polygon_at_y(crown, 25.6)], "island")
-        m.box(f"LaserAperture_{i}", x, 24.4, z+2.6, 2.1, .65, .18, "laser")
-
-    # Low closed hatches preserve the smooth perimeter. No weapon logic here.
-    for i, (x, z) in enumerate(((-48, 31), (49, -91)), 1):
-        m.box(f"DefensiveHatch_{i}", x, 22.09, z, 5.6, .14, 7, "hatch")
+    # The base mesh shows shut, flush armoured hatches. A separate geometry
+    # layer is drawn when the viewer's conceptual deploy control is activated.
+    if closed_lasers:
+        for i, (x, z) in enumerate(LASERS, 1):
+            m.box(f"LaserHatchClosed_{i}", x, 22.105, z, 5, .12, 5.8, "hatch")
+            m.stripe(f"LaserHatchSeam_{i}", (x, z-2.6), (x, z+2.6),
+                     .09, 22.18, "edge")
     m.box("BowSonarFairingStudy", 0, -5.5, 164, 6, 3.5, 8, "dark")
+    return m
+
+
+def deployed_lasers():
+    """Additional exhibition mesh; deployment is not Sea Power weapon logic."""
+    m = Mesh()
+    for i, (x, z) in enumerate(LASERS, 1):
+        for side in (-1, 1):
+            m.box(f"LaserHatchOpen_{i}_{side}", x+side*2.65, 22.19,
+                  z, .24, .24, 5.8, "dark")
+        m.box(f"LaserHatchOpen_{i}_fore", x, 22.19,
+              z+2.96, 5.55, .24, .22, "dark")
+        m.box(f"LaserHatchOpen_{i}_aft", x, 22.19,
+              z-2.96, 5.55, .24, .22, "dark")
+        m.box(f"LaserTurretPedestal_{i}", x, 22.65, z, 3.6, 1.45, 3.8, "hull")
+        base = [(x-1.9, z-2), (x+1.9, z-2),
+                (x+2.25, z), (x+1.9, z+2),
+                (x-1.9, z+2), (x-2.25, z)]
+        crown = scaled_polygon(base, x, z, .72, .72)
+        loft(m, f"LaserTurretFaceted_{i}",
+             [polygon_at_y(base, 22.7), polygon_at_y(crown, 25.4)], "island")
+        m.box(f"LaserEmitter_{i}", x, 24.25, z+1.55, 1.5, .65, .15, "laser")
     return m
 
 
@@ -252,10 +286,10 @@ def plan_preview(path):
     for a, b in zip(DECK, DECK[1:]+DECK[:1]):
         draw.line([point(*a), point(*b)], fill="#758f95", width=3)
     draw.polygon(shape(MAIN_ISLAND_BASE), fill="#9eafb6", outline="#d8e3e2", width=2)
-    draw.polygon(shape([(35, -3), (42, -4), (44, 19), (35, 18)]),
+    draw.polygon(shape([(30, -3), (35, -4), (37, 19), (30, 18)]),
                  fill="#366072")
     draw.polygon(shape(AFT_ISLAND_BASE), fill="#8198a2", outline="#c1d8da", width=2)
-    draw.polygon(shape([(37, -95), (44, -91), (44, -83), (37, -84)]),
+    draw.polygon(shape([(30, -95), (37, -91), (37, -83), (30, -84)]),
                  fill="#366072")
     for x, z in ELEVATORS:
         p, q = point(x-6.5, z+9), point(x+6.5, z-9)
@@ -276,7 +310,11 @@ def plan_preview(path):
                   fill="#edf4f2", width=3)
     for (a, b) in CATAPULTS:
         draw.line([point(*a), point(*b)], fill="#d8b66e", width=4)
-    a, b = np.array((-27., -155.)), np.array((-16., 62.))
+        sx, sz = a
+        draw.polygon(shape([(sx-3.5, sz-7), (sx+3.5, sz-7),
+                            (sx+3.5, sz-3), (sx-3.5, sz-3)]),
+                     fill="#76909a", outline="#d2dfdf", width=1)
+    a, b = LANDING_LANE_A, LANDING_LANE_B
     for side in (-1, 1):
         shift = np.array((side*11.3, 0.))
         draw.line([point(*(a+shift)), point(*(b+shift))],
@@ -287,26 +325,33 @@ def plan_preview(path):
     for t in (.31, .39, .47, .55):
         p = a+(b-a)*t
         draw.line([point(*(p+(-11, 0))), point(*(p+(11, 0)))],
-                  fill="#a3b9c0", width=2)
+                  fill="#d8b66e", width=3)
+        for side in (-1, 1):
+            px, py = point(*(p+(side*11.25, 0)))
+            draw.ellipse((px-3, py-3, px+3, py+3), fill="#11212c")
+    draw.line([point(-33, -154), point(-11, -154)], fill="#eef4f3", width=3)
     for x, z in LASERS:
         px, py = point(x, z)
-        draw.regular_polygon((px, py, 10), 6, fill="#62b9b9", outline="#def2ee", width=2)
+        draw.rectangle((px-10, py-9, px+10, py+9),
+                       fill="#526a74", outline="#a3d2ce", width=2)
+        draw.line((px-8, py, px+8, py), fill="#243d49", width=2)
 
     # Annotation leaders stay beyond the deck footprint.
     for label, anchor, xy in [
-        ("MAIN COMMAND ISLAND", (44, 10), (912, 216)),
-        ("AFT AVIATION ISLAND", (42, -88), (590, 207)),
+        ("MAIN COMMAND ISLAND", (35, 10), (912, 216)),
+        ("AFT AVIATION ISLAND", (34, -88), (590, 207)),
         ("4 OUTBOARD LIFTS", (51, 69), (1250, 207)),
-        ("4 CLEAR VTOL / HELO SPOTS", (16, -143), (158, 204)),
+        ("4 OFFSET VTOL / HELO SPOTS", (6, -136), (158, 204)),
         ("3 CATAPULTS", (8, 133), (1378, 655)),
-        ("4 LASER ENCLOSURES", (-52, 109), (1266, 757)),
-        ("ANGLED RECOVERY", (-27, -100), (155, 718)),
+        ("4 FLUSH LASER HATCHES", (-35, 109), (1266, 757)),
+        ("4 ARRESTING WIRES", (-23, -75), (160, 689)),
+        ("ANGLED RECOVERY", (-27, -100), (155, 736)),
     ]:
         ax, ay = point(*anchor)
         tx, ty = xy
         draw.line([(ax, ay), (tx+8, ty-8)], fill="#607e88", width=2)
         draw.text((tx, ty), label, font=f(18, True), fill="#cadadc")
-    draw.text((82, 872), "370 m overall  ·  104 m deck beam  ·  99 aircraft target  ·  CVN concept",
+    draw.text((82, 872), "370 m overall  ·  88 m deck beam  ·  99 aircraft target  ·  CVN concept",
               font=f(22), fill="#a1c8ca")
     draw.text((1276, 880), "GEOMETRY STUDY  /  NOT GAMEPLAY", font=f(16), fill="#91a6af")
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -322,8 +367,7 @@ def main():
     assert spec["islands"]["count"] == 2
     assert PAD_MARK_ANGLE_DEG == spec["deck"]["aft_h_mark_angle_degrees"]
     # Check pad footprints and clear longitudinal departure corridors.
-    lane_a = np.array((-27., -155.))
-    lane_b = np.array((-16., 62.))
+    lane_a, lane_b = LANDING_LANE_A, LANDING_LANE_B
     line = lane_b-lane_a
     min_island_gap = min_lift_gap = min_cat_clearance = float("inf")
     min_spot_edge_gap = min(
@@ -381,6 +425,23 @@ def main():
     assert len(immersed_bow) == 2
     bow_tip_width = abs(immersed_bow[0]-immersed_bow[1])
     assert bow_tip_width < 1.0
+    for x, z in LASERS:
+        for dx in (-2.8, 2.8):
+            for dz in (-3.1, 3.1):
+                assert inside_deck(x+dx, z+dz)
+    def area(points):
+        return abs(sum(x*z2-x2*z for (x, z), (x2, z2)
+                       in zip(points, points[1:]+points[:1])))/2
+    waterline = hull_outline(WATERLINE_WIDTH_SCALE, .98, .035)
+    keel = hull_outline(.31, .88, .02)
+    mid_depth = [((x+x2)/2, (z+z2)/2)
+                 for (x, z), (x2, z2) in zip(waterline, keel)]
+    submerged_volume = DESIGN_DRAFT_M*(area(waterline)+4*area(mid_depth)+area(keel))/6
+    waterline_beam = max(x for x, _ in waterline)-min(x for x, _ in waterline)
+    waterline_length = max(z for _, z in waterline)-min(z for _, z in waterline)
+    block_coefficient = submerged_volume/(waterline_length*waterline_beam*DESIGN_DRAFT_M)
+    assert 40 < waterline_beam < 50 and 80000 < submerged_volume*1.025 < 140000
+    assert .55 < block_coefficient < .75
     summary = validate({"id": spec["id"], "aircraft_capacity": 99,
                         "air_group": [{"role": "Capacity placeholder", "count": 99}],
                         "offensive_ecm_modules": 1}, mesh)
@@ -396,28 +457,41 @@ def main():
                    minimum_pad_to_lift_lateral_gap_m=round(min_lift_gap, 2),
                    minimum_catapult_to_obstruction_plan_gap_m=round(min_cat_clearance, 2),
                    hull_deck_perimeter_mates=True,
-                   bow_waterline_tip_width_m=round(bow_tip_width, 2))
+                   bow_waterline_tip_width_m=round(bow_tip_width, 2),
+                   design_draft_m=DESIGN_DRAFT_M,
+                   maximum_waterline_beam_m=round(waterline_beam, 2),
+                   waterline_length_m=round(waterline_length, 2),
+                   length_to_waterline_beam_ratio=round(370/waterline_beam, 2),
+                   approximate_block_coefficient=round(block_coefficient, 3),
+                   approximate_submerged_volume_m3=round(submerged_volume),
+                   approximate_displacement_tonnes=round(submerged_volume*1.025),
+                   flush_laser_hatches=len(LASERS),
+                   arresting_wire_indications=4,
+                   radar_faces_on_island_sides=True)
     source = HERE/"model/source/ran_cvn_australis_2030.obj"
     game = HERE/"model/game-scale/ran_cvn_australis_2030.obj"
     mesh.save(source)
     mesh.save(game, scale=1/METRES_PER_UNIT)
+    # Overlay this separate OBJ on the base mesh in Blender to inspect the
+    # raised state; the interactive viewer handles the closed/open switch.
+    deployed_lasers().save(HERE/"model/source/ran_cvn_australis_2030_deployed_lasers.obj")
     game.write_text(game.read_text().replace(
         "# RAN Carrier Restart: original model study; coordinates in metres",
         "# Approximate Sea Power scale; origin, deck routing and collision untested", 1))
     (HERE/"previews").mkdir(exist_ok=True)
     render({"name": spec["name"], "aircraft_capacity": 99,
             "propulsion": "Nuclear concept", "length_m": 370,
-            "deck_width_m": 104}, mesh,
+            "deck_width_m": 88}, mesh,
            HERE/"previews/australis_2030_perspective.png")
     render({"name": "Australis class — bow view", "aircraft_capacity": 99,
             "propulsion": "Nuclear concept", "length_m": 370,
-            "deck_width_m": 104}, mesh,
+            "deck_width_m": 88}, mesh,
            HERE/"previews/australis_2030_bow.png",
            camera_azimuth_deg=90, camera_elevation_deg=8)
     plan_preview(HERE/"previews/australis_2030_deck_plan.png")
     (HERE/"model/validation.json").write_text(
         json.dumps(summary, indent=2)+"\n")
-    build_viewer(mesh, COLORS, HERE/"viewer/australis_2030_3d.html")
+    build_viewer(mesh, COLORS, HERE/"viewer/australis_2030_3d.html", deployed_lasers())
     print(f"[OK] {summary['parts']} closed components; {summary['triangles']} triangles")
     print("[OK] Original metre OBJ, approximate game-scale OBJ, three PNGs, and 3D viewer")
     print("[STATUS] Design model only; Sea Power integration has not been tested")

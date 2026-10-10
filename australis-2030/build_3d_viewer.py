@@ -16,11 +16,18 @@ def category(name):
         return "lifts"
     if name.startswith(("AftVTOL", "AftSpot")):
         return "spots"
-    if name.startswith(("AngledLanding", "LandingCentreline", "ArrestingWire")):
+    if name.startswith(("AngledLanding", "LandingCentreline", "ArrestingWire",
+                        "LandingThreshold")):
         return "recovery"
+    if name.startswith(("LaserHatchClosed", "LaserHatchSeam")):
+        return "laser_closed"
+    if name.startswith("LaserHatchOpen"):
+        return "laser_open"
+    if name.startswith(("LaserTurret", "LaserEmitter")):
+        return "laser_turret"
     if name.startswith(("MainRaked", "IntegratedBridge", "BridgeWindow",
                         "EnclosedSensor", "IntegratedRadar", "ShipboardECM",
-                        "AftAviation", "AftEnclosed")):
+                        "AftAviation", "AftEnclosed", "AftSideRadar")):
         return "islands"
     if name.startswith(("Laser", "OutboardFairing", "DefensiveHatch",
                         "BowSonarFairing")):
@@ -28,9 +35,12 @@ def category(name):
     return "hull"
 
 
-def build_viewer(mesh, colors, path):
+def build_viewer(mesh, colors, path, deployed_mesh=None):
     groups = defaultdict(list)
-    for name, triangle, material in mesh.triangles():
+    triangles = list(mesh.triangles())
+    if deployed_mesh is not None:
+        triangles.extend(deployed_mesh.triangles())
+    for name, triangle, material in triangles:
         normal = np.cross(triangle[1] - triangle[0], triangle[2] - triangle[0])
         length = np.linalg.norm(normal)
         if length < 1e-10:
@@ -68,6 +78,7 @@ TEMPLATE = r'''<!doctype html>
   .buttons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
   button { color: #e1edef; background: #263e4c; border: 1px solid #496572; border-radius: 7px; padding: 9px; font: inherit; font-size: .82rem; cursor: pointer; }
   button:hover, button:focus-visible, button.active { background: #32626b; border-color: #8fcdcc; }
+  #deploy { width: 100%; margin-bottom: 7px; }
   label { display: flex; align-items: center; gap: 9px; margin: 8px 0; font-size: .84rem; cursor: pointer; }
   input[type=checkbox] { accent-color: #7fd1cf; width: 16px; height: 16px; }
   .footer { margin-top: 23px; border-top: 1px solid #35505c; padding-top: 14px; }
@@ -85,7 +96,7 @@ TEMPLATE = r'''<!doctype html>
 <aside>
   <div class="eyebrow">ROYAL AUSTRALIAN NAVY · DESIGN STUDY</div>
   <h1>Australis 2030</h1>
-  <div class="muted">Twin-island carrier · 370 m overall · 104 m deck beam · 99 aircraft target</div>
+  <div class="muted">Twin-island carrier · 370 m overall · 88 m deck beam · 99 aircraft target</div>
   <span class="pill">ORIGINAL CONCEPT MESH</span>
   <h2>Camera</h2>
   <div class="buttons" id="views">
@@ -94,6 +105,9 @@ TEMPLATE = r'''<!doctype html>
     <button type="button" data-view="starboard">Starboard</button>
     <button type="button" data-view="bow">Bow</button>
   </div>
+  <h2>Defensive mount study</h2>
+  <button type="button" id="deploy" aria-pressed="false">Deploy four lasers</button>
+  <div id="laserStatus" class="muted" aria-live="polite">Flush hatches closed</div>
   <h2>Show parts</h2>
   <div id="layers">
     <label><input type="checkbox" value="hull" checked> Hull and flight deck</label>
@@ -101,12 +115,14 @@ TEMPLATE = r'''<!doctype html>
     <label><input type="checkbox" value="catapults" checked> Three catapults</label>
     <label><input type="checkbox" value="lifts" checked> Four deck-edge lifts</label>
     <label><input type="checkbox" value="spots" checked> Four VTOL / helicopter spots</label>
-    <label><input type="checkbox" value="recovery" checked> Angled recovery lane</label>
+    <label><input type="checkbox" value="recovery" checked> Angled deck, four arresting wires</label>
+    <label><input type="checkbox" value="laser" checked> Retractable laser positions</label>
     <label><input type="checkbox" value="equipment" checked> Other equipment</label>
   </div>
-  <div class="footer muted">Drag to rotate. Scroll or pinch to zoom. The mesh is a design preview; deck operations and Sea Power integration have not been tested.<br><br>
+  <div class="footer muted">Drag to rotate. Scroll or pinch to zoom. Laser deployment is an animated visual study, not implemented game behavior. Stability, seakeeping, deck operations and Sea Power integration have not been tested.<br><br>
     <a href="../model/source/ran_cvn_australis_2030.obj" download>Download OBJ mesh</a> ·
-    <a href="../model/source/ran_cvn_australis_2030.mtl" download>Materials</a>
+    <a href="../model/source/ran_cvn_australis_2030.mtl" download>Materials</a> ·
+    <a href="../model/source/ran_cvn_australis_2030_deployed_lasers.obj" download>Raised laser overlay</a>
   </div>
 </aside>
 <main>
@@ -126,12 +142,12 @@ if (!gl) {
   errorBox.style.display = "block";
 } else {
   const vertexShader = `attribute vec3 position; attribute vec3 normal;
-    uniform mat4 projection; uniform mat4 view;
+    uniform mat4 projection; uniform mat4 view; uniform float lift;
     varying float light;
     void main() {
       vec3 sun = normalize(vec3(-0.38, 0.86, 0.42));
       light = 0.51 + 0.49 * abs(dot(normalize(normal), sun));
-      gl_Position = projection * view * vec4(position, 1.0);
+      gl_Position = projection * view * vec4(position + vec3(0.0, lift, 0.0), 1.0);
     }`;
   const fragmentShader = `precision mediump float; uniform vec3 color;
     varying float light;
@@ -148,7 +164,7 @@ if (!gl) {
   if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program));
   gl.useProgram(program);
   const attributes = {pos: gl.getAttribLocation(program, "position"), norm: gl.getAttribLocation(program, "normal")};
-  const uniforms = {projection: gl.getUniformLocation(program, "projection"), view: gl.getUniformLocation(program, "view"), color: gl.getUniformLocation(program, "color")};
+  const uniforms = {projection: gl.getUniformLocation(program, "projection"), view: gl.getUniformLocation(program, "view"), color: gl.getUniformLocation(program, "color"), lift: gl.getUniformLocation(program, "lift")};
   const meshes = meshData.map(item => {
     const binary = atob(item.data);
     const bytes = new Uint8Array(binary.length);
@@ -161,6 +177,9 @@ if (!gl) {
   });
   meshData.length = 0;
   const enabled = new Set([...document.querySelectorAll('#layers input:checked')].map(x => x.value));
+  const deployButton = document.getElementById('deploy');
+  const laserStatus = document.getElementById('laserStatus');
+  let deployTarget = 0, deployProgress = 0, lastFrame = 0, animating = false;
   let azimuth = -2.48, elevation = 0.48, distance = 540, top = false;
   const target = [0, 19, 0];
   function normalize(a) { const l = Math.hypot(...a); return a.map(x => x / l); }
@@ -200,14 +219,39 @@ if (!gl) {
     gl.enableVertexAttribArray(attributes.pos);
     gl.enableVertexAttribArray(attributes.norm);
     for (const mesh of meshes) {
-      if (!enabled.has(mesh.category)) continue;
+      if (mesh.category.startsWith('laser_')) {
+        if (!enabled.has('laser')) continue;
+        if (mesh.category === 'laser_closed' && deployProgress > .001) continue;
+        if (mesh.category !== 'laser_closed' && deployProgress < .001) continue;
+      } else if (!enabled.has(mesh.category)) continue;
       gl.bindBuffer(gl.ARRAY_BUFFER, mesh.buffer);
       gl.vertexAttribPointer(attributes.pos, 3, gl.FLOAT, false, 24, 0);
       gl.vertexAttribPointer(attributes.norm, 3, gl.FLOAT, false, 24, 12);
       gl.uniform3fv(uniforms.color, mesh.color);
+      gl.uniform1f(uniforms.lift, mesh.category === 'laser_turret' ? (deployProgress-1)*4.3 : 0);
       gl.drawArrays(gl.TRIANGLES, 0, mesh.count);
     }
   }
+  function animate(timestamp) {
+    const step = lastFrame ? Math.min((timestamp-lastFrame)/800, .1) : 0;
+    lastFrame = timestamp;
+    deployProgress += Math.sign(deployTarget-deployProgress) *
+      Math.min(Math.abs(deployTarget-deployProgress), step);
+    draw();
+    if (Math.abs(deployTarget-deployProgress) > .001) requestAnimationFrame(animate);
+    else {
+      deployProgress = deployTarget; animating = false; lastFrame = 0;
+      laserStatus.textContent = deployTarget ? 'Four turrets raised' : 'Flush hatches closed';
+      draw();
+    }
+  }
+  deployButton.addEventListener('click', () => {
+    deployTarget = deployTarget ? 0 : 1;
+    deployButton.textContent = deployTarget ? 'Retract four lasers' : 'Deploy four lasers';
+    deployButton.setAttribute('aria-pressed', String(Boolean(deployTarget)));
+    laserStatus.textContent = deployTarget ? 'Hatches open; turrets rising' : 'Turrets lowering; hatches closing';
+    if (!animating) { animating = true; requestAnimationFrame(animate); }
+  });
   document.querySelectorAll('#layers input').forEach(input => input.addEventListener('change', () => {
     if (input.checked) enabled.add(input.value); else enabled.delete(input.value);
     draw();
@@ -265,7 +309,7 @@ if (!gl) {
 if __name__ == "__main__":
     import sys
     sys.dont_write_bytecode = True
-    from build import geometry, COLORS
+    from build import geometry, deployed_lasers, COLORS
     target = Path(__file__).resolve().parent / "viewer/australis_2030_3d.html"
-    parts, triangles = build_viewer(geometry(), COLORS, target)
+    parts, triangles = build_viewer(geometry(), COLORS, target, deployed_lasers())
     print(f"[OK] {target} ({parts} colored groups, {triangles} triangles)")

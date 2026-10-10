@@ -4,9 +4,11 @@
   "year": 2030,
   "type": "CVN",
   "length_m": 370,
-  "flight_deck_beam_m": 104,
+  "flight_deck_beam_m": 88,
+  "maximum_waterline_beam_m_design_target": 44,
+  "design_draft_m": 11.5,
   "hull_deck_join": "upper hull shares the full flight-deck underside perimeter",
-  "bow_shape": "faceted upper bow tapering to a fine waterline stem",
+  "bow_shape": "high continuous flared topsides with a narrowing faceted lower bow and fine waterline stem; hydrodynamics unverified",
   "aircraft_capacity_design_target": 99,
   "propulsion_design_target": "Nuclear",
   "islands": {
@@ -19,17 +21,21 @@
     "deck_edge_lifts": 4,
     "aft_vertical_operation_spots": 4,
     "aft_spot_use": "VTOL aircraft and helicopters; recover fixed-wing aircraft separately",
-    "aft_spot_layout": "spaced staggered central strip with angled H markings and clear longitudinal routes",
+    "aft_spot_layout": "four evenly spaced off-centre positions aligned fore-to-aft next to the smaller aft island, with H markings angled twelve degrees",
     "aft_h_mark_angle_degrees": -12,
     "catapult_to_island_and_lift_plan_clearance_m": 12,
     "aft_spot_lateral_clearance_from_islands_m": 4,
     "aft_spot_lateral_clearance_from_lifts_m": 8,
-    "angled_recovery_lane": true
+    "angled_recovery_lane": true,
+    "arresting_wire_indications": 4,
+    "landing_threshold_indicated": true
   },
   "systems_visual_studies": {
-    "integrated_radar_arrays": 4,
+    "integrated_radar_arrays": 7,
+    "radar_placement": "conformal panels on the sides and faces of both islands",
     "shipboard_offensive_ecm_modules": 1,
-    "laser_enclosures": 4,
+    "retractable_laser_positions": 4,
+    "laser_default_state": "flush armoured deck hatches; raised visual state in the viewer and a separate OBJ overlay",
     "sonar_bow_fairing": true
   },
   "integration": {
