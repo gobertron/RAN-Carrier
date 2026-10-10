@@ -160,14 +160,15 @@ def geometry(s):
         for sign in (-1,1):m.box(f'OffensiveECM_Array_{sign}',island_x+sign*2.6,ey,island_z,.15,1.8,3.5,'dark')
     return m
 
-def render(s,m,path,top=False):
+def render(s,m,path,top=False,camera_azimuth_deg=None,camera_elevation_deg=None):
     # Orthographic, per-pixel depth buffer: long deck triangles must not hide
     # the island, as a polygon-centre painter sort would do.
     from PIL import Image, ImageDraw, ImageFont
     width,height=1725,885
     rgb=np.empty((height,width,3),dtype=np.uint8);rgb[:]=[15,24,33]
     depth=np.full((height,width),-np.inf)
-    az=math.radians(-85 if top else -57);el=math.radians(89.9 if top else 26)
+    az=math.radians(camera_azimuth_deg if camera_azimuth_deg is not None else (-85 if top else -57))
+    el=math.radians(camera_elevation_deg if camera_elevation_deg is not None else (89.9 if top else 26))
     direction=np.array([math.cos(el)*math.cos(az),math.cos(el)*math.sin(az),math.sin(el)])
     right=np.array([-math.sin(az),math.cos(az),0]);up=np.cross(direction,right)
     tris=list(m.triangles());world=np.concatenate([t[:,[0,2,1]] for _,t,_ in tris])
