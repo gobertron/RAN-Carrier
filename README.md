@@ -1,4 +1,16 @@
-# Royal Australian Navy carrier game design — 8 October 2026
+# Royal Australian Navy carrier game design
+
+## Current focus: Australis 2050
+
+We are building the newest Australis first, then moving backward through its earlier concepts. The first original 2050 silhouette, editable model source, deck plan and rendered preview are in [australis-2050](australis-2050/README.md).
+
+![Australis 2050 perspective](australis-2050/previews/australis_2050_perspective.png)
+
+![Australis 2050 deck plan](australis-2050/previews/australis_2050_deck_plan.png)
+
+The 2050 study uses straight deck edges, a hard-chine hull and a raked integrated island. Its 99-aircraft capacity, one shipboard ECM module and four laser enclosures are design targets. **This is a model study, not an installable Sea Power mod.** No mission editor or combat test has passed. The earlier 14 fleet studies remain below as reference.
+
+## Earlier fleet studies
 
 Fourteen original Sea Power carrier **designs** covering every edition in the brief. The models and gameplay figures are proposals for an alternate-history RAN fleet. They are not tested as a playable mod.
 

@@ -1,0 +1,13 @@
+{
+  "unit": "ran_cvn_australis_2050",
+  "capacity": 99,
+  "air_group_total": 99,
+  "offensive_ecm_modules": 1,
+  "parts": 86,
+  "triangles": 1420,
+  "finite_vertices": true,
+  "valid_faces": true,
+  "nonzero_triangles": true,
+  "closed_construction_parts": true,
+  "game_integration_tested": false
+}

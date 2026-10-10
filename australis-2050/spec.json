@@ -1,0 +1,28 @@
+{
+  "id": "ran_cvn_australis_2050",
+  "name": "Australis class — 2050 concept",
+  "year": 2050,
+  "type": "CVN",
+  "length_m": 370,
+  "flight_deck_beam_m": 104,
+  "aircraft_capacity_design_target": 99,
+  "propulsion_design_target": "Nuclear",
+  "deck": {
+    "catapult_tracks": 4,
+    "deck_edge_lifts": 4,
+    "angled_recovery_lane": true
+  },
+  "systems_visual_studies": {
+    "integrated_radar_arrays": 4,
+    "shipboard_offensive_ecm_modules": 1,
+    "laser_enclosures": 4,
+    "sonar_bow_fairing": true
+  },
+  "integration": {
+    "model_units": "metres",
+    "game_scale_copy": "approximate based on an observed reference mesh",
+    "game_tested": false,
+    "operational_weapons_or_sensors": false,
+    "native_carrier_routes_and_collision": false
+  }
+}
