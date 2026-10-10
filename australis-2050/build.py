@@ -5,6 +5,7 @@ No files outside this concept folder are changed. This is not a game installer.
 """
 from pathlib import Path
 import json
+import math
 import sys
 
 import numpy as np
@@ -34,8 +35,12 @@ ISLAND_BASE = [
     (31, -30), (40, -33), (47, -23), (48, 28),
     (39, 39), (31, 32),
 ]
-ELEVATORS = [(41, 118), (42, 69), (43, -57), (41, -140)]
+ELEVATORS = [(41, 118), (42, 69), (43, -57), (41, -82)]
 LASERS = [(-52, 109), (53, 110), (-58, -125), (55, -126)]
+CATAPULTS = [((-15, 59), (-15, 157)), ((8, 55), (8, 161)),
+             ((5, -18), (18, 75))]
+VERTICAL_SPOTS = [(0, -151), (23, -151), (0, -109), (23, -109)]
+VERTICAL_SPOT_RADIUS = 10.5
 
 
 def loft(mesh, name, rings, material):
@@ -111,10 +116,8 @@ def geometry():
             m.stripe(f"LiftEdge_{i}_{side}", (x-6.4, z+side*8.8),
                      (x+6.4, z+side*8.8), .22, 22.25, "white")
 
-    # Two bow and two waist indications; functional launch routes come later.
-    cats = [((-15, 59), (-15, 157)), ((8, 55), (8, 161)),
-            ((5, -18), (18, 75)), ((20, -38), (31, 62))]
-    for i, (start, end) in enumerate(cats, 1):
+    # Two bow and one waist indication; functional launch routes come later.
+    for i, (start, end) in enumerate(CATAPULTS, 1):
         m.stripe(f"CatapultTrack_{i}", start, end, .52, 22.13, "gold")
         m.stripe(f"CatapultDeckGuide_{i}",
                  (start[0]+1.25, start[1]), (end[0]+1.25, end[1]),
@@ -132,6 +135,20 @@ def geometry():
         p = a+(b-a)*t
         m.stripe(f"ArrestingWire_{i}", p+(-11, 0), p+(11, 0),
                  .16, 22.19, "dark")
+
+    # Four marked aft spots for vertical takeoff/landing or helicopters.
+    # These are visual positions, not operational flight-deck routing.
+    for i, (x, z) in enumerate(VERTICAL_SPOTS, 1):
+        rim = [(x+VERTICAL_SPOT_RADIUS*math.cos(2*math.pi*j/20),
+                z+VERTICAL_SPOT_RADIUS*math.sin(2*math.pi*j/20))
+               for j in range(20)]
+        m.prism(f"AftVTOL_HeloSpot_{i}", rim, 22.01, 22.08, "hatch")
+        for side in (-1, 1):
+            m.stripe(f"AftSpot_{i}_HStem_{side}",
+                     (x+side*3.5, z-4.5), (x+side*3.5, z+4.5),
+                     .48, 22.12, "white")
+        m.stripe(f"AftSpot_{i}_HBar", (x-3.5, z), (x+3.5, z),
+                 .48, 22.13, "white")
 
     # Faceted fairings let the defensive mounts sit outside launch/recovery.
     for i, (x, z) in enumerate(LASERS, 1):
@@ -181,8 +198,13 @@ def plan_preview(path):
         draw.rectangle([min(p[0], q[0]), min(p[1], q[1]),
                         max(p[0], q[0]), max(p[1], q[1])],
                        fill="#718790", outline="#c6d3d1", width=2)
-    for (a, b) in [((-15, 59), (-15, 157)), ((8, 55), (8, 161)),
-                   ((5, -18), (18, 75)), ((20, -38), (31, 62))]:
+    for x, z in VERTICAL_SPOTS:
+        px, py = point(x, z)
+        radius = round(VERTICAL_SPOT_RADIUS*scale)
+        draw.ellipse([px-radius, py-radius, px+radius, py+radius],
+                     fill="#586e77", outline="#d4eeee", width=3)
+        draw.text((px, py), "H", font=f(22, True), anchor="mm", fill="#edf4f2")
+    for (a, b) in CATAPULTS:
         draw.line([point(*a), point(*b)], fill="#d8b66e", width=4)
     a, b = np.array((-27., -155.)), np.array((-16., 62.))
     for side in (-1, 1):
@@ -204,6 +226,8 @@ def plan_preview(path):
     for label, anchor, xy in [
         ("RAKED ISLAND / FLUSH ARRAYS", (44, 10), (896, 224)),
         ("4 DECK-EDGE LIFTS", (41, 118), (1372, 244)),
+        ("4 AFT VTOL / HELO SPOTS", (23, -151), (394, 208)),
+        ("3 CATAPULTS", (8, 133), (1378, 655)),
         ("4 LASER ENCLOSURES", (-52, 109), (1266, 757)),
         ("ANGLED RECOVERY", (-27, -100), (155, 718)),
     ]:
@@ -222,10 +246,28 @@ def main():
     spec = json.loads((HERE/"spec.json").read_text())
     assert max(z for _, z in DECK)-min(z for _, z in DECK) == spec["length_m"]
     assert max(x for x, _ in DECK)-min(x for x, _ in DECK) == spec["flight_deck_beam_m"]
+    assert len(CATAPULTS) == spec["deck"]["catapult_tracks"]
+    assert len(VERTICAL_SPOTS) == spec["deck"]["aft_vertical_operation_spots"]
+    # Check each full aft pad against the recovery lane and physical lift marks.
+    lane_a = np.array((-27., -155.))
+    lane_b = np.array((-16., 62.))
+    line = lane_b-lane_a
+    for x, z in VERTICAL_SPOTS:
+        p = np.array((x, z))
+        t = min(1., max(0., float(np.dot(p-lane_a, line)/np.dot(line, line))))
+        assert np.linalg.norm(p-(lane_a+t*line)) > VERTICAL_SPOT_RADIUS+11.3+1
+        for lift_x, lift_z in ELEVATORS:
+            dx = max(abs(x-lift_x)-6.5, 0)
+            dz = max(abs(z-lift_z)-9, 0)
+            assert math.hypot(dx, dz) > VERTICAL_SPOT_RADIUS+.5
     mesh = geometry()
     summary = validate({"id": spec["id"], "aircraft_capacity": 99,
                         "air_group": [{"role": "Capacity placeholder", "count": 99}],
                         "offensive_ecm_modules": 1}, mesh)
+    summary.update(catapult_tracks=len(CATAPULTS),
+                   aft_vertical_operation_spots=len(VERTICAL_SPOTS),
+                   deck_edge_lifts=len(ELEVATORS),
+                   aft_spot_clearance_geometry_checked=True)
     source = HERE/"model/source/ran_cvn_australis_2050.obj"
     game = HERE/"model/game-scale/ran_cvn_australis_2050.obj"
     mesh.save(source)

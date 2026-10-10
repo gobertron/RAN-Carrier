@@ -12,13 +12,19 @@ visual design choice, not a measured radar signature or a claim of stealth.
 | Overall length | 370 m |
 | Maximum flight-deck beam | 104 m |
 | Air-group capacity | 99 aircraft, target only |
-| Catapult tracks / deck-edge lifts | 4 / 4, indicated on the model |
+| Catapult tracks / deck-edge lifts | 3 / 4, indicated on the model |
+| Aft vertical-operation spots | 4, for VTOL aircraft or helicopters |
 | Shipboard offensive ECM | 1 integrated module, represented by two panels |
 | Laser positions | 4 enclosed mounts, visual study only |
 
-The deck has an angled recovery lane, four arresting-wire indications and
-separate bow and waist launch lanes. Flight operations, equipment locations,
-and deck clearances still need an in-game engineering pass. The aircraft
+The deck has two bow catapults, one waist catapult, an angled recovery lane,
+four arresting-wire indications and four marked aft VTOL/helicopter spots.
+The spots sit in two rows on the aft deck. Vertical operations and fixed-wing
+recovery are proposed as separate deck modes; simultaneous use is not claimed.
+The fourth deck-edge lift has been shifted forward to leave space for the aft
+spots.
+Flight operations, equipment locations, and deck clearances still need an
+in-game engineering pass. The aircraft
 capacity is the requested design target and is not a demonstrated 99-aircraft
 simulation. Air-group IDs and combat values are deliberately unassigned.
 

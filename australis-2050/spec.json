@@ -8,8 +8,10 @@
   "aircraft_capacity_design_target": 99,
   "propulsion_design_target": "Nuclear",
   "deck": {
-    "catapult_tracks": 4,
+    "catapult_tracks": 3,
     "deck_edge_lifts": 4,
+    "aft_vertical_operation_spots": 4,
+    "aft_spot_use": "VTOL aircraft and helicopters; recover fixed-wing aircraft separately",
     "angled_recovery_lane": true
   },
   "systems_visual_studies": {
