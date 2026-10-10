@@ -1,6 +1,6 @@
-# Australis 2050 — original RAN carrier concept
+# Australis 2030 — original RAN carrier concept
 
-The first new design in the newest-to-oldest Australis sequence. This 2050
+The first new design in the newest-to-oldest Australis sequence. This 2030
 study has a straight-edged flight deck, hard-chine hull, a larger integrated
 command island amidships, a smaller aviation island aft, flush radar faces,
 and four enclosed deck-edge laser positions. Surfaces use
@@ -19,12 +19,15 @@ visual design choice, not a measured radar signature or a claim of stealth.
 | Shipboard offensive ECM | 1 integrated module, represented by two panels |
 | Laser positions | 4 enclosed mounts, visual study only |
 
-The deck has two bow catapults, one waist catapult, an angled recovery lane,
+The deck has two bow catapults, one angled starboard catapult launching
+forward clear of the lifts, an angled recovery lane,
 four arresting-wire indications and four marked aft VTOL/helicopter spots.
 The spots sit farther apart in a staggered central strip on the aft deck, and their H
 markings are angled by 12 degrees. Vertical operations and fixed-wing
 recovery are proposed as separate deck modes; simultaneous use is not claimed.
-The lifts sit outboard of the marked launch and vertical-operation routes.
+The forward starboard lift has moved amidships, between the islands; the
+smaller aft aviation island is set farther aft to provide that gap. All four
+lifts sit outboard of the marked launch and vertical-operation routes.
 The builder checks a 12 m plan-view corridor around each catapult track and
 its indicated forward rollout against both islands and all lifts. It also
 checks that the full H spot circles and their straight-ahead routes have
@@ -35,7 +38,7 @@ in-game engineering pass. The aircraft
 capacity is the requested design target and is not a demonstrated 99-aircraft
 simulation. Air-group IDs and combat values are deliberately unassigned.
 
-`model/source/ran_cvn_australis_2050.obj` uses metres. `model/game-scale/`
+`model/source/ran_cvn_australis_2030.obj` uses metres. `model/game-scale/`
 contains an approximate scale copy for later integration. The OBJ groups are
 named so deck, island, panels, lifts and mounts can be refined independently.
 The PNG previews show rendered geometry and a deck-layout study; they are not

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the original Australis 2050 geometry and presentation previews.
+"""Build the original Australis 2030 geometry and presentation previews.
 
 No files outside this concept folder are changed. This is not a game installer.
 """
@@ -36,13 +36,13 @@ MAIN_ISLAND_BASE = [
     (39, 39), (31, 32),
 ]
 AFT_ISLAND_BASE = [
-    (33, -92), (41, -94), (48, -86), (48, -56),
-    (41, -48), (33, -51),
+    (33, -110), (41, -112), (48, -104), (48, -74),
+    (41, -66), (33, -69),
 ]
-ELEVATORS = [(50, 118), (51, 69), (-48, 92), (53, -132)]
+ELEVATORS = [(50, -50), (51, 69), (-48, 92), (53, -132)]
 LASERS = [(-52, 109), (53, 110), (-58, -125), (55, -160)]
 CATAPULTS = [((-15, 59), (-15, 157)), ((8, 55), (8, 161)),
-             ((5, -18), (18, 75))]
+             ((23, 52), (28, 144))]
 VERTICAL_SPOTS = [(0, -168), (16, -143), (0, -118), (16, -93)]
 VERTICAL_SPOT_RADIUS = 10.5
 PAD_MARK_ANGLE_DEG = -12
@@ -137,22 +137,22 @@ def geometry():
     m.box("ShipboardECM_Module_PortPanel", 35.2, 53.3, 10, .24, 2.1, 5, "dark")
     m.box("ShipboardECM_Module_StarboardPanel", 43.7, 53.3, 10, .24, 2.1, 5, "dark")
 
-    aft_top = scaled_polygon(AFT_ISLAND_BASE, 40.5, -71, .82, .80)
+    aft_top = scaled_polygon(AFT_ISLAND_BASE, 40.5, -89, .82, .80)
     loft(m, "AftAviationIsland",
          [polygon_at_y(AFT_ISLAND_BASE, 22), polygon_at_y(aft_top, 33.5)], "island")
-    aft_bridge = [(35, -86), (41, -87), (46, -80),
-                  (46, -60), (40, -54), (35, -58)]
+    aft_bridge = [(35, -104), (41, -105), (46, -98),
+                  (46, -78), (40, -72), (35, -76)]
     loft(m, "AftAviationBridge",
          [polygon_at_y(aft_bridge, 33.3),
-          polygon_at_y(scaled_polygon(aft_bridge, 40, -70, .8, .82), 39)], "island")
-    m.box("AftAviationWindowPort", 34.85, 36.8, -71, .22, 1.55, 24, "glass")
-    m.box("AftAviationWindowStarboard", 45.75, 36.8, -70, .22, 1.55, 20, "glass")
-    m.box("AftAviationWindowForward", 40, 36.8, -54.2, 8, 1.55, .2, "glass")
-    aft_mast = [(37, -77), (42, -78), (44, -73),
-                (44, -65), (39, -62), (37, -66)]
+          polygon_at_y(scaled_polygon(aft_bridge, 40, -88, .8, .82), 39)], "island")
+    m.box("AftAviationWindowPort", 34.85, 36.8, -89, .22, 1.55, 24, "glass")
+    m.box("AftAviationWindowStarboard", 45.75, 36.8, -88, .22, 1.55, 20, "glass")
+    m.box("AftAviationWindowForward", 40, 36.8, -72.2, 8, 1.55, .2, "glass")
+    aft_mast = [(37, -95), (42, -96), (44, -91),
+                (44, -83), (39, -80), (37, -84)]
     loft(m, "AftEnclosedMast",
          [polygon_at_y(aft_mast, 38.8),
-          polygon_at_y(scaled_polygon(aft_mast, 40.5, -70, .70, .70), 44)],
+          polygon_at_y(scaled_polygon(aft_mast, 40.5, -88, .70, .70), 44)],
          "island")
 
     for i, (x, z) in enumerate(ELEVATORS, 1):
@@ -161,7 +161,7 @@ def geometry():
             m.stripe(f"LiftEdge_{i}_{side}", (x-6.4, z+side*8.8),
                      (x+6.4, z+side*8.8), .22, 22.25, "white")
 
-    # Two bow and one waist indication; functional launch routes come later.
+    # Two bow tracks and one angled starboard track; routes come later.
     for i, (start, end) in enumerate(CATAPULTS, 1):
         m.stripe(f"CatapultTrack_{i}", start, end, .52, 22.13, "gold")
         m.stripe(f"CatapultDeckGuide_{i}",
@@ -227,7 +227,7 @@ def plan_preview(path):
     regular = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
     bold = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
     f = lambda n, heavy=False: ImageFont.truetype(bold if heavy else regular, n)
-    draw.text((82, 54), "AUSTRALIS 2050", font=f(41, True), fill="#edf3f3")
+    draw.text((82, 54), "AUSTRALIS 2030", font=f(41, True), fill="#edf3f3")
     draw.text((82, 112), "FACETED FLIGHT DECK  /  ORIGINAL RAN CONCEPT  /  BOW TO RIGHT",
               font=f(20), fill="#91c9cd")
     scale = 3.75
@@ -242,7 +242,7 @@ def plan_preview(path):
     draw.polygon(shape([(35, -3), (42, -4), (44, 19), (35, 18)]),
                  fill="#366072")
     draw.polygon(shape(AFT_ISLAND_BASE), fill="#8198a2", outline="#c1d8da", width=2)
-    draw.polygon(shape([(37, -77), (44, -73), (44, -65), (37, -66)]),
+    draw.polygon(shape([(37, -95), (44, -91), (44, -83), (37, -84)]),
                  fill="#366072")
     for x, z in ELEVATORS:
         p, q = point(x-6.5, z+9), point(x+6.5, z-9)
@@ -282,8 +282,8 @@ def plan_preview(path):
     # Annotation leaders stay beyond the deck footprint.
     for label, anchor, xy in [
         ("MAIN COMMAND ISLAND", (44, 10), (912, 216)),
-        ("AFT AVIATION ISLAND", (42, -70), (655, 207)),
-        ("4 OUTBOARD LIFTS", (50, 118), (1372, 244)),
+        ("AFT AVIATION ISLAND", (42, -88), (590, 207)),
+        ("4 OUTBOARD LIFTS", (51, 69), (1250, 207)),
         ("4 CLEAR VTOL / HELO SPOTS", (16, -143), (158, 204)),
         ("3 CATAPULTS", (8, 133), (1378, 655)),
         ("4 LASER ENCLOSURES", (-52, 109), (1266, 757)),
@@ -370,8 +370,8 @@ def main():
                    minimum_pad_to_island_lateral_gap_m=round(min_island_gap, 2),
                    minimum_pad_to_lift_lateral_gap_m=round(min_lift_gap, 2),
                    minimum_catapult_to_obstruction_plan_gap_m=round(min_cat_clearance, 2))
-    source = HERE/"model/source/ran_cvn_australis_2050.obj"
-    game = HERE/"model/game-scale/ran_cvn_australis_2050.obj"
+    source = HERE/"model/source/ran_cvn_australis_2030.obj"
+    game = HERE/"model/game-scale/ran_cvn_australis_2030.obj"
     mesh.save(source)
     mesh.save(game, scale=1/METRES_PER_UNIT)
     game.write_text(game.read_text().replace(
@@ -381,8 +381,8 @@ def main():
     render({"name": spec["name"], "aircraft_capacity": 99,
             "propulsion": "Nuclear concept", "length_m": 370,
             "deck_width_m": 104}, mesh,
-           HERE/"previews/australis_2050_perspective.png")
-    plan_preview(HERE/"previews/australis_2050_deck_plan.png")
+           HERE/"previews/australis_2030_perspective.png")
+    plan_preview(HERE/"previews/australis_2030_deck_plan.png")
     (HERE/"model/validation.json").write_text(
         json.dumps(summary, indent=2)+"\n")
     print(f"[OK] {summary['parts']} closed components; {summary['triangles']} triangles")

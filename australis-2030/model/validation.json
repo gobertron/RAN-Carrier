@@ -1,5 +1,5 @@
 {
-  "unit": "ran_cvn_australis_2050",
+  "unit": "ran_cvn_australis_2030",
   "capacity": 99,
   "air_group_total": 99,
   "offensive_ecm_modules": 1,
@@ -21,5 +21,5 @@
   "minimum_spot_edge_spacing_m": 8.68,
   "minimum_pad_to_island_lateral_gap_m": 4.5,
   "minimum_pad_to_lift_lateral_gap_m": 17.0,
-  "minimum_catapult_to_obstruction_plan_gap_m": 17.87
+  "minimum_catapult_to_obstruction_plan_gap_m": 15.26
 }

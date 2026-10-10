@@ -1,14 +1,14 @@
 # Royal Australian Navy carrier game design
 
-## Current focus: Australis 2050
+## Current focus: Australis 2030
 
-We are building the newest Australis first, then moving backward through its earlier concepts. The first original 2050 silhouette, editable model source, deck plan and rendered preview are in [australis-2050](australis-2050/README.md).
+We are refining the newest Australis first, then moving backward through its earlier concepts. The original 2030 silhouette, editable model source, deck plan and rendered preview are in [australis-2030](australis-2030/README.md).
 
-![Australis 2050 perspective](australis-2050/previews/australis_2050_perspective.png)
+![Australis 2030 perspective](australis-2030/previews/australis_2030_perspective.png)
 
-![Australis 2050 deck plan](australis-2050/previews/australis_2050_deck_plan.png)
+![Australis 2030 deck plan](australis-2030/previews/australis_2030_deck_plan.png)
 
-The 2050 study uses straight deck edges, a hard-chine hull, a larger command island amidships and a smaller aviation island aft. Its four VTOL/helicopter spots are spaced in a staggered central strip with angled H markings. Fixed-wing launches use two bow catapults and one waist catapult. The lifts sit outboard of both the launch paths and the straight-ahead H-pad routes; the geometry builder checks clearance against the two islands and four lifts. The 99-aircraft capacity, one shipboard ECM module and four laser enclosures are design targets. **This is a model study, not an installable Sea Power mod.** No mission editor or combat test has passed. The earlier 14 fleet studies remain below as reference.
+The 2030 study uses straight deck edges, a hard-chine hull, a larger command island amidships and a smaller aviation island aft. Its four VTOL/helicopter spots are staggered on the aft deck with angled H markings. Fixed-wing launch markings show two bow catapults and one angled starboard catapult, with its forward path clear of lifts. The former forward starboard lift now sits amidships between the islands, and the smaller island is farther aft. The builder checks plan-view clearance from both islands and all four lifts. The 99-aircraft capacity, one shipboard ECM module and four laser enclosures are design targets. **This is a model study, not an installable Sea Power mod.** Mission Editor loading and flight operations are untested. The earlier 14 fleet studies remain below as reference.
 
 ## Earlier fleet studies
 
@@ -31,7 +31,7 @@ Fourteen original Sea Power carrier **designs** covering every edition in the br
 | 2000s late | Southern Cross | Nuclear | 98 | 1 shipboard | — |
 | 2020s early | Australis | Nuclear | 99 | 1 shipboard | 4 mounts (concept) |
 
-Each edition has a separate design sheet with the proposed air group, dated combat systems and hull dimensions. `design-manifest.json` provides machine-readable values, including a single carrier-mounted offensive ECM module from 1972 onward. ECM uses no aircraft slots and there is no EF-111N-2050 aircraft. The 2023 hull has four visible laser mount studies; beam weapon logic and effects need implementation and testing.
+Each edition has a separate design sheet with the proposed air group, dated combat systems and hull dimensions. `design-manifest.json` provides machine-readable values, including a single carrier-mounted offensive ECM module from 1972 onward. ECM uses no aircraft slots and there is no carrier-dedicated EF-111N aircraft. The 2023 hull has four visible laser mount studies; beam weapon logic and effects need implementation and testing.
 
 `metre-source-models/` holds the original OBJ/MTL authoring coordinates. `game-scale-models/ships/` holds approximately scaled copies using one observed Sea Power OBJ reference ratio, with the same object groups (Hull, FlightDeck, elevators, catapult markings, ECM and laser mounts). `previews/` are geometry renders, not screenshots. `generate_source_models.py` rebuilds the original metre models from `fleet-source.json` with Python, NumPy and Pillow; `rebuild_game_scale.py` recreates the approximate game-scale OBJ copies from the packaged metre sources. The design manifest remains the editable source of the gameplay proposals.
 
