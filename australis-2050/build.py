@@ -39,11 +39,11 @@ AFT_ISLAND_BASE = [
     (33, -92), (41, -94), (48, -86), (48, -56),
     (41, -48), (33, -51),
 ]
-ELEVATORS = [(41, 118), (42, 69), (-40, 92), (50, -106)]
-LASERS = [(-52, 109), (53, 110), (-58, -125), (55, -126)]
+ELEVATORS = [(50, 118), (51, 69), (-48, 92), (53, -132)]
+LASERS = [(-52, 109), (53, 110), (-58, -125), (55, -160)]
 CATAPULTS = [((-15, 59), (-15, 157)), ((8, 55), (8, 161)),
              ((5, -18), (18, 75))]
-VERTICAL_SPOTS = [(1, -166), (25, -152), (1, -126), (25, -112)]
+VERTICAL_SPOTS = [(0, -168), (16, -143), (0, -118), (16, -93)]
 VERTICAL_SPOT_RADIUS = 10.5
 PAD_MARK_ANGLE_DEG = -12
 
@@ -80,6 +80,14 @@ def inside_deck(x, z):
         if (az > z) != (bz > z) and x < ax+(bx-ax)*(z-az)/(bz-az):
             inside = not inside
     return inside
+
+
+def rectangle_distance(x, z, xlo, xhi, zlo, zhi):
+    return math.hypot(max(xlo-x, x-xhi, 0), max(zlo-z, z-zhi, 0))
+
+
+def lateral_gap(left, right, xlo, xhi):
+    return max(xlo-right, left-xhi, 0)
 
 
 def geometry():
@@ -275,8 +283,8 @@ def plan_preview(path):
     for label, anchor, xy in [
         ("MAIN COMMAND ISLAND", (44, 10), (912, 216)),
         ("AFT AVIATION ISLAND", (42, -70), (655, 207)),
-        ("4 DECK-EDGE LIFTS", (41, 118), (1372, 244)),
-        ("4 STAGGERED VTOL / HELO SPOTS", (25, -152), (158, 204)),
+        ("4 OUTBOARD LIFTS", (50, 118), (1372, 244)),
+        ("4 CLEAR VTOL / HELO SPOTS", (16, -143), (158, 204)),
         ("3 CATAPULTS", (8, 133), (1378, 655)),
         ("4 LASER ENCLOSURES", (-52, 109), (1266, 757)),
         ("ANGLED RECOVERY", (-27, -100), (155, 718)),
@@ -300,10 +308,17 @@ def main():
     assert len(VERTICAL_SPOTS) == spec["deck"]["aft_vertical_operation_spots"]
     assert spec["islands"]["count"] == 2
     assert PAD_MARK_ANGLE_DEG == spec["deck"]["aft_h_mark_angle_degrees"]
-    # Check each full aft pad against the recovery lane and physical lift marks.
+    # Check pad footprints and clear longitudinal departure corridors.
     lane_a = np.array((-27., -155.))
     lane_b = np.array((-16., 62.))
     line = lane_b-lane_a
+    min_island_gap = min_lift_gap = min_cat_clearance = float("inf")
+    min_spot_edge_gap = min(
+        math.dist(a, b)-2*VERTICAL_SPOT_RADIUS
+        for i, a in enumerate(VERTICAL_SPOTS)
+        for b in VERTICAL_SPOTS[i+1:]
+    )
+    assert min_spot_edge_gap >= 5
     for x, z in VERTICAL_SPOTS:
         for t in range(36):
             theta = 2*math.pi*t/36
@@ -313,15 +328,33 @@ def main():
         t = min(1., max(0., float(np.dot(p-lane_a, line)/np.dot(line, line))))
         assert np.linalg.norm(p-(lane_a+t*line)) > VERTICAL_SPOT_RADIUS+11.3+1
         for lift_x, lift_z in ELEVATORS:
-            dx = max(abs(x-lift_x)-6.5, 0)
-            dz = max(abs(z-lift_z)-9, 0)
-            assert math.hypot(dx, dz) > VERTICAL_SPOT_RADIUS+.5
+            assert rectangle_distance(x, z, lift_x-6.5, lift_x+6.5,
+                                      lift_z-9, lift_z+9) > VERTICAL_SPOT_RADIUS+1
+            gap = lateral_gap(x-VERTICAL_SPOT_RADIUS, x+VERTICAL_SPOT_RADIUS,
+                              lift_x-6.5, lift_x+6.5)
+            min_lift_gap = min(min_lift_gap, gap)
+            assert gap >= 8
         for island in (MAIN_ISLAND_BASE, AFT_ISLAND_BASE):
-            dx = max(min(px for px, _ in island)-x,
-                     x-max(px for px, _ in island), 0)
-            dz = max(min(pz for _, pz in island)-z,
-                     z-max(pz for _, pz in island), 0)
-            assert math.hypot(dx, dz) > VERTICAL_SPOT_RADIUS+1
+            xmin, xmax = min(px for px, _ in island), max(px for px, _ in island)
+            zmin, zmax = min(pz for _, pz in island), max(pz for _, pz in island)
+            assert rectangle_distance(x, z, xmin, xmax, zmin, zmax) > VERTICAL_SPOT_RADIUS+1
+            gap = lateral_gap(x-VERTICAL_SPOT_RADIUS, x+VERTICAL_SPOT_RADIUS,
+                              xmin, xmax)
+            min_island_gap = min(min_island_gap, gap)
+            assert gap >= 4
+    # The launch line and up to 60 m of forward rollout within the ship's
+    # length keep a 12 m plan-view corridor clear of island/lift footprints.
+    obstacles = [(min(x for x, _ in island), max(x for x, _ in island),
+                  min(z for _, z in island), max(z for _, z in island))
+                 for island in (MAIN_ISLAND_BASE, AFT_ISLAND_BASE)]
+    obstacles += [(x-6.5, x+6.5, z-9, z+9) for x, z in ELEVATORS]
+    for (sx, sz), (ex, ez) in CATAPULTS:
+        for z in np.linspace(sz, min(ez+60, 185), 80):
+            x = sx+(ex-sx)*(z-sz)/(ez-sz)
+            nearest = min(rectangle_distance(x, z, *bounds)
+                          for bounds in obstacles)
+            min_cat_clearance = min(min_cat_clearance, nearest)
+            assert nearest >= 12
     mesh = geometry()
     summary = validate({"id": spec["id"], "aircraft_capacity": 99,
                         "air_group": [{"role": "Capacity placeholder", "count": 99}],
@@ -330,7 +363,13 @@ def main():
                    aft_vertical_operation_spots=len(VERTICAL_SPOTS),
                    deck_edge_lifts=len(ELEVATORS),
                    islands=2, aft_h_mark_angle_degrees=PAD_MARK_ANGLE_DEG,
-                   aft_spot_clearance_geometry_checked=True)
+                   aft_spot_clearance_geometry_checked=True,
+                   pad_longitudinal_corridors_clear=True,
+                   catapult_launch_corridors_clear=True,
+                   minimum_spot_edge_spacing_m=round(min_spot_edge_gap, 2),
+                   minimum_pad_to_island_lateral_gap_m=round(min_island_gap, 2),
+                   minimum_pad_to_lift_lateral_gap_m=round(min_lift_gap, 2),
+                   minimum_catapult_to_obstruction_plan_gap_m=round(min_cat_clearance, 2))
     source = HERE/"model/source/ran_cvn_australis_2050.obj"
     game = HERE/"model/game-scale/ran_cvn_australis_2050.obj"
     mesh.save(source)

@@ -21,11 +21,15 @@ visual design choice, not a measured radar signature or a claim of stealth.
 
 The deck has two bow catapults, one waist catapult, an angled recovery lane,
 four arresting-wire indications and four marked aft VTOL/helicopter spots.
-The spots sit farther apart in staggered rows on the aft deck, and their H
+The spots sit farther apart in a staggered central strip on the aft deck, and their H
 markings are angled by 12 degrees. Vertical operations and fixed-wing
 recovery are proposed as separate deck modes; simultaneous use is not claimed.
-One lift is on the forward port side and another on the starboard edge ahead
-of the aft spots; this leaves space for the smaller rear island.
+The lifts sit outboard of the marked launch and vertical-operation routes.
+The builder checks a 12 m plan-view corridor around each catapult track and
+its indicated forward rollout against both islands and all lifts. It also
+checks that the full H spot circles and their straight-ahead routes have
+lateral clearance from islands and lifts. These are layout checks only, not
+aircraft wing, rotor, exhaust or in-game flight-path certification.
 Flight operations, equipment locations, and deck clearances still need an
 in-game engineering pass. The aircraft
 capacity is the requested design target and is not a demonstrated 99-aircraft

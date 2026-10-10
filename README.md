@@ -8,7 +8,7 @@ We are building the newest Australis first, then moving backward through its ear
 
 ![Australis 2050 deck plan](australis-2050/previews/australis_2050_deck_plan.png)
 
-The 2050 study uses straight deck edges, a hard-chine hull, a larger command island amidships and a smaller aviation island aft. Its four VTOL/helicopter spots are spaced in staggered rows with angled H markings. Fixed-wing launches use two bow catapults and one waist catapult. The 99-aircraft capacity, one shipboard ECM module and four laser enclosures are design targets. **This is a model study, not an installable Sea Power mod.** No mission editor or combat test has passed. The earlier 14 fleet studies remain below as reference.
+The 2050 study uses straight deck edges, a hard-chine hull, a larger command island amidships and a smaller aviation island aft. Its four VTOL/helicopter spots are spaced in a staggered central strip with angled H markings. Fixed-wing launches use two bow catapults and one waist catapult. The lifts sit outboard of both the launch paths and the straight-ahead H-pad routes; the geometry builder checks clearance against the two islands and four lifts. The 99-aircraft capacity, one shipboard ECM module and four laser enclosures are design targets. **This is a model study, not an installable Sea Power mod.** No mission editor or combat test has passed. The earlier 14 fleet studies remain below as reference.
 
 ## Earlier fleet studies
 

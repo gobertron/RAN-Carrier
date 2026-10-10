@@ -17,8 +17,11 @@
     "deck_edge_lifts": 4,
     "aft_vertical_operation_spots": 4,
     "aft_spot_use": "VTOL aircraft and helicopters; recover fixed-wing aircraft separately",
-    "aft_spot_layout": "spaced staggered rows with angled H markings",
+    "aft_spot_layout": "spaced staggered central strip with angled H markings and clear longitudinal routes",
     "aft_h_mark_angle_degrees": -12,
+    "catapult_to_island_and_lift_plan_clearance_m": 12,
+    "aft_spot_lateral_clearance_from_islands_m": 4,
+    "aft_spot_lateral_clearance_from_lifts_m": 8,
     "angled_recovery_lane": true
   },
   "systems_visual_studies": {

@@ -15,5 +15,11 @@
   "deck_edge_lifts": 4,
   "islands": 2,
   "aft_h_mark_angle_degrees": -12,
-  "aft_spot_clearance_geometry_checked": true
+  "aft_spot_clearance_geometry_checked": true,
+  "pad_longitudinal_corridors_clear": true,
+  "catapult_launch_corridors_clear": true,
+  "minimum_spot_edge_spacing_m": 8.68,
+  "minimum_pad_to_island_lateral_gap_m": 4.5,
+  "minimum_pad_to_lift_lateral_gap_m": 17.0,
+  "minimum_catapult_to_obstruction_plan_gap_m": 17.87
 }
