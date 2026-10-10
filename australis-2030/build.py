@@ -16,6 +16,7 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, str(HERE.parent))
 from generate_source_models import Mesh, COLORS, render, validate  # noqa: E402
 from rebuild_game_scale import METRES_PER_UNIT  # noqa: E402
+from build_3d_viewer import build_viewer  # noqa: E402
 
 COLORS.update({
     "hull": "#778b96", "underwater": "#394954", "deck": "#394953",
@@ -385,8 +386,9 @@ def main():
     plan_preview(HERE/"previews/australis_2030_deck_plan.png")
     (HERE/"model/validation.json").write_text(
         json.dumps(summary, indent=2)+"\n")
+    build_viewer(mesh, COLORS, HERE/"viewer/australis_2030_3d.html")
     print(f"[OK] {summary['parts']} closed components; {summary['triangles']} triangles")
-    print("[OK] Original metre OBJ, approximate game-scale OBJ, and two previews")
+    print("[OK] Original metre OBJ, approximate game-scale OBJ, two PNGs, and 3D viewer")
     print("[STATUS] Design model only; Sea Power integration has not been tested")
 
 

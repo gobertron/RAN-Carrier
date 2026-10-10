@@ -43,7 +43,11 @@ contains an approximate scale copy for later integration. The OBJ groups are
 named so deck, island, panels, lifts and mounts can be refined independently.
 The PNG previews show rendered geometry and a deck-layout study; they are not
 Sea Power screenshots. `build.py` regenerates the OBJ/MTL and preview images
-from original geometry using NumPy and Pillow.
+from original geometry using NumPy and Pillow. Open
+[`viewer/australis_2030_3d.html`](viewer/australis_2030_3d.html) in a browser
+to rotate and zoom the original model, switch camera views, and show or hide
+deck details. The HTML includes its own mesh and WebGL code and needs no
+network connection. Run `python3 build.py` to regenerate the viewer as well.
 
 **Status:** Concept art and watertight component mesh, not an installable Sea
 Power mod. No vessel INI is enabled or shipped here. Mission Editor loading,
