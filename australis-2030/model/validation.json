@@ -22,5 +22,6 @@
   "minimum_pad_to_island_lateral_gap_m": 4.5,
   "minimum_pad_to_lift_lateral_gap_m": 17.0,
   "minimum_catapult_to_obstruction_plan_gap_m": 15.26,
-  "hull_deck_perimeter_mates": true
+  "hull_deck_perimeter_mates": true,
+  "bow_waterline_tip_width_m": 0.86
 }

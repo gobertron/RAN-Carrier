@@ -6,6 +6,7 @@
   "length_m": 370,
   "flight_deck_beam_m": 104,
   "hull_deck_join": "upper hull shares the full flight-deck underside perimeter",
+  "bow_shape": "faceted upper bow tapering to a fine waterline stem",
   "aircraft_capacity_design_target": 99,
   "propulsion_design_target": "Nuclear",
   "islands": {

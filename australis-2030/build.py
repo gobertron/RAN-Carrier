@@ -71,6 +71,16 @@ def scaled_polygon(points, cx, cz, fx, fz):
     return [(cx+(x-cx)*fx, cz+(z-cz)*fz) for x, z in points]
 
 
+def hull_outline(width_scale, length_scale, bow_tip_scale):
+    """Keep broad amidships but narrow the immersed forward stem to a point."""
+    result = []
+    for x, z in DECK:
+        forward = max(0., min(1., (z-110.)/75.))
+        bow_factor = 1. - (1. - bow_tip_scale)*forward**1.4
+        result.append((x*width_scale*bow_factor, z*length_scale))
+    return result
+
+
 def pad_mark_point(x, z, offset_x, offset_z):
     angle = math.radians(PAD_MARK_ANGLE_DEG)
     return (x+offset_x*math.cos(angle)-offset_z*math.sin(angle),
@@ -98,10 +108,10 @@ def geometry():
     # The first hull ring shares the whole deck underside outline: the hull
     # rises to the flight deck at the bow, stern, and both sides, then narrows
     # through faceted chines towards its waterline and keel.
-    chine = scaled_polygon(DECK, 0, 0, .96, .99)
-    shoulder = scaled_polygon(DECK, 0, 0, .90, .96)
-    waterline = scaled_polygon(DECK, 0, 0, .82, .93)
-    keel = scaled_polygon(DECK, 0, 0, .52, .77)
+    chine = hull_outline(.96, .99, .40)
+    shoulder = hull_outline(.90, .98, .12)
+    waterline = hull_outline(.82, .98, .035)
+    keel = hull_outline(.52, .88, .02)
     loft(m, "HardChineHull", [polygon_at_y(DECK, DECK_UNDERSIDE_Y),
                               polygon_at_y(chine, 12),
                               polygon_at_y(shoulder, 4.5),
@@ -365,6 +375,12 @@ def main():
                           parts["FacetedFlightDeck"][:n])
     assert np.array_equal(parts["HardChineHull"][-n:],
                           parts["UnderwaterBody"][:n])
+    bow_z = max(z for _, z in DECK)
+    immersed_bow = [x for x, z in hull_outline(.82, .98, .035)
+                    if math.isclose(z, bow_z*.98)]
+    assert len(immersed_bow) == 2
+    bow_tip_width = abs(immersed_bow[0]-immersed_bow[1])
+    assert bow_tip_width < 1.0
     summary = validate({"id": spec["id"], "aircraft_capacity": 99,
                         "air_group": [{"role": "Capacity placeholder", "count": 99}],
                         "offensive_ecm_modules": 1}, mesh)
@@ -379,7 +395,8 @@ def main():
                    minimum_pad_to_island_lateral_gap_m=round(min_island_gap, 2),
                    minimum_pad_to_lift_lateral_gap_m=round(min_lift_gap, 2),
                    minimum_catapult_to_obstruction_plan_gap_m=round(min_cat_clearance, 2),
-                   hull_deck_perimeter_mates=True)
+                   hull_deck_perimeter_mates=True,
+                   bow_waterline_tip_width_m=round(bow_tip_width, 2))
     source = HERE/"model/source/ran_cvn_australis_2030.obj"
     game = HERE/"model/game-scale/ran_cvn_australis_2030.obj"
     mesh.save(source)
@@ -392,12 +409,17 @@ def main():
             "propulsion": "Nuclear concept", "length_m": 370,
             "deck_width_m": 104}, mesh,
            HERE/"previews/australis_2030_perspective.png")
+    render({"name": "Australis class — bow view", "aircraft_capacity": 99,
+            "propulsion": "Nuclear concept", "length_m": 370,
+            "deck_width_m": 104}, mesh,
+           HERE/"previews/australis_2030_bow.png",
+           camera_azimuth_deg=90, camera_elevation_deg=8)
     plan_preview(HERE/"previews/australis_2030_deck_plan.png")
     (HERE/"model/validation.json").write_text(
         json.dumps(summary, indent=2)+"\n")
     build_viewer(mesh, COLORS, HERE/"viewer/australis_2030_3d.html")
     print(f"[OK] {summary['parts']} closed components; {summary['triangles']} triangles")
-    print("[OK] Original metre OBJ, approximate game-scale OBJ, two PNGs, and 3D viewer")
+    print("[OK] Original metre OBJ, approximate game-scale OBJ, three PNGs, and 3D viewer")
     print("[STATUS] Design model only; Sea Power integration has not been tested")
 
 

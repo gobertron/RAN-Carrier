@@ -8,9 +8,11 @@ We are refining the newest Australis first, then moving backward through its ear
 
 ![Australis 2030 deck plan](australis-2030/previews/australis_2030_deck_plan.png)
 
+![Australis 2030 bow view](australis-2030/previews/australis_2030_bow.png)
+
 [Open the interactive 3D model](australis-2030/viewer/australis_2030_3d.html) to rotate, zoom and inspect its deck layout in a browser. The viewer is self-contained and can be saved and opened offline.
 
-The 2030 study uses straight deck edges, a hard-chine hull, a larger command island amidships and a smaller aviation island aft. Its four VTOL/helicopter spots are staggered on the aft deck with angled H markings. Fixed-wing launch markings show two bow catapults and one angled starboard catapult, with its forward path clear of lifts. The former forward starboard lift now sits amidships between the islands, and the smaller island is farther aft. The builder checks plan-view clearance from both islands and all four lifts. The 99-aircraft capacity, one shipboard ECM module and four laser enclosures are design targets. **This is a model study, not an installable Sea Power mod.** Mission Editor loading and flight operations are untested. The earlier 14 fleet studies remain below as reference.
+The 2030 study uses straight deck edges, a hard-chine hull, a larger command island amidships and a smaller aviation island aft. Its four VTOL/helicopter spots are staggered on the aft deck with angled H markings. Fixed-wing launch markings show two bow catapults and one angled starboard catapult, with its forward path clear of lifts. The former forward starboard lift now sits amidships between the islands, and the smaller island is farther aft. The upper hull meets the flight-deck edge all around and its immersed bow tapers to a fine waterline stem. The builder checks plan-view clearance from both islands and all four lifts. The 99-aircraft capacity, one shipboard ECM module and four laser enclosures are design targets. **This is a model study, not an installable Sea Power mod.** Mission Editor loading and flight operations are untested. The earlier 14 fleet studies remain below as reference.
 
 ## Earlier fleet studies
 

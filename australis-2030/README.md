@@ -8,6 +8,8 @@ long aligned planes to give a clean, radar-conscious silhouette. This is a
 visual design choice, not a measured radar signature or a claim of stealth.
 The hull now rises directly to the underside of the flight deck along its
 entire bow, stern and side perimeter; its chines taper inward to the waterline.
+Below the flat forward deck edge, the bow narrows to a fine waterline stem.
+This is a shape study, not a hydrodynamic performance claim.
 
 | Design target | Value |
 |---|---:|
@@ -44,7 +46,8 @@ simulation. Air-group IDs and combat values are deliberately unassigned.
 contains an approximate scale copy for later integration. The OBJ groups are
 named so deck, island, panels, lifts and mounts can be refined independently.
 The PNG previews show rendered geometry and a deck-layout study; they are not
-Sea Power screenshots. `build.py` regenerates the OBJ/MTL and preview images
+Sea Power screenshots. The bow preview shows the fine waterline stem below the
+broader deck edge. `build.py` regenerates the OBJ/MTL and preview images
 from original geometry using NumPy and Pillow. Open
 [`viewer/australis_2030_3d.html`](viewer/australis_2030_3d.html) in a browser
 to rotate and zoom the original model, switch camera views, and show or hide
