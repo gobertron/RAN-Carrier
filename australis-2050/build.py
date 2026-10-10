@@ -31,16 +31,21 @@ DECK = [
     (-48, 123), (-48, 60), (-52, -41), (-52, -114),
     (-43, -168),
 ]
-ISLAND_BASE = [
+MAIN_ISLAND_BASE = [
     (31, -30), (40, -33), (47, -23), (48, 28),
     (39, 39), (31, 32),
 ]
-ELEVATORS = [(41, 118), (42, 69), (43, -57), (41, -82)]
+AFT_ISLAND_BASE = [
+    (33, -92), (41, -94), (48, -86), (48, -56),
+    (41, -48), (33, -51),
+]
+ELEVATORS = [(41, 118), (42, 69), (-40, 92), (50, -106)]
 LASERS = [(-52, 109), (53, 110), (-58, -125), (55, -126)]
 CATAPULTS = [((-15, 59), (-15, 157)), ((8, 55), (8, 161)),
              ((5, -18), (18, 75))]
-VERTICAL_SPOTS = [(0, -151), (23, -151), (0, -109), (23, -109)]
+VERTICAL_SPOTS = [(1, -166), (25, -152), (1, -126), (25, -112)]
 VERTICAL_SPOT_RADIUS = 10.5
+PAD_MARK_ANGLE_DEG = -12
 
 
 def loft(mesh, name, rings, material):
@@ -63,6 +68,20 @@ def scaled_polygon(points, cx, cz, fx, fz):
     return [(cx+(x-cx)*fx, cz+(z-cz)*fz) for x, z in points]
 
 
+def pad_mark_point(x, z, offset_x, offset_z):
+    angle = math.radians(PAD_MARK_ANGLE_DEG)
+    return (x+offset_x*math.cos(angle)-offset_z*math.sin(angle),
+            z+offset_x*math.sin(angle)+offset_z*math.cos(angle))
+
+
+def inside_deck(x, z):
+    inside = False
+    for (ax, az), (bx, bz) in zip(DECK, DECK[1:]+DECK[:1]):
+        if (az > z) != (bz > z) and x < ax+(bx-ax)*(z-az)/(bz-az):
+            inside = not inside
+    return inside
+
+
 def geometry():
     m = Mesh()
     stations = [(-185, 15), (-174, 23), (-148, 27), (-104, 28),
@@ -82,10 +101,10 @@ def geometry():
     for i, (a, b) in enumerate(zip(DECK, DECK[1:] + DECK[:1]), 1):
         m.stripe(f"DeckEdge_{i:02d}", a, b, .28, 22.07, "edge")
 
-    # The single island steps inward and aft as it rises. No open truss mast.
-    lower_top = scaled_polygon(ISLAND_BASE, 39, 3, .82, .82)
-    loft(m, "RakedIsland",
-         [polygon_at_y(ISLAND_BASE, 22), polygon_at_y(lower_top, 37)], "island")
+    # Larger integrated island amidships; the smaller island controls aft aviation.
+    lower_top = scaled_polygon(MAIN_ISLAND_BASE, 39, 3, .82, .82)
+    loft(m, "MainRakedIsland",
+         [polygon_at_y(MAIN_ISLAND_BASE, 22), polygon_at_y(lower_top, 37)], "island")
     bridge_base = [(33, -17), (41, -19), (46, -12),
                    (46, 26), (38, 33), (33, 27)]
     bridge_top = scaled_polygon(bridge_base, 39, 7, .82, .84)
@@ -109,6 +128,24 @@ def geometry():
     # Two conformal panel faces represent one shipboard ECM installation.
     m.box("ShipboardECM_Module_PortPanel", 35.2, 53.3, 10, .24, 2.1, 5, "dark")
     m.box("ShipboardECM_Module_StarboardPanel", 43.7, 53.3, 10, .24, 2.1, 5, "dark")
+
+    aft_top = scaled_polygon(AFT_ISLAND_BASE, 40.5, -71, .82, .80)
+    loft(m, "AftAviationIsland",
+         [polygon_at_y(AFT_ISLAND_BASE, 22), polygon_at_y(aft_top, 33.5)], "island")
+    aft_bridge = [(35, -86), (41, -87), (46, -80),
+                  (46, -60), (40, -54), (35, -58)]
+    loft(m, "AftAviationBridge",
+         [polygon_at_y(aft_bridge, 33.3),
+          polygon_at_y(scaled_polygon(aft_bridge, 40, -70, .8, .82), 39)], "island")
+    m.box("AftAviationWindowPort", 34.85, 36.8, -71, .22, 1.55, 24, "glass")
+    m.box("AftAviationWindowStarboard", 45.75, 36.8, -70, .22, 1.55, 20, "glass")
+    m.box("AftAviationWindowForward", 40, 36.8, -54.2, 8, 1.55, .2, "glass")
+    aft_mast = [(37, -77), (42, -78), (44, -73),
+                (44, -65), (39, -62), (37, -66)]
+    loft(m, "AftEnclosedMast",
+         [polygon_at_y(aft_mast, 38.8),
+          polygon_at_y(scaled_polygon(aft_mast, 40.5, -70, .70, .70), 44)],
+         "island")
 
     for i, (x, z) in enumerate(ELEVATORS, 1):
         m.box(f"DeckEdgeLift_{i}", x, 22.12, z, 13, .17, 18, "hatch")
@@ -136,7 +173,7 @@ def geometry():
         m.stripe(f"ArrestingWire_{i}", p+(-11, 0), p+(11, 0),
                  .16, 22.19, "dark")
 
-    # Four marked aft spots for vertical takeoff/landing or helicopters.
+    # Four staggered aft spots for vertical takeoff/landing or helicopters.
     # These are visual positions, not operational flight-deck routing.
     for i, (x, z) in enumerate(VERTICAL_SPOTS, 1):
         rim = [(x+VERTICAL_SPOT_RADIUS*math.cos(2*math.pi*j/20),
@@ -145,9 +182,12 @@ def geometry():
         m.prism(f"AftVTOL_HeloSpot_{i}", rim, 22.01, 22.08, "hatch")
         for side in (-1, 1):
             m.stripe(f"AftSpot_{i}_HStem_{side}",
-                     (x+side*3.5, z-4.5), (x+side*3.5, z+4.5),
+                     pad_mark_point(x, z, -4.5, side*3.5),
+                     pad_mark_point(x, z, 4.5, side*3.5),
                      .48, 22.12, "white")
-        m.stripe(f"AftSpot_{i}_HBar", (x-3.5, z), (x+3.5, z),
+        m.stripe(f"AftSpot_{i}_HBar",
+                 pad_mark_point(x, z, 0, -3.5),
+                 pad_mark_point(x, z, 0, 3.5),
                  .48, 22.13, "white")
 
     # Faceted fairings let the defensive mounts sit outside launch/recovery.
@@ -190,8 +230,11 @@ def plan_preview(path):
     draw.polygon(shape(DECK), fill="#40535e", outline="#b3c4c4", width=3)
     for a, b in zip(DECK, DECK[1:]+DECK[:1]):
         draw.line([point(*a), point(*b)], fill="#758f95", width=3)
-    draw.polygon(shape(ISLAND_BASE), fill="#9eafb6", outline="#d8e3e2", width=2)
+    draw.polygon(shape(MAIN_ISLAND_BASE), fill="#9eafb6", outline="#d8e3e2", width=2)
     draw.polygon(shape([(35, -3), (42, -4), (44, 19), (35, 18)]),
+                 fill="#366072")
+    draw.polygon(shape(AFT_ISLAND_BASE), fill="#8198a2", outline="#c1d8da", width=2)
+    draw.polygon(shape([(37, -77), (44, -73), (44, -65), (37, -66)]),
                  fill="#366072")
     for x, z in ELEVATORS:
         p, q = point(x-6.5, z+9), point(x+6.5, z-9)
@@ -203,7 +246,13 @@ def plan_preview(path):
         radius = round(VERTICAL_SPOT_RADIUS*scale)
         draw.ellipse([px-radius, py-radius, px+radius, py+radius],
                      fill="#586e77", outline="#d4eeee", width=3)
-        draw.text((px, py), "H", font=f(22, True), anchor="mm", fill="#edf4f2")
+        for side in (-1, 1):
+            draw.line([point(*pad_mark_point(x, z, -4.5, side*3.5)),
+                       point(*pad_mark_point(x, z, 4.5, side*3.5))],
+                      fill="#edf4f2", width=3)
+        draw.line([point(*pad_mark_point(x, z, 0, -3.5)),
+                   point(*pad_mark_point(x, z, 0, 3.5))],
+                  fill="#edf4f2", width=3)
     for (a, b) in CATAPULTS:
         draw.line([point(*a), point(*b)], fill="#d8b66e", width=4)
     a, b = np.array((-27., -155.)), np.array((-16., 62.))
@@ -224,9 +273,10 @@ def plan_preview(path):
 
     # Annotation leaders stay beyond the deck footprint.
     for label, anchor, xy in [
-        ("RAKED ISLAND / FLUSH ARRAYS", (44, 10), (896, 224)),
+        ("MAIN COMMAND ISLAND", (44, 10), (912, 216)),
+        ("AFT AVIATION ISLAND", (42, -70), (655, 207)),
         ("4 DECK-EDGE LIFTS", (41, 118), (1372, 244)),
-        ("4 AFT VTOL / HELO SPOTS", (23, -151), (394, 208)),
+        ("4 STAGGERED VTOL / HELO SPOTS", (25, -152), (158, 204)),
         ("3 CATAPULTS", (8, 133), (1378, 655)),
         ("4 LASER ENCLOSURES", (-52, 109), (1266, 757)),
         ("ANGLED RECOVERY", (-27, -100), (155, 718)),
@@ -248,11 +298,17 @@ def main():
     assert max(x for x, _ in DECK)-min(x for x, _ in DECK) == spec["flight_deck_beam_m"]
     assert len(CATAPULTS) == spec["deck"]["catapult_tracks"]
     assert len(VERTICAL_SPOTS) == spec["deck"]["aft_vertical_operation_spots"]
+    assert spec["islands"]["count"] == 2
+    assert PAD_MARK_ANGLE_DEG == spec["deck"]["aft_h_mark_angle_degrees"]
     # Check each full aft pad against the recovery lane and physical lift marks.
     lane_a = np.array((-27., -155.))
     lane_b = np.array((-16., 62.))
     line = lane_b-lane_a
     for x, z in VERTICAL_SPOTS:
+        for t in range(36):
+            theta = 2*math.pi*t/36
+            assert inside_deck(x+VERTICAL_SPOT_RADIUS*math.cos(theta),
+                               z+VERTICAL_SPOT_RADIUS*math.sin(theta))
         p = np.array((x, z))
         t = min(1., max(0., float(np.dot(p-lane_a, line)/np.dot(line, line))))
         assert np.linalg.norm(p-(lane_a+t*line)) > VERTICAL_SPOT_RADIUS+11.3+1
@@ -260,6 +316,12 @@ def main():
             dx = max(abs(x-lift_x)-6.5, 0)
             dz = max(abs(z-lift_z)-9, 0)
             assert math.hypot(dx, dz) > VERTICAL_SPOT_RADIUS+.5
+        for island in (MAIN_ISLAND_BASE, AFT_ISLAND_BASE):
+            dx = max(min(px for px, _ in island)-x,
+                     x-max(px for px, _ in island), 0)
+            dz = max(min(pz for _, pz in island)-z,
+                     z-max(pz for _, pz in island), 0)
+            assert math.hypot(dx, dz) > VERTICAL_SPOT_RADIUS+1
     mesh = geometry()
     summary = validate({"id": spec["id"], "aircraft_capacity": 99,
                         "air_group": [{"role": "Capacity placeholder", "count": 99}],
@@ -267,6 +329,7 @@ def main():
     summary.update(catapult_tracks=len(CATAPULTS),
                    aft_vertical_operation_spots=len(VERTICAL_SPOTS),
                    deck_edge_lifts=len(ELEVATORS),
+                   islands=2, aft_h_mark_angle_degrees=PAD_MARK_ANGLE_DEG,
                    aft_spot_clearance_geometry_checked=True)
     source = HERE/"model/source/ran_cvn_australis_2050.obj"
     game = HERE/"model/game-scale/ran_cvn_australis_2050.obj"

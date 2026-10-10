@@ -1,8 +1,9 @@
 # Australis 2050 — original RAN carrier concept
 
 The first new design in the newest-to-oldest Australis sequence. This 2050
-study has a straight-edged flight deck, hard-chine hull, raked single island,
-flush radar faces, and four enclosed deck-edge laser positions. Surfaces use
+study has a straight-edged flight deck, hard-chine hull, a larger integrated
+command island amidships, a smaller aviation island aft, flush radar faces,
+and four enclosed deck-edge laser positions. Surfaces use
 long aligned planes to give a clean, radar-conscious silhouette. This is a
 visual design choice, not a measured radar signature or a claim of stealth.
 
@@ -13,16 +14,18 @@ visual design choice, not a measured radar signature or a claim of stealth.
 | Maximum flight-deck beam | 104 m |
 | Air-group capacity | 99 aircraft, target only |
 | Catapult tracks / deck-edge lifts | 3 / 4, indicated on the model |
-| Aft vertical-operation spots | 4, for VTOL aircraft or helicopters |
+| Aft vertical-operation spots | 4, staggered with angled H markings; VTOL or helicopters |
+| Islands | 2; larger midship command island, smaller aft aviation island |
 | Shipboard offensive ECM | 1 integrated module, represented by two panels |
 | Laser positions | 4 enclosed mounts, visual study only |
 
 The deck has two bow catapults, one waist catapult, an angled recovery lane,
 four arresting-wire indications and four marked aft VTOL/helicopter spots.
-The spots sit in two rows on the aft deck. Vertical operations and fixed-wing
+The spots sit farther apart in staggered rows on the aft deck, and their H
+markings are angled by 12 degrees. Vertical operations and fixed-wing
 recovery are proposed as separate deck modes; simultaneous use is not claimed.
-The fourth deck-edge lift has been shifted forward to leave space for the aft
-spots.
+One lift is on the forward port side and another on the starboard edge ahead
+of the aft spots; this leaves space for the smaller rear island.
 Flight operations, equipment locations, and deck clearances still need an
 in-game engineering pass. The aircraft
 capacity is the requested design target and is not a demonstrated 99-aircraft

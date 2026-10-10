@@ -3,8 +3,8 @@
   "capacity": 99,
   "air_group_total": 99,
   "offensive_ecm_modules": 1,
-  "parts": 100,
-  "triangles": 1844,
+  "parts": 106,
+  "triangles": 1940,
   "finite_vertices": true,
   "valid_faces": true,
   "nonzero_triangles": true,
@@ -13,5 +13,7 @@
   "catapult_tracks": 3,
   "aft_vertical_operation_spots": 4,
   "deck_edge_lifts": 4,
+  "islands": 2,
+  "aft_h_mark_angle_degrees": -12,
   "aft_spot_clearance_geometry_checked": true
 }

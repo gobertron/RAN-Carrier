@@ -7,11 +7,18 @@
   "flight_deck_beam_m": 104,
   "aircraft_capacity_design_target": 99,
   "propulsion_design_target": "Nuclear",
+  "islands": {
+    "count": 2,
+    "main": "larger integrated command and sensor island amidships",
+    "aft": "smaller aviation-control island aft"
+  },
   "deck": {
     "catapult_tracks": 3,
     "deck_edge_lifts": 4,
     "aft_vertical_operation_spots": 4,
     "aft_spot_use": "VTOL aircraft and helicopters; recover fixed-wing aircraft separately",
+    "aft_spot_layout": "spaced staggered rows with angled H markings",
+    "aft_h_mark_angle_degrees": -12,
     "angled_recovery_lane": true
   },
   "systems_visual_studies": {
