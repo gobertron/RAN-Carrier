@@ -367,6 +367,31 @@ def vessel_ini(material: dict[str,str]) -> str:
         "Cavitation=ships/particles/usn_cvn_nimitz_cavitation",
         f"BowWavePosition={vec(0,0,170)}",
         f"PropWashPosition={vec(0,-5,-155)}"]))
+    # Rudder initialization reads the stern foam trail's transform. Without
+    # [Foam], Sea Power never creates that object and throws a null reference.
+    parts.append(section("Foam",[
+        "HullFoamTexture=ships/particles/wake/Ceto_Hullwake",
+        f"HullFoamPosition={vec(0,0,53)}",
+        "HullFoamDuration=20","HullFoamSize=0.95",
+        "HullFoamSpacing=0.55","HullFoamExpansion=0.055",
+        "HullFoamMomentum=0","HullFoamSpin=0","HullFoamAlpha=2",
+        "HullFoamJitter=0.25",
+        "SternFoamTexture=ships/particles/wake/Ceto_Propwash",
+        f"SternFoamPosition={vec(0,0,-150)}",
+        "SternFoamDuration=65","SternFoamSize=0.95",
+        "SternFoamSpacing=0.45","SternFoamExpansion=0.025",
+        "SternFoamMomentum=0.01","SternFoamSpin=0",
+        "SternFoamAlpha=2","SternFoamJitter=0.25",
+        "OverlayHeightTexture=ships/particles/wake/bowwave_hm",
+        "OverlayHeightMaskTexture=ships/particles/wake/bowwave_hm",
+        "OverlayHeightMaxAlpha=0.1",
+        "OverlayNormalTexture=ships/particles/wake/bowwave_normal",
+        "OverlayNormalMaskTexture=ships/particles/wake/bowwave_normal",
+        "OverlayNormalMaxAlpha=10.0",
+        "OverlayFoamTexture=ships/particles/wake/bowwave_tx2",
+        "OverlayFoamMaskTexture=ships/particles/wake/bowwave_mask",
+        "OverlayFoamMaxAlpha=1.0","KelvinWaves=7.65,7.65",
+        "VelocityForMaxParticles=15"]))
     return "\n".join(parts)
 
 
@@ -412,10 +437,11 @@ def build(destination: Path = DEST) -> None:
         "or ECM, and no tested deck animation. The 99-aircraft count is a design "
         "target. A stock Sea Power Nimitz bundle is named as a runtime fallback; "
         "no stock or Workshop asset bytes are copied.\n"
-        "The first installed OBJ lacked UV and normal face indices. This "
-        "revision adds them, an explicit collision hull, and a stock game "
-        "cavitation effect. The editor load correction remains unconfirmed "
-        "until a fresh in-game test.\n"
+        "The second installed version still raised VesselRudderSystem.init. "
+        "The supplied game assembly shows that method reads the stern foam "
+        "trail transform. This revision adds a native-style Foam section "
+        "with an original trail position; the rudder and hull stay ours. "
+        "The editor-load correction requires an in-game test.\n"
         "Test with the failed Melbourne prototype disabled. If the editor "
         "errors, collect the current logs, withdraw only this mod, and share "
         "the latest Sea Power Player.log.\n",

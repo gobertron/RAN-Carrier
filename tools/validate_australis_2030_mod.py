@@ -108,9 +108,6 @@ def main(destination: Path = DEST) -> None:
             path = destination / material["Textures"][key]
             assert path.is_file(),path
             assert path.read_bytes().startswith(b"\x89PNG\r\n\x1a\n")
-    # Unlike the failed Melbourne prototype, the moving sections explicitly
-    # resolve their root file and have one mount each. Only a game test can
-    # tell whether this avoids its rudder initialization exception.
     for name in ("Propeller_1","Propeller_2","Rudder"):
         part = ship[name]
         assert part["ResourcesMeshFolder"] == SHIP_DIR + "/"
@@ -162,6 +159,11 @@ def main(destination: Path = DEST) -> None:
     assert not re.search(r"3455404959|3491248180|3574957049|hmas_melbourne",
                          (destination/f"vessels/{ID}.ini").read_text(encoding="utf-8-sig"))
     assert ship["Particles"]["Cavitation"] == "ships/particles/usn_cvn_nimitz_cavitation"
+    foam = ship["Foam"]
+    assert foam["SternFoamTexture"] == "ships/particles/wake/Ceto_Propwash"
+    assert foam["HullFoamTexture"] == "ships/particles/wake/Ceto_Hullwake"
+    vector(foam["SternFoamPosition"])
+    vector(foam["HullFoamPosition"])
     print(f"[OK] {ID}: {len(groups)} OBJ groups, {len(registered)} submodels")
     print(f"[OK] {vertex_count} vertices with UVs and {normal_count} indexed face normals")
     print("[OK] 4 lifts, 3 fixed-wing catapults, 4 vertical spots, 5 recovery points")

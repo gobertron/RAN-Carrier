@@ -15,9 +15,19 @@ raised a `VesselRudderSystem.init()` null-reference exception. The supplied
 session log names `ran_cvn_australis_2030` as the affected vessel, reports an
 empty cavitation effect and a mesh collider fallback, then records the rudder
 exception. The installed OBJ was the first export, without face UV/normal
-indices. This candidate update adds those indices, an original collision hull,
-and a stock game cavitation effect. These corrections still need an in-game
-test; the exact cause of the rudder exception is not established.
+indices. The next package added those indices, an original collision hull,
+and a stock game cavitation effect. The second test below showed that these
+changes did not clear the rudder exception.
+
+**Second editor finding:** The 17:49 isolated game run used the corrected OBJ
+and vessel INI (verified by their SHA-256 hashes). The cavitation error is gone,
+but the collision fallback and the same rudder exception remain. Inspection
+of the supplied `Seapower-Scripts.dll` shows that the vessel foam loader returns
+immediately if `[Foam]` is missing; the rudder initialization subsequently
+reads the absent stern foam trail's transform. This package now includes
+the stock-style foam configuration with original Australis positions. All
+visible hull and rudder geometry remains original. An in-game test is still
+needed. The editor map displays a unit marker; press **Play** to test 3D load.
 
 ## Install from the draft branch
 
@@ -63,10 +73,10 @@ stop there and share its output.
    Test** if present. Restart Sea Power.
 2. Open Mission Editor with a **new blank mission**. Select Australia and the
    carrier/CVN category, with **Hide Anachronistic** off. Search **Australis**.
-3. Place one **Australis Test** on the sea. Start the mission and confirm the
-   original faceted hull renders without a rudder error. Then save and reload
-   the mission. Look for two islands, four offset H spots, three catapult
-   lanes and angled arresting cables.
+3. Place one **Australis Test** on the sea and press **Play**. Confirm that
+   the mission opens without the rudder exception and that the original
+   faceted hull renders. Then save and reload the mission. Look for two
+   islands, four offset H spots, three catapult lanes and angled cables.
 4. If it loads, test one stock, game-compatible fixed-wing aircraft on a
    catapult and one helicopter on a vertical spot separately. Record whether
    spawn, taxi, launch and recovery work. The air group starts empty.
