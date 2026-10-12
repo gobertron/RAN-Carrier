@@ -16,7 +16,7 @@ In a terminal on the Sea Power computer, run:
 ```bash
 git clone --branch feature/australis-2050-concept \
   https://github.com/gobertron/RAN-Carrier.git "$HOME/Downloads/RAN-Carrier-Australis-test"
-python3 "$HOME/Downloads/RAN-Carrier-Australis-test/deliverables/RAN-Carrier-Game-Design/tools/install_australis_2030.py"
+python3 "$HOME/Downloads/RAN-Carrier-Australis-test/tools/install_australis_2030.py"
 ```
 
 If the checkout already exists, run
@@ -28,7 +28,7 @@ withdraw the old folder while retaining a verified copy under
 `~/Downloads/RAN-Carrier-Australis-2030-backups/`, run:
 
 ```bash
-python3 "$HOME/Downloads/RAN-Carrier-Australis-test/deliverables/RAN-Carrier-Game-Design/tools/install_australis_2030.py" --remove
+python3 "$HOME/Downloads/RAN-Carrier-Australis-test/tools/install_australis_2030.py" --remove
 ```
 
 Then run the first install command again. Do not merge the mod files into
@@ -48,10 +48,18 @@ Then run the first install command again. Do not merge the mod files into
    catapult and one helicopter on a vertical spot separately. Record whether
    spawn, taxi, launch and recovery work. The air group starts empty.
 
-If the editor hangs or throws an exception, close the game, withdraw this mod
-with `--remove`, and provide the latest `Player.log` plus the name of the
-section or stack trace. This is the first runtime gate; the static validator
-cannot prove that the game accepts every key, geometry or reference.
+If the editor hangs or throws an exception, close Sea Power and collect the
+current logs **before restarting it**:
+
+```bash
+python3 "$HOME/Downloads/RAN-Carrier-Australis-test/tools/collect_australis_editor_diagnostics.py"
+```
+
+The command prints an error-context text file and a diagnostics ZIP in
+`~/Downloads`. Provide the text excerpt or ZIP, then withdraw this mod with
+`--remove` to restore the previous game state. This is the first runtime gate;
+the static validator cannot prove that the game accepts every key, geometry
+or reference.
 
 The 99-aircraft capacity, aircraft deck cycle, working radars, long-range
 offensive ECM and retracting laser weapons are later milestones. The offline
@@ -65,6 +73,6 @@ Building the original mesh requires Python, NumPy and Pillow. Installing the
 already built package requires only Python's standard library.
 
 ```bash
-python3 deliverables/RAN-Carrier-Game-Design/tools/build_australis_2030_mod.py
-python3 deliverables/RAN-Carrier-Game-Design/tools/validate_australis_2030_mod.py
+python3 tools/build_australis_2030_mod.py
+python3 tools/validate_australis_2030_mod.py
 ```
