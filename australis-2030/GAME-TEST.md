@@ -9,13 +9,15 @@ The previous Melbourne prototypes caused a Mission Editor load exception.
 Close Sea Power before installing, and disable both Melbourne prototypes in
 Mod Manager for this isolated test. Leave RADF as it was before.
 
-**12 October editor finding:** The first Australis package also raised a
-`VesselRudderSystem.init()` null-reference exception while loading. The
-screenshot alone does not establish which vessel or mesh caused the error.
-The next package export adds OBJ texture coordinates and face normals to match
-working carrier references. This is a candidate correction, not a confirmed
-in-game fix. Collect the failed session log before replacing the installed
-package.
+**12 October editor finding:** The isolated first Australis package registered
+and could be selected, but its 3D vessel did not appear. Loading the mission
+raised a `VesselRudderSystem.init()` null-reference exception. The supplied
+session log names `ran_cvn_australis_2030` as the affected vessel, reports an
+empty cavitation effect and a mesh collider fallback, then records the rudder
+exception. The installed OBJ was the first export, without face UV/normal
+indices. This candidate update adds those indices, an original collision hull,
+and a stock game cavitation effect. These corrections still need an in-game
+test; the exact cause of the rudder exception is not established.
 
 ## Install from the draft branch
 
@@ -42,6 +44,18 @@ python3 "$HOME/Downloads/RAN-Carrier-Australis-test/tools/install_australis_2030
 Then run the first install command again. Do not merge the mod files into
 `StreamingAssets/user` or the RADF folder.
 
+For a previously installed first version, close Sea Power and use this exact
+upgrade sequence:
+
+```bash
+git -C "$HOME/Downloads/RAN-Carrier-Australis-test" pull --ff-only
+python3 "$HOME/Downloads/RAN-Carrier-Australis-test/tools/install_australis_2030.py" --remove
+python3 "$HOME/Downloads/RAN-Carrier-Australis-test/tools/install_australis_2030.py"
+```
+
+The removal command backs up the old Australis folder. If any command fails,
+stop there and share its output.
+
 ## First editor check
 
 1. In Mod Manager enable **RAN Australis 2030 Editor Prototype**. Disable
@@ -49,9 +63,10 @@ Then run the first install command again. Do not merge the mod files into
    Test** if present. Restart Sea Power.
 2. Open Mission Editor with a **new blank mission**. Select Australia and the
    carrier/CVN category, with **Hide Anachronistic** off. Search **Australis**.
-3. Place one **Australis Test** on the sea. Save and reload the mission. Look
-   for the original faceted hull, two islands, offset four H spots, three
-   catapult lanes and angled arresting cables.
+3. Place one **Australis Test** on the sea. Start the mission and confirm the
+   original faceted hull renders without a rudder error. Then save and reload
+   the mission. Look for two islands, four offset H spots, three catapult
+   lanes and angled arresting cables.
 4. If it loads, test one stock, game-compatible fixed-wing aircraft on a
    catapult and one helicopter on a vertical spot separately. Record whether
    spawn, taxi, launch and recovery work. The air group starts empty.

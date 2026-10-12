@@ -85,6 +85,9 @@ def model(ship: Path) -> dict[str, str]:
                       "Rudder": (.25,1.1,1.05)}.items():
         out.box(name,0,0,0,*dims,"dark")
         materials[name] = "dark"
+    # Collision geometry is a separate OBJ object. It is never listed as a
+    # visible submodel, but the game can use it in preference to its fallback.
+    out.box("coll_hull_main",0,10,0,52,20,320,"hull")
     path = ship / f"{ID}.obj"
     out.save(path, scale=SCALE)
     # Working Workshop carrier OBJ files carry v/vt/vn face indices. The
@@ -176,7 +179,8 @@ def routes() -> list[tuple[str, str, list[tuple[float,float]]]]:
 
 def vessel_ini(material: dict[str,str]) -> str:
     moving = {"Propeller_1","Propeller_2","Rudder"}
-    static = [name for name in material if name not in moving and name != "Hull"]
+    static = [name for name in material if name not in moving
+              and name not in ("Hull", "coll_hull_main")]
     mounts = {"Propeller_1": (-7,-6,-147),
               "Propeller_2": (7,-6,-147),
               "Rudder": (0,-5,-153)}
@@ -318,7 +322,7 @@ def vessel_ini(material: dict[str,str]) -> str:
             "AssetBundleMeshHullCollider=usn_cvn_nimitz_coll_hull",
             f"ResourcesFolder={SHIP_DIR}/",f"ResourcesRoot={ID}.obj",
             "ResourcesMesh=Hull","ResourcesMaterial=hull_mat.ini",
-            f"ResourcesMeshHullCollider={ID}.obj"]),
+            "ResourcesMeshHullCollider=coll_hull_main"]),
         section("Submodels",[
             *[f"Main_{i}={name}" for i,name in enumerate(static,1)],
             "MainSystems_1=Propeller_1","MainSystems_2=Propeller_2",
@@ -350,7 +354,8 @@ def vessel_ini(material: dict[str,str]) -> str:
         "coll_hull": ("Box",(0,2,0),(48,26,335)),
     }
     parts.append(section("Colliders",[
-        "UseKinematicCollision=True","NumberOfMeshColliders=0",
+        "UseKinematicCollision=True","NumberOfMeshColliders=1",
+        "MeshCollider1=coll_hull_main",
         f"NumberOfColliders={len(colliders)}",
         *[f"Collider{i}={name}" for i,name in enumerate(colliders,1)]]))
     for name,(kind,pos,dims) in colliders.items():
@@ -359,6 +364,7 @@ def vessel_ini(material: dict[str,str]) -> str:
             f"Scale={vec(*dims)}"]))
     parts.append(section("Particles",[
         "BowWave=ships/particles/bowwave","PropWash=ships/particles/propwash",
+        "Cavitation=ships/particles/usn_cvn_nimitz_cavitation",
         f"BowWavePosition={vec(0,0,170)}",
         f"PropWashPosition={vec(0,-5,-155)}"]))
     return "\n".join(parts)
@@ -406,9 +412,10 @@ def build(destination: Path = DEST) -> None:
         "or ECM, and no tested deck animation. The 99-aircraft count is a design "
         "target. A stock Sea Power Nimitz bundle is named as a runtime fallback; "
         "no stock or Workshop asset bytes are copied.\n"
-        "The original OBJ now carries UV and normal indices on every face, "
-        "matching the format of working carrier references. This is an "
-        "unconfirmed editor-load correction.\n"
+        "The first installed OBJ lacked UV and normal face indices. This "
+        "revision adds them, an explicit collision hull, and a stock game "
+        "cavitation effect. The editor load correction remains unconfirmed "
+        "until a fresh in-game test.\n"
         "Test with the failed Melbourne prototype disabled. If the editor "
         "errors, collect the current logs, withdraw only this mod, and share "
         "the latest Sea Power Player.log.\n",

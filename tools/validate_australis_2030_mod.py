@@ -62,8 +62,20 @@ def main(destination: Path = DEST) -> None:
     groups = set(names_in_obj)
     assert len(groups) == len(names_in_obj)
     assert {"Hull","Deck","Rudder","Propeller_1","Propeller_2",
-            "Surface_Hatch","Surface_Sensor"} <= groups
+            "Surface_Hatch","Surface_Sensor","coll_hull_main"} <= groups
     assert len(groups) <= 20, "Static materials should be batched"
+    object_faces: dict[str,int] = {}
+    current_object = None
+    for line in content.splitlines():
+        if line.startswith("o "):
+            current_object = line[2:]
+            object_faces[current_object] = 0
+        elif line.startswith("f "):
+            assert current_object is not None
+            object_faces[current_object] += 1
+    assert all(object_faces[name] >= 12 for name in
+               ("Hull", "Deck", "Rudder", "Propeller_1", "Propeller_2",
+                "coll_hull_main")), object_faces
     vertex_count = len(re.findall(r"(?m)^v ",content))
     uv_count = len(re.findall(r"(?m)^vt ",content))
     normal_count = len(re.findall(r"(?m)^vn ",content))
@@ -81,12 +93,12 @@ def main(destination: Path = DEST) -> None:
 
     registered = list(ship["Submodels"].values())
     assert len(registered) == len(set(registered))
-    assert set(registered) == groups - {"Hull"} | {"Flag1"}
+    assert set(registered) == groups - {"Hull", "coll_hull_main"} | {"Flag1"}
     assert [ship["Submodels"][f"MainSystems_{i}"] for i in (1,2,3)] == [
         "Propeller_1","Propeller_2","Rudder"]
     assert "Rudder" not in [value for key,value in ship["Submodels"].items()
                             if key.startswith("Main_")]
-    for name in groups - {"Hull"}:
+    for name in groups - {"Hull", "coll_hull_main"}:
         part = ship[name]
         assert part["Mesh"] == name
         mat = base / part["Material"]
@@ -143,15 +155,17 @@ def main(destination: Path = DEST) -> None:
         collider = ship[section_name].get("Collider")
         assert collider and ship.has_section(collider), (section_name,collider)
     colliders = ship["Colliders"]
-    assert colliders["NumberOfMeshColliders"] == "0"
+    assert colliders["NumberOfMeshColliders"] == "1"
+    assert colliders["MeshCollider1"] == ship["Models"]["ResourcesMeshHullCollider"] == "coll_hull_main"
     assert int(colliders["NumberOfColliders"]) == len([
         key for key in colliders if re.fullmatch(r"Collider\d+",key)])
     assert not re.search(r"3455404959|3491248180|3574957049|hmas_melbourne",
                          (destination/f"vessels/{ID}.ini").read_text(encoding="utf-8-sig"))
+    assert ship["Particles"]["Cavitation"] == "ships/particles/usn_cvn_nimitz_cavitation"
     print(f"[OK] {ID}: {len(groups)} OBJ groups, {len(registered)} submodels")
     print(f"[OK] {vertex_count} vertices with UVs and {normal_count} indexed face normals")
     print("[OK] 4 lifts, 3 fixed-wing catapults, 4 vertical spots, 5 recovery points")
-    print("[OK] Rudder/propeller mounts, materials, names, routes and colliders resolve")
+    print("[OK] Rudder/propeller mounts, materials, effects, names, routes and colliders resolve")
     print("[LIMIT] Sea Power loading, flight operations and animation require in-game QA")
 
 
