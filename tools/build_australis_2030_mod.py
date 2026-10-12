@@ -87,9 +87,43 @@ def model(ship: Path) -> dict[str, str]:
         materials[name] = "dark"
     path = ship / f"{ID}.obj"
     out.save(path, scale=SCALE)
-    path.write_text(path.read_text().replace(
-        "# RAN Carrier Restart: original model study; coordinates in metres",
-        "# Original Australis geometry; approximate Sea Power units",1))
+    # Working Workshop carrier OBJ files carry v/vt/vn face indices. The
+    # earlier prototype exported bare vertex indices, which may cause the
+    # game loader to omit a moving mesh. Give this solid-colour prototype
+    # planar UVs and explicit flat normals without changing its geometry.
+    obj_lines = ["# Original Australis geometry; approximate Sea Power units",
+                 f"mtllib {ID}.mtl"]
+    vertex_offset = 0
+    normal_offset = 0
+    for name,vertices,faces,material in out.parts:
+        obj_lines.append(f"o {name}")
+        obj_lines.extend("v " + " ".join(f"{axis*SCALE:.6f}" for axis in vertex)
+                         for vertex in vertices)
+        obj_lines.extend(f"vt {(vertex[0]/20)%1:.6f} {(vertex[2]/20)%1:.6f}"
+                         for vertex in vertices)
+        normals: list[str] = []
+        triangles: list[tuple[int,int,int,int]] = []
+        for face in faces:
+            for i in range(1,len(face)-1):
+                a,b,c = face[0],face[i],face[i+1]
+                p,q,r = vertices[a],vertices[b],vertices[c]
+                ux,uy,uz = (q[j]-p[j] for j in range(3))
+                vx,vy,vz = (r[j]-p[j] for j in range(3))
+                nx,ny,nz = uy*vz-uz*vy, uz*vx-ux*vz, ux*vy-uy*vx
+                length = math.sqrt(nx*nx+ny*ny+nz*nz)
+                if length < 1e-12:
+                    raise ValueError(f"Degenerate triangle in {name}")
+                normals.append(f"vn {nx/length:.6f} {ny/length:.6f} {nz/length:.6f}")
+                normal_offset += 1
+                triangles.append((a,b,c,normal_offset))
+        obj_lines.extend(normals)
+        obj_lines.append(f"usemtl {material}")
+        obj_lines.append("s off")
+        for a,b,c,n in triangles:
+            obj_lines.append("f " + " ".join(
+                f"{vertex_offset+j}/{vertex_offset+j}/{n}" for j in (a+1,b+1,c+1)))
+        vertex_offset += len(vertices)
+    path.write_text("\n".join(obj_lines)+"\n",encoding="utf-8")
     assert len({part[0] for part in out.parts}) == len(out.parts)
     return materials
 
@@ -372,8 +406,12 @@ def build(destination: Path = DEST) -> None:
         "or ECM, and no tested deck animation. The 99-aircraft count is a design "
         "target. A stock Sea Power Nimitz bundle is named as a runtime fallback; "
         "no stock or Workshop asset bytes are copied.\n"
-        "Test with the failed Melbourne prototype disabled. If the editor errors, "
-        "disable only this mod and send the latest Sea Power Player.log.\n",
+        "The original OBJ now carries UV and normal indices on every face, "
+        "matching the format of working carrier references. This is an "
+        "unconfirmed editor-load correction.\n"
+        "Test with the failed Melbourne prototype disabled. If the editor "
+        "errors, collect the current logs, withdraw only this mod, and share "
+        "the latest Sea Power Player.log.\n",
         encoding="utf-8")
 
 

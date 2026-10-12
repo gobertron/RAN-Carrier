@@ -64,11 +64,19 @@ def main(destination: Path = DEST) -> None:
     assert {"Hull","Deck","Rudder","Propeller_1","Propeller_2",
             "Surface_Hatch","Surface_Sensor"} <= groups
     assert len(groups) <= 20, "Static materials should be batched"
-    count = len(re.findall(r"(?m)^v ",content))
-    assert count > 400
+    vertex_count = len(re.findall(r"(?m)^v ",content))
+    uv_count = len(re.findall(r"(?m)^vt ",content))
+    normal_count = len(re.findall(r"(?m)^vn ",content))
+    assert vertex_count > 400 and uv_count == vertex_count and normal_count > 100
+    for normal in re.findall(r"(?m)^vn (.+)$",content):
+        xyz=tuple(float(item) for item in normal.split())
+        assert len(xyz)==3 and math.isclose(sum(a*a for a in xyz),1,abs_tol=2e-5)
     for row in re.findall(r"(?m)^f (.+)$",content):
-        indices = [int(token.split("/")[0]) for token in row.split()]
-        assert len(indices) == 3 and all(1 <= i <= count for i in indices)
+        indices = [[int(index) for index in token.split("/")] for token in row.split()]
+        assert len(indices) == 3 and all(len(token) == 3 for token in indices)
+        assert all(1 <= vertex <= vertex_count and 1 <= uv <= uv_count
+                   and 1 <= normal <= normal_count
+                   for vertex,uv,normal in indices)
     assert (base / f"{ID}.mtl").is_file()
 
     registered = list(ship["Submodels"].values())
@@ -141,6 +149,7 @@ def main(destination: Path = DEST) -> None:
     assert not re.search(r"3455404959|3491248180|3574957049|hmas_melbourne",
                          (destination/f"vessels/{ID}.ini").read_text(encoding="utf-8-sig"))
     print(f"[OK] {ID}: {len(groups)} OBJ groups, {len(registered)} submodels")
+    print(f"[OK] {vertex_count} vertices with UVs and {normal_count} indexed face normals")
     print("[OK] 4 lifts, 3 fixed-wing catapults, 4 vertical spots, 5 recovery points")
     print("[OK] Rudder/propeller mounts, materials, names, routes and colliders resolve")
     print("[LIMIT] Sea Power loading, flight operations and animation require in-game QA")

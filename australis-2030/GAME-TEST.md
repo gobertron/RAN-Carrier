@@ -9,6 +9,14 @@ The previous Melbourne prototypes caused a Mission Editor load exception.
 Close Sea Power before installing, and disable both Melbourne prototypes in
 Mod Manager for this isolated test. Leave RADF as it was before.
 
+**12 October editor finding:** The first Australis package also raised a
+`VesselRudderSystem.init()` null-reference exception while loading. The
+screenshot alone does not establish which vessel or mesh caused the error.
+The next package export adds OBJ texture coordinates and face normals to match
+working carrier references. This is a candidate correction, not a confirmed
+in-game fix. Collect the failed session log before replacing the installed
+package.
+
 ## Install from the draft branch
 
 In a terminal on the Sea Power computer, run:
