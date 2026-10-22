@@ -57,24 +57,33 @@ crew or water-production keys are added to the vessel INI.
 
 ## Five steam CATOBAR lanes
 
-| Catapult | Transverse position | Stroke | Aircraft test scope |
-|---|---:|---:|---|
-| 1, outboard | 28 m port | 95 m | Stock A-7E only pending other footprint checks |
-| 2, middle bank | 14 m port | 95 m | Carrier-capable aircraft; large reference envelope checked |
-| 3, middle bank | Centreline | 95 m | Carrier-capable aircraft; large reference envelope checked |
-| 4, middle bank | 14 m starboard | 95 m | Carrier-capable aircraft; large reference envelope checked |
-| 5, outboard | 28 m starboard | 95 m | Stock A-7E only pending other footprint checks |
+| Catapult | Launch position, metres (x, z) | Heading | Stroke | Aircraft test scope |
+|---|---|---:|---:|---|
+| 1, port bow | (-14, 88) | Ahead, 0° | 95 m | Carrier-capable aircraft; large reference envelope checked |
+| 2, centre bow | (0, 88) | Ahead, 0° | 95 m | Carrier-capable aircraft; large reference envelope checked |
+| 3, starboard bow | (14, 88) | Ahead, 0° | 95 m | Carrier-capable aircraft; large reference envelope checked |
+| 4, outer port waist | (-6, -30) | 15° to port | 95 m | Stock A-7E only pending other footprint checks |
+| 5, inner port waist | (12, -30) | 15° to port | 95 m | Stock A-7E only pending other footprint checks |
+
+Coordinates are physical metres, with +x starboard and +z toward the bow.
+This is the requested three-bow/two-waist Australis layout. The two waist
+tracks turn toward the port deck edge instead of forming a five-track bank
+at the bow. The exact five-catapult count is an Australis design choice.
 
 The bow deck is broader while the immersed bow retains a fine stem. The
 starboard forward lift moves from z=69 m to z=54 m to clear the launch/taxi
 area. The port lift stays abreast of the main island; four helicopter/VTOL
 spots remain aft.
 
-Adjacent lanes interlock: 1↔2, 2↔3, 3↔4 and 4↔5. Alternate sets 1/3/5 or 2/4
-can prepare independently. Five installed catapults do not authorize five
-simultaneous departures. Outboard taxi approaches join 10 m behind the launch
-point; middle approaches join 20 m behind. Actual timing depends on the shared
-one-second minimum, preparation, occupancy and ship course.
+Bow lanes 1/3 can operate as a pair; bow lane 2 interlocks with both. Each
+waist lane interlocks with all bow lanes and with the other waist lane because
+the forward departure and taxi areas are shared. Launch and recovery remain
+separate. Five installed catapults do not authorize five simultaneous
+departures. Taxi approaches join 20 m behind each launch point on its actual
+heading. The deflector panels and guide markings rotate with the waist tracks.
+Actual timing depends on the shared one-second minimum, preparation, occupancy
+and ship course. Helicopter launch spots retain independent launch-point
+interlocks; exhaust, rotor and full deck-cycle clearance still need game QA.
 
 Recovery uses the angled deck and arresting cables, with the hook on the
 aircraft. The prototype blocks launches during recovery. Sea Power does not

@@ -59,10 +59,24 @@ ELEVATORS = [(LIFT_CENTRE_X_M/WIDTH_SCALE, -50),
              (-LIFT_CENTRE_X_M/WIDTH_SCALE, PORT_LIFT_Z),
              (LIFT_CENTRE_X_M/WIDTH_SCALE, -132)]
 LASERS = [(-35, 109), (36, 119), (-40, -60), (31, -157)]
-# Five 95 m CATOBAR steam tracks: three centre lanes and two outboard.
-# Adjacent lanes are interlocked; only alternate lanes can prepare together.
+# Three bow tracks and two port-waist tracks, each with a 95 m stroke.
+# Waist departures are angled to port, using the shared recovery-deck area.
+BOW_CATAPULT_IDS = (1, 2, 3)
+WAIST_CATAPULT_IDS = (4, 5)
+WAIST_CATAPULT_HEADING_DEG = -15.0
 CATAPULTS = [((x/WIDTH_SCALE, 88), (x/WIDTH_SCALE, 183))
-             for x in (-28,-14,0,14,28)]
+             for x in (-14, 0, 14)] + [
+    ((x/WIDTH_SCALE, -30),
+     ((x+95*math.sin(math.radians(WAIST_CATAPULT_HEADING_DEG)))/WIDTH_SCALE,
+      -30+95*math.cos(math.radians(WAIST_CATAPULT_HEADING_DEG))))
+    for x in (-6, 12)
+]
+# Bow 1/3 can operate as a pair. Waist launches interlock with all bow
+# lanes and with each other because departure/taxi areas are shared.
+CATAPULT_INTERLOCKS = {
+    1: (2, 4, 5), 2: (1, 3, 4, 5), 3: (2, 4, 5),
+    4: (1, 2, 3, 5), 5: (1, 2, 3, 4),
+}
 VERTICAL_SPOTS = [(6, -165), (6, -136), (6, -107), (6, -78)]
 LANDING_LANE_A = np.array((-23., -155.))
 LANDING_LANE_B = np.array((-15., 62.))
@@ -76,6 +90,20 @@ DESIGN_DRAFT_M = 11.5
 
 def physical_xz(points):
     return [(x*WIDTH_SCALE, z) for x, z in points]
+
+
+def catapult_point(route, along, across=0):
+    """Authoring-frame point with offsets measured along the physical track."""
+    start, end = np.array(physical_xz(route))
+    direction = (end-start)/np.linalg.norm(end-start)
+    lateral = np.array((direction[1], -direction[0]))
+    x, z = start+along*direction+across*lateral
+    return (x/WIDTH_SCALE, z)
+
+
+def catapult_deflector(route):
+    return [catapult_point(route, along, across)
+            for along, across in ((-20,-3.5),(-20,3.5),(-16,3.5),(-16,-3.5))]
 
 
 def slim_mesh(mesh):
@@ -251,14 +279,15 @@ def geometry(closed_lasers=True):
     for i, (start, end) in enumerate(CATAPULTS, 1):
         # A deck-flush blast-deflector panel is marked behind each launch
         # point; actuator volume, exhaust flow and clearances remain unknown.
-        sx, sz = start
-        m.box(f"CatapultJetBlastDeflector_{i}",
-              sx, 22.095, sz-18.0, 7, .14, 4, "hatch")
+        route = (start, end)
+        m.prism(f"CatapultJetBlastDeflector_{i}",
+                catapult_deflector(route), 22.025, 22.165, "hatch")
         m.stripe(f"CatapultJetBlastDeflectorHinge_{i}",
-                 (sx-3.5, sz-16), (sx+3.5, sz-16), .13, 22.18, "edge")
+                 catapult_point(route,-16,-3.5), catapult_point(route,-16,3.5),
+                 .13, 22.18, "edge")
         m.stripe(f"CatapultTrack_{i}", start, end, .52, 22.13, "gold")
         m.stripe(f"CatapultDeckGuide_{i}",
-                 (start[0]+1.25, start[1]), (end[0]+1.25, end[1]),
+                 catapult_point(route,0,1.25), catapult_point(route,95,1.25),
                  .16, 22.14, "edge")
 
     a, b = LANDING_LANE_A, LANDING_LANE_B
@@ -386,9 +415,7 @@ def plan_preview(path):
                   fill="#edf4f2", width=3)
     for (a, b) in CATAPULTS:
         draw.line([point(*a), point(*b)], fill="#d8b66e", width=4)
-        sx, sz = a
-        draw.polygon(shape([(sx-3.5, sz-20), (sx+3.5, sz-20),
-                            (sx+3.5, sz-16), (sx-3.5, sz-16)]),
+        draw.polygon(shape(catapult_deflector((a,b))),
                      fill="#76909a", outline="#d2dfdf", width=1)
     a, b = LANDING_LANE_A, LANDING_LANE_B
     for side in (-1, 1):
@@ -418,8 +445,9 @@ def plan_preview(path):
         ("AFT AVIATION ISLAND", (34, -88), (590, 207)),
         ("4 LIFTS / 22 x 26 m", (57, 54), (1250, 207)),
         ("4 OFFSET VTOL / HELO SPOTS", (6, -136), (158, 204)),
-        ("5 STEAM CATAPULTS", (0, 136), (1335, 655)),
-        ("4 FLUSH LASER HATCHES", (-35, 109), (1266, 757)),
+        ("3 BOW CATAPULTS", (0, 136), (1335, 655)),
+        ("2 PORT-WAIST CATAPULTS", (-17, 25), (854, 715)),
+        ("4 FLUSH LASER HATCHES", (-35, 109), (1266, 784)),
         ("4 ARRESTING WIRES", (-23, -75), (160, 689)),
         ("ANGLED RECOVERY", (-27, -100), (155, 736)),
     ]:
@@ -497,13 +525,13 @@ def main():
     assert LIFT_WIDTH_M >= 19.545+2, "F-14A full-span reference needs side clearance"
     f14_reference_shift = abs(-.074+.012+.0126)*METRES_PER_UNIT
     assert LIFT_LENGTH_M/2 >= 19.1/2+f14_reference_shift
-    # The three centre lanes accept a 25 x 30 m reference footprint. The
-    # outboard lanes use an A-7E-sized 12 x 16 m footprint and class filters.
+    # Bow lanes accept a 25 x 30 m reference footprint. Angled waist lanes
+    # use an A-7E-sized 12 x 16 m footprint and explicit class filters.
     for index in range(5):
         start,end = np.array(physical_xz(CATAPULTS[index]))
         direction = (end-start)/np.linalg.norm(end-start)
         lateral = np.array((direction[1],-direction[0]))
-        half_length,half_span = (8,6) if index in (0,4) else (15,12.5)
+        half_length,half_span = (8,6) if index+1 in WAIST_CATAPULT_IDS else (15,12.5)
         for along in np.linspace(-half_length,half_length,7):
             for across in np.linspace(-half_span,half_span,7):
                 x,z = start+along*direction+across*lateral
@@ -512,8 +540,11 @@ def main():
                     (index,"staged aircraft overlaps an island or lift")
     for route in CATAPULTS:
         (sx, sz), (ex, ez) = physical_xz(route)
-        for z in np.linspace(sz, min(ez+60, 185), 80):
-            x = sx+(ex-sx)*(z-sz)/(ez-sz)
+        length = math.hypot(ex-sx,ez-sz)
+        dx,dz = (ex-sx)/length,(ez-sz)/length
+        for along in np.linspace(0,length+60,100):
+            x,z = sx+along*dx,sz+along*dz
+            if z > 185: break
             nearest = min(rectangle_distance(x, z, *bounds)
                           for bounds in obstacles)
             min_cat_clearance = min(min_cat_clearance, nearest)
@@ -553,8 +584,11 @@ def main():
                         "offensive_ecm_modules": 1}, mesh)
     summary.update(catapult_tracks=len(CATAPULTS),
                    flight_deck_beam_m=DECK_BEAM_M,
-                   outer_catapult_lateral_separation_m=round((CATAPULTS[4][0][0]-CATAPULTS[0][0][0])*WIDTH_SCALE,2),
-                   catapult_type="Steam CATOBAR, five 95 m tracks",
+                   bow_outer_catapult_lateral_separation_m=round((CATAPULTS[2][0][0]-CATAPULTS[0][0][0])*WIDTH_SCALE,2),
+                   catapult_type="Steam CATOBAR, three bow and two port-waist 95 m tracks",
+                   bow_catapult_ids=list(BOW_CATAPULT_IDS),
+                   port_waist_catapult_ids=list(WAIST_CATAPULT_IDS),
+                   port_waist_heading_degrees=WAIST_CATAPULT_HEADING_DEG,
                    embarked_complement_design_target=FIT["crew"]["total"],
                    accommodation_berths_design_target=FIT["crew"]["berths"],
                    peripheral_vls_cells_visual_target=80,

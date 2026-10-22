@@ -193,6 +193,7 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
     # Measure the actual exported gold track meshes, independently of the
     # generator constants, and compare with the game's launch definitions.
     gold = object_vertices["Surface_Gold"]
+    actual_catapults = []
     for i in range(1,6):
         track = gold[(i-1)*8:i*8]
         start = tuple((a+b)/2 for a,b in zip(track[0],track[3]))
@@ -203,6 +204,27 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
         dx,dz = end[0]-start[0],end[2]-start[2]
         assert abs(float(launch["Rotation"])-math.degrees(math.atan2(dx,dz))) < .002, (i,"heading")
         assert abs(float(launch["CatapultLength"])-math.hypot(dx,dz)*METRES_PER_UNIT) < .01
+        assert abs(float(launch["CatapultLength"])-95) < .01
+        heading = math.degrees(math.atan2(dx,dz))
+        if i <= 3:
+            assert abs(heading) < .002 and start[2]*METRES_PER_UNIT > 80, (i,"bow track")
+            assert "SupportedClasses" not in launch
+        else:
+            assert abs(heading+15) < .002 and start[2] < 0, (i,"angled port-waist track")
+            assert end[0] < start[0] and end[0] < 0
+            assert launch["SupportedClasses"] == "usn_a-7e"
+        length = math.hypot(dx,dz)
+        direction = (dx/length,dz/length)
+        actual_catapults.append((start,end,direction))
+        # Measure the actual deflector behind each track, including its
+        # orientation. A heading change must rotate its markings and panel.
+        deflector = hatch[32+(i-1)*8:40+(i-1)*8]
+        centre = tuple(sum(v[axis] for v in deflector)/8 for axis in (0,2))
+        expected = (start[0]-18/METRES_PER_UNIT*direction[0],
+                    start[2]-18/METRES_PER_UNIT*direction[1])
+        assert math.dist(centre,expected)*METRES_PER_UNIT < .001, (i,"deflector placement")
+        along = (deflector[3][0]-deflector[0][0],deflector[3][2]-deflector[0][2])
+        assert abs(math.degrees(math.atan2(*along))-heading) < .003, (i,"deflector heading")
     # Check the user's stock A-7E reference at all five catapults, with
     # wings open. This is a staging footprint check, not a taxi simulation.
     obstacles = list(lift_bounds)
@@ -224,17 +246,24 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
                 assert inside_deck(px,pz,outline), (i,"A-7E off deck")
                 assert all(not(x0 <= px <= x1 and z0 <= pz <= z1)
                            for x0,x1,z0,z1 in obstacles), (i,"A-7E overlaps lift or island")
-    assert ship["LaunchPoint1"]["BlocksLaunchPoints"] == "2"
-    assert ship["LaunchPoint3"]["BlocksLaunchPoints"] == "2,4"
-    assert ship["LaunchPoint2"]["BlocksLaunchPoints"] == "1,3"
-    assert ship["LaunchPoint4"]["BlocksLaunchPoints"] == "3,5"
-    assert ship["LaunchPoint5"]["BlocksLaunchPoints"] == "4"
-    for i in (1,5):
-        assert ship[f"LaunchPoint{i}"]["SupportedClasses"] == "usn_a-7e"
+    # Independently check real exported corridors and the safety interlocks.
+    # The extra rollout is a plan-view obstruction check, not blast analysis.
+    for i,(start,end,direction) in enumerate(actual_catapults,1):
+        sx,sz = start[0]*METRES_PER_UNIT,start[2]*METRES_PER_UNIT
+        for n in range(156):
+            x,z = sx+n*direction[0],sz+n*direction[1]
+            if z > 185: break
+            for x0,x1,z0,z1 in obstacles:
+                gap = math.hypot(max(x0-x,x-x1,0),max(z0-z,z-z1,0))
+                assert gap >= 12-.001, (i,"launch corridor overlaps island/lift")
+    interlocks = {1:"2,4,5",2:"1,3,4,5",3:"2,4,5",4:"1,2,3,5",5:"1,2,3,4"}
+    for i,blocks in interlocks.items():
+        assert ship[f"LaunchPoint{i}"]["BlocksLaunchPoints"] == blocks
+        assert ship[f"LaunchPoint{i}"]["TakeoffRequiresFreeLaunchpoints"] == blocks
     assert float(deck["LaunchDelay"]) == 1
     left = vector(ship["LaunchPoint1"]["Position"])
-    right = vector(ship["LaunchPoint5"]["Position"])
-    assert abs((right[0]-left[0])*METRES_PER_UNIT-56) < .001
+    right = vector(ship["LaunchPoint3"]["Position"])
+    assert abs((right[0]-left[0])*METRES_PER_UNIT-28) < .001
     for i in range(6,10):
         assert not ship[f"LaunchPoint{i}"].get("BlocksLaunchPoints"), "Aft spots must not block the forward pair"
     for i in range(1,int(deck["NumberOfTaxiPaths"])+1):
@@ -245,6 +274,15 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
             x,y,z=vector(item)
             assert inside_deck(x*METRES_PER_UNIT,z*METRES_PER_UNIT,outline), (i,item)
             assert abs(y - 22.16/METRES_PER_UNIT) < 1e-5
+        if route["To"].startswith("LaunchPoint") and int(route["To"][11:]) <= 5:
+            launch = ship[route["To"]]
+            end = vector(route["Waypoints"].split("|")[-1])
+            position = vector(launch["Position"])
+            angle = math.radians(float(launch["Rotation"]))
+            expected = (position[0]-20/METRES_PER_UNIT*math.sin(angle),
+                        position[2]-20/METRES_PER_UNIT*math.cos(angle))
+            assert math.hypot(end[0]-expected[0],end[2]-expected[1])*METRES_PER_UNIT < .001, \
+                (i,"taxi approach not aligned to launch track")
     for i in range(1,int(deck["NumberOfDeckZones"])+1):
         section = ship[f"DeckZone{i}"]
         assert all(f"Point{j}" in section
@@ -297,11 +335,11 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
     if stock_root is not None: check_stock(ship,destination,stock_root)
     print(f"[OK] {ID}: {len(groups)} OBJ groups, {len(registered)} submodels")
     print(f"[OK] {vertex_count} vertices with UVs and {normal_count} indexed face normals")
-    print("[OK] 4 lifts, 5 steam CATOBAR catapults, 4 vertical spots, 5 recovery points")
+    print("[OK] 4 lifts, 3 bow + 2 port-waist steam CATOBAR tracks, 4 vertical spots, 5 recovery points")
     print("[OK] Four 22 x 26 m lifts; ride/spawn centres and F-14A reference footprint fit")
     print("[OK] A-7E open-wing staging footprint clear at all five catapults")
-    print("[OK] 82 m deck; catapult meshes, headings and launch positions align")
-    print("[OK] Adjacent-lane interlocks and independent aft launch spots")
+    print("[OK] 82 m deck; launch tracks, rotated deflectors and taxi approaches align")
+    print("[OK] Bow-pair / waist / recovery interlocks and independent aft launch spots")
     print("[OK] 5300 embarked / 5800 berths; 112000 t concept mass budget balances")
     print("[OK] 80 VLS cells, 21 weapon systems, 11 sensors and two towed decoys configured")
     print("[OK] Rudder/propeller mounts, materials, effects, names, routes and colliders resolve")

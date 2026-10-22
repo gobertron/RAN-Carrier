@@ -20,7 +20,7 @@
     "catapult_tracks": 5,
     "primary_launch_pair": [
       1,
-      5
+      3
     ],
     "minimum_launch_interval_seconds": 1,
     "independent_helicopter_launch_spots": true,
@@ -42,18 +42,22 @@
     "catapult_reference_aircraft": "Stock A-7E",
     "overall_beam_including_lifts_m": 109,
     "catapult_type": "Steam CATOBAR",
-    "central_catapult_ids": [
-      2,
-      3,
-      4
-    ],
-    "outboard_catapult_ids": [
+    "catapult_stroke_m": 95,
+    "bow_catapult_ids": [
       1,
+      2,
+      3
+    ],
+    "port_waist_catapult_ids": [
+      4,
       5
     ],
-    "adjacent_catapults_interlocked": true,
-    "outboard_reference_class": "usn_a-7e",
-    "catapult_stroke_m": 95
+    "port_waist_heading_degrees": -15,
+    "bow_adjacent_catapults_interlocked": true,
+    "waist_launches_interlocked_with_all_bow_lanes": true,
+    "waist_launches_interlocked_with_each_other": true,
+    "waist_reference_class": "usn_a-7e",
+    "layout": "Three straight bow catapults and two angled port-waist catapults"
   },
   "systems_visual_studies": {
     "integrated_radar_arrays": 7,

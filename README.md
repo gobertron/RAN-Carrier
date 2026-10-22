@@ -13,12 +13,14 @@ We are refining the newest Australis first, then moving backward through its ear
 [Open the interactive 3D model](australis-2030/viewer/australis_2030_3d.html) to rotate and inspect the deck, radar panels and laser hatches. Use **Deploy four lasers** to see the raised visual state. Download the self-contained HTML file to open it offline.
 
 The current Australis is a **steam CATOBAR carrier** with five 95 m launch
-tracks: three in the middle and two outboard. It retains the original two
+tracks: **three at the bow and two angled on the port waist**. It retains the original two
 islands, four offset helicopter/VTOL spots, four 22 × 26 m lifts and an angled
 recovery deck with arresting cables. A broader bow deck follows the supplied
-Ford reference while the immersed bow remains fine. Adjacent launch lanes
-interlock; the outer pair currently accepts stock A-7Es pending checks for
-other aircraft. The middle lanes accept other carrier-capable aircraft.
+Ford reference while the immersed bow remains fine. Bow lanes 1/3 can operate
+as a pair; the centre bow lane interlocks with its neighbours. Waist lanes
+4/5 angle 15 degrees to port and interlock with all bow lanes and each other.
+The waist pair currently accepts stock A-7Es pending checks for other aircraft.
+The three bow lanes accept other carrier-capable aircraft.
 
 Design targets are **370 m overall, 82 m main flight deck, 112,000 metric
 tonnes, 99 aircraft and 5,300 embarked personnel**, with 5,800 berths. Maximum

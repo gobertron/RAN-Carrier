@@ -12,8 +12,18 @@
   "game_integration_tested": false,
   "catapult_tracks": 5,
   "flight_deck_beam_m": 82.0,
-  "outer_catapult_lateral_separation_m": 56.0,
-  "catapult_type": "Steam CATOBAR, five 95 m tracks",
+  "bow_outer_catapult_lateral_separation_m": 28.0,
+  "catapult_type": "Steam CATOBAR, three bow and two port-waist 95 m tracks",
+  "bow_catapult_ids": [
+    1,
+    2,
+    3
+  ],
+  "port_waist_catapult_ids": [
+    4,
+    5
+  ],
+  "port_waist_heading_degrees": -15.0,
   "embarked_complement_design_target": 5300,
   "accommodation_berths_design_target": 5800,
   "peripheral_vls_cells_visual_target": 80,
@@ -32,7 +42,7 @@
   "minimum_spot_edge_spacing_m": 8.0,
   "minimum_pad_to_island_lateral_gap_m": 8.14,
   "minimum_pad_to_lift_lateral_gap_m": 16.41,
-  "minimum_catapult_to_obstruction_plan_gap_m": 21.48,
+  "minimum_catapult_to_obstruction_plan_gap_m": 12.23,
   "hull_deck_perimeter_mates": true,
   "bow_waterline_tip_width_m": 0.92,
   "design_draft_m": 11.5,

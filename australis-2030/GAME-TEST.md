@@ -1,7 +1,8 @@
 # Australis 2030 — five-lane CATOBAR and combat-fit trial
 
-The current design uses five 95 m steam CATOBAR tracks: three in the middle
-and two outboard. Four 22 × 26 m lifts and four aft helicopter spots remain.
+The current design uses five 95 m steam CATOBAR tracks: three at the bow
+and two angled 15 degrees to port on the waist. Four 22 × 26 m lifts and four
+aft helicopter spots remain.
 The targets are 99 aircraft, 5,300 embarked personnel, 5,800 berths and
 112,000 tonnes. See [DESIGN-BASIS.md](DESIGN-BASIS.md) for the size/crew budget
 and the modern-equipment-to-stock-proxy mapping.
@@ -62,12 +63,14 @@ stop there and share its output.
 3. Add a stock **F-14A**. Check bow-facing parking, wheel/platform alignment
    and taxiing inboard. The forward starboard lift is now at z=54 m; the port
    lift remains abreast of the main island.
-4. Use **A-7Es** for all five catapults. IDs 1/5 are the outboard pair,
-   currently restricted to the stock A-7E. IDs 2/3/4 form the middle bank and
-   accept other carrier-capable aircraft. Check each lane separately first.
-5. Test outer pair 1/5, then middle pair 2/4, then centre 3. Adjacent lanes
-   interlock. The shared one-second minimum does not guarantee an actual
-   interval or the game scheduler's lane assignment.
+4. Use **A-7Es** for all five catapults. IDs 1/2/3 are the straight bow bank
+   and accept other carrier-capable aircraft. IDs 4/5 are the angled port-waist
+   pair, currently restricted to the stock A-7E. Check each lane separately,
+   including taxi alignment, deflector position and actual departure heading.
+5. Test bow pair 1/3, then centre bow 2. Check waist 4 and 5 separately: each
+   must wait for every bow lane and the other waist lane to be clear. Then
+   queue a mixed bow/waist group and verify those interlocks. The shared
+   one-second minimum does not guarantee an actual interval or lane assignment.
 6. Ready and queue a helicopter first, followed by jets. Check that aft
    preparation/launch progresses alongside forward preparation while the
    carrier holds course. Aft launch spots are now IDs 6–9.
@@ -75,10 +78,14 @@ stop there and share its output.
    launches. Check the aircraft hook and stopping point; visible cable lines
    alone do not prove the recovery works.
 
-Middle-lane staging checks use a 25 m span × 30 m length envelope. Outboard
+Bow-lane staging checks use a 25 m span × 30 m length envelope. Waist
 lanes have only been checked for the A-7E; they are not yet cleared for the
 F-111N families. Five installed lanes do not imply five simultaneous launches
 or a validated 99-aircraft deck cycle.
+
+This revision keeps the port lift abreast of the main island and checks a
+12 m plan-view launch corridor past lifts/islands. Waist departure uses shared
+deck space, so a successful single launch does not prove a complete deck cycle.
 
 ## Combat check after the empty-deck loading test
 
@@ -110,7 +117,14 @@ Withdraw the current mod while retaining a verified backup:
 python3 "$HOME/Downloads/RAN-Carrier-Australis-test/tools/install_australis_2030.py" --remove
 ```
 
-To reinstall the pre-CATOBAR/combat revision, use its matching installer:
+To return to the previous five-bow-track revision, use its matching installer:
+
+```bash
+git -C "$HOME/Downloads/RAN-Carrier-Australis-test" worktree add --detach "$HOME/Downloads/RAN-Carrier-Australis-before-waist" fae6b9d
+python3 "$HOME/Downloads/RAN-Carrier-Australis-before-waist/tools/install_australis_2030.py"
+```
+
+To reinstall the older pre-CATOBAR/combat revision instead:
 
 ```bash
 git -C "$HOME/Downloads/RAN-Carrier-Australis-test" worktree add --detach "$HOME/Downloads/RAN-Carrier-Australis-before-catobar" 74e378e

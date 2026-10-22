@@ -2,7 +2,7 @@
 
 The current concept uses the supplied Ford flight-deck reference with our
 original faceted hull and two islands. It has **five 95 m steam catapults**:
-three in the middle and two outboard, plus an angled arrested-recovery lane,
+three at the bow and two angled on the port waist, plus an arrested-recovery lane,
 four aft helicopter/VTOL spots and four 22 × 26 m lifts. A broader bow flight
 deck sits above the fine immersed stem. The main flight deck remains 82 m
 wide; the maximum width including the lift extensions is 109 m.
@@ -16,7 +16,8 @@ wide; the maximum width including the lift extensions is 109 m.
 | Embarked personnel / berths | 5,300 / 5,800 |
 | Aircraft target | 99 |
 | Proposed hangar / deck allocation | 36 / 63, parking unverified |
-| Steam CATOBAR tracks | Five, each 95 m; IDs 2/3/4 middle and 1/5 outboard |
+| Steam CATOBAR tracks | Five, each 95 m; IDs 1/2/3 bow and 4/5 port waist |
+| Waist launch heading | 15 degrees to port |
 | Deck-edge lifts | Four, each 22 × 26 m, bow-facing parking |
 | Recovery | Angled lane, four cable indications; hook belongs to aircraft |
 | Islands | Larger command island and smaller aft aviation island |
@@ -36,13 +37,19 @@ changing their housing does not implement RIM-116/ESSM performance. Four
 Nulka positions and four laser hatches are visual studies. Turrets/hatches
 are not animated in the game prototype.
 
-Adjacent catapult lanes interlock. Alternate sets 1/3/5 or 2/4 can prepare
-independently; the one-second minimum interval remains subject to the game
-scheduler. Outboard lanes are restricted to the stock A-7E pending other
-footprint checks. The middle lanes use a checked 25 m span × 30 m length
+Bow catapults 1/3 can operate as a pair; centre bow lane 2 interlocks with both.
+Waist catapults 4/5 interlock with all bow lanes and with each other because
+their departure/taxi areas are shared. The one-second minimum interval remains
+subject to the game scheduler. Waist lanes are restricted to the stock A-7E
+pending other footprint checks. The bow lanes use a checked 25 m span × 30 m length
 reference envelope. The starboard forward lift is moved to z=54 m; the port
 lift remains abreast of the main island. Four 12-degree H markings remain
 29 m apart near the aft island. Recovery blocks launches.
+
+The three-bow/two-waist arrangement is our requested Australis adaptation of
+the bow-and-waist carrier layout, not a claim that an American class has this
+exact five-catapult arrangement. Tracks, deflector panels, taxi approaches and
+native launch headings share the same axes; the waist tracks turn to port.
 
 The [deck plan](previews/australis_2030_deck_plan.png),
 [perspective](previews/australis_2030_perspective.png) and

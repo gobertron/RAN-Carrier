@@ -21,7 +21,8 @@ sys.path.insert(0, str(DESIGN))
 from build import (  # noqa: E402
     AFT_ISLAND_BASE, CATAPULTS, COLORS, DECK, DECK_SURFACE_Y, ELEVATORS,
     LANDING_LANE_A, LANDING_LANE_B, MAIN_ISLAND_BASE, VERTICAL_SPOTS, geometry,
-    WIDTH_SCALE,
+    WIDTH_SCALE, BOW_CATAPULT_IDS, WAIST_CATAPULT_IDS, CATAPULT_INTERLOCKS,
+    catapult_point,
 )
 from generate_source_models import Mesh  # noqa: E402
 from rebuild_game_scale import METRES_PER_UNIT  # noqa: E402
@@ -33,7 +34,7 @@ SHIP_DIR = f"ships/{ID}"
 DEST = ROOT / "game-mod" / MOD_NAME
 SCALE = 1 / METRES_PER_UNIT
 DECK_HEIGHT = DECK_SURFACE_Y * SCALE
-LAUNCH_ASSOC = ((1,2,3),(5,4,3),(1,2,3),(6,7,8,9))
+LAUNCH_ASSOC = ((1,2,3),(3,2,1),(4,5,1),(6,7,8,9))
 
 
 def vec(x: float, y: float, z: float) -> str:
@@ -148,12 +149,10 @@ def zone(name: str, kind: str, coords: list[tuple[float, float]]) -> str:
 
 def catapult_zone(start: tuple[float,float],
                   end: tuple[float,float]) -> list[tuple[float,float]]:
-    (x,z),(ex,ez) = start,end
-    direction = (ex-x, ez-z)
-    norm = math.hypot(*direction)
-    lateral = (-direction[1]*5/norm, direction[0]*5/norm)
-    return [(x+lateral[0],z-3+lateral[1]), (x-lateral[0],z-3-lateral[1]),
-            (ex-lateral[0],ez-lateral[1]), (ex+lateral[0],ez+lateral[1])]
+    route = (start,end)
+    length = math.hypot((end[0]-start[0])*WIDTH_SCALE,end[1]-start[1])
+    return [catapult_point(route,along,across)
+            for along,across in ((-3,-5),(-3,5),(length,5),(length,-5))]
 
 
 def routes() -> list[tuple[str, str, list[tuple[float,float]]]]:
@@ -161,12 +160,11 @@ def routes() -> list[tuple[str, str, list[tuple[float,float]]]]:
     out: list[tuple[str,str,list[tuple[float,float]]]] = []
     for e, launches in enumerate(LAUNCH_ASSOC[:3],1):
         for launch in launches:
-            (sx,sz),(ex,ez) = CATAPULTS[launch-1]
-            length = math.hypot((ex-sx)*WIDTH_SCALE,ez-sz)
-            approach_length = 10 if launch in (1,5) else 20
-            approach = (sx-approach_length*(ex-sx)/length,sz-approach_length*(ez-sz)/length)
+            approach = catapult_point(CATAPULTS[launch-1],-20)
             if e == 1: way = [(0,-48),(0,32),approach]
             elif e == 2: way = [(23,50),approach]
+            elif launch in WAIST_CATAPULT_IDS:
+                way = [(-20,ELEVATORS[2][1]),(-20,-54),approach]
             else: way = [(-30,ELEVATORS[2][1]+12),(-28,32),approach]
             out.append((f"Elevator{e}",f"LaunchPoint{launch}",way))
     for i,(x,z) in enumerate(VERTICAL_SPOTS,6):
@@ -241,10 +239,10 @@ def vessel_ini(material: dict[str,str]) -> str:
             "EmbarkTime=10","RecycleTime=15"]))
     for i,((x,z),(ex,ez)) in enumerate(CATAPULTS,1):
         rotation = math.degrees(math.atan2((ex-x)*WIDTH_SCALE,ez-z))
-        interlock = ",".join(str(j) for j in (i-1,i+1) if 1 <= j <= 5)
+        interlock = ",".join(map(str,CATAPULT_INTERLOCKS[i]))
         parts.append(section(f"LaunchPoint{i}",[
             "AllowedType=Plane,VTOL",f"Position={point(x,z)}",
-            *(["SupportedClasses=usn_a-7e"] if i in (1,5) else []),
+            *(["SupportedClasses=usn_a-7e"] if i in WAIST_CATAPULT_IDS else []),
             f"BlocksLaunchPoints={interlock}",
             f"TakeoffRequiresFreeLaunchpoints={interlock}",
             f"Rotation={rotation:.3f}","CatapultParticles=None",
@@ -276,7 +274,8 @@ def vessel_ini(material: dict[str,str]) -> str:
         parts.append(section(f"TaxiPath{i}",[
             f"From={frm}",f"To={to}",
             "Waypoints="+"|".join(point(x,z) for x,z in waypoints)]))
-    deckzones = [(f"Catapult {i}", "Runway",catapult_zone(*route))
+    deckzones = [(f"{'Bow' if i in BOW_CATAPULT_IDS else 'Port-waist'} catapult {i}",
+                  "Runway",catapult_zone(*route))
                  for i,route in enumerate(CATAPULTS,1)]
     a,b = LANDING_LANE_A,LANDING_LANE_B
     deckzones += [("Angled recovery","Runway",
@@ -442,7 +441,7 @@ def build(destination: Path = DEST) -> None:
               "Default=Australis class 2030,Australis 2030\n"
               "DefaultDescription=Original future RAN carrier prototype. "
               "370 m, 112000 t, 5300 embarked design targets. Five steam CATOBAR "
-              "lanes; Ford/Zumwalt-inspired combat fit with declared stock proxies.\n"
+              "lanes, three bow and two port-waist; Ford/Zumwalt-inspired combat fit with declared stock proxies.\n"
               "Variant1=HMAS Australis test,HMAS Australis test\n")
     write_ini(destination / "_info.ini",
               "[Language_en]\nName=RAN Australis 2030 Editor Prototype\n"
@@ -458,8 +457,8 @@ def build(destination: Path = DEST) -> None:
         "This is an opt-in editor test of an original mesh and native-style "
         "carrier deck routes. The air group is user-selected and starts empty. "
         "Targets: 99 aircraft, 5300 embarked, 5800 berths, 112000 t full load. "
-        "Five 95 m steam CATOBAR tracks use adjacent-lane interlocks. The "
-        "outboard pair currently accepts the stock A-7E; three middle lanes "
+        "Five 95 m steam CATOBAR tracks: three bow and two angled port-waist. "
+        "The waist pair currently accepts the stock A-7E; three bow lanes "
         "accept other carrier aircraft. Combat-fit.json declares modern "
         "targets and stock proxies: Mk41/SM-2/Tomahawk, Sea Sparrow in the "
         "ESSM and 21-round RAM-form launchers, Phalanx, 30 mm, SPY-1A, "
@@ -475,7 +474,9 @@ def build(destination: Path = DEST) -> None:
         "and fore-and-aft parking, checked against the stock F-14A reference. "
         "Catapult staging is checked using the stock A-7E. "
         "LaunchDelay=1 is a shared one-second minimum, not a "
-        "guarantee of synchronized launches. Flight operations need game QA.\n"
+        "guarantee of synchronized launches. Bow 1/3 can be paired; waist "
+        "launches block all bow lanes and each other. Recovery blocks all "
+        "launches. Flight operations need game QA.\n"
         "Test with the failed Melbourne prototype disabled. If the editor "
         "errors, collect the current logs, withdraw only this mod, and share "
         "the latest Sea Power Player.log.\n",
