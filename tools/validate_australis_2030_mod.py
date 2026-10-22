@@ -123,6 +123,13 @@ def main(destination: Path = DEST) -> None:
     assert int(deck["NumberOfElevators"]) == 4
     assert int(deck["NumberOfLaunchPoints"]) == 7
     assert int(deck["NumberOfRecoveryPoints"]) == 5
+    port_lift = vector(ship["Elevator3"]["SpawnPosition"])
+    main_island = ship["DeckZone6"]
+    island_z = [vector(main_island[f"Point{i}"])[2]
+                for i in range(1,int(main_island["NumberOfPoints"])+1)]
+    assert port_lift[0] < 0 and math.isclose(
+        port_lift[2],(min(island_z)+max(island_z))/2,abs_tol=1e-6), \
+        "Port lift must be abreast of the main island"
     assert ship["RecoveryPoint1"]["Arrested"] == "True"
     deck_outline = ship["DeckZone5"]
     assert deck_outline["Type"] == "Deck"

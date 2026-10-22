@@ -40,7 +40,9 @@ AFT_ISLAND_BASE = [
     (26, -110), (33, -112), (39, -104), (39, -74),
     (33, -66), (26, -69),
 ]
-ELEVATORS = [(42, -50), (42, 69), (-42, 92), (41, -132)]
+PORT_LIFT_Z = (min(z for _, z in MAIN_ISLAND_BASE)
+               + max(z for _, z in MAIN_ISLAND_BASE))/2
+ELEVATORS = [(42, -50), (42, 69), (-42, PORT_LIFT_Z), (41, -132)]
 LASERS = [(-35, 109), (36, 119), (-40, -60), (31, -157)]
 CATAPULTS = [((-13, 59), (-13, 157)), ((6, 55), (6, 161)),
              ((16, 59), (21, 144))]
@@ -105,6 +107,32 @@ def rectangle_distance(x, z, xlo, xhi, zlo, zhi):
 
 def lateral_gap(left, right, xlo, xhi):
     return max(xlo-right, left-xhi, 0)
+
+
+def bow_sonar_fairing(mesh):
+    """Round the sonar blister into the bow; its aft end sits inside the hull."""
+    sides, sections = 32, 16
+    centre_y, centre_z = -6.2, 160.0
+    half_width, half_height, half_length = 3.0, 2.0, 12.0
+    vertices = [(0, centre_y, centre_z-half_length)]
+    for i in range(1, sections):
+        theta = math.pi*i/sections
+        radius = math.sin(theta)
+        z = centre_z-half_length*math.cos(theta)
+        for j in range(sides):
+            angle = 2*math.pi*j/sides
+            vertices.append((half_width*radius*math.cos(angle),
+                             centre_y+half_height*radius*math.sin(angle), z))
+    end = len(vertices)
+    vertices.append((0, centre_y, centre_z+half_length))
+    faces = [[0, 1+(j+1)%sides, 1+j] for j in range(sides)]
+    for i in range(sections-2):
+        a, b = 1+i*sides, 1+(i+1)*sides
+        faces.extend([[a+j, a+(j+1)%sides, b+(j+1)%sides, b+j]
+                      for j in range(sides)])
+    last = 1+(sections-2)*sides
+    faces.extend([[last+j, last+(j+1)%sides, end] for j in range(sides)])
+    mesh.add("BowSonarFairingStudy", vertices, faces, "underwater")
 
 
 def geometry(closed_lasers=True):
@@ -241,7 +269,7 @@ def geometry(closed_lasers=True):
             m.box(f"LaserHatchClosed_{i}", x, 22.105, z, 5, .12, 5.8, "hatch")
             m.stripe(f"LaserHatchSeam_{i}", (x, z-2.6), (x, z+2.6),
                      .09, 22.18, "edge")
-    m.box("BowSonarFairingStudy", 0, -5.5, 164, 6, 3.5, 8, "dark")
+    bow_sonar_fairing(m)
     return m
 
 
@@ -494,7 +522,7 @@ def main():
     build_viewer(mesh, COLORS, HERE/"viewer/australis_2030_3d.html", deployed_lasers())
     print(f"[OK] {summary['parts']} closed components; {summary['triangles']} triangles")
     print("[OK] Original metre OBJ, approximate game-scale OBJ, three PNGs, and 3D viewer")
-    print("[STATUS] Design model only; Sea Power integration has not been tested")
+    print("[STATUS] User confirmed hull loading; revised visuals and aircraft operations await QA")
 
 
 if __name__ == "__main__":

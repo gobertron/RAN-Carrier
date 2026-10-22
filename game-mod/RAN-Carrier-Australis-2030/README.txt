@@ -1,4 +1,4 @@
 RAN Australis 2030 Editor Prototype
 This is an opt-in editor test of an original mesh and native-style carrier deck routes. It has no air group, no operational laser, radar or ECM, and no tested deck animation. The 99-aircraft count is a design target. A stock Sea Power Nimitz bundle is named as a runtime fallback; no stock or Workshop asset bytes are copied.
-The second installed version still raised VesselRudderSystem.init. The supplied game assembly shows that method reads the stern foam trail transform. This revision adds a native-style Foam section with an original trail position; the rudder and hull stay ours. The editor-load correction requires an in-game test.
+The user confirmed mission loading and original hull rendering on 22 October 2026 after the Foam section was added. This revision lowers the flag by 25 m, rounds the bow sonar fairing into the underwater hull, and moves the port lift abreast of the main island with matching taxi routes. These changes need an in-game check.
 Test with the failed Melbourne prototype disabled. If the editor errors, collect the current logs, withdraw only this mod, and share the latest Sea Power Player.log.

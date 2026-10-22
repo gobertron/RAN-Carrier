@@ -160,14 +160,14 @@ def routes() -> list[tuple[str, str, list[tuple[float,float]]]]:
             sx,sz = CATAPULTS[launch-1][0]
             if e == 1: way = [(0,-48),(0,44),(sx,sz-8)]
             elif e == 2: way = [(23,56),(sx,sz-8)]
-            else: way = [(-28,77),(sx,sz-8)]
+            else: way = [(-30,ELEVATORS[2][1]+12),(-28,46),(sx,sz-8)]
             out.append((f"Elevator{e}",f"LaunchPoint{launch}",way))
     for i,(x,z) in enumerate(VERTICAL_SPOTS,4):
         out.append(("Elevator4",f"LaunchPoint{i}",[(10,-128),(x,z-12)]))
     out += [
         ("RecoveryPoint1","Elevator1",[(-25,-62),(0,-50)]),
         ("RecoveryPoint1","Elevator2",[(-26,-35),(0,46),(23,63)]),
-        ("RecoveryPoint1","Elevator3",[(-30,-35),(-30,69)]),
+        ("RecoveryPoint1","Elevator3",[(-30,50),(-34,ELEVATORS[2][1]+8)]),
     ]
     for i,(x,z) in enumerate(VERTICAL_SPOTS,2):
         if i < 5:
@@ -341,7 +341,9 @@ def vessel_ini(material: dict[str,str]) -> str:
         "RootMesh=usn_ddg_adams",
         "Mesh=usn_ddg_adams_animatedflag",
         "ResourcesMaterialFolder=ships/materials/",
-        "Material=flag_us",f"Position={vec(33,50,10)}",
+        # The stock Adams flag already has its mast offset baked in. The
+        # former extra 50 m placed it high above our 55 m enclosed mast.
+        "Material=flag_us",f"Position={vec(33,25,10)}",
         "Rotation=270,90,0"]))
     colliders = {
         "coll_bridge": ("Box",(33,34,2),(14,22,60)),
@@ -437,11 +439,11 @@ def build(destination: Path = DEST) -> None:
         "or ECM, and no tested deck animation. The 99-aircraft count is a design "
         "target. A stock Sea Power Nimitz bundle is named as a runtime fallback; "
         "no stock or Workshop asset bytes are copied.\n"
-        "The second installed version still raised VesselRudderSystem.init. "
-        "The supplied game assembly shows that method reads the stern foam "
-        "trail transform. This revision adds a native-style Foam section "
-        "with an original trail position; the rudder and hull stay ours. "
-        "The editor-load correction requires an in-game test.\n"
+        "The user confirmed mission loading and original hull rendering on "
+        "22 October 2026 after the Foam section was added. This revision "
+        "lowers the flag by 25 m, rounds the bow sonar fairing into the "
+        "underwater hull, and moves the port lift abreast of the main island "
+        "with matching taxi routes. These changes need an in-game check.\n"
         "Test with the failed Melbourne prototype disabled. If the editor "
         "errors, collect the current logs, withdraw only this mod, and share "
         "the latest Sea Power Player.log.\n",
@@ -454,7 +456,7 @@ def main() -> None:
     args = parser.parse_args()
     build(args.destination)
     print(f"[OK] Built {MOD_NAME}: {args.destination}")
-    print("[STATUS] Static editor prototype; no Sea Power test has run here")
+    print("[STATUS] User confirmed hull loading; revised flag, bow and lift await QA")
 
 
 if __name__ == "__main__":

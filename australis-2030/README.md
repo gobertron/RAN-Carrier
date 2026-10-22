@@ -24,7 +24,7 @@ visual design choice and do not establish a radar signature.
 | Maximum waterline beam / draft | 44 m / 11.5 m, approximate |
 | Air group | 99 aircraft, capacity target only |
 | Catapult tracks / blast deflector panels | 3 / 3, indicated |
-| Deck-edge lifts | 4, with the forward starboard lift amidships |
+| Deck-edge lifts | 4; single port lift abreast of the larger main island |
 | Aft VTOL / helicopter spots | 4, offset toward the smaller aft island in a fore-to-aft line |
 | Recovery lane | Angled, with landing threshold and four arresting cables indicated |
 | Islands | 2; larger central command island, smaller aft aviation island |
@@ -70,8 +70,12 @@ concept art, not a seaworthy naval architecture package. A separate
 ships the original mesh, simple materials, collision sections, four lift
 positions, three catapult launch points, four vertical launch points, five
 recovery points and simple taxi routes. Its 99-aircraft figure is a configured
-capacity, not a demonstrated working air group. Static checks pass, but
-Mission Editor loading, actual aircraft operations, radar, ECM and lasers
+capacity, not a demonstrated working air group. The user confirmed Mission
+Editor Play loading and hull rendering with `cbdaef4` on 22 October 2026.
+The latest revision lowers the stock flag, replaces the box-shaped sonar
+study with a rounded fairing blended into the underwater hull, and moves the
+single port lift abreast of the main island with matching taxi routes. These
+changes await an in-game check; aircraft operations, radar, ECM and lasers
 remain untested or unimplemented. See [GAME-TEST.md](GAME-TEST.md). The
 package does not modify RADF, the Workshop, the original game or Melbourne.
 

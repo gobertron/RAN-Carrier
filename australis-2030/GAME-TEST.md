@@ -26,8 +26,27 @@ of the supplied `Seapower-Scripts.dll` shows that the vessel foam loader returns
 immediately if `[Foam]` is missing; the rudder initialization subsequently
 reads the absent stern foam trail's transform. This package now includes
 the stock-style foam configuration with original Australis positions. All
-visible hull and rudder geometry remains original. An in-game test is still
-needed. The editor map displays a unit marker; press **Play** to test 3D load.
+visible hull and rudder geometry remains original. The editor map displays a
+unit marker; press **Play** to test 3D load.
+
+**22 October successful load:** The user installed `cbdaef4`, started the
+mission and confirmed that the original hull renders without the previous
+loading exception. The screenshots show the two islands and marked flight
+deck, with an empty aircraft list. This confirms the mission-load gate only;
+aircraft operations, damage collision and combat systems remain untested.
+
+**Visual correction awaiting check:** The stock flag's baked mast offset plus
+our extra vertical translation left it floating above the main island. Its
+INI translation is now 25 m lower. The rectangular bow sonar study is replaced
+by a rounded, closed fairing, with its aft end embedded in the underwater hull
+and the same hull finish. Check the flag from both sides and the bow from
+underwater after upgrading; the flag should sit just above the enclosed mast,
+and the fairing should show no projecting rectangular corners.
+
+The single port lift (Elevator 3) has also moved aft from z=92 m to z=3 m,
+abreast of the larger forward island. Its spawn/ride positions and both taxi
+directions now follow that location. Check lift placement and a single-aircraft
+taxi movement after confirming the revised hull loads.
 
 ## Install from the draft branch
 
