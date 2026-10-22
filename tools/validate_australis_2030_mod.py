@@ -175,9 +175,9 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
     main_island = ship["DeckZone8"]
     island_z = [vector(main_island[f"Point{i}"])[2]
                 for i in range(1,int(main_island["NumberOfPoints"])+1)]
-    assert port_lift[0] < 0 and math.isclose(
-        port_lift[2],(min(island_z)+max(island_z))/2,abs_tol=1e-6), \
-        "Port lift must be abreast of the main island"
+    assert port_lift[0] < 0 and min(island_z) <= port_lift[2] <= max(island_z), \
+        "Port lift must remain abreast of the main island"
+    assert abs(port_lift[2]*METRES_PER_UNIT+27) < .001
     assert ship["RecoveryPoint1"]["Arrested"] == "True"
     deck_outline = ship["DeckZone7"]
     assert deck_outline["Type"] == "Deck"
@@ -190,12 +190,15 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
                         abs_tol=.001)
     assert math.isclose(max(z for _,z in outline)-min(z for _,z in outline),370,
                         abs_tol=.001)
-    # Measure the actual exported gold track meshes, independently of the
+    # Measure the actual exported metal track meshes, independently of the
     # generator constants, and compare with the game's launch definitions.
-    gold = object_vertices["Surface_Gold"]
+    tracks = object_vertices["Surface_Track"]
     actual_catapults = []
     for i in range(1,6):
-        track = gold[(i-1)*8:i*8]
+        track = tracks[(i-1)*8:i*8]
+        for x,y,z in track:
+            assert inside_deck(x*METRES_PER_UNIT,z*METRES_PER_UNIT,outline), (i,"metal track off deck")
+            assert 0 <= y*METRES_PER_UNIT-22 < .08, (i,"track should be deck-flush")
         start = tuple((a+b)/2 for a,b in zip(track[0],track[3]))
         end = tuple((a+b)/2 for a,b in zip(track[1],track[2]))
         launch = ship[f"LaunchPoint{i}"]
@@ -210,7 +213,7 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
             assert abs(heading) < .002 and start[2]*METRES_PER_UNIT > 80, (i,"bow track")
             assert "SupportedClasses" not in launch
         else:
-            assert abs(heading+15) < .002 and start[2] < 0, (i,"angled port-waist track")
+            assert abs(heading+6) < .002 and start[0] < 0 and start[2] < 0, (i,"port-waist track")
             assert end[0] < start[0] and end[0] < 0
             assert launch["SupportedClasses"] == "usn_a-7e"
         length = math.hypot(dx,dz)
@@ -225,6 +228,25 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
         assert math.dist(centre,expected)*METRES_PER_UNIT < .001, (i,"deflector placement")
         along = (deflector[3][0]-deflector[0][0],deflector[3][2]-deflector[0][2])
         assert abs(math.degrees(math.atan2(*along))-heading) < .003, (i,"deflector heading")
+    waist_starts = [actual_catapults[i][0] for i in (3,4)]
+    assert abs(abs(waist_starts[1][2]-waist_starts[0][2])*METRES_PER_UNIT-21) < .001
+    # The first five gold objects are the new compact launch shuttles;
+    # white guides follow the eight lift-edge stripes in their batch.
+    gold = object_vertices["Surface_Gold"]
+    white = object_vertices["Surface_White"]
+    for i,(start,end,direction) in enumerate(actual_catapults,1):
+        shuttle = gold[(i-1)*8:i*8]
+        centre = tuple(sum(v[axis] for v in shuttle)/8 for axis in (0,2))
+        assert math.dist(centre,(start[0],start[2]))*METRES_PER_UNIT < .001, (i,"shuttle alignment")
+    for x,y,z in white[64:144]:
+        assert inside_deck(x*METRES_PER_UNIT,z*METRES_PER_UNIT,outline), "painted guide off deck"
+    # No track is allowed to float over the sea. The outer waist finishes
+    # inside the deck edge; departure continues outboard once airborne.
+    for i,(start,end,direction) in enumerate(actual_catapults,1):
+        for n in range(96):
+            x = start[0]*METRES_PER_UNIT+n*direction[0]
+            z = start[2]*METRES_PER_UNIT+n*direction[1]
+            assert inside_deck(x,z,outline), (i,"track runs off the deck")
     # Check the user's stock A-7E reference at all five catapults, with
     # wings open. This is a staging footprint check, not a taxi simulation.
     obstacles = list(lift_bounds)

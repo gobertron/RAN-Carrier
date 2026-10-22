@@ -25,6 +25,7 @@ COLORS.update({
     "island": "#9aacb3", "glass": "#1b3c50", "dark": "#253843",
     "white": "#dfebea", "gold": "#d3b269", "laser": "#4f9b9c",
     "edge": "#71848b", "sensor": "#3a6374", "hatch": "#536b75",
+    "track": "#697b85",
 })
 
 # Keep one authoring frame for the detailed fittings, then project every X
@@ -47,8 +48,8 @@ AFT_ISLAND_BASE = [
     (26, -110), (33, -112), (39, -104), (39, -74),
     (33, -66), (26, -69),
 ]
-PORT_LIFT_Z = (min(z for _, z in MAIN_ISLAND_BASE)
-               + max(z for _, z in MAIN_ISLAND_BASE))/2
+# Abreast the aft part of the main island, behind the waist launch run.
+PORT_LIFT_Z = -27.0
 # Actual metre dimensions are independent of the hull's width reduction.
 # Fore-and-aft parking accommodates the Tomcat without a wide cross-deck lift.
 LIFT_WIDTH_M = 22.0
@@ -63,13 +64,13 @@ LASERS = [(-35, 109), (36, 119), (-40, -60), (31, -157)]
 # Waist departures are angled to port, using the shared recovery-deck area.
 BOW_CATAPULT_IDS = (1, 2, 3)
 WAIST_CATAPULT_IDS = (4, 5)
-WAIST_CATAPULT_HEADING_DEG = -15.0
+WAIST_CATAPULT_HEADING_DEG = -6.0
 CATAPULTS = [((x/WIDTH_SCALE, 88), (x/WIDTH_SCALE, 183))
              for x in (-14, 0, 14)] + [
-    ((x/WIDTH_SCALE, -30),
+    ((x/WIDTH_SCALE, z),
      ((x+95*math.sin(math.radians(WAIST_CATAPULT_HEADING_DEG)))/WIDTH_SCALE,
-      -30+95*math.cos(math.radians(WAIST_CATAPULT_HEADING_DEG))))
-    for x in (-6, 12)
+      z+95*math.cos(math.radians(WAIST_CATAPULT_HEADING_DEG))))
+    for x,z in ((-26.4,-1),(-10,-22))
 ]
 # Bow 1/3 can operate as a pair. Waist launches interlock with all bow
 # lanes and with each other because departure/taxi areas are shared.
@@ -104,6 +105,16 @@ def catapult_point(route, along, across=0):
 def catapult_deflector(route):
     return [catapult_point(route, along, across)
             for along, across in ((-20,-3.5),(-20,3.5),(-16,3.5),(-16,-3.5))]
+
+
+def catapult_guide_end(route, across):
+    """Stop painted guide lines inboard of the deck edge."""
+    length = 95.0
+    while length > 0:
+        points = [catapult_point(route,length,across+delta) for delta in (-.2,.2)]
+        if all(inside_deck(x*WIDTH_SCALE,z) for x,z in points): return length
+        length -= .5
+    raise ValueError("Catapult guide is outside the deck")
 
 
 def slim_mesh(mesh):
@@ -285,10 +296,22 @@ def geometry(closed_lasers=True):
         m.stripe(f"CatapultJetBlastDeflectorHinge_{i}",
                  catapult_point(route,-16,-3.5), catapult_point(route,-16,3.5),
                  .13, 22.18, "edge")
-        m.stripe(f"CatapultTrack_{i}", start, end, .52, 22.13, "gold")
-        m.stripe(f"CatapultDeckGuide_{i}",
-                 catapult_point(route,0,1.25), catapult_point(route,95,1.25),
-                 .16, 22.14, "edge")
+        for across in (-7/6,7/6):
+            m.stripe(f"CatapultJetBlastDeflectorSeam_{i}_{across:+.2f}",
+                     catapult_point(route,-20,across),catapult_point(route,-16,across),
+                     .06,22.17,"dark")
+        # Shallow metal trough and dark slot, with a small shuttle rather
+        # than the former raised yellow bar. These are static visual details.
+        m.stripe(f"CatapultTrack_{i}", start, end, .62, 22.015, "track")
+        m.stripe(f"CatapultSlot_{i}", start, end, .13, 22.06, "dark")
+        for side in (-1,1):
+            m.stripe(f"CatapultDeckGuide_{i}_{side}",
+                     catapult_point(route,0,side*1.1),
+                     catapult_point(route,catapult_guide_end(route,side*1.1),side*1.1),
+                     .13,22.055,"white")
+        shuttle = [catapult_point(route,along,across)
+                   for along,across in ((-.55,-.22),(-.55,.22),(.55,.22),(.55,-.22))]
+        m.prism(f"CatapultShuttle_{i}",shuttle,22.10,22.16,"gold")
 
     a, b = LANDING_LANE_A, LANDING_LANE_B
     for side in (-1, 1):
@@ -414,9 +437,19 @@ def plan_preview(path):
                    point(*pad_mark_point(x, z, 0, 3.5))],
                   fill="#edf4f2", width=3)
     for (a, b) in CATAPULTS:
-        draw.line([point(*a), point(*b)], fill="#d8b66e", width=4)
+        draw.line([point(*a), point(*b)], fill="#92a1a6", width=3)
+        draw.line([point(*a), point(*b)], fill="#162a35", width=1)
+        for side in (-1,1):
+            draw.line([point(*catapult_point((a,b),0,side*1.1)),
+                       point(*catapult_point((a,b),catapult_guide_end((a,b),side*1.1),side*1.1))],
+                      fill="#dce7e6",width=1)
         draw.polygon(shape(catapult_deflector((a,b))),
                      fill="#76909a", outline="#d2dfdf", width=1)
+        for across in (-7/6,7/6):
+            draw.line([point(*catapult_point((a,b),-20,across)),
+                       point(*catapult_point((a,b),-16,across))],fill="#263d48",width=1)
+        sx,sy = point(*a)
+        draw.ellipse((sx-2,sy-2,sx+2,sy+2),fill="#d8b66e")
     a, b = LANDING_LANE_A, LANDING_LANE_B
     for side in (-1, 1):
         shift = np.array((side*11.3, 0.))
@@ -446,7 +479,7 @@ def plan_preview(path):
         ("4 LIFTS / 22 x 26 m", (57, 54), (1250, 207)),
         ("4 OFFSET VTOL / HELO SPOTS", (6, -136), (158, 204)),
         ("3 BOW CATAPULTS", (0, 136), (1335, 655)),
-        ("2 PORT-WAIST CATAPULTS", (-17, 25), (854, 715)),
+        ("2 STAGGERED WAIST CATAPULTS", (-28, 45), (850, 715)),
         ("4 FLUSH LASER HATCHES", (-35, 109), (1266, 784)),
         ("4 ARRESTING WIRES", (-23, -75), (160, 689)),
         ("ANGLED RECOVERY", (-27, -100), (155, 736)),
@@ -468,6 +501,8 @@ def main():
     assert math.isclose((max(x for x, _ in DECK)-min(x for x, _ in DECK))*WIDTH_SCALE,
                         spec["flight_deck_beam_m"])
     assert len(CATAPULTS) == spec["deck"]["catapult_tracks"]
+    assert WAIST_CATAPULT_HEADING_DEG == spec["deck"]["port_waist_heading_degrees"]
+    assert PORT_LIFT_Z == spec["deck"]["port_lift_longitudinal_position_m"]
     assert len(VERTICAL_SPOTS) == spec["deck"]["aft_vertical_operation_spots"]
     assert spec["islands"]["count"] == 2
     assert PAD_MARK_ANGLE_DEG == spec["deck"]["aft_h_mark_angle_degrees"]
@@ -551,6 +586,9 @@ def main():
             assert nearest >= 12
     mesh = geometry()
     parts = {name: vertices for name, vertices, _, _ in mesh.parts}
+    for name,vertices in parts.items():
+        if name.startswith("Catapult"):
+            assert all(inside_deck(x,z) for x,y,z in vertices), (name,"hardware outside deck")
     n = len(DECK)
     assert np.array_equal(parts["HardChineHull"][:n],
                           parts["FacetedFlightDeck"][:n])
@@ -589,6 +627,9 @@ def main():
                    bow_catapult_ids=list(BOW_CATAPULT_IDS),
                    port_waist_catapult_ids=list(WAIST_CATAPULT_IDS),
                    port_waist_heading_degrees=WAIST_CATAPULT_HEADING_DEG,
+                   port_lift_longitudinal_position_m=PORT_LIFT_Z,
+                   port_waist_launch_stagger_m=abs(CATAPULTS[4][0][1]-CATAPULTS[3][0][1]),
+                   catapult_flush_slot_shuttle_details=True,
                    embarked_complement_design_target=FIT["crew"]["total"],
                    accommodation_berths_design_target=FIT["crew"]["berths"],
                    peripheral_vls_cells_visual_target=80,
@@ -640,11 +681,16 @@ def main():
            HERE/"previews/australis_2030_bow.png",
            camera_azimuth_deg=90, camera_elevation_deg=8)
     plan_preview(HERE/"previews/australis_2030_deck_plan.png")
+    render({"name": "Australis class — port waist", "aircraft_capacity": 99,
+            "propulsion": "Nuclear concept", "length_m": 370,
+            "deck_width_m": DECK_BEAM_M}, mesh,
+           HERE/"previews/australis_2030_port_waist.png",
+           camera_azimuth_deg=-125, camera_elevation_deg=38)
     (HERE/"model/validation.json").write_text(
         json.dumps(summary, indent=2)+"\n")
     build_viewer(mesh, COLORS, HERE/"viewer/australis_2030_3d.html", deployed_lasers())
     print(f"[OK] {summary['parts']} closed components; {summary['triangles']} triangles")
-    print("[OK] Original metre OBJ, approximate game-scale OBJ, three PNGs, and 3D viewer")
+    print("[OK] Original metre OBJ, approximate game-scale OBJ, four PNGs, and 3D viewer")
     print("[STATUS] User confirmed hull loading; revised visuals and aircraft operations await QA")
 
 

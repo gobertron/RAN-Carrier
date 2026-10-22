@@ -17,7 +17,7 @@ wide; the maximum width including the lift extensions is 109 m.
 | Aircraft target | 99 |
 | Proposed hangar / deck allocation | 36 / 63, parking unverified |
 | Steam CATOBAR tracks | Five, each 95 m; IDs 1/2/3 bow and 4/5 port waist |
-| Waist launch heading | 15 degrees to port |
+| Waist launch heading | 6 degrees to port; launch positions staggered 21 m |
 | Deck-edge lifts | Four, each 22 × 26 m, bow-facing parking |
 | Recovery | Angled lane, four cable indications; hook belongs to aircraft |
 | Islands | Larger command island and smaller aft aviation island |
@@ -43,18 +43,26 @@ their departure/taxi areas are shared. The one-second minimum interval remains
 subject to the game scheduler. Waist lanes are restricted to the stock A-7E
 pending other footprint checks. The bow lanes use a checked 25 m span × 30 m length
 reference envelope. The starboard forward lift is moved to z=54 m; the port
-lift remains abreast of the main island. Four 12-degree H markings remain
+lift remains abreast of the aft part of the main island at z=-27 m, behind the
+waist launch run. Four 12-degree H markings remain
 29 m apart near the aft island. Recovery blocks launches.
 
 The three-bow/two-waist arrangement is our requested Australis adaptation of
 the bow-and-waist carrier layout, not a claim that an American class has this
 exact five-catapult arrangement. Tracks, deflector panels, taxi approaches and
 native launch headings share the same axes; the waist tracks turn to port.
+The waist tracks now use a shallow 6-degree heading, outboard positioning and
+a 21 m fore-and-aft stagger. Small launch shuttles, flush metal troughs/dark
+slots, white guides and segmented stowed deflectors give them a more credible
+appearance. Those details are static; deflector deployment and shuttle motion
+are not animated. The chosen angle is an Australis design value.
 
 The [deck plan](previews/australis_2030_deck_plan.png),
 [perspective](previews/australis_2030_perspective.png) and
 [bow view](previews/australis_2030_bow.png) are geometry renders. Open the
 [offline viewer](viewer/australis_2030_3d.html) to rotate and inspect the model.
+The [port-waist view](previews/australis_2030_port_waist.png) and the viewer's
+**Port waist** preset show the shallow, staggered tracks from their outboard side.
 Its laser deployment control is a visual demonstration, not game weapon logic.
 
 `model/source/` contains metre OBJ/MTL files. The deployed-laser OBJ is an

@@ -10,7 +10,7 @@ import numpy as np
 
 
 def category(name):
-    if name.startswith(("CatapultTrack", "CatapultDeckGuide")):
+    if name.startswith("Catapult"):
         return "catapults"
     if name.startswith(("DeckEdgeLift", "LiftEdge")):
         return "lifts"
@@ -104,6 +104,7 @@ TEMPLATE = r'''<!doctype html>
     <button type="button" data-view="top">Deck / top</button>
     <button type="button" data-view="starboard">Starboard</button>
     <button type="button" data-view="bow">Bow</button>
+    <button type="button" data-view="port">Port waist</button>
   </div>
   <h2>Defensive mount study</h2>
   <button type="button" id="deploy" aria-pressed="false">Deploy four lasers</button>
@@ -264,6 +265,7 @@ if (!gl) {
     if (view === 'perspective') { azimuth=-2.48; elevation=.48; distance=540; }
     if (view === 'top') distance=520;
     if (view === 'starboard') { azimuth=Math.PI/2; elevation=.20; distance=530; }
+    if (view === 'port') { azimuth=-Math.PI/2; elevation=.55; distance=530; }
     if (view === 'bow') { azimuth=0; elevation=.25; distance=480; }
     draw();
   });

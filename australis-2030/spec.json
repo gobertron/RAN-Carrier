@@ -52,12 +52,25 @@
       4,
       5
     ],
-    "port_waist_heading_degrees": -15,
+    "port_waist_heading_degrees": -6,
     "bow_adjacent_catapults_interlocked": true,
     "waist_launches_interlocked_with_all_bow_lanes": true,
     "waist_launches_interlocked_with_each_other": true,
     "waist_reference_class": "usn_a-7e",
-    "layout": "Three straight bow catapults and two angled port-waist catapults"
+    "layout": "Three straight bow catapults and two angled port-waist catapults",
+    "port_waist_launch_positions_m": [
+      [
+        -26.4,
+        -1
+      ],
+      [
+        -10,
+        -22
+      ]
+    ],
+    "port_waist_launch_stagger_m": 21,
+    "port_lift_longitudinal_position_m": -27,
+    "catapult_visual_details": "Flush metal troughs, dark slots, launch shuttles and segmented stowed deflectors; static geometry"
   },
   "systems_visual_studies": {
     "integrated_radar_arrays": 7,

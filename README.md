@@ -18,9 +18,12 @@ islands, four offset helicopter/VTOL spots, four 22 × 26 m lifts and an angled
 recovery deck with arresting cables. A broader bow deck follows the supplied
 Ford reference while the immersed bow remains fine. Bow lanes 1/3 can operate
 as a pair; the centre bow lane interlocks with its neighbours. Waist lanes
-4/5 angle 15 degrees to port and interlock with all bow lanes and each other.
+4/5 use a shallow 6-degree port heading and staggered launch positions; they
+interlock with all bow lanes and each other. Flush metal slots, small shuttles,
+white guides and segmented stowed deflectors replace the plain yellow bars.
 The waist pair currently accepts stock A-7Es pending checks for other aircraft.
-The three bow lanes accept other carrier-capable aircraft.
+The three bow lanes accept other carrier-capable aircraft. The port lift stays
+beside the aft part of the main island at z=-27 m, behind the waist launch run.
 
 Design targets are **370 m overall, 82 m main flight deck, 112,000 metric
 tonnes, 99 aircraft and 5,300 embarked personnel**, with 5,800 berths. Maximum

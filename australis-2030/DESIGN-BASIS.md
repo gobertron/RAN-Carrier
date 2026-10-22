@@ -62,17 +62,21 @@ crew or water-production keys are added to the vessel INI.
 | 1, port bow | (-14, 88) | Ahead, 0° | 95 m | Carrier-capable aircraft; large reference envelope checked |
 | 2, centre bow | (0, 88) | Ahead, 0° | 95 m | Carrier-capable aircraft; large reference envelope checked |
 | 3, starboard bow | (14, 88) | Ahead, 0° | 95 m | Carrier-capable aircraft; large reference envelope checked |
-| 4, outer port waist | (-6, -30) | 15° to port | 95 m | Stock A-7E only pending other footprint checks |
-| 5, inner port waist | (12, -30) | 15° to port | 95 m | Stock A-7E only pending other footprint checks |
+| 4, outer port waist | (-26.4, -1) | 6° to port | 95 m | Stock A-7E only pending other footprint checks |
+| 5, inner port waist | (-10, -22) | 6° to port | 95 m | Stock A-7E only pending other footprint checks |
 
 Coordinates are physical metres, with +x starboard and +z toward the bow.
 This is the requested three-bow/two-waist Australis layout. The two waist
 tracks turn toward the port deck edge instead of forming a five-track bank
-at the bow. The exact five-catapult count is an Australis design choice.
+at the bow. The exact five-catapult count and 6-degree waist angle are Australis
+design choices. The waist launch positions are staggered 21 m fore-and-aft,
+with both starts on the port half of the deck. The outer track finishes near
+the port deck edge. These changes avoid the earlier steep diagonal layout.
 
 The bow deck is broader while the immersed bow retains a fine stem. The
 starboard forward lift moves from z=69 m to z=54 m to clear the launch/taxi
-area. The port lift stays abreast of the main island; four helicopter/VTOL
+area. The port lift stays abreast of the aft part of the main island, at
+z=-27 m; its entire platform is behind the waist launch positions. Four helicopter/VTOL
 spots remain aft.
 
 Bow lanes 1/3 can operate as a pair; bow lane 2 interlocks with both. Each
@@ -81,6 +85,12 @@ the forward departure and taxi areas are shared. Launch and recovery remain
 separate. Five installed catapults do not authorize five simultaneous
 departures. Taxi approaches join 20 m behind each launch point on its actual
 heading. The deflector panels and guide markings rotate with the waist tracks.
+The metal track, dark slot and small launch shuttle are deck-flush visual
+details. Painted guides stop before the deck edge; each stowed deflector has
+panel seams. These details follow the equipment families described by
+[NAVAIR Launching Systems](https://www.navair.navy.mil/product/launching-systems),
+not a copied installation drawing. Hardware motion, panel deployment, steam
+delivery and exhaust flow are not implemented or certified by these blockouts.
 Actual timing depends on the shared one-second minimum, preparation, occupancy
 and ship course. Helicopter launch spots retain independent launch-point
 interlocks; exhaust, rotor and full deck-cycle clearance still need game QA.

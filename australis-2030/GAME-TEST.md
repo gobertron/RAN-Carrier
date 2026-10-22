@@ -1,7 +1,8 @@
 # Australis 2030 — five-lane CATOBAR and combat-fit trial
 
 The current design uses five 95 m steam CATOBAR tracks: three at the bow
-and two angled 15 degrees to port on the waist. Four 22 × 26 m lifts and four
+and two shallow 6-degree port-waist tracks with staggered launch positions.
+Four 22 × 26 m lifts and four
 aft helicopter spots remain.
 The targets are 99 aircraft, 5,300 embarked personnel, 5,800 berths and
 112,000 tonnes. See [DESIGN-BASIS.md](DESIGN-BASIS.md) for the size/crew budget
@@ -62,11 +63,14 @@ stop there and share its output.
    and outboard weapon shelves render, then save and reload once.
 3. Add a stock **F-14A**. Check bow-facing parking, wheel/platform alignment
    and taxiing inboard. The forward starboard lift is now at z=54 m; the port
-   lift remains abreast of the main island.
+   lift sits beside the aft part of the main island at z=-27 m, behind the
+   waist launch run. Confirm that the port platform clears the launch area.
 4. Use **A-7Es** for all five catapults. IDs 1/2/3 are the straight bow bank
    and accept other carrier-capable aircraft. IDs 4/5 are the angled port-waist
    pair, currently restricted to the stock A-7E. Check each lane separately,
    including taxi alignment, deflector position and actual departure heading.
+   Check the flush slots, shuttles, trimmed white guides and the staggered
+   waist positions; neither track may project beyond the deck edge.
 5. Test bow pair 1/3, then centre bow 2. Check waist 4 and 5 separately: each
    must wait for every bow lane and the other waist lane to be clear. Then
    queue a mixed bow/waist group and verify those interlocks. The shared
@@ -83,7 +87,7 @@ lanes have only been checked for the A-7E; they are not yet cleared for the
 F-111N families. Five installed lanes do not imply five simultaneous launches
 or a validated 99-aircraft deck cycle.
 
-This revision keeps the port lift abreast of the main island and checks a
+This revision keeps the port lift abreast of the aft part of the main island and checks a
 12 m plan-view launch corridor past lifts/islands. Waist departure uses shared
 deck space, so a successful single launch does not prove a complete deck cycle.
 
@@ -117,7 +121,14 @@ Withdraw the current mod while retaining a verified backup:
 python3 "$HOME/Downloads/RAN-Carrier-Australis-test/tools/install_australis_2030.py" --remove
 ```
 
-To return to the previous five-bow-track revision, use its matching installer:
+To return to the previous 15-degree waist revision, use its matching installer:
+
+```bash
+git -C "$HOME/Downloads/RAN-Carrier-Australis-test" worktree add --detach "$HOME/Downloads/RAN-Carrier-Australis-before-waist-refinement" 016fde6
+python3 "$HOME/Downloads/RAN-Carrier-Australis-before-waist-refinement/tools/install_australis_2030.py"
+```
+
+To return to the earlier five-bow-track revision:
 
 ```bash
 git -C "$HOME/Downloads/RAN-Carrier-Australis-test" worktree add --detach "$HOME/Downloads/RAN-Carrier-Australis-before-waist" fae6b9d
