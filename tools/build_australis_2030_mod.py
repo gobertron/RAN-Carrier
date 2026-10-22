@@ -20,6 +20,7 @@ sys.path.insert(0, str(DESIGN))
 from build import (  # noqa: E402
     AFT_ISLAND_BASE, CATAPULTS, COLORS, DECK, DECK_SURFACE_Y, ELEVATORS,
     LANDING_LANE_A, LANDING_LANE_B, MAIN_ISLAND_BASE, VERTICAL_SPOTS, geometry,
+    WIDTH_SCALE,
 )
 from generate_source_models import Mesh  # noqa: E402
 from rebuild_game_scale import METRES_PER_UNIT  # noqa: E402
@@ -30,10 +31,11 @@ SHIP_DIR = f"ships/{ID}"
 DEST = ROOT / "game-mod" / MOD_NAME
 SCALE = 1 / METRES_PER_UNIT
 DECK_HEIGHT = DECK_SURFACE_Y * SCALE
+LAUNCH_ASSOC = ((1,2),(3,2),(1,2),(4,5,6,7))
 
 
 def vec(x: float, y: float, z: float) -> str:
-    return f"{x*SCALE:.6f},{y*SCALE:.6f},{z*SCALE:.6f}"
+    return f"{x*WIDTH_SCALE*SCALE:.6f},{y*SCALE:.6f},{z*SCALE:.6f}"
 
 
 def point(x: float, z: float, above: float = .16) -> str:
@@ -87,7 +89,7 @@ def model(ship: Path) -> dict[str, str]:
         materials[name] = "dark"
     # Collision geometry is a separate OBJ object. It is never listed as a
     # visible submodel, but the game can use it in preference to its fallback.
-    out.box("coll_hull_main",0,10,0,52,20,320,"hull")
+    out.box("coll_hull_main",0,10,0,52*WIDTH_SCALE,20,320,"hull")
     path = ship / f"{ID}.obj"
     out.save(path, scale=SCALE)
     # Working Workshop carrier OBJ files carry v/vt/vn face indices. The
@@ -155,12 +157,14 @@ def catapult_zone(start: tuple[float,float],
 def routes() -> list[tuple[str, str, list[tuple[float,float]]]]:
     """Single-aircraft demonstration taxi routes; not a deck-cycle analysis."""
     out: list[tuple[str,str,list[tuple[float,float]]]] = []
-    for e in range(1,4):
-        for launch in range(1,4):
-            sx,sz = CATAPULTS[launch-1][0]
-            if e == 1: way = [(0,-48),(0,44),(sx,sz-8)]
-            elif e == 2: way = [(23,56),(sx,sz-8)]
-            else: way = [(-30,ELEVATORS[2][1]+12),(-28,46),(sx,sz-8)]
+    for e, launches in enumerate(LAUNCH_ASSOC[:3],1):
+        for launch in launches:
+            (sx,sz),(ex,ez) = CATAPULTS[launch-1]
+            length = math.hypot((ex-sx)*WIDTH_SCALE,ez-sz)
+            approach = (sx-20*(ex-sx)/length,sz-20*(ez-sz)/length)
+            if e == 1: way = [(0,-48),(0,32),approach]
+            elif e == 2: way = [(23,50),approach]
+            else: way = [(-30,ELEVATORS[2][1]+12),(-28,32),approach]
             out.append((f"Elevator{e}",f"LaunchPoint{launch}",way))
     for i,(x,z) in enumerate(VERTICAL_SPOTS,4):
         out.append(("Elevator4",f"LaunchPoint{i}",[(10,-128),(x,z-12)]))
@@ -189,9 +193,10 @@ def vessel_ini(material: dict[str,str]) -> str:
         section("General",[
             "UnitType=Vessel","DefaultCameraDistance=8.0",
             "MinCameraDistanceForeAft=3.2","MinCameraDistanceBroadside=1.5",
-            "CameraPivotHeight=0.34","Length=370","Beam=44",
+            "CameraPivotHeight=0.34","Length=370",f"Beam={44*WIDTH_SCALE:g}",
             "CompartmentsHeight=0.25","ArmorType=Moderate",
-            "FrontalArea=2450","SideArea=13200","BottomArea=25500"]),
+            f"FrontalArea={2450*WIDTH_SCALE:g}","SideArea=13200",
+            f"BottomArea={25500*WIDTH_SCALE:g}"]),
         section("OpticalView",[
             "Views=binocular_7x50,binocular_10x50",
             "DefaultView=binocular_7x50"]),
@@ -203,7 +208,7 @@ def vessel_ini(material: dict[str,str]) -> str:
             "NumberOfLaunchPoints=7","NumberOfRecoveryPoints=5",
             f"NumberOfTaxiPaths={len(routes())}","NumberOfDeckZones=7",
             "ForwardsTaxiVelocity=12","BackwardsTaxiVelocity=-8",
-            "SlowTaxiVelocity=6","LaunchDelay=9","GroundCrewCount=16",
+            "SlowTaxiVelocity=6","LaunchDelay=1","GroundCrewCount=16",
             "DeckParkSlots=44","LandingWhileLaunching=False",
             "HelicopterInitialWaypoint=-1,300,1",
             "HoldWaypoints=-2.7,2000,-6|-1.9,2000,-6.6|-1.1,2000,-6|-1.9,2000,-4.7",
@@ -215,23 +220,25 @@ def vessel_ini(material: dict[str,str]) -> str:
             "FlightDeck_NumberOfAccountableAmmunitionCategories=0",
             "ArmorType=Moderate","Collider=coll_hangar"]),
     ]
-    launch_assoc = ((1,2,3),(1,2,3),(1,2,3),(4,5,6,7))
     for i,(x,z) in enumerate(ELEVATORS,1):
         inner_x = (34 if x > 0 else -34)
         parts.append(section(f"Elevator{i}",[
-            "AssociatedLaunchPoints="+",".join(map(str,launch_assoc[i-1])),
+            "AssociatedLaunchPoints="+",".join(map(str,LAUNCH_ASSOC[i-1])),
             "Mesh=Dummy",f"SpawnPosition={point(inner_x,z)}",
             "SpawnRotation=-90",f"RidePosition={point(inner_x,z)}",
             "RideRotation=-90","EmbarkTime=10","RecycleTime=15"]))
     for i,((x,z),(ex,ez)) in enumerate(CATAPULTS,1):
-        rotation = math.degrees(math.atan2(ex-x,ez-z))
+        rotation = math.degrees(math.atan2((ex-x)*WIDTH_SCALE,ez-z))
+        interlock = "1,3" if i == 2 else "2"
         parts.append(section(f"LaunchPoint{i}",[
             "AllowedType=Plane,VTOL",f"Position={point(x,z)}",
+            f"BlocksLaunchPoints={interlock}",
+            f"TakeoffRequiresFreeLaunchpoints={interlock}",
             f"Rotation={rotation:.3f}","CatapultParticles=None",
-            f"CatapultLength={math.dist((x,z),(ex,ez)):.1f}"]))
+            f"CatapultLength={math.hypot((ex-x)*WIDTH_SCALE,ez-z):.3f}"]))
     for i,(x,z) in enumerate(VERTICAL_SPOTS,4):
         parts.append(section(f"LaunchPoint{i}",[
-            "AllowedType=Helicopter,VTOL","BlocksLaunchPoints=1,2,3",
+            "AllowedType=Helicopter,VTOL",
             f"Position={point(x,z)}","Rotation=-12"]))
     touchdown = LANDING_LANE_A + (LANDING_LANE_B-LANDING_LANE_A)*.36
     parts.append(section("RecoveryPoint1",[
@@ -239,7 +246,7 @@ def vessel_ini(material: dict[str,str]) -> str:
         "BlocksLaunchPoints=1,2,3,4,5,6,7",
         "BlocksRecoveryPoints=2,3,4,5",
         f"Position={point(*touchdown)}",f"ExitPosition={point(*LANDING_LANE_B)}",
-        "Rotation=-2.1",
+        "Rotation="+f"{math.degrees(math.atan2((LANDING_LANE_B[0]-LANDING_LANE_A[0])*WIDTH_SCALE,LANDING_LANE_B[1]-LANDING_LANE_A[1])):.3f}",
         "CircuitWaypoints=0.5,800,-4.5|0.5,800,2.5|-0.75,800,3.2|-2,800,2.2|-2,500,-2.5|-0.75,500,-3.5|0.42,500,-3",
         "LandingInterval=56","Arrested=True"]))
     for i,(x,z) in enumerate(VERTICAL_SPOTS,2):
@@ -247,7 +254,6 @@ def vessel_ini(material: dict[str,str]) -> str:
         other = [str(j) for j in range(1,6) if j != i]
         parts.append(section(f"RecoveryPoint{i}",[
             "AllowedType=Helicopter,VTOL",f"AssociatedElevators={elevator}",
-            "BlocksLaunchPoints=1,2,3",
             "BlocksRecoveryPoints="+",".join(other),
             f"Position={point(x,z)}","Rotation=-12",
             "HelicopterCircuitWaypoints=0,300,-2|0,300,-1",
@@ -270,7 +276,7 @@ def vessel_ini(material: dict[str,str]) -> str:
         parts.append(section(f"DeckZone{i}",zone(name,kind,coords)))
     parts += [
         section("Physics",[
-            "Displacement=120000","MaxForwardVelocity=30",
+            f"Displacement={120000*WIDTH_SCALE:g}","MaxForwardVelocity=30",
             "MaxBackwardVelocity=7","LinearDrag=0.97",
             "MaxAccelerationFactor=0.20","MinAccelerationFactor=0.08",
             "RudderTurnRate=1.25","RudderForce=0.35",
@@ -441,9 +447,10 @@ def build(destination: Path = DEST) -> None:
         "no stock or Workshop asset bytes are copied.\n"
         "The user confirmed mission loading and original hull rendering on "
         "22 October 2026 after the Foam section was added. This revision "
-        "lowers the flag by 25 m, rounds the bow sonar fairing into the "
-        "underwater hull, and moves the port lift abreast of the main island "
-        "with matching taxi routes. These changes need an in-game check.\n"
+        "uses an 82 m deck with more widely separated outer catapults, a "
+        "staggered interlocked centre track and independent aft helicopter "
+        "launch spots. LaunchDelay=1 is a shared one-second minimum, not a "
+        "guarantee of synchronized launches. Flight operations need game QA.\n"
         "Test with the failed Melbourne prototype disabled. If the editor "
         "errors, collect the current logs, withdraw only this mod, and share "
         "the latest Sea Power Player.log.\n",
@@ -456,7 +463,7 @@ def main() -> None:
     args = parser.parse_args()
     build(args.destination)
     print(f"[OK] Built {MOD_NAME}: {args.destination}")
-    print("[STATUS] User confirmed hull loading; revised flag, bow and lift await QA")
+    print("[STATUS] User confirmed hull loading; slimmer deck and launch changes await game QA")
 
 
 if __name__ == "__main__":

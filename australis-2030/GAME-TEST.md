@@ -48,6 +48,28 @@ abreast of the larger forward island. Its spawn/ride positions and both taxi
 directions now follow that location. Check lift placement and a single-aircraft
 taxi movement after confirming the revised hull loads.
 
+**22 October flight trial:** The later screenshots show fixed-wing aircraft
+staging at the bow, a helicopter at the aft lift, and an aircraft airborne.
+They also show crowding and launch-track alignment problems. These observations
+do not yet confirm recovery or a complete deck cycle.
+
+**Launch-spacing revision:** The deck is now 82 m wide (previously 88 m),
+with an approximately 41 m waterline beam. The port and starboard launch
+tracks are about 40 m apart. The centre track is staggered forward and
+interlocked with both outer tracks, so it operates separately from the pair.
+Taxi approaches now end 20 m behind each launch point on that track's axis;
+the validator measures the exported gold mesh tracks against native launch
+positions, headings and catapult lengths.
+
+The supplied game assembly confirms that `PlaneTakeOff` and
+`HelicopterTakeOff` both use the same `FlightDeck.LaunchDelay` timer. This
+revision changes it from nine seconds to one second, removes the aft launch
+spots' forward-catapult blocks, and gives the forward lifts separate routes
+to the port and starboard catapults. A one-second interval is a minimum,
+not a synchronized launch command; crew preparation, engine/rotor warmup,
+deck occupancy and the ship staying on course still govern actual launches.
+Fixed-wing recovery remains separate from launch operations.
+
 ## Install from the draft branch
 
 In a terminal on the Sea Power computer, run:
@@ -99,6 +121,37 @@ stop there and share its output.
 4. If it loads, test one stock, game-compatible fixed-wing aircraft on a
    catapult and one helicopter on a vertical spot separately. Record whether
    spawn, taxi, launch and recovery work. The air group starts empty.
+
+## Paired launch check
+
+Use a new blank mission and a newly placed carrier, so saved deck-point
+positions do not preserve the previous layout. Add two fixed-wing aircraft
+of the same type and one helicopter to its air group in the editor.
+
+1. Ready the helicopter first, then the two jets. Queue the helicopter's
+   launch first so its longer warmup can begin before the jets reach the bow.
+2. Queue the two jets. Confirm they use the separate outer catapults, align
+   with the gold tracks, and maintain wing clearance while staging and taxiing.
+3. With the carrier holding a steady course, record the actual interval
+   between the outer launches and whether the helicopter can taxi/launch
+   while the forward pair prepares. A longer interval alone does not prove
+   the timer was ignored; compare each aircraft's preparation state.
+4. After the outer pair clears, test the centre catapult with one jet. It
+   should wait while either outer point is occupied, then align and launch.
+
+The source check uses a 25 m wingspan by 30 m length staging envelope for
+the outer pair, including clearance from islands and lifts. This does not
+validate every aircraft model, jet blast, taxi intersection or a 99-aircraft
+deck cycle. If the new deck fails, withdraw this mod with `--remove`; that
+command retains a verified backup. The previous working release remains
+available at commit `e587b60`. To reinstall that package, close the game and
+use its matching installer from a separate checkout:
+
+```bash
+python3 "$HOME/Downloads/RAN-Carrier-Australis-test/tools/install_australis_2030.py" --remove
+git -C "$HOME/Downloads/RAN-Carrier-Australis-test" worktree add --detach "$HOME/Downloads/RAN-Carrier-Australis-previous-e587b60" e587b60
+python3 "$HOME/Downloads/RAN-Carrier-Australis-previous-e587b60/tools/install_australis_2030.py"
+```
 
 If the editor hangs or throws an exception, close Sea Power and collect the
 current logs **before restarting it**:

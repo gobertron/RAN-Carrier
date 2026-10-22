@@ -65,11 +65,15 @@ def main(destination: Path = DEST) -> None:
             "Surface_Hatch","Surface_Sensor","coll_hull_main"} <= groups
     assert len(groups) <= 20, "Static materials should be batched"
     object_faces: dict[str,int] = {}
+    object_vertices: dict[str,list[tuple[float,float,float]]] = {}
     current_object = None
     for line in content.splitlines():
         if line.startswith("o "):
             current_object = line[2:]
             object_faces[current_object] = 0
+            object_vertices[current_object] = []
+        elif line.startswith("v "):
+            object_vertices[current_object].append(tuple(map(float,line.split()[1:4])))
         elif line.startswith("f "):
             assert current_object is not None
             object_faces[current_object] += 1
@@ -138,10 +142,32 @@ def main(destination: Path = DEST) -> None:
         x,y,z = vector(deck_outline[f"Point{i}"])
         outline.append((x*METRES_PER_UNIT,z*METRES_PER_UNIT))
     assert len(outline) == 17
-    assert math.isclose(max(x for x,_ in outline)-min(x for x,_ in outline),88,
+    assert math.isclose(max(x for x,_ in outline)-min(x for x,_ in outline),82,
                         abs_tol=.001)
     assert math.isclose(max(z for _,z in outline)-min(z for _,z in outline),370,
                         abs_tol=.001)
+    # Measure the actual exported gold track meshes, independently of the
+    # generator constants, and compare with the game's launch definitions.
+    gold = object_vertices["Surface_Gold"]
+    for i in range(1,4):
+        track = gold[(i-1)*8:i*8]
+        start = tuple((a+b)/2 for a,b in zip(track[0],track[3]))
+        end = tuple((a+b)/2 for a,b in zip(track[1],track[2]))
+        launch = ship[f"LaunchPoint{i}"]
+        px,_,pz = vector(launch["Position"])
+        assert math.hypot(px-start[0],pz-start[2]) < 2e-6, (i,"track start")
+        dx,dz = end[0]-start[0],end[2]-start[2]
+        assert abs(float(launch["Rotation"])-math.degrees(math.atan2(dx,dz))) < .002, (i,"heading")
+        assert abs(float(launch["CatapultLength"])-math.hypot(dx,dz)*METRES_PER_UNIT) < .01
+    assert ship["LaunchPoint1"]["BlocksLaunchPoints"] == "2"
+    assert ship["LaunchPoint3"]["BlocksLaunchPoints"] == "2"
+    assert ship["LaunchPoint2"]["BlocksLaunchPoints"] == "1,3"
+    assert float(deck["LaunchDelay"]) == 1
+    left = vector(ship["LaunchPoint1"]["Position"])
+    right = vector(ship["LaunchPoint3"]["Position"])
+    assert (right[0]-left[0])*METRES_PER_UNIT >= 40, "Outer pair needs wing clearance"
+    for i in range(4,8):
+        assert not ship[f"LaunchPoint{i}"].get("BlocksLaunchPoints"), "Aft spots must not block the forward pair"
     for i in range(1,int(deck["NumberOfTaxiPaths"])+1):
         route = ship[f"TaxiPath{i}"]
         assert ship.has_section(route["From"]) and ship.has_section(route["To"])
@@ -174,6 +200,8 @@ def main(destination: Path = DEST) -> None:
     print(f"[OK] {ID}: {len(groups)} OBJ groups, {len(registered)} submodels")
     print(f"[OK] {vertex_count} vertices with UVs and {normal_count} indexed face normals")
     print("[OK] 4 lifts, 3 fixed-wing catapults, 4 vertical spots, 5 recovery points")
+    print("[OK] 82 m deck; catapult meshes, headings and launch positions align")
+    print("[OK] Outer launch pair, centre interlock and independent aft launch spots")
     print("[OK] Rudder/propeller mounts, materials, effects, names, routes and colliders resolve")
     print("[LIMIT] Sea Power loading, flight operations and animation require in-game QA")
 

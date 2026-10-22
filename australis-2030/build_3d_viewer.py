@@ -96,7 +96,7 @@ TEMPLATE = r'''<!doctype html>
 <aside>
   <div class="eyebrow">ROYAL AUSTRALIAN NAVY · DESIGN STUDY</div>
   <h1>Australis 2030</h1>
-  <div class="muted">Twin-island carrier · 370 m overall · 88 m deck beam · 99 aircraft target</div>
+  <div class="muted">Twin-island carrier · 370 m overall · 82 m deck beam · 99 aircraft target</div>
   <span class="pill">ORIGINAL CONCEPT MESH</span>
   <h2>Camera</h2>
   <div class="buttons" id="views">

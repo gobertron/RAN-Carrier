@@ -5,13 +5,13 @@ mesh draws broad design cues from U.S. aircraft carriers and modern faceted
 warship superstructures, with two RAN concept islands and a continuous carrier
 flight deck. No third-party meshes, textures, or vessel definitions are copied.
 
-The deck has been narrowed from 104 m to **88 m**, while the maximum waterline
-beam is approximately **44 m**. High continuous topsides connect the deck's
+The deck has been narrowed from the previous 88 m to **82 m**, while the maximum waterline
+beam is approximately **41 m**. High continuous topsides connect the deck's
 entire perimeter to a narrower waterline; the bow below the deck tapers to a
 fine immersed stem. The hull has a proposed 11.5 m draft and a 370 m overall
-length. Its crude enclosed-volume estimate is 117,064 m³, or about 119,991
+length. Its crude enclosed-volume estimate is 109,082 m³, or about 111,809
 tonnes in seawater at 1.025 tonnes/m³; the corresponding approximate block
-coefficient is 0.637. This arithmetic only checks that the blockout has a
+coefficient is 0.638. This arithmetic only checks that the blockout has a
 plausible order of magnitude. It does not demonstrate actual
 loading, intact or damaged stability, trim, resistance, seakeeping, structural
 strength, propulsion or safe flight operations. The angular shapes are a
@@ -20,8 +20,8 @@ visual design choice and do not establish a radar signature.
 | Design target | Value |
 |---|---:|
 | Type and propulsion | CVN, nuclear concept |
-| Overall length / maximum deck beam | 370 m / 88 m |
-| Maximum waterline beam / draft | 44 m / 11.5 m, approximate |
+| Overall length / maximum deck beam | 370 m / 82 m |
+| Maximum waterline beam / draft | 41 m / 11.5 m, approximate |
 | Air group | 99 aircraft, capacity target only |
 | Catapult tracks / blast deflector panels | 3 / 3, indicated |
 | Deck-edge lifts | 4; single port lift abreast of the larger main island |
@@ -32,14 +32,14 @@ visual design choice and do not establish a radar signature.
 | Defensive lasers | 4 flush hatches; separate raised visual state |
 
 The four H markings have the requested 12-degree tilt. Their centers lie at
-x=6 m, 29 m apart, alongside the aft island. The landing lane is offset to
+x=5.6 m, 29 m apart, alongside the aft island. The landing lane is offset to
 port. Hook-equipped aircraft would engage **arresting cables on the deck**;
 the hooks themselves belong to aircraft and are not carrier fittings. Vertical
 operations and fixed-wing recovery are intended as separate deck modes.
 The right-hand catapult launches forward and avoids the lifts in plan view.
 The builder checks sampled spot outlines and minimum two-dimensional gaps
 from islands, lifts and catapult routes. The smallest reported spot-edge gap
-is 8 m; the smallest sampled catapult-to-island/lift plan gap is 16.4 m.
+is 8 m; the smallest sampled catapult-to-island/lift plan gap is 15.15 m.
 These checks do not cover rotor disks, parked aircraft, jet blast, wings,
 elevator cycling, simultaneous operations or actual approach geometry.
 
@@ -72,10 +72,12 @@ positions, three catapult launch points, four vertical launch points, five
 recovery points and simple taxi routes. Its 99-aircraft figure is a configured
 capacity, not a demonstrated working air group. The user confirmed Mission
 Editor Play loading and hull rendering with `cbdaef4` on 22 October 2026.
-The latest revision lowers the stock flag, replaces the box-shaped sonar
-study with a rounded fairing blended into the underwater hull, and moves the
-single port lift abreast of the main island with matching taxi routes. These
-changes await an in-game check; aircraft operations, radar, ECM and lasers
+The latest revision narrows the deck to 82 m, spreads the primary port and
+starboard catapults about 40 m apart, and staggers the centre track. The
+centre track interlocks with the outer pair; aft helicopter launches no
+longer block the forward catapults. A shared one-second launch interval
+allows closely spaced departures when aircraft are ready, subject to the
+game scheduler. These changes await an in-game check; aircraft operations, radar, ECM and lasers
 remain untested or unimplemented. See [GAME-TEST.md](GAME-TEST.md). The
 package does not modify RADF, the Workshop, the original game or Melbourne.
 
