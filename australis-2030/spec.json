@@ -1,6 +1,6 @@
 {
   "id": "ran_cvn_australis_2030",
-  "name": "Australis class — 2030 concept",
+  "name": "Australis class \u2014 2030 concept",
   "year": 2030,
   "type": "CVN",
   "length_m": 370,
@@ -18,7 +18,10 @@
   },
   "deck": {
     "catapult_tracks": 3,
-    "primary_launch_pair": [1, 3],
+    "primary_launch_pair": [
+      1,
+      3
+    ],
     "centre_catapult_interlocked_with_outer_pair": true,
     "minimum_launch_interval_seconds": 1,
     "independent_helicopter_launch_spots": true,
@@ -32,7 +35,13 @@
     "aft_spot_lateral_clearance_from_lifts_m": 8,
     "angled_recovery_lane": true,
     "arresting_wire_indications": 4,
-    "landing_threshold_indicated": true
+    "landing_threshold_indicated": true,
+    "lift_platform_width_m": 22,
+    "lift_platform_length_m": 26,
+    "lift_aircraft_heading_degrees": 0,
+    "lift_reference_aircraft": "Stock F-14A; full-span footprint and stock deck-reference offset",
+    "catapult_reference_aircraft": "Stock A-7E",
+    "overall_beam_including_lifts_m": 109
   },
   "systems_visual_studies": {
     "integrated_radar_arrays": 7,

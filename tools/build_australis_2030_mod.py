@@ -178,6 +178,15 @@ def routes() -> list[tuple[str, str, list[tuple[float,float]]]]:
             out.append((f"RecoveryPoint{i}","Elevator4",[(10,-128)]))
         else:
             out.append((f"RecoveryPoint{i}","Elevator1",[(10,-61)]))
+    # Join the main deck at each lift's inboard edge before crossing it.
+    # Ride positions are on the visible platform, outside the main outline.
+    for frm,to,waypoints in out:
+        if frm.startswith("Elevator"):
+            x,z = ELEVATORS[int(frm.removeprefix("Elevator"))-1]
+            waypoints.insert(0,(math.copysign(32/WIDTH_SCALE,x),z))
+        if to.startswith("Elevator"):
+            x,z = ELEVATORS[int(to.removeprefix("Elevator"))-1]
+            waypoints.append((math.copysign(32/WIDTH_SCALE,x),z))
     return out
 
 
@@ -221,12 +230,11 @@ def vessel_ini(material: dict[str,str]) -> str:
             "ArmorType=Moderate","Collider=coll_hangar"]),
     ]
     for i,(x,z) in enumerate(ELEVATORS,1):
-        inner_x = (34 if x > 0 else -34)
         parts.append(section(f"Elevator{i}",[
             "AssociatedLaunchPoints="+",".join(map(str,LAUNCH_ASSOC[i-1])),
-            "Mesh=Dummy",f"SpawnPosition={point(inner_x,z)}",
-            "SpawnRotation=-90",f"RidePosition={point(inner_x,z)}",
-            "RideRotation=-90","EmbarkTime=10","RecycleTime=15"]))
+            "Mesh=Dummy",f"SpawnPosition={point(x,z,.205)}",
+            "SpawnRotation=0",f"RidePosition={point(x,z,.205)}",
+            "EmbarkTime=10","RecycleTime=15"]))
     for i,((x,z),(ex,ez)) in enumerate(CATAPULTS,1):
         rotation = math.degrees(math.atan2((ex-x)*WIDTH_SCALE,ez-z))
         interlock = "1,3" if i == 2 else "2"
@@ -449,7 +457,10 @@ def build(destination: Path = DEST) -> None:
         "22 October 2026 after the Foam section was added. This revision "
         "uses an 82 m deck with more widely separated outer catapults, a "
         "staggered interlocked centre track and independent aft helicopter "
-        "launch spots. LaunchDelay=1 is a shared one-second minimum, not a "
+        "launch spots. Four 22 x 26 m lifts use centred ride/spawn positions "
+        "and fore-and-aft parking, checked against the stock F-14A reference. "
+        "Catapult staging is checked using the stock A-7E. "
+        "LaunchDelay=1 is a shared one-second minimum, not a "
         "guarantee of synchronized launches. Flight operations need game QA.\n"
         "Test with the failed Melbourne prototype disabled. If the editor "
         "errors, collect the current logs, withdraw only this mod, and share "

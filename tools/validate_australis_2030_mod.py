@@ -127,6 +127,28 @@ def main(destination: Path = DEST) -> None:
     assert int(deck["NumberOfElevators"]) == 4
     assert int(deck["NumberOfLaunchPoints"]) == 7
     assert int(deck["NumberOfRecoveryPoints"]) == 5
+    # The first four hatch-coloured boxes are the actual exported platforms.
+    # Measure their geometry rather than trusting a second copy of the layout.
+    hatch = object_vertices["Surface_Hatch"]
+    lift_bounds = []
+    for i in range(1,5):
+        vertices = hatch[(i-1)*8:i*8]
+        low = [min(v[axis] for v in vertices)*METRES_PER_UNIT for axis in range(3)]
+        high = [max(v[axis] for v in vertices)*METRES_PER_UNIT for axis in range(3)]
+        assert abs(high[0]-low[0]-22) < .001, (i,"lift width")
+        assert abs(high[2]-low[2]-26) < .001, (i,"lift length")
+        centre = ((low[0]+high[0])/2,high[1],(low[2]+high[2])/2)
+        for key in ("SpawnPosition","RidePosition"):
+            position = tuple(p*METRES_PER_UNIT for p in vector(ship[f"Elevator{i}"][key]))
+            assert math.dist(position,centre) < .0002, (i,key,"off platform centre")
+        assert float(ship[f"Elevator{i}"]["SpawnRotation"]) == 0
+        # Stock F-14A deck/ground-pivot terms, plus the engine's 0.012 ride
+        # allowance. The full-span 19.545 x 19.1 m reference box must fit.
+        f14_shift = (-.074+.012+.0126)*METRES_PER_UNIT
+        assert centre[0]-19.545/2 >= low[0] and centre[0]+19.545/2 <= high[0]
+        assert centre[2]+f14_shift-19.1/2 >= low[2]
+        assert centre[2]+f14_shift+19.1/2 <= high[2]
+        lift_bounds.append((low[0],high[0],low[2],high[2]))
     port_lift = vector(ship["Elevator3"]["SpawnPosition"])
     main_island = ship["DeckZone6"]
     island_z = [vector(main_island[f"Point{i}"])[2]
@@ -159,6 +181,27 @@ def main(destination: Path = DEST) -> None:
         dx,dz = end[0]-start[0],end[2]-start[2]
         assert abs(float(launch["Rotation"])-math.degrees(math.atan2(dx,dz))) < .002, (i,"heading")
         assert abs(float(launch["CatapultLength"])-math.hypot(dx,dz)*METRES_PER_UNIT) < .01
+    # Check the user's stock A-7E reference at all three catapults, with
+    # wings open. This is a staging footprint check, not a taxi simulation.
+    obstacles = list(lift_bounds)
+    for name in ("DeckZone6","DeckZone7"):
+        zone = ship[name]
+        points = [vector(zone[f"Point{i}"]) for i in range(1,int(zone["NumberOfPoints"])+1)]
+        obstacles.append((min(v[0] for v in points)*METRES_PER_UNIT,
+                          max(v[0] for v in points)*METRES_PER_UNIT,
+                          min(v[2] for v in points)*METRES_PER_UNIT,
+                          max(v[2] for v in points)*METRES_PER_UNIT))
+    for i in range(1,4):
+        launch = ship[f"LaunchPoint{i}"]
+        x,_,z = (v*METRES_PER_UNIT for v in vector(launch["Position"]))
+        angle = math.radians(float(launch["Rotation"]))
+        for along in (-14.06/2,0,14.06/2):
+            for across in (-11.8/2,0,11.8/2):
+                px = x+along*math.sin(angle)+across*math.cos(angle)
+                pz = z+along*math.cos(angle)-across*math.sin(angle)
+                assert inside_deck(px,pz,outline), (i,"A-7E off deck")
+                assert all(not(x0 <= px <= x1 and z0 <= pz <= z1)
+                           for x0,x1,z0,z1 in obstacles), (i,"A-7E overlaps lift or island")
     assert ship["LaunchPoint1"]["BlocksLaunchPoints"] == "2"
     assert ship["LaunchPoint3"]["BlocksLaunchPoints"] == "2"
     assert ship["LaunchPoint2"]["BlocksLaunchPoints"] == "1,3"
@@ -200,6 +243,8 @@ def main(destination: Path = DEST) -> None:
     print(f"[OK] {ID}: {len(groups)} OBJ groups, {len(registered)} submodels")
     print(f"[OK] {vertex_count} vertices with UVs and {normal_count} indexed face normals")
     print("[OK] 4 lifts, 3 fixed-wing catapults, 4 vertical spots, 5 recovery points")
+    print("[OK] Four 22 x 26 m lifts; ride/spawn centres and F-14A reference footprint fit")
+    print("[OK] A-7E open-wing staging footprint clear at all three catapults")
     print("[OK] 82 m deck; catapult meshes, headings and launch positions align")
     print("[OK] Outer launch pair, centre interlock and independent aft launch spots")
     print("[OK] Rudder/propeller mounts, materials, effects, names, routes and colliders resolve")

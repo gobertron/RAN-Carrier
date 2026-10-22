@@ -70,6 +70,21 @@ not a synchronized launch command; crew preparation, engine/rotor warmup,
 deck occupancy and the ship staying on course still govern actual launches.
 Fixed-wing recovery remains separate from launch operations.
 
+**F-14A lift correction:** The next overhead screenshot identifies F-14As
+on the lifts and A-7Es on the catapults. The old visible platforms were only
+about 12.1 m across by 18 m long, with the ride references displaced inboard.
+All four platforms are now 22 m across by 26 m fore-and-aft. Their spawn and
+ride references are at the platform centre and surface height, and aircraft
+face the bow. Taxi paths join the inboard edge before crossing each platform.
+The main deck remains 82 m wide; the maximum width including the lift
+extensions is 109 m. The port lift remains abreast of the main island.
+
+Static validation measures the actual exported platforms and checks a
+full-span F-14A reference footprint, allowing for its stock deck-position and
+ground-pivot terms. It also checks the A-7E open-wing staging footprint at all
+three catapults. Aircraft INIs are not altered. These revised lift placements
+and turns still need a fresh game test.
+
 ## Install from the draft branch
 
 In a terminal on the Sea Power computer, run:
@@ -127,6 +142,13 @@ stop there and share its output.
 Use a new blank mission and a newly placed carrier, so saved deck-point
 positions do not preserve the previous layout. Add two fixed-wing aircraft
 of the same type and one helicopter to its air group in the editor.
+
+For the lift correction, first ready a stock **F-14A** and inspect it on each
+lift: the nose should point toward the bow, the aircraft should fit within
+the platform, and the wheels should sit on its surface. Watch it taxi inboard
+without clipping an island. Then use **A-7Es** for the paired catapult check
+below, inspecting their alignment with the gold tracks. Check a return to a
+lift separately after a successful recovery.
 
 1. Ready the helicopter first, then the two jets. Queue the helicopter's
    launch first so its longer warmup can begin before the jets reach the bow.

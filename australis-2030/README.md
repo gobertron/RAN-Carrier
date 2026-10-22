@@ -25,6 +25,8 @@ visual design choice and do not establish a radar signature.
 | Air group | 99 aircraft, capacity target only |
 | Catapult tracks / blast deflector panels | 3 / 3, indicated |
 | Deck-edge lifts | 4; single port lift abreast of the larger main island |
+| Each lift platform / parking direction | 22 m across by 26 m fore-and-aft / bow-facing |
+| Overall width including lift platforms | 109 m; main flight deck remains 82 m |
 | Aft VTOL / helicopter spots | 4, offset toward the smaller aft island in a fore-to-aft line |
 | Recovery lane | Angled, with landing threshold and four arresting cables indicated |
 | Islands | 2; larger central command island, smaller aft aviation island |
@@ -39,9 +41,20 @@ operations and fixed-wing recovery are intended as separate deck modes.
 The right-hand catapult launches forward and avoids the lifts in plan view.
 The builder checks sampled spot outlines and minimum two-dimensional gaps
 from islands, lifts and catapult routes. The smallest reported spot-edge gap
-is 8 m; the smallest sampled catapult-to-island/lift plan gap is 15.15 m.
+is 8 m; the smallest sampled catapult-to-island/lift plan gap is 14.5 m.
 These checks do not cover rotor disks, parked aircraft, jet blast, wings,
 elevator cycling, simultaneous operations or actual approach geometry.
+
+All four lifts are sized against the stock **F-14A**, with their native spawn
+and ride references centred on the visible platform. Aircraft face forward
+rather than sideways across the narrow axis. The 26 m length also allows for
+the F-14A's stock deck-position and ground-pivot terms. The validator measures
+the exported platforms and checks a full-span 19.545 m by 19.1 m reference
+footprint, including those terms. The stock **A-7E** is the catapult reference:
+its 11.8 m by 14.06 m open-wing footprint is checked at all three launch points.
+These are static reference checks; actual mesh placement, taxi turns and lift
+cycling require another game test. Stock aircraft files are only read as
+references and are not modified or redistributed.
 
 Radar faces are placed on the command and aviation island sides rather than
 carried above them on exposed rotating frames. The four laser hatches are
@@ -85,5 +98,6 @@ package does not modify RADF, the Workshop, the original game or Melbourne.
 
 - [U.S. Navy aircraft carrier dimensions](https://www.airpac.navy.mil/Organization/Distinguished-Visitors/Important-Links-and-Info/) informed the difference between a carrier's waterline beam and broader flight deck. Australis uses its own dimensions and hull shape.
 - [NAVAIR Advanced Arresting Gear](https://www.navair.navy.mil/product/advanced-arresting-gear-aag) informed the recovery lane and cable indications; none of its engineering is implemented here.
+- [Naval Aviation Museum F-14A](https://www.history.navy.mil/content/history/museums/nnam/explore/collections/aircraft/f/f-14a-tomcat.html) and [A-7E](https://www.history.navy.mil/content/history/museums/nnam/explore/collections/aircraft/a/a-7e-corsair-ii0.html) provide aircraft length references. Wingspans and deck/ground-pivot terms were checked against the stock aircraft INIs in the user-supplied Sea Power copy.
 - [NAVSEA on Ford flight-deck design](https://www.navsea.navy.mil/Media/News/Article-View/Article/2596302/uss-gerald-r-ford-closes-out-evolutionary-18-month-pdtt-for-first-in-class-airc/) informed the outboard island and carrier equipment layout.
 - [NAVSEA on Zumwalt's faceted superstructure](https://www.navsea.navy.mil/Media/News/Article-View/Article/777551/us-navy-accepts-delivery-of-future-uss-zumwalt-ddg-1000/) informed the visual treatment of tower surfaces; its destroyer hull design has not been transferred to this carrier.

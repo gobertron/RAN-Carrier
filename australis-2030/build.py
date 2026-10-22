@@ -47,7 +47,15 @@ AFT_ISLAND_BASE = [
 ]
 PORT_LIFT_Z = (min(z for _, z in MAIN_ISLAND_BASE)
                + max(z for _, z in MAIN_ISLAND_BASE))/2
-ELEVATORS = [(42, -50), (42, 69), (-42, PORT_LIFT_Z), (41, -132)]
+# Actual metre dimensions are independent of the hull's width reduction.
+# Fore-and-aft parking accommodates the Tomcat without a wide cross-deck lift.
+LIFT_WIDTH_M = 22.0
+LIFT_LENGTH_M = 26.0
+LIFT_CENTRE_X_M = 43.5
+ELEVATORS = [(LIFT_CENTRE_X_M/WIDTH_SCALE, -50),
+             (LIFT_CENTRE_X_M/WIDTH_SCALE, 69),
+             (-LIFT_CENTRE_X_M/WIDTH_SCALE, PORT_LIFT_Z),
+             (LIFT_CENTRE_X_M/WIDTH_SCALE, -132)]
 LASERS = [(-35, 109), (36, 119), (-40, -60), (31, -157)]
 CATAPULTS = [((-24, 58), (-24, 154)), ((0, 90), (0, 170)),
              ((19, 68), (21, 154))]
@@ -225,10 +233,15 @@ def geometry(closed_lasers=True):
          "island")
 
     for i, (x, z) in enumerate(ELEVATORS, 1):
-        m.box(f"DeckEdgeLift_{i}", x, 22.12, z, 13, .17, 18, "hatch")
+        half_width = LIFT_WIDTH_M/(2*WIDTH_SCALE)
+        half_length = LIFT_LENGTH_M/2
+        m.box(f"DeckEdgeLift_{i}", x, 22.12, z,
+              LIFT_WIDTH_M/WIDTH_SCALE, .17, LIFT_LENGTH_M, "hatch")
         for side in (-1, 1):
-            m.stripe(f"LiftEdge_{i}_{side}", (x-6.4, z+side*8.8),
-                     (x+6.4, z+side*8.8), .22, 22.25, "white")
+            m.stripe(f"LiftEdge_{i}_{side}",
+                     (x-half_width+.2/WIDTH_SCALE, z+side*(half_length-.2)),
+                     (x+half_width-.2/WIDTH_SCALE, z+side*(half_length-.2)),
+                     .22, 22.25, "white")
 
     # Two bow tracks and one angled starboard track; routes come later.
     for i, (start, end) in enumerate(CATAPULTS, 1):
@@ -336,7 +349,8 @@ def plan_preview(path):
     draw.polygon(shape([(30, -95), (37, -91), (37, -83), (30, -84)]),
                  fill="#366072")
     for x, z in ELEVATORS:
-        p, q = point(x-6.5, z+9), point(x+6.5, z-9)
+        p = point(x-LIFT_WIDTH_M/(2*WIDTH_SCALE), z+LIFT_LENGTH_M/2)
+        q = point(x+LIFT_WIDTH_M/(2*WIDTH_SCALE), z-LIFT_LENGTH_M/2)
         draw.rectangle([min(p[0], q[0]), min(p[1], q[1]),
                         max(p[0], q[0]), max(p[1], q[1])],
                        fill="#718790", outline="#c6d3d1", width=2)
@@ -384,7 +398,7 @@ def plan_preview(path):
     for label, anchor, xy in [
         ("MAIN COMMAND ISLAND", (35, 10), (912, 216)),
         ("AFT AVIATION ISLAND", (34, -88), (590, 207)),
-        ("4 OUTBOARD LIFTS", (51, 69), (1250, 207)),
+        ("4 LIFTS / 22 x 26 m", (57, 69), (1250, 207)),
         ("4 OFFSET VTOL / HELO SPOTS", (6, -136), (158, 204)),
         ("3 CATAPULTS", (8, 133), (1378, 655)),
         ("4 FLUSH LASER HATCHES", (-35, 109), (1266, 757)),
@@ -433,10 +447,10 @@ def main():
         t = min(1., max(0., float(np.dot(p-lane_a, line)/np.dot(line, line))))
         assert np.linalg.norm(p-(lane_a+t*line)) > VERTICAL_SPOT_RADIUS+11.3*WIDTH_SCALE+1
         for lift_x, lift_z in lifts:
-            assert rectangle_distance(x, z, lift_x-6.5*WIDTH_SCALE, lift_x+6.5*WIDTH_SCALE,
-                                      lift_z-9, lift_z+9) > VERTICAL_SPOT_RADIUS+1
+            assert rectangle_distance(x, z, lift_x-LIFT_WIDTH_M/2, lift_x+LIFT_WIDTH_M/2,
+                                      lift_z-LIFT_LENGTH_M/2, lift_z+LIFT_LENGTH_M/2) > VERTICAL_SPOT_RADIUS+1
             gap = lateral_gap(x-VERTICAL_SPOT_RADIUS, x+VERTICAL_SPOT_RADIUS,
-                              lift_x-6.5*WIDTH_SCALE, lift_x+6.5*WIDTH_SCALE)
+                              lift_x-LIFT_WIDTH_M/2, lift_x+LIFT_WIDTH_M/2)
             min_lift_gap = min(min_lift_gap, gap)
             assert gap >= 8
         for island in islands:
@@ -452,7 +466,19 @@ def main():
     obstacles = [(min(x for x, _ in island), max(x for x, _ in island),
                   min(z for _, z in island), max(z for _, z in island))
                  for island in islands]
-    obstacles += [(x-6.5*WIDTH_SCALE, x+6.5*WIDTH_SCALE, z-9, z+9) for x, z in lifts]
+    lift_bounds = [(x-LIFT_WIDTH_M/2, x+LIFT_WIDTH_M/2,
+                    z-LIFT_LENGTH_M/2, z+LIFT_LENGTH_M/2) for x, z in lifts]
+    obstacles += lift_bounds
+    for bounds in lift_bounds:
+        for island in islands:
+            xmin,xmax = min(x for x,_ in island), max(x for x,_ in island)
+            zmin,zmax = min(z for _,z in island), max(z for _,z in island)
+            assert bounds[1] <= xmin or bounds[0] >= xmax or bounds[3] <= zmin or bounds[2] >= zmax
+    assert spec["deck"]["lift_platform_width_m"] == LIFT_WIDTH_M
+    assert spec["deck"]["lift_platform_length_m"] == LIFT_LENGTH_M
+    assert LIFT_WIDTH_M >= 19.545+2, "F-14A full-span reference needs side clearance"
+    f14_reference_shift = abs(-.074+.012+.0126)*METRES_PER_UNIT
+    assert LIFT_LENGTH_M/2 >= 19.1/2+f14_reference_shift
     # The primary pair can stage a 25 m wingspan / 30 m length envelope.
     # The middle track is interlocked in the game INI, rather than trying to
     # park three wide aircraft shoulder-to-shoulder on this narrower bow.
@@ -512,6 +538,10 @@ def main():
                    outer_catapult_lateral_separation_m=round((CATAPULTS[2][0][0]-CATAPULTS[0][0][0])*WIDTH_SCALE,2),
                    aft_vertical_operation_spots=len(VERTICAL_SPOTS),
                    deck_edge_lifts=len(ELEVATORS),
+                   lift_platform_width_m=LIFT_WIDTH_M,
+                   lift_platform_length_m=LIFT_LENGTH_M,
+                   overall_beam_including_lifts_m=2*LIFT_CENTRE_X_M+LIFT_WIDTH_M,
+                   f14a_lift_reference_envelope_checked=True,
                    islands=2, aft_h_mark_angle_degrees=PAD_MARK_ANGLE_DEG,
                    aft_spot_clearance_geometry_checked=True,
                    pad_longitudinal_corridors_clear=True,
