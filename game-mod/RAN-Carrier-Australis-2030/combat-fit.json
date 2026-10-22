@@ -1,0 +1,68 @@
+{
+  "crew": {
+    "ships_company": 2850,
+    "air_wing": 2250,
+    "staff": 200,
+    "total": 5300,
+    "berths": 5800
+  },
+  "full_load_displacement_tonnes": 112000,
+  "weight_budget_tonnes": {
+    "structure": 42000,
+    "machinery": 12500,
+    "ship_and_aviation_outfit": 15000,
+    "combat_and_electronics": 5000,
+    "aviation_fuel": 9000,
+    "aircraft_and_wing_equipment": 6500,
+    "ordnance_and_stores": 5500,
+    "water_and_fluids": 4500,
+    "crew_and_provisions": 2500,
+    "design_allowance": 9500
+  },
+  "hangar": {
+    "length_m": 245,
+    "width_m": 30,
+    "height_m": 8,
+    "proposed_aircraft_allocation": 36,
+    "proposed_deck_allocation": 63,
+    "parking_layout_validated": false
+  },
+  "hotel_services": {
+    "fresh_water_litres_per_person_day": 150,
+    "watermakers": 3,
+    "each_watermaker_m3_per_day": 450,
+    "meals_per_person_day": 3,
+    "provision_days": 60
+  },
+  "targets": {
+    "mk57_style_vls_cells": 80,
+    "essm_launchers": 2,
+    "ram_21_round_launchers": 2,
+    "phalanx": 3,
+    "mk46_style_30mm": 2,
+    "srboc_launchers": 8,
+    "nulka_launchers": 4,
+    "towed_decoys": 2,
+    "retractable_laser_positions": 4,
+    "radar": "SPY-6(V)3/EASR-style volume search and SPY-3-style multifunction faces",
+    "ew": "SLQ-32/SEWIP-style passive warning and defensive/offensive jamming"
+  },
+  "native_proxies": {
+    "vls_launcher": "MK41",
+    "area_defence": "usn_rim-66e",
+    "land_attack": "usn_rgm-109c",
+    "essm": "usn_rim-7m",
+    "ram": "21-position original launcher with usn_rim-7m; SARH, not RAM guidance",
+    "30mm": "original gun profile with rn_cal_30mm",
+    "search_radar": "SPY-1A",
+    "surface_radar": "SPS-67",
+    "air_traffic": "SPN-43",
+    "esm": "AN/SLQ-32_ESM",
+    "defensive_ecm": "AN/SLQ-32",
+    "chaff": "Mk_36_SRBOC",
+    "towed_decoy": "SLQ-25_Nixie",
+    "nulka": "visual positions only; active hovering behaviour unimplemented",
+    "lasers": "visual hatches only; weapon/animation unimplemented"
+  },
+  "native_combat_tested": false
+}

@@ -96,7 +96,7 @@ TEMPLATE = r'''<!doctype html>
 <aside>
   <div class="eyebrow">ROYAL AUSTRALIAN NAVY · DESIGN STUDY</div>
   <h1>Australis 2030</h1>
-  <div class="muted">Twin-island carrier · 370 m overall · 82 m deck beam · 99 aircraft target</div>
+  <div class="muted">CATOBAR · 370 m · 82 m main deck · 99 aircraft · 5,300 embarked targets</div>
   <span class="pill">ORIGINAL CONCEPT MESH</span>
   <h2>Camera</h2>
   <div class="buttons" id="views">
@@ -112,7 +112,7 @@ TEMPLATE = r'''<!doctype html>
   <div id="layers">
     <label><input type="checkbox" value="hull" checked> Hull and flight deck</label>
     <label><input type="checkbox" value="islands" checked> Two islands and radar</label>
-    <label><input type="checkbox" value="catapults" checked> Three catapults</label>
+    <label><input type="checkbox" value="catapults" checked> Five steam catapults</label>
     <label><input type="checkbox" value="lifts" checked> Four deck-edge lifts</label>
     <label><input type="checkbox" value="spots" checked> Four VTOL / helicopter spots</label>
     <label><input type="checkbox" value="recovery" checked> Angled deck, four arresting wires</label>

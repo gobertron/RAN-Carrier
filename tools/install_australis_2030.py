@@ -87,7 +87,7 @@ def run(game: Path, source: Path, backups: Path, remove: bool) -> None:
     original = fingerprints(source)
     if not original:
         raise ValueError("The package contains no files")
-    validate(source)
+    validate(source, assets / "original")
     if target.exists():
         if not target.is_dir():
             raise ValueError(f"A file occupies the mod path: {target}")
@@ -103,7 +103,7 @@ def run(game: Path, source: Path, backups: Path, remove: bool) -> None:
         shutil.copytree(source, staged)
         if fingerprints(staged) != original:
             raise ValueError("The staged copy does not match the source")
-        validate(staged)
+        validate(staged, assets / "original")
         print(f"[ 75%] Verified {len(original)} staged package files")
         staged.rename(target)
     print(f"[100%] Installed the independent prototype: {target}")

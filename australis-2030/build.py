@@ -17,6 +17,8 @@ sys.path.insert(0, str(HERE.parent))
 from generate_source_models import Mesh, COLORS, render, validate  # noqa: E402
 from rebuild_game_scale import METRES_PER_UNIT  # noqa: E402
 from build_3d_viewer import build_viewer  # noqa: E402
+from combat_fit import (add_geometry as add_combat_geometry, FIT, VLS_BANKS,
+                        SAM_POS, RAM_POS, CIWS_POS, GUN_POS, CHAFF_POS, NULKA_POS)  # noqa: E402
 
 COLORS.update({
     "hull": "#778b96", "underwater": "#394954", "deck": "#394953",
@@ -33,7 +35,7 @@ WIDTH_SCALE = DECK_BEAM_M/88.0
 DECK = [
     (-28, -185), (22, -185), (32, -170), (38, -138),
     (40, -76), (41, -33), (42, 72), (40, 125),
-    (32, 163), (12, 185), (-12, 185), (-32, 161),
+    (38, 163), (30, 185), (-30, 185), (-38, 161),
     (-40, 123), (-39, 60), (-46, -41), (-43, -114),
     (-36, -168),
 ]
@@ -53,12 +55,14 @@ LIFT_WIDTH_M = 22.0
 LIFT_LENGTH_M = 26.0
 LIFT_CENTRE_X_M = 43.5
 ELEVATORS = [(LIFT_CENTRE_X_M/WIDTH_SCALE, -50),
-             (LIFT_CENTRE_X_M/WIDTH_SCALE, 69),
+             (LIFT_CENTRE_X_M/WIDTH_SCALE, 54),
              (-LIFT_CENTRE_X_M/WIDTH_SCALE, PORT_LIFT_Z),
              (LIFT_CENTRE_X_M/WIDTH_SCALE, -132)]
 LASERS = [(-35, 109), (36, 119), (-40, -60), (31, -157)]
-CATAPULTS = [((-24, 58), (-24, 154)), ((0, 90), (0, 170)),
-             ((19, 68), (21, 154))]
+# Five 95 m CATOBAR steam tracks: three centre lanes and two outboard.
+# Adjacent lanes are interlocked; only alternate lanes can prepare together.
+CATAPULTS = [((x/WIDTH_SCALE, 88), (x/WIDTH_SCALE, 183))
+             for x in (-28,-14,0,14,28)]
 VERTICAL_SPOTS = [(6, -165), (6, -136), (6, -107), (6, -78)]
 LANDING_LANE_A = np.array((-23., -155.))
 LANDING_LANE_B = np.array((-15., 62.))
@@ -166,7 +170,7 @@ def geometry(closed_lasers=True):
     # through faceted chines towards its waterline and keel.
     chine = hull_outline(.74, .99, .40)
     shoulder = hull_outline(.58, .98, .12)
-    waterline = hull_outline(WATERLINE_WIDTH_SCALE, .98, .035)
+    waterline = hull_outline(WATERLINE_WIDTH_SCALE, .98, .02)
     keel = hull_outline(.31, .88, .02)
     loft(m, "HardChineHull", [polygon_at_y(DECK, DECK_UNDERSIDE_Y),
                               polygon_at_y(chine, 12),
@@ -243,15 +247,15 @@ def geometry(closed_lasers=True):
                      (x+half_width-.2/WIDTH_SCALE, z+side*(half_length-.2)),
                      .22, 22.25, "white")
 
-    # Two bow tracks and one angled starboard track; routes come later.
+    # CATOBAR steam launch tracks; native launch rules use the same axes.
     for i, (start, end) in enumerate(CATAPULTS, 1):
         # A deck-flush blast-deflector panel is marked behind each launch
         # point; actuator volume, exhaust flow and clearances remain unknown.
         sx, sz = start
         m.box(f"CatapultJetBlastDeflector_{i}",
-              sx, 22.095, sz-5.0, 7, .14, 4, "hatch")
+              sx, 22.095, sz-18.0, 7, .14, 4, "hatch")
         m.stripe(f"CatapultJetBlastDeflectorHinge_{i}",
-                 (sx-3.5, sz-3), (sx+3.5, sz-3), .13, 22.18, "edge")
+                 (sx-3.5, sz-16), (sx+3.5, sz-16), .13, 22.18, "edge")
         m.stripe(f"CatapultTrack_{i}", start, end, .52, 22.13, "gold")
         m.stripe(f"CatapultDeckGuide_{i}",
                  (start[0]+1.25, start[1]), (end[0]+1.25, end[1]),
@@ -299,6 +303,7 @@ def geometry(closed_lasers=True):
             m.stripe(f"LaserHatchSeam_{i}", (x, z-2.6), (x, z+2.6),
                      .09, 22.18, "edge")
     bow_sonar_fairing(m)
+    add_combat_geometry(m, WIDTH_SCALE)
     return slim_mesh(m)
 
 
@@ -339,6 +344,19 @@ def plan_preview(path):
         return (int(width/2 + z*scale), int(height/2 - x*WIDTH_SCALE*scale))
     def shape(outline):
         return [point(x, z) for x, z in outline]
+    def physical_box(x,z,w,l,fill):
+        a = point((x-w/2)/WIDTH_SCALE,z-l/2)
+        b = point((x+w/2)/WIDTH_SCALE,z+l/2)
+        draw.rectangle((min(a[0],b[0]),min(a[1],b[1]),max(a[0],b[0]),max(a[1],b[1])),
+                       fill=fill,outline="#9aacb3",width=1)
+    for x,z in VLS_BANKS:
+        physical_box(x*.8,z,25,21,"#52626b")
+        physical_box(x,z,4.6,19,"#20333c")
+    for positions in (SAM_POS,RAM_POS,CIWS_POS,GUN_POS,CHAFF_POS,NULKA_POS):
+        for x,y,z in positions:
+            physical_box(x*.8,z,24 if positions in (SAM_POS,RAM_POS,CIWS_POS,GUN_POS) else 21,
+                         7 if positions in (SAM_POS,RAM_POS,CIWS_POS,GUN_POS) else 2.8,"#52626b")
+            physical_box(x,z,3,2.8,"#a4b5bb")
     draw.polygon(shape(DECK), fill="#40535e", outline="#b3c4c4", width=3)
     for a, b in zip(DECK, DECK[1:]+DECK[:1]):
         draw.line([point(*a), point(*b)], fill="#758f95", width=3)
@@ -369,8 +387,8 @@ def plan_preview(path):
     for (a, b) in CATAPULTS:
         draw.line([point(*a), point(*b)], fill="#d8b66e", width=4)
         sx, sz = a
-        draw.polygon(shape([(sx-3.5, sz-7), (sx+3.5, sz-7),
-                            (sx+3.5, sz-3), (sx-3.5, sz-3)]),
+        draw.polygon(shape([(sx-3.5, sz-20), (sx+3.5, sz-20),
+                            (sx+3.5, sz-16), (sx-3.5, sz-16)]),
                      fill="#76909a", outline="#d2dfdf", width=1)
     a, b = LANDING_LANE_A, LANDING_LANE_B
     for side in (-1, 1):
@@ -398,9 +416,9 @@ def plan_preview(path):
     for label, anchor, xy in [
         ("MAIN COMMAND ISLAND", (35, 10), (912, 216)),
         ("AFT AVIATION ISLAND", (34, -88), (590, 207)),
-        ("4 LIFTS / 22 x 26 m", (57, 69), (1250, 207)),
+        ("4 LIFTS / 22 x 26 m", (57, 54), (1250, 207)),
         ("4 OFFSET VTOL / HELO SPOTS", (6, -136), (158, 204)),
-        ("3 CATAPULTS", (8, 133), (1378, 655)),
+        ("5 STEAM CATAPULTS", (0, 136), (1335, 655)),
         ("4 FLUSH LASER HATCHES", (-35, 109), (1266, 757)),
         ("4 ARRESTING WIRES", (-23, -75), (160, 689)),
         ("ANGLED RECOVERY", (-27, -100), (155, 736)),
@@ -409,7 +427,7 @@ def plan_preview(path):
         tx, ty = xy
         draw.line([(ax, ay), (tx+8, ty-8)], fill="#607e88", width=2)
         draw.text((tx, ty), label, font=f(18, True), fill="#cadadc")
-    draw.text((82, 872), "370 m overall  ·  82 m deck beam  ·  99 aircraft target  ·  CVN concept",
+    draw.text((82, 872), "370 m overall  ·  82 m deck  ·  99 aircraft  ·  5,300 embarked  ·  CATOBAR",
               font=f(22), fill="#a1c8ca")
     draw.text((1276, 880), "GEOMETRY STUDY  /  NOT GAMEPLAY", font=f(16), fill="#91a6af")
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -479,15 +497,15 @@ def main():
     assert LIFT_WIDTH_M >= 19.545+2, "F-14A full-span reference needs side clearance"
     f14_reference_shift = abs(-.074+.012+.0126)*METRES_PER_UNIT
     assert LIFT_LENGTH_M/2 >= 19.1/2+f14_reference_shift
-    # The primary pair can stage a 25 m wingspan / 30 m length envelope.
-    # The middle track is interlocked in the game INI, rather than trying to
-    # park three wide aircraft shoulder-to-shoulder on this narrower bow.
-    for index in (0,2):
+    # The three centre lanes accept a 25 x 30 m reference footprint. The
+    # outboard lanes use an A-7E-sized 12 x 16 m footprint and class filters.
+    for index in range(5):
         start,end = np.array(physical_xz(CATAPULTS[index]))
         direction = (end-start)/np.linalg.norm(end-start)
         lateral = np.array((direction[1],-direction[0]))
-        for along in np.linspace(-15,15,7):
-            for across in np.linspace(-12.5,12.5,7):
+        half_length,half_span = (8,6) if index in (0,4) else (15,12.5)
+        for along in np.linspace(-half_length,half_length,7):
+            for across in np.linspace(-half_span,half_span,7):
                 x,z = start+along*direction+across*lateral
                 assert inside_deck(x,z), (index,"staged aircraft off deck")
                 assert min(rectangle_distance(x,z,*b) for b in obstacles) >= 1.5, \
@@ -508,7 +526,7 @@ def main():
     assert np.array_equal(parts["HardChineHull"][-n:],
                           parts["UnderwaterBody"][:n])
     bow_z = max(z for _, z in DECK)
-    immersed_bow = [x for x, z in hull_outline(.82, .98, .035)
+    immersed_bow = [x for x, z in hull_outline(.82, .98, .02)
                     if math.isclose(z, bow_z*.98)]
     assert len(immersed_bow) == 2
     bow_tip_width = abs(immersed_bow[0]-immersed_bow[1])*WIDTH_SCALE
@@ -520,7 +538,7 @@ def main():
     def area(points):
         return abs(sum(x*z2-x2*z for (x, z), (x2, z2)
                        in zip(points, points[1:]+points[:1])))/2
-    waterline = physical_xz(hull_outline(WATERLINE_WIDTH_SCALE, .98, .035))
+    waterline = physical_xz(hull_outline(WATERLINE_WIDTH_SCALE, .98, .02))
     keel = physical_xz(hull_outline(.31, .88, .02))
     mid_depth = [((x+x2)/2, (z+z2)/2)
                  for (x, z), (x2, z2) in zip(waterline, keel)]
@@ -535,7 +553,11 @@ def main():
                         "offensive_ecm_modules": 1}, mesh)
     summary.update(catapult_tracks=len(CATAPULTS),
                    flight_deck_beam_m=DECK_BEAM_M,
-                   outer_catapult_lateral_separation_m=round((CATAPULTS[2][0][0]-CATAPULTS[0][0][0])*WIDTH_SCALE,2),
+                   outer_catapult_lateral_separation_m=round((CATAPULTS[4][0][0]-CATAPULTS[0][0][0])*WIDTH_SCALE,2),
+                   catapult_type="Steam CATOBAR, five 95 m tracks",
+                   embarked_complement_design_target=FIT["crew"]["total"],
+                   accommodation_berths_design_target=FIT["crew"]["berths"],
+                   peripheral_vls_cells_visual_target=80,
                    aft_vertical_operation_spots=len(VERTICAL_SPOTS),
                    deck_edge_lifts=len(ELEVATORS),
                    lift_platform_width_m=LIFT_WIDTH_M,
@@ -543,6 +565,7 @@ def main():
                    overall_beam_including_lifts_m=2*LIFT_CENTRE_X_M+LIFT_WIDTH_M,
                    f14a_lift_reference_envelope_checked=True,
                    islands=2, aft_h_mark_angle_degrees=PAD_MARK_ANGLE_DEG,
+                   design_mass_budget_matches_hull_volume_within_one_percent=abs(submerged_volume*1.025-FIT["full_load_displacement_tonnes"])/FIT["full_load_displacement_tonnes"]<.01,
                    aft_spot_clearance_geometry_checked=True,
                    pad_longitudinal_corridors_clear=True,
                    catapult_launch_corridors_clear=True,

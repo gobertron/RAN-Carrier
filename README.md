@@ -12,7 +12,37 @@ We are refining the newest Australis first, then moving backward through its ear
 
 [Open the interactive 3D model](australis-2030/viewer/australis_2030_3d.html) to rotate and inspect the deck, radar panels and laser hatches. Use **Deploy four lasers** to see the raised visual state. Download the self-contained HTML file to open it offline.
 
-The revised 2030 study has a slimmer 82 m flight deck, an approximately 41 m maximum waterline beam, high continuous topsides and a fine immersed bow. Four offset VTOL/helicopter spots now form a line near the aft island. Two bow catapults, a starboard catapult, three blast-deflector panels, an angled recovery lane and four arresting cables are marked on the deck. Radar faces sit on the sides of both islands; four defensive laser positions have flush hatches in the default mesh and a separate raised visual state. The 99-aircraft capacity and combat systems are design targets. Hull volume and plan-view spacing are calculated in the [design notes](australis-2030/README.md), but stability, seakeeping and aircraft operations are not validated. A separate [opt-in Australis Sea Power editor package](game-mod/RAN-Carrier-Australis-2030/) includes our own geometry, materials and a native-style vessel definition. **The user confirmed mission loading and original hull rendering on 22 October 2026 with `cbdaef4`**, after adding the missing `[Foam]` section. Its aircraft list is intentionally empty. The newest revision narrows the hull and deck, spreads and staggers the catapults, aligns their mesh tracks with native launch headings, and allows the outer catapult pair plus aft helicopter spots to operate with a shared one-second minimum launch interval. The centre catapult is interlocked with the outer pair. All four lifts are now 22 m across by 26 m long, with centred ride/spawn references and bow-facing parking checked against the stock F-14A; the stock A-7E is used for catapult staging checks. The main deck remains 82 m wide (109 m including the lift extensions). These flight-deck changes still need an in-game check. See the [test steps](australis-2030/GAME-TEST.md). The earlier 14 fleet studies remain below as reference.
+The current Australis is a **steam CATOBAR carrier** with five 95 m launch
+tracks: three in the middle and two outboard. It retains the original two
+islands, four offset helicopter/VTOL spots, four 22 × 26 m lifts and an angled
+recovery deck with arresting cables. A broader bow deck follows the supplied
+Ford reference while the immersed bow remains fine. Adjacent launch lanes
+interlock; the outer pair currently accepts stock A-7Es pending checks for
+other aircraft. The middle lanes accept other carrier-capable aircraft.
+
+Design targets are **370 m overall, 82 m main flight deck, 112,000 metric
+tonnes, 99 aircraft and 5,300 embarked personnel**, with 5,800 berths. Maximum
+width including the lifts is 109 m. The [design basis](australis-2030/DESIGN-BASIS.md)
+sets out the crew, space and mass allocations and distinguishes them from
+verified game behaviour.
+
+The Ford/Zumwalt-inspired fit has 80 peripheral VLS cells, two self-defence
+launchers, two 21-position RAM-form launchers, three Phalanx mounts, two 30 mm
+guns, conformal radar faces, ESM, defensive/offensive ECM, SRBOC and two Nixie
+decoys. Available stock profiles provide explicitly declared compatibility
+proxies: the ESSM/RAM-form mounts currently fire **RIM-7M Sea Sparrows**.
+SPY-1A represents the modern search-radar role. Nulka and retractable lasers
+remain visual positions. This is an original game design, not an exact Ford
+or Zumwalt simulation.
+
+The user confirmed mission loading and original hull rendering with `cbdaef4`
+on 22 October 2026 after the missing `[Foam]` configuration was added. The new
+five-lane/combat revision passes static geometry, references, size/budget and
+installer checks, and **still needs in-game flight and combat testing**.
+The installer checks stock dependencies before staging the independent
+[game package](game-mod/RAN-Carrier-Australis-2030/). See [upgrade, test and
+rollback steps](australis-2030/GAME-TEST.md). RADF, Workshop, original game files
+and User Data are not modified. The earlier 14 fleet studies remain below.
 
 ## Earlier fleet studies
 
@@ -43,7 +73,7 @@ Each edition has a separate design sheet with the proposed air group, dated comb
 
 The 1944–1959 light fleet series follows British wartime light-carrier design cues. The 1963–1993 hulls draw from US conventional and nuclear supercarrier lineages but have newly authored Australian silhouettes and fittings. The 2002–2023 Southern Cross and Australis hulls have distinct Australian decks, islands and sensor/weapon outlines. No third-party hull geometry, textures or INIs are included. `CREDITS.md` records the provenance of the one external scale reference.
 
-The Australis editor test uses the supplied smaller reference archives of stock Forrestal/Nimitz and Workshop carrier INIs to map lifts, taxi, launch and recovery sections against the original Australis mesh. The supplied Sea Power copy was used to inspect `Seapower-Scripts.dll` and trace the rudder loading error; game binaries and third-party assets are not included here. The prototype intentionally leaves its air group empty and combat effects inactive until editor load and basic deck behavior are checked in Sea Power. Source design geometry may require reshaping for physically safe deck cycles. No in-game flight, radar, sonar, ECM or laser tests have been claimed.
+The Australis editor test uses the supplied smaller reference archives of stock Forrestal/Nimitz and Workshop carrier INIs to map lifts, taxi, launch and recovery sections against the original Australis mesh. The supplied Sea Power copy was used to inspect `Seapower-Scripts.dll` and trace the rudder loading error; game binaries and third-party assets are not included here. The prototype leaves its air group empty for user-selected aircraft and now includes a declared stock-compatible combat trial. Source design geometry may require reshaping for physically safe deck cycles. No in-game flight, radar, sonar, ECM or laser tests have been claimed.
 
 ## Source notes
 

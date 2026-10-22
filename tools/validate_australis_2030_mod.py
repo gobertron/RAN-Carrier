@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import configparser
+import json
 import math
 import re
 from pathlib import Path
@@ -36,7 +37,28 @@ def inside_deck(x: float, z: float, outline: list[tuple[float,float]]) -> bool:
     return inside
 
 
-def main(destination: Path = DEST) -> None:
+def check_stock(ship, destination: Path, original: Path) -> None:
+    """Fail before installation if a stock system or round is unavailable."""
+    for family,filename in (("SensorSystem","sensors.ini"),("WeaponSystem","weapons.ini")):
+        local = destination/"systems"/filename
+        local_names = set(ini(local).sections()) if local.is_file() else set()
+        stock = original/"systems"/filename
+        if not stock.is_file():
+            raise FileNotFoundError(f"Required stock catalogue missing: {stock}")
+        stock_names = set(re.findall(r"(?m)^\[([^\]\r\n]+)\]",stock.read_text(encoding="utf-8-sig")))
+        count = int(ship[family+"s"]["NumberOf"+family+"s"])
+        for i in range(1,count+1):
+            system = ship[f"{family}{i}"]
+            if system["Type"] == "Visual": continue
+            assert system["SystemName"] in local_names|stock_names, (family,i,"missing stock profile")
+    rounds = {value for name in ship.sections() for key,value in ship[name].items()
+              if re.fullmatch(r"Ammunition\d*|Countermeasure",key)}
+    for name in rounds:
+        assert (original/"ammunition"/(name+".ini")).is_file(), (name,"missing stock ammunition")
+    print(f"[OK] Installed stock catalogues and {len(rounds)} ammunition references resolve")
+
+
+def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
     ship = ini(destination / f"vessels/{ID}.ini")
     variants = ini(destination / f"vessels/{ID}_variants.ini")
     names = ini(destination / "language_en/vessel_names.ini")
@@ -45,8 +67,8 @@ def main(destination: Path = DEST) -> None:
     assert ship["FlightDeck"]["AircraftCapacity"] == "99"
     assert ship["MainPowerSystem"]["Type"] == "Nuclear"
     assert not ship["AirGroup"], "Air group must wait for aircraft compatibility"
-    assert ship["WeaponSystems"]["NumberOfWeaponSystems"] == "0"
-    assert ship["SensorSystems"]["NumberOfSensorSystems"] == "1"
+    assert ship["WeaponSystems"]["NumberOfWeaponSystems"] == "21"
+    assert ship["SensorSystems"]["NumberOfSensorSystems"] == "11"
     assert names.has_section(ID) and names[ID]["Type"].startswith("CVN,")
     assert variants["General"]["NationFlagReference"] == "Flag1"
     assert variants["Default"]["Nation"] == variants["Variant1"]["Nation"] == "Australia"
@@ -125,7 +147,7 @@ def main(destination: Path = DEST) -> None:
         assert all(ship.has_section(f"{family}{i}") for i in range(1,count+1))
         assert not ship.has_section(f"{family}{count+1}")
     assert int(deck["NumberOfElevators"]) == 4
-    assert int(deck["NumberOfLaunchPoints"]) == 7
+    assert int(deck["NumberOfLaunchPoints"]) == 9
     assert int(deck["NumberOfRecoveryPoints"]) == 5
     # The first four hatch-coloured boxes are the actual exported platforms.
     # Measure their geometry rather than trusting a second copy of the layout.
@@ -150,14 +172,14 @@ def main(destination: Path = DEST) -> None:
         assert centre[2]+f14_shift+19.1/2 <= high[2]
         lift_bounds.append((low[0],high[0],low[2],high[2]))
     port_lift = vector(ship["Elevator3"]["SpawnPosition"])
-    main_island = ship["DeckZone6"]
+    main_island = ship["DeckZone8"]
     island_z = [vector(main_island[f"Point{i}"])[2]
                 for i in range(1,int(main_island["NumberOfPoints"])+1)]
     assert port_lift[0] < 0 and math.isclose(
         port_lift[2],(min(island_z)+max(island_z))/2,abs_tol=1e-6), \
         "Port lift must be abreast of the main island"
     assert ship["RecoveryPoint1"]["Arrested"] == "True"
-    deck_outline = ship["DeckZone5"]
+    deck_outline = ship["DeckZone7"]
     assert deck_outline["Type"] == "Deck"
     outline = []
     for i in range(1,int(deck_outline["NumberOfPoints"])+1):
@@ -171,7 +193,7 @@ def main(destination: Path = DEST) -> None:
     # Measure the actual exported gold track meshes, independently of the
     # generator constants, and compare with the game's launch definitions.
     gold = object_vertices["Surface_Gold"]
-    for i in range(1,4):
+    for i in range(1,6):
         track = gold[(i-1)*8:i*8]
         start = tuple((a+b)/2 for a,b in zip(track[0],track[3]))
         end = tuple((a+b)/2 for a,b in zip(track[1],track[2]))
@@ -181,17 +203,17 @@ def main(destination: Path = DEST) -> None:
         dx,dz = end[0]-start[0],end[2]-start[2]
         assert abs(float(launch["Rotation"])-math.degrees(math.atan2(dx,dz))) < .002, (i,"heading")
         assert abs(float(launch["CatapultLength"])-math.hypot(dx,dz)*METRES_PER_UNIT) < .01
-    # Check the user's stock A-7E reference at all three catapults, with
+    # Check the user's stock A-7E reference at all five catapults, with
     # wings open. This is a staging footprint check, not a taxi simulation.
     obstacles = list(lift_bounds)
-    for name in ("DeckZone6","DeckZone7"):
+    for name in ("DeckZone8","DeckZone9"):
         zone = ship[name]
         points = [vector(zone[f"Point{i}"]) for i in range(1,int(zone["NumberOfPoints"])+1)]
         obstacles.append((min(v[0] for v in points)*METRES_PER_UNIT,
                           max(v[0] for v in points)*METRES_PER_UNIT,
                           min(v[2] for v in points)*METRES_PER_UNIT,
                           max(v[2] for v in points)*METRES_PER_UNIT))
-    for i in range(1,4):
+    for i in range(1,6):
         launch = ship[f"LaunchPoint{i}"]
         x,_,z = (v*METRES_PER_UNIT for v in vector(launch["Position"]))
         angle = math.radians(float(launch["Rotation"]))
@@ -203,13 +225,17 @@ def main(destination: Path = DEST) -> None:
                 assert all(not(x0 <= px <= x1 and z0 <= pz <= z1)
                            for x0,x1,z0,z1 in obstacles), (i,"A-7E overlaps lift or island")
     assert ship["LaunchPoint1"]["BlocksLaunchPoints"] == "2"
-    assert ship["LaunchPoint3"]["BlocksLaunchPoints"] == "2"
+    assert ship["LaunchPoint3"]["BlocksLaunchPoints"] == "2,4"
     assert ship["LaunchPoint2"]["BlocksLaunchPoints"] == "1,3"
+    assert ship["LaunchPoint4"]["BlocksLaunchPoints"] == "3,5"
+    assert ship["LaunchPoint5"]["BlocksLaunchPoints"] == "4"
+    for i in (1,5):
+        assert ship[f"LaunchPoint{i}"]["SupportedClasses"] == "usn_a-7e"
     assert float(deck["LaunchDelay"]) == 1
     left = vector(ship["LaunchPoint1"]["Position"])
-    right = vector(ship["LaunchPoint3"]["Position"])
-    assert (right[0]-left[0])*METRES_PER_UNIT >= 40, "Outer pair needs wing clearance"
-    for i in range(4,8):
+    right = vector(ship["LaunchPoint5"]["Position"])
+    assert abs((right[0]-left[0])*METRES_PER_UNIT-56) < .001
+    for i in range(6,10):
         assert not ship[f"LaunchPoint{i}"].get("BlocksLaunchPoints"), "Aft spots must not block the forward pair"
     for i in range(1,int(deck["NumberOfTaxiPaths"])+1):
         route = ship[f"TaxiPath{i}"]
@@ -240,13 +266,44 @@ def main(destination: Path = DEST) -> None:
     assert foam["HullFoamTexture"] == "ships/particles/wake/Ceto_Hullwake"
     vector(foam["SternFoamPosition"])
     vector(foam["HullFoamPosition"])
+    fit = json.loads((destination/"combat-fit.json").read_text())
+    crew = fit["crew"]
+    assert crew["ships_company"]+crew["air_wing"]+crew["staff"] == crew["total"] == 5300
+    assert crew["berths"] == 5800 and crew["berths"] >= crew["total"]
+    assert sum(fit["weight_budget_tonnes"].values()) == float(ship["Physics"]["Displacement"]) == 112000
+    assert fit["hangar"]["proposed_aircraft_allocation"]+fit["hangar"]["proposed_deck_allocation"] == 99
+    hotel = fit["hotel_services"]
+    assert (hotel["watermakers"]-1)*hotel["each_watermaker_m3_per_day"] >= crew["total"]*hotel["fresh_water_litres_per_person_day"]/1000
+    local_sensors = ini(destination/"systems/sensors.ini")
+    local_weapons = ini(destination/"systems/weapons.ini")
+    assert local_sensors["RAN_Australis_OECM"]["Type"] == "Offensive"
+    assert local_weapons["RAN_Australis_RAM21"]["NumberOfAttachments"] == "21"
+    for family in ("SensorSystem","WeaponSystem","DecoySystem"):
+        count = int(ship[family+"s"]["NumberOf"+family+"s"])
+        for i in range(1,count+1):
+            assert ship.has_section(f"{family}{i}")
+    vls = [ship[s] for s in ship.sections() if s.startswith("WeaponSystem") and ship[s].get("SystemName")=="MK41"]
+    assert len(vls) == 4 and sum(int(s["NumberOfContainers"]) for s in vls) == 80
+    for name in ship.sections():
+        if not re.fullmatch(r"WeaponSystem\d+",name): continue
+        system = ship[name]
+        if "AssociatedMagazine" in system: assert ship.has_section(system["AssociatedMagazine"])
+        for key in ("AssociatedSensors","AssociatedSearchSensors"):
+            assert all(ship.has_section(s) for s in system.get(key,"").split(",") if s)
+        count = int(system.get("NumberOfContainers",0))
+        for i in range(1,count+1):
+            assert system[f"Container{i}"] == "Dummy"
+            vector(system[f"Container{i}_Position"])
+    if stock_root is not None: check_stock(ship,destination,stock_root)
     print(f"[OK] {ID}: {len(groups)} OBJ groups, {len(registered)} submodels")
     print(f"[OK] {vertex_count} vertices with UVs and {normal_count} indexed face normals")
-    print("[OK] 4 lifts, 3 fixed-wing catapults, 4 vertical spots, 5 recovery points")
+    print("[OK] 4 lifts, 5 steam CATOBAR catapults, 4 vertical spots, 5 recovery points")
     print("[OK] Four 22 x 26 m lifts; ride/spawn centres and F-14A reference footprint fit")
-    print("[OK] A-7E open-wing staging footprint clear at all three catapults")
+    print("[OK] A-7E open-wing staging footprint clear at all five catapults")
     print("[OK] 82 m deck; catapult meshes, headings and launch positions align")
-    print("[OK] Outer launch pair, centre interlock and independent aft launch spots")
+    print("[OK] Adjacent-lane interlocks and independent aft launch spots")
+    print("[OK] 5300 embarked / 5800 berths; 112000 t concept mass budget balances")
+    print("[OK] 80 VLS cells, 21 weapon systems, 11 sensors and two towed decoys configured")
     print("[OK] Rudder/propeller mounts, materials, effects, names, routes and colliders resolve")
     print("[LIMIT] Sea Power loading, flight operations and animation require in-game QA")
 
@@ -254,4 +311,6 @@ def main(destination: Path = DEST) -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--destination",type=Path,default=DEST)
-    main(parser.parse_args().destination)
+    parser.add_argument("--stock-root",type=Path,help="StreamingAssets/original for stock reference checks")
+    args = parser.parse_args()
+    main(args.destination,args.stock_root)

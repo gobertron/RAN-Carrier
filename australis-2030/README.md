@@ -1,103 +1,67 @@
-# Australis 2030 — original RAN carrier design study
+# Australis 2030 — original Australian CATOBAR carrier
 
-This is the first ship in the newest-to-oldest Australis sequence. The original
-mesh draws broad design cues from U.S. aircraft carriers and modern faceted
-warship superstructures, with two RAN concept islands and a continuous carrier
-flight deck. No third-party meshes, textures, or vessel definitions are copied.
-
-The deck has been narrowed from the previous 88 m to **82 m**, while the maximum waterline
-beam is approximately **41 m**. High continuous topsides connect the deck's
-entire perimeter to a narrower waterline; the bow below the deck tapers to a
-fine immersed stem. The hull has a proposed 11.5 m draft and a 370 m overall
-length. Its crude enclosed-volume estimate is 109,082 m³, or about 111,809
-tonnes in seawater at 1.025 tonnes/m³; the corresponding approximate block
-coefficient is 0.638. This arithmetic only checks that the blockout has a
-plausible order of magnitude. It does not demonstrate actual
-loading, intact or damaged stability, trim, resistance, seakeeping, structural
-strength, propulsion or safe flight operations. The angular shapes are a
-visual design choice and do not establish a radar signature.
+The current concept uses the supplied Ford flight-deck reference with our
+original faceted hull and two islands. It has **five 95 m steam catapults**:
+three in the middle and two outboard, plus an angled arrested-recovery lane,
+four aft helicopter/VTOL spots and four 22 × 26 m lifts. A broader bow flight
+deck sits above the fine immersed stem. The main flight deck remains 82 m
+wide; the maximum width including the lift extensions is 109 m.
 
 | Design target | Value |
 |---|---:|
-| Type and propulsion | CVN, nuclear concept |
-| Overall length / maximum deck beam | 370 m / 82 m |
-| Maximum waterline beam / draft | 41 m / 11.5 m, approximate |
-| Air group | 99 aircraft, capacity target only |
-| Catapult tracks / blast deflector panels | 3 / 3, indicated |
-| Deck-edge lifts | 4; single port lift abreast of the larger main island |
-| Each lift platform / parking direction | 22 m across by 26 m fore-and-aft / bow-facing |
-| Overall width including lift platforms | 109 m; main flight deck remains 82 m |
-| Aft VTOL / helicopter spots | 4, offset toward the smaller aft island in a fore-to-aft line |
-| Recovery lane | Angled, with landing threshold and four arresting cables indicated |
-| Islands | 2; larger central command island, smaller aft aviation island |
-| Side-mounted radar faces / offensive ECM | 7 indicative panels / 1 visual module |
-| Defensive lasers | 4 flush hatches; separate raised visual state |
+| Overall length | 370 m |
+| Main flight deck / waterline beam | 82 m / approximately 41 m |
+| Draft / full-load displacement | 11.5 m / 112,000 metric tonnes |
+| Simplified hull-volume displacement estimate | 112,402 tonnes |
+| Embarked personnel / berths | 5,300 / 5,800 |
+| Aircraft target | 99 |
+| Proposed hangar / deck allocation | 36 / 63, parking unverified |
+| Steam CATOBAR tracks | Five, each 95 m; IDs 2/3/4 middle and 1/5 outboard |
+| Deck-edge lifts | Four, each 22 × 26 m, bow-facing parking |
+| Recovery | Angled lane, four cable indications; hook belongs to aircraft |
+| Islands | Larger command island and smaller aft aviation island |
 
-The four H markings have the requested 12-degree tilt. Their centers lie at
-x=5.6 m, 29 m apart, alongside the aft island. The landing lane is offset to
-port. Hook-equipped aircraft would engage **arresting cables on the deck**;
-the hooks themselves belong to aircraft and are not carrier fittings. Vertical
-operations and fixed-wing recovery are intended as separate deck modes.
-The right-hand catapult launches forward and avoids the lifts in plan view.
-The builder checks sampled spot outlines and minimum two-dimensional gaps
-from islands, lifts and catapult routes. The smallest reported spot-edge gap
-is 8 m; the smallest sampled catapult-to-island/lift plan gap is 14.5 m.
-These checks do not cover rotor disks, parked aircraft, jet blast, wings,
-elevator cycling, simultaneous operations or actual approach geometry.
+[DESIGN-BASIS.md](DESIGN-BASIS.md) provides the crew and mass budget, space
+allowances, references and complete modern-target/stock-proxy equipment table.
+The dimensions and staffing are project estimates, not certified naval
+architecture. Folded-aircraft parking, stability, blast clearance and the full
+99-aircraft cycle remain unvalidated.
 
-All four lifts are sized against the stock **F-14A**, with their native spawn
-and ride references centred on the visible platform. Aircraft face forward
-rather than sideways across the narrow axis. The 26 m length also allows for
-the F-14A's stock deck-position and ground-pivot terms. The validator measures
-the exported platforms and checks a full-span 19.545 m by 19.1 m reference
-footprint, including those terms. The stock **A-7E** is the catapult reference:
-its 11.8 m by 14.06 m open-wing footprint is checked at all three launch points.
-These are static reference checks; actual mesh placement, taxi turns and lift
-cycling require another game test. Stock aircraft files are only read as
-references and are not modified or redistributed.
+The combat layout includes 80 peripheral VLS cells, two self-defence missile
+mounts, two 21-position RAM-form mounts, three Phalanx mounts, two 30 mm guns,
+radars, ESM, defensive ECM, one offensive ECM, eight SRBOC positions and two
+Nixie decoys. The current native package uses declared stock-compatible
+proxies. In particular its ESSM/RAM-form mounts fire stock Sea Sparrows;
+changing their housing does not implement RIM-116/ESSM performance. Four
+Nulka positions and four laser hatches are visual studies. Turrets/hatches
+are not animated in the game prototype.
 
-Radar faces are placed on the command and aviation island sides rather than
-carried above them on exposed rotating frames. The four laser hatches are
-closed nearly flush to the flight deck in the default OBJ. In the viewer,
-**Deploy four lasers** opens the hatches and raises simplified turrets; the
-reverse control lowers them. This animation is a visual demonstration, not
-game logic, a working directed-energy weapon, or a verified below-deck
-installation. The small forward sonar fairing and ECM panel are also
-unimplemented visual cues.
+Adjacent catapult lanes interlock. Alternate sets 1/3/5 or 2/4 can prepare
+independently; the one-second minimum interval remains subject to the game
+scheduler. Outboard lanes are restricted to the stock A-7E pending other
+footprint checks. The middle lanes use a checked 25 m span × 30 m length
+reference envelope. The starboard forward lift is moved to z=54 m; the port
+lift remains abreast of the main island. Four 12-degree H markings remain
+29 m apart near the aft island. Recovery blocks launches.
 
-Open [the offline 3D viewer](viewer/australis_2030_3d.html) to rotate the model,
-switch among deck, bow, side and perspective views, and test the laser states.
 The [deck plan](previews/australis_2030_deck_plan.png),
 [perspective](previews/australis_2030_perspective.png) and
-[bow view](previews/australis_2030_bow.png) are renders of this geometry.
-`model/source/ran_cvn_australis_2030.obj` has metre coordinates. The
-`model/source/ran_cvn_australis_2030_deployed_lasers.obj` file is a **laser
-overlay only** for aligning on top of the closed-state hull in a 3D editor;
-hide the four closed hatch objects while inspecting that state. The
-`model/game-scale/` OBJ is an approximate scale copy for later integration.
-Run `python3 build.py` here to regenerate all geometry, previews and viewer.
+[bow view](previews/australis_2030_bow.png) are geometry renders. Open the
+[offline viewer](viewer/australis_2030_3d.html) to rotate and inspect the model.
+Its laser deployment control is a visual demonstration, not game weapon logic.
 
-**Status:** The components form individually closed geometry, but this is
-concept art, not a seaworthy naval architecture package. A separate
-[Sea Power editor-test package](../game-mod/RAN-Carrier-Australis-2030/) now
-ships the original mesh, simple materials, collision sections, four lift
-positions, three catapult launch points, four vertical launch points, five
-recovery points and simple taxi routes. Its 99-aircraft figure is a configured
-capacity, not a demonstrated working air group. The user confirmed Mission
-Editor Play loading and hull rendering with `cbdaef4` on 22 October 2026.
-The latest revision narrows the deck to 82 m, spreads the primary port and
-starboard catapults about 40 m apart, and staggers the centre track. The
-centre track interlocks with the outer pair; aft helicopter launches no
-longer block the forward catapults. A shared one-second launch interval
-allows closely spaced departures when aircraft are ready, subject to the
-game scheduler. These changes await an in-game check; aircraft operations, radar, ECM and lasers
-remain untested or unimplemented. See [GAME-TEST.md](GAME-TEST.md). The
-package does not modify RADF, the Workshop, the original game or Melbourne.
+`model/source/` contains metre OBJ/MTL files. The deployed-laser OBJ is an
+overlay for the base hull; `model/game-scale/` contains an approximate Sea
+Power scale copy. Rebuild from the repository root:
 
-## Design references
+```bash
+python3 australis-2030/build.py
+python3 tools/build_australis_2030_mod.py
+python3 tools/validate_australis_2030_mod.py
+```
 
-- [U.S. Navy aircraft carrier dimensions](https://www.airpac.navy.mil/Organization/Distinguished-Visitors/Important-Links-and-Info/) informed the difference between a carrier's waterline beam and broader flight deck. Australis uses its own dimensions and hull shape.
-- [NAVAIR Advanced Arresting Gear](https://www.navair.navy.mil/product/advanced-arresting-gear-aag) informed the recovery lane and cable indications; none of its engineering is implemented here.
-- [Naval Aviation Museum F-14A](https://www.history.navy.mil/content/history/museums/nnam/explore/collections/aircraft/f/f-14a-tomcat.html) and [A-7E](https://www.history.navy.mil/content/history/museums/nnam/explore/collections/aircraft/a/a-7e-corsair-ii0.html) provide aircraft length references. Wingspans and deck/ground-pivot terms were checked against the stock aircraft INIs in the user-supplied Sea Power copy.
-- [NAVSEA on Ford flight-deck design](https://www.navsea.navy.mil/Media/News/Article-View/Article/2596302/uss-gerald-r-ford-closes-out-evolutionary-18-month-pdtt-for-first-in-class-airc/) informed the outboard island and carrier equipment layout.
-- [NAVSEA on Zumwalt's faceted superstructure](https://www.navsea.navy.mil/Media/News/Article-View/Article/777551/us-navy-accepts-delivery-of-future-uss-zumwalt-ddg-1000/) informed the visual treatment of tower surfaces; its destroyer hull design has not been transferred to this carrier.
+The user confirmed original hull loading on 22 October 2026 after the missing
+Foam configuration was added. The new CATOBAR/combat fit needs an in-game
+check using [GAME-TEST.md](GAME-TEST.md). Geometry is original; stock profile
+and resource references do not bundle stock or Workshop asset bytes. The
+installer changes only the standalone Australis mod folder.

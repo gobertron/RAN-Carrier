@@ -7,6 +7,7 @@ explicit --destination). It never changes a live installation or Workshop.
 from __future__ import annotations
 
 import argparse
+import json
 import math
 import struct
 import sys
@@ -24,6 +25,7 @@ from build import (  # noqa: E402
 )
 from generate_source_models import Mesh  # noqa: E402
 from rebuild_game_scale import METRES_PER_UNIT  # noqa: E402
+from combat_fit import FIT, native_sections, custom_profiles  # noqa: E402
 
 ID = "ran_cvn_australis_2030"
 MOD_NAME = "RAN-Carrier-Australis-2030"
@@ -31,7 +33,7 @@ SHIP_DIR = f"ships/{ID}"
 DEST = ROOT / "game-mod" / MOD_NAME
 SCALE = 1 / METRES_PER_UNIT
 DECK_HEIGHT = DECK_SURFACE_Y * SCALE
-LAUNCH_ASSOC = ((1,2),(3,2),(1,2),(4,5,6,7))
+LAUNCH_ASSOC = ((1,2,3),(5,4,3),(1,2,3),(6,7,8,9))
 
 
 def vec(x: float, y: float, z: float) -> str:
@@ -161,12 +163,13 @@ def routes() -> list[tuple[str, str, list[tuple[float,float]]]]:
         for launch in launches:
             (sx,sz),(ex,ez) = CATAPULTS[launch-1]
             length = math.hypot((ex-sx)*WIDTH_SCALE,ez-sz)
-            approach = (sx-20*(ex-sx)/length,sz-20*(ez-sz)/length)
+            approach_length = 10 if launch in (1,5) else 20
+            approach = (sx-approach_length*(ex-sx)/length,sz-approach_length*(ez-sz)/length)
             if e == 1: way = [(0,-48),(0,32),approach]
             elif e == 2: way = [(23,50),approach]
             else: way = [(-30,ELEVATORS[2][1]+12),(-28,32),approach]
             out.append((f"Elevator{e}",f"LaunchPoint{launch}",way))
-    for i,(x,z) in enumerate(VERTICAL_SPOTS,4):
+    for i,(x,z) in enumerate(VERTICAL_SPOTS,6):
         out.append(("Elevator4",f"LaunchPoint{i}",[(10,-128),(x,z-12)]))
     out += [
         ("RecoveryPoint1","Elevator1",[(-25,-62),(0,-50)]),
@@ -210,12 +213,13 @@ def vessel_ini(material: dict[str,str]) -> str:
             "Views=binocular_7x50,binocular_10x50",
             "DefaultView=binocular_7x50"]),
         section("AirGroup",[
+            "; 5,300 embarked personnel; 99 aircraft is a design target.",
             "; Empty while aircraft compatibility and the 99-place deck cycle",
             "; are tested. This avoids a dependency on RADF or the F-111N pack."]),
         section("FlightDeck",[
             "AircraftCapacity=99","NumberOfElevators=4",
-            "NumberOfLaunchPoints=7","NumberOfRecoveryPoints=5",
-            f"NumberOfTaxiPaths={len(routes())}","NumberOfDeckZones=7",
+            "NumberOfLaunchPoints=9","NumberOfRecoveryPoints=5",
+            f"NumberOfTaxiPaths={len(routes())}","NumberOfDeckZones=9",
             "ForwardsTaxiVelocity=12","BackwardsTaxiVelocity=-8",
             "SlowTaxiVelocity=6","LaunchDelay=1","GroundCrewCount=16",
             "DeckParkSlots=44","LandingWhileLaunching=False",
@@ -237,21 +241,22 @@ def vessel_ini(material: dict[str,str]) -> str:
             "EmbarkTime=10","RecycleTime=15"]))
     for i,((x,z),(ex,ez)) in enumerate(CATAPULTS,1):
         rotation = math.degrees(math.atan2((ex-x)*WIDTH_SCALE,ez-z))
-        interlock = "1,3" if i == 2 else "2"
+        interlock = ",".join(str(j) for j in (i-1,i+1) if 1 <= j <= 5)
         parts.append(section(f"LaunchPoint{i}",[
             "AllowedType=Plane,VTOL",f"Position={point(x,z)}",
+            *(["SupportedClasses=usn_a-7e"] if i in (1,5) else []),
             f"BlocksLaunchPoints={interlock}",
             f"TakeoffRequiresFreeLaunchpoints={interlock}",
             f"Rotation={rotation:.3f}","CatapultParticles=None",
             f"CatapultLength={math.hypot((ex-x)*WIDTH_SCALE,ez-z):.3f}"]))
-    for i,(x,z) in enumerate(VERTICAL_SPOTS,4):
+    for i,(x,z) in enumerate(VERTICAL_SPOTS,6):
         parts.append(section(f"LaunchPoint{i}",[
             "AllowedType=Helicopter,VTOL",
             f"Position={point(x,z)}","Rotation=-12"]))
     touchdown = LANDING_LANE_A + (LANDING_LANE_B-LANDING_LANE_A)*.36
     parts.append(section("RecoveryPoint1",[
         "AllowedType=Plane,VTOL","AssociatedElevators=1,2,3",
-        "BlocksLaunchPoints=1,2,3,4,5,6,7",
+        "BlocksLaunchPoints=1,2,3,4,5,6,7,8,9",
         "BlocksRecoveryPoints=2,3,4,5",
         f"Position={point(*touchdown)}",f"ExitPosition={point(*LANDING_LANE_B)}",
         "Rotation="+f"{math.degrees(math.atan2((LANDING_LANE_B[0]-LANDING_LANE_A[0])*WIDTH_SCALE,LANDING_LANE_B[1]-LANDING_LANE_A[1])):.3f}",
@@ -284,7 +289,7 @@ def vessel_ini(material: dict[str,str]) -> str:
         parts.append(section(f"DeckZone{i}",zone(name,kind,coords)))
     parts += [
         section("Physics",[
-            f"Displacement={120000*WIDTH_SCALE:g}","MaxForwardVelocity=30",
+            f"Displacement={FIT['full_load_displacement_tonnes']}","MaxForwardVelocity=30",
             "MaxBackwardVelocity=7","LinearDrag=0.97",
             "MaxAccelerationFactor=0.20","MinAccelerationFactor=0.08",
             "RudderTurnRate=1.25","RudderForce=0.35",
@@ -300,7 +305,8 @@ def vessel_ini(material: dict[str,str]) -> str:
             "MinNoiseClassificationTreshold=5","ElectricFrequency=60"]),
         section("AI",[
             "UnitCostValue=12000","UnitScoreValue=15","Role=Carrier",
-            "AAW_Capability=1","ASuW_Capability=1","ASW_Capability=1",
+            "AAW_Capability=3","ASuW_Capability=2","ASW_Capability=1",
+            "HasChaff=True",
             "MissilesToSaturate=16","TorpedoesToSaturate=5"]),
         section("ControlSystem",["Collider=coll_bridge",
                                  "ArmorType=Minor","ModuleType=CIC"]),
@@ -316,11 +322,7 @@ def vessel_ini(material: dict[str,str]) -> str:
             "Collider=coll_prop_stbd"]),
         section("RudderSystems","NumberOfRudderSystems=1"),
         section("RudderSystem1",["Mount=Rudder","Collider=coll_rudder"]),
-        section("SensorSystems","NumberOfSensorSystems=1"),
-        section("SensorSystem1",[
-            "Type=Visual","SystemName=Optics","Mount=Dummy",
-            f"MountPosition={vec(33,40,5)}"]),
-        section("WeaponSystems","NumberOfWeaponSystems=0"),
+        *native_sections(section,vec,WIDTH_SCALE),
         section("Compartments",[
             f"Compartment1FirePosition={vec(0,15,95)}",
             f"Compartment2FirePosition={vec(0,15,0)}",
@@ -439,25 +441,37 @@ def build(destination: Path = DEST) -> None:
               f"[{ID}]\nType=CVN,Aircraft Carrier\n"
               "Default=Australis class 2030,Australis 2030\n"
               "DefaultDescription=Original future RAN carrier prototype. "
-              "99-aircraft target; carrier deck operations await in-game tests.\n"
+              "370 m, 112000 t, 5300 embarked design targets. Five steam CATOBAR "
+              "lanes; Ford/Zumwalt-inspired combat fit with declared stock proxies.\n"
               "Variant1=HMAS Australis test,HMAS Australis test\n")
     write_ini(destination / "_info.ini",
               "[Language_en]\nName=RAN Australis 2030 Editor Prototype\n"
               "Description=Independent Australian carrier model and flight-deck test. "
               "No RADF or Workshop files are bundled.\n\n"
               "[Compatibility]\nApproximateVersion=0.8.5\n")
+    sensor_profiles,weapon_profiles = custom_profiles(section,METRES_PER_UNIT)
+    write_ini(destination / "systems/sensors.ini",sensor_profiles)
+    write_ini(destination / "systems/weapons.ini",weapon_profiles)
+    (destination / "combat-fit.json").write_text(json.dumps(FIT,indent=2)+"\n")
     (destination / "README.txt").write_text(
         "RAN Australis 2030 Editor Prototype\n"
         "This is an opt-in editor test of an original mesh and native-style "
-        "carrier deck routes. It has no air group, no operational laser, radar "
-        "or ECM, and no tested deck animation. The 99-aircraft count is a design "
-        "target. A stock Sea Power Nimitz bundle is named as a runtime fallback; "
+        "carrier deck routes. The air group is user-selected and starts empty. "
+        "Targets: 99 aircraft, 5300 embarked, 5800 berths, 112000 t full load. "
+        "Five 95 m steam CATOBAR tracks use adjacent-lane interlocks. The "
+        "outboard pair currently accepts the stock A-7E; three middle lanes "
+        "accept other carrier aircraft. Combat-fit.json declares modern "
+        "targets and stock proxies: Mk41/SM-2/Tomahawk, Sea Sparrow in the "
+        "ESSM and 21-round RAM-form launchers, Phalanx, 30 mm, SPY-1A, "
+        "SLQ-32, original offensive ECM, SRBOC and two Nixie decoys. "
+        "Nulka and lasers remain visual positions. New combat behaviour "
+        "and flight-deck animation require in-game testing. A stock Sea "
+        "Power Nimitz bundle is named as a runtime fallback; "
         "no stock or Workshop asset bytes are copied.\n"
         "The user confirmed mission loading and original hull rendering on "
         "22 October 2026 after the Foam section was added. This revision "
-        "uses an 82 m deck with more widely separated outer catapults, a "
-        "staggered interlocked centre track and independent aft helicopter "
-        "launch spots. Four 22 x 26 m lifts use centred ride/spawn positions "
+        "uses an 82 m main deck and four independent aft helicopter spots. "
+        "Four 22 x 26 m lifts use centred ride/spawn positions "
         "and fore-and-aft parking, checked against the stock F-14A reference. "
         "Catapult staging is checked using the stock A-7E. "
         "LaunchDelay=1 is a shared one-second minimum, not a "
@@ -474,7 +488,7 @@ def main() -> None:
     args = parser.parse_args()
     build(args.destination)
     print(f"[OK] Built {MOD_NAME}: {args.destination}")
-    print("[STATUS] User confirmed hull loading; slimmer deck and launch changes await game QA")
+    print("[STATUS] User confirmed original hull loading; CATOBAR and combat fit await game QA")
 
 
 if __name__ == "__main__":
