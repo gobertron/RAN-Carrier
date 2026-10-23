@@ -51,7 +51,10 @@ The reported normal-gun aiming error is corrected by registering real
 barrels and supplying the engine-required `NumberOfGuns`/`Gun1` fields.
 All five guns now have original moving yaw/elevation objects. Aircraft
 taxi/launch coordinates match the deck surface, removing the former 16 cm
-offset. The finite aviation reserve is **6,000,000 supply points**, with no
+offset. The rebuild also makes the lift surfaces nearly flush, reduces the helipads to
+painted surfaces and lowers thick deck markings and stowed covers. Aircraft
+contact points follow the actual exported surfaces. The finite aviation
+reserve is **6,000,000 supply points**, with no
 per-category limits; stock aircraft gun capacities are preserved. These gun
 and contact-height corrections pass static checks and need in-game verification.
 

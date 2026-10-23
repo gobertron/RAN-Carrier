@@ -387,11 +387,29 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
     # GroundPivot itself. The old 22.16 m route height visibly floated tyres.
     surface=max(v[1] for v in object_vertices["Deck"])
     assert abs(surface*METRES_PER_UNIT-22)<.001
+    for i in range(4):
+        platform=hatch[i*8:(i+1)*8]
+        assert abs((max(v[1] for v in platform)-surface)*METRES_PER_UNIT-.002)<.0002, \
+            "Lift platform must be within two millimetres of deck"
+    assert all(surface < y <= surface+.009/METRES_PER_UNIT
+               for x,y,z in white), "Deck paint must be millimetres above the contact plane"
+    for i in range(5):
+        deflector=hatch[32+i*8:40+i*8]
+        assert abs(max(v[1] for v in deflector)*METRES_PER_UNIT-22.002)<.0002, \
+            "Stowed deflector must be flush with deck"
+    for x,y,z in hatch[232:264]:
+        assert y <= surface+.0022/METRES_PER_UNIT, "Closed laser hatches must remain within two millimetres of deck"
     for i in range(1,6):
         assert abs(vector(ship[f"LaunchPoint{i}"]["Position"])[1]-surface)<1e-6
     assert abs(vector(ship["RecoveryPoint1"]["Position"])[1]-surface)<1e-6
     for i in range(6,10):
-        assert abs(vector(ship[f"LaunchPoint{i}"]["Position"])[1]*METRES_PER_UNIT-22.08)<.001
+        pad=hatch[72+(i-6)*40:112+(i-6)*40]
+        assert len(pad)==40
+        pad_top=max(v[1] for v in pad)
+        assert abs(pad_top*METRES_PER_UNIT-22.002)<.0002
+        centre=(sum(v[0] for v in pad)/40,pad_top,sum(v[2] for v in pad)/40)
+        assert math.dist(vector(ship[f"LaunchPoint{i}"]["Position"]),centre)*METRES_PER_UNIT<.0002
+        assert math.dist(vector(ship[f"RecoveryPoint{i-4}"]["Position"]),centre)*METRES_PER_UNIT<.0002
     # The actual recovery zone and exported cable ends must share one nine
     # degree port axis; wires cross that axis at ninety degrees.
     assert float(ship["RecoveryPoint1"]["Rotation"]) == -9
@@ -449,7 +467,8 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
     print("[OK] A-7E open-wing staging footprint clear at all five catapults")
     print("[OK] 82 m deck; launch tracks, rotated deflectors and taxi approaches align")
     print("[OK] Bow-pair / waist / recovery interlocks; forward helicopter pair blocks waist lanes only")
-    print("[OK] Tyre-contact heights match deck/pads/lifts; nine-degree recovery and perpendicular wires")
+    print("[OK] Flush lifts/pads, thin deck paint and matching tyre-contact positions")
+    print("[OK] Closed laser hatches and stowed deflectors are flush; nine-degree recovery and perpendicular wires")
     print("[OK] Smaller rear tower with six-face glazing; eight defensive deck no-parking zones")
     print("[OK] Five guns have real yaw/barrel meshes; normal guns resolve NumberOfGuns/Gun1")
     print("[OK] 6,000,000 aviation-ammunition points; RIM-66E and RGM-109 removed")

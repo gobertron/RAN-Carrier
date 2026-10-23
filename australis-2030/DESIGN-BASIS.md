@@ -157,8 +157,13 @@ countermeasure capacities. No aircraft files are overridden. Aircraft must
 use an armed loadout and complete preparation/rearming between sorties.
 
 Main-deck taxi, launch and fixed-wing recovery contact heights are 22 m,
-matching the exported deck. Helicopter contacts are on the 22.08 m pads and
-lift contacts on the 22.205 m platforms. Sea Power applies each aircraft's
+matching the exported deck. Lift and helicopter contacts match their 22.002 m
+platform and painted-pad surfaces. The two-millimetre allowance prevents
+coplanar flicker at overlapping deck edges. Ordinary deck markings rise 4–8 mm above
+the deck, stowed deflectors are within 2 mm of it and closed laser hatches
+are within 2 mm of the deck. Visible wires rise 3 cm and launch shuttles 6 cm. These details
+replace the former raised paint, 8 cm pads and 20.5 cm lift steps.
+Sea Power applies each aircraft's
 GroundPivot correction itself. The former 16 cm extra main-deck offset is
 removed. This aligns the declared contact plane; tyre appearance still
 requires in-game inspection for each aircraft type.

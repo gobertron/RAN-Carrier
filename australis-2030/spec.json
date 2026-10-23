@@ -68,7 +68,7 @@
     ],
     "port_waist_launch_stagger_m": 21,
     "port_lift_longitudinal_position_m": -32,
-    "catapult_visual_details": "Flush metal troughs, dark slots, launch shuttles and segmented stowed deflectors; static geometry",
+    "catapult_visual_details": "Deck-flush metal tracks, thin dark slots and painted guides, compact launch shuttles and flush segmented stowed deflectors; static geometry",
     "minimum_pad_footprint_clearance_m": 1,
     "recovery_heading_degrees": -9,
     "vertical_spot_centres_m": [
@@ -90,8 +90,11 @@
       ]
     ],
     "tyre_contact_height_m": 22.0,
-    "helipad_contact_height_m": 22.08,
-    "lift_contact_height_m": 22.205
+    "helipad_contact_height_m": 22.002,
+    "lift_contact_height_m": 22.002,
+    "paint_maximum_height_above_deck_m": 0.008,
+    "stowed_blast_deflector_height_above_deck_m": 0.002,
+    "closed_laser_hatch_height_above_deck_m": 0.002
   },
   "systems_visual_studies": {
     "integrated_radar_arrays": 7,

@@ -96,12 +96,27 @@ VERTICAL_SPOT_RADIUS = 10.5
 PAD_MARK_ANGLE_DEG = -12
 DECK_UNDERSIDE_Y = 20.3
 DECK_SURFACE_Y = 22.0
+# A two-millimetre plate allowance avoids coplanar faces where a platform
+# overlaps the deck edge. It replaces the former 20.5 cm platform step.
+LIFT_SURFACE_Y = DECK_SURFACE_Y+.002
+HELIPAD_SURFACE_Y = DECK_SURFACE_Y+.002
 WATERLINE_WIDTH_SCALE = .50
 DESIGN_DRAFT_M = 11.5
 
 
 def physical_xz(points):
     return [(x*WIDTH_SCALE, z) for x, z in points]
+
+
+def deck_line(mesh,name,a,b,width,material="white",above=.004,thickness=.002):
+    """Closed, millimetre-thick deck markings, clear of coplanar z-fighting."""
+    direction=np.array(b)-np.array(a)
+    length=np.linalg.norm(direction)
+    if length==0: raise ValueError(f"Zero-length deck marking: {name}")
+    offset=np.array((-direction[1],direction[0]))*width/(2*length)
+    mesh.prism(name,[np.array(a)+offset,np.array(b)+offset,
+                     np.array(b)-offset,np.array(a)-offset],
+               DECK_SURFACE_Y+above,DECK_SURFACE_Y+above+thickness,material)
 
 
 def catapult_point(route, along, across=0):
@@ -238,7 +253,7 @@ def geometry(closed_lasers=True):
                                polygon_at_y(keel, -DESIGN_DRAFT_M)], "underwater")
     m.prism("FacetedFlightDeck", DECK, DECK_UNDERSIDE_Y, DECK_SURFACE_Y, "deck")
     for i, (a, b) in enumerate(zip(DECK, DECK[1:] + DECK[:1]), 1):
-        m.stripe(f"DeckEdge_{i:02d}", a, b, .28, 22.07, "edge")
+        deck_line(m,f"DeckEdge_{i:02d}",a,b,.28,"edge")
 
     # Larger integrated island amidships; the smaller island controls aft aviation.
     lower_top = scaled_polygon(MAIN_ISLAND_BASE, 32.5, 3, .82, .82)
@@ -318,13 +333,13 @@ def geometry(closed_lasers=True):
     for i, (x, z) in enumerate(ELEVATORS, 1):
         half_width = LIFT_WIDTH_M/(2*WIDTH_SCALE)
         half_length = LIFT_LENGTH_M/2
-        m.box(f"DeckEdgeLift_{i}", x, 22.12, z,
+        m.box(f"DeckEdgeLift_{i}", x, LIFT_SURFACE_Y-.17/2, z,
               LIFT_WIDTH_M/WIDTH_SCALE, .17, LIFT_LENGTH_M, "hatch")
         for side in (-1, 1):
-            m.stripe(f"LiftEdge_{i}_{side}",
+            deck_line(m,f"LiftEdge_{i}_{side}",
                      (x-half_width+.2/WIDTH_SCALE, z+side*(half_length-.2)),
                      (x+half_width-.2/WIDTH_SCALE, z+side*(half_length-.2)),
-                     .22, 22.25, "white")
+                     .22)
 
     # CATOBAR steam launch tracks; native launch rules use the same axes.
     for i, (start, end) in enumerate(CATAPULTS, 1):
@@ -332,43 +347,42 @@ def geometry(closed_lasers=True):
         # point; actuator volume, exhaust flow and clearances remain unknown.
         route = (start, end)
         m.prism(f"CatapultJetBlastDeflector_{i}",
-                catapult_deflector(route), 22.025, 22.165, "hatch")
-        m.stripe(f"CatapultJetBlastDeflectorHinge_{i}",
+                catapult_deflector(route), DECK_SURFACE_Y-.14,DECK_SURFACE_Y+.002,"hatch")
+        deck_line(m,f"CatapultJetBlastDeflectorHinge_{i}",
                  catapult_point(route,-16,-3.5), catapult_point(route,-16,3.5),
-                 .13, 22.18, "edge")
+                 .13,"edge")
         for across in (-7/6,7/6):
-            m.stripe(f"CatapultJetBlastDeflectorSeam_{i}_{across:+.2f}",
+            deck_line(m,f"CatapultJetBlastDeflectorSeam_{i}_{across:+.2f}",
                      catapult_point(route,-20,across),catapult_point(route,-16,across),
-                     .06,22.17,"dark")
+                     .06,"dark",above=.005,thickness=.001)
         # Shallow metal trough and dark slot, with a small shuttle rather
         # than the former raised yellow bar. These are static visual details.
-        m.stripe(f"CatapultTrack_{i}", start, end, .62, 22.015, "track")
-        m.stripe(f"CatapultSlot_{i}", start, end, .13, 22.06, "dark")
+        deck_line(m,f"CatapultTrack_{i}",start,end,.62,"track",above=.001)
+        deck_line(m,f"CatapultSlot_{i}",start,end,.13,"dark",above=.004,thickness=.001)
         for side in (-1,1):
-            m.stripe(f"CatapultDeckGuide_{i}_{side}",
+            deck_line(m,f"CatapultDeckGuide_{i}_{side}",
                      catapult_point(route,0,side*1.1),
                      catapult_point(route,catapult_guide_end(route,side*1.1),side*1.1),
-                     .13,22.055,"white")
+                     .13,above=.006)
         shuttle = [catapult_point(route,along,across)
                    for along,across in ((-.55,-.22),(-.55,.22),(.55,.22),(.55,-.22))]
-        m.prism(f"CatapultShuttle_{i}",shuttle,22.10,22.16,"gold")
+        m.prism(f"CatapultShuttle_{i}",shuttle,DECK_SURFACE_Y+.01,DECK_SURFACE_Y+.06,"gold")
 
     a, b = LANDING_LANE_A, LANDING_LANE_B
     for side in (-1, 1):
-        m.stripe(f"AngledLandingEdge_{side}", landing_point(0,side*11.3),
-                 landing_point(1,side*11.3), .34, 22.15, "white")
+        deck_line(m,f"AngledLandingEdge_{side}",landing_point(0,side*11.3),
+                  landing_point(1,side*11.3),.34)
     for i in range(13):
         p = a+(b-a)*(i+.10)/13
         q = a+(b-a)*(i+.49)/13
-        m.stripe(f"LandingCentreline_{i+1:02d}", p, q, .44, 22.16, "white")
+        deck_line(m,f"LandingCentreline_{i+1:02d}",p,q,.44)
     for i, t in enumerate((.31, .39, .47, .55), 1):
-        m.stripe(f"ArrestingWire_{i}", landing_point(t,-11), landing_point(t,11),
-                 .24, 22.19, "gold")
+        deck_line(m,f"ArrestingWire_{i}",landing_point(t,-11),landing_point(t,11),
+                  .08,"gold",above=.015,thickness=.015)
         for side in (-1, 1):
             x,z=landing_point(t,side*11.25)
-            m.box(f"ArrestingWireAnchor_{i}_{side}",x,22.16,z,.85,.20,1.4,"dark")
-    m.stripe("LandingThresholdStripe", landing_point(.02,-11),
-             landing_point(.02,11), .38, 22.16, "white")
+            m.box(f"ArrestingWireAnchor_{i}_{side}",x,DECK_SURFACE_Y+.015,z,.85,.03,1.4,"dark")
+    deck_line(m,"LandingThresholdStripe",landing_point(.02,-11),landing_point(.02,11),.38)
 
     # Offset helicopter pairs forward of each island; bow launches can run
     # alongside these, but the forward pair shares the waist runway area.
@@ -376,24 +390,23 @@ def geometry(closed_lasers=True):
         rim = [(x+VERTICAL_SPOT_RADIUS*math.cos(2*math.pi*j/20)/WIDTH_SCALE,
                 z+VERTICAL_SPOT_RADIUS*math.sin(2*math.pi*j/20))
                for j in range(20)]
-        m.prism(f"AftVTOL_HeloSpot_{i}", rim, 22.01, 22.08, "hatch")
+        m.prism(f"AftVTOL_HeloSpot_{i}",rim,DECK_SURFACE_Y-.01,HELIPAD_SURFACE_Y,"hatch")
         for side in (-1, 1):
-            m.stripe(f"AftSpot_{i}_HStem_{side}",
+            deck_line(m,f"AftSpot_{i}_HStem_{side}",
                      pad_mark_point(x, z, -4.5, side*3.5),
                      pad_mark_point(x, z, 4.5, side*3.5),
-                     .48, 22.12, "white")
-        m.stripe(f"AftSpot_{i}_HBar",
+                     .48)
+        deck_line(m,f"AftSpot_{i}_HBar",
                  pad_mark_point(x, z, 0, -3.5),
                  pad_mark_point(x, z, 0, 3.5),
-                 .48, 22.13, "white")
+                 .48)
 
     # The base mesh shows shut, flush armoured hatches. A separate geometry
     # layer is drawn when the viewer's conceptual deploy control is activated.
     if closed_lasers:
         for i, (x, z) in enumerate(LASERS, 1):
-            m.box(f"LaserHatchClosed_{i}", x, 22.105, z, 5, .12, 5.8, "hatch")
-            m.stripe(f"LaserHatchSeam_{i}", (x, z-2.6), (x, z+2.6),
-                     .09, 22.18, "edge")
+            m.box(f"LaserHatchClosed_{i}",x,DECK_SURFACE_Y-.058,z,5,.12,5.8,"hatch")
+            deck_line(m,f"LaserHatchSeam_{i}",(x,z-2.6),(x,z+2.6),.09,"edge")
     bow_sonar_fairing(m)
     add_combat_geometry(m, WIDTH_SCALE)
     return slim_mesh(m)
@@ -548,6 +561,9 @@ def main():
     assert len(VERTICAL_SPOTS) == spec["deck"]["aft_vertical_operation_spots"]
     assert spec["islands"]["count"] == 2
     assert PAD_MARK_ANGLE_DEG == spec["deck"]["aft_h_mark_angle_degrees"]
+    assert spec["deck"]["tyre_contact_height_m"] == DECK_SURFACE_Y
+    assert spec["deck"]["helipad_contact_height_m"] == HELIPAD_SURFACE_Y
+    assert spec["deck"]["lift_contact_height_m"] == LIFT_SURFACE_Y
     # Check pad footprints and clear longitudinal departure corridors.
     lane_a, lane_b = np.array(physical_xz([LANDING_LANE_A, LANDING_LANE_B]))
     line = lane_b-lane_a
@@ -652,6 +668,13 @@ def main():
             assert nearest >= 12
     mesh = geometry()
     parts = {name: vertices for name, vertices, _, _ in mesh.parts}
+    for i in range(1,5):
+        assert abs(max(parts[f"DeckEdgeLift_{i}"][:,1])-LIFT_SURFACE_Y)<1e-9
+        assert abs(max(parts[f"AftVTOL_HeloSpot_{i}"][:,1])-HELIPAD_SURFACE_Y)<1e-9
+        assert abs(max(parts[f"LaserHatchClosed_{i}"][:,1])-(DECK_SURFACE_Y+.002))<1e-9
+    for name,vertices,_,material in mesh.parts:
+        if material=="white":
+            assert DECK_SURFACE_Y < min(vertices[:,1]) <= max(vertices[:,1]) <= DECK_SURFACE_Y+.008001,name
     for name,vertices in parts.items():
         if name.startswith("Catapult"):
             assert all(inside_deck(x,z) for x,y,z in vertices), (name,"hardware outside deck")
@@ -703,6 +726,10 @@ def main():
                    deck_edge_lifts=len(ELEVATORS),
                    lift_platform_width_m=LIFT_WIDTH_M,
                    lift_platform_length_m=LIFT_LENGTH_M,
+                   lift_surface_height_m=LIFT_SURFACE_Y,
+                   helipad_contact_height_m=HELIPAD_SURFACE_Y,
+                   deck_paint_maximum_height_m=.008,
+                   stowed_surfaces_flush=True,
                    overall_beam_including_lifts_m=2*LIFT_CENTRE_X_M+LIFT_WIDTH_M,
                    f14a_lift_reference_envelope_checked=True,
                    islands=2, aft_h_mark_angle_degrees=PAD_MARK_ANGLE_DEG,

@@ -54,7 +54,11 @@ bow launch points available. Recovery blocks launches.
 The 30 mm normal-gun sections now use the engine-required NumberOfGuns/Gun1
 keys and registered barrels, correcting the null reference in AlignTurret.
 Taxi/launch contact points match the deck surface, removing the former
-16 cm height offset. Lift and helicopter contact points match their surfaces.
+16 cm height offset. Lifts now sit within 2 mm of the main deck rather than
+20.5 cm higher; helicopter circles use a 2 mm painted surface rather than
+an 8 cm platform. Native contact positions match those exported surfaces.
+Deck paint, closed laser covers and stowed deflectors also sit close to or
+flush with the deck. Cable and shuttle details retain small raised profiles.
 Stock aircraft magazines remain intact; the carrier reserve increases to
 6,000,000 points for repeated armed sorties. The new gun and wheel-contact
 corrections still need an in-game firing and aircraft check.

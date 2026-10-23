@@ -18,6 +18,22 @@ The installer now checks required stock profiles and ammunition files before
 staging. Close Sea Power before updating. Its removal step retains a verified
 backup under `~/Downloads/RAN-Carrier-Australis-2030-backups/`.
 
+## Rebuild verification — 23 October 2026
+
+The model, previews and native package were rebuilt from source into an empty
+staging folder. All 38 package files were verified before promotion. Lift and
+helicopter contacts now match their surfaces at 22.002 m, within 2 mm of the
+22 m main deck. That allowance also prevents coplanar flicker. Ordinary deck
+paint rises 4–8 mm; closed covers and stowed deflectors stay within 2 mm.
+The former 20.5 cm lift steps and 8 cm raised helipads are removed.
+
+Static checks retain the five moving gun references, defensive-only missile
+stores, 6,000,000 aviation supply points and today's revised deck/tower layout.
+The validator rejects the earlier raised surfaces and deliberately broken
+gun/contact/ammunition configurations. Isolated install, backup, removal and
+reinstall checks pass. Live firing, wheel contact and flight cycles remain
+pending the in-game checks below.
+
 ## Install from the draft branch
 
 In a terminal on the Sea Power computer, run:
@@ -67,9 +83,12 @@ stop there and share its output.
    and taxiing inboard. The forward starboard lift is now at z=54 m; the port
    lift sits beside the aft part of the main island at z=-32 m. Check the
    tyres on each lift, while taxiing and at a bow catapult. Main-deck contact
-   points are 22 m; pads are 22.08 m and platforms 22.205 m. The previous
+   points are 22 m; lift and painted-pad contacts are 22.002 m. The previous
    16 cm main-deck clearance has been removed; stock aircraft ground pivots
    remain in use. Check the helicopter tyres on their pads separately.
+   Check that lifts and pads have no visible step, painted lines sit close
+   to the deck and stowed deflectors/laser covers stay within 2 mm of it.
+   Watch for overlapping surfaces flickering at close and distant views.
 4. Use **A-7Es** for all five catapults. IDs 1/2/3 are the straight bow bank
    and accept other carrier-capable aircraft. IDs 4/5 are the angled port-waist
    pair, currently restricted to the stock A-7E. Check each lane separately,

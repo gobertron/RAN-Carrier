@@ -22,7 +22,8 @@ from build import (  # noqa: E402
     AFT_ISLAND_BASE, CATAPULTS, COLORS, DECK, DECK_SURFACE_Y, ELEVATORS,
     LANDING_LANE_A, LANDING_LANE_B, MAIN_ISLAND_BASE, VERTICAL_SPOTS, geometry,
     WIDTH_SCALE, BOW_CATAPULT_IDS, WAIST_CATAPULT_IDS, CATAPULT_INTERLOCKS,
-    HELO_INTERLOCKS, HELO_ELEVATORS, catapult_point, landing_point,
+    HELO_INTERLOCKS, HELO_ELEVATORS, LIFT_SURFACE_Y, HELIPAD_SURFACE_Y,
+    catapult_point, landing_point,
 )
 from generate_source_models import Mesh  # noqa: E402
 from rebuild_game_scale import METRES_PER_UNIT  # noqa: E402
@@ -253,8 +254,8 @@ def vessel_ini(material: dict[str,str]) -> str:
     for i,(x,z) in enumerate(ELEVATORS,1):
         parts.append(section(f"Elevator{i}",[
             "AssociatedLaunchPoints="+",".join(map(str,LAUNCH_ASSOC[i-1])),
-            "Mesh=Dummy",f"SpawnPosition={point(x,z,.205)}",
-            "SpawnRotation=0",f"RidePosition={point(x,z,.205)}","RideRotation=0",
+            "Mesh=Dummy",f"SpawnPosition={point(x,z,LIFT_SURFACE_Y-DECK_SURFACE_Y)}",
+            "SpawnRotation=0",f"RidePosition={point(x,z,LIFT_SURFACE_Y-DECK_SURFACE_Y)}","RideRotation=0",
             "EmbarkTime=10","RecycleTime=15"]))
     for i,((x,z),(ex,ez)) in enumerate(CATAPULTS,1):
         rotation = math.degrees(math.atan2((ex-x)*WIDTH_SCALE,ez-z))
@@ -270,7 +271,7 @@ def vessel_ini(material: dict[str,str]) -> str:
         blocks=",".join(map(str,HELO_INTERLOCKS[i]))
         parts.append(section(f"LaunchPoint{i}",[
             "AllowedType=Helicopter,VTOL",
-            f"Position={point(x,z,.08)}","Rotation=-12",
+            f"Position={point(x,z,HELIPAD_SURFACE_Y-DECK_SURFACE_Y)}","Rotation=-12",
             *([f"BlocksLaunchPoints={blocks}",f"TakeoffRequiresFreeLaunchpoints={blocks}"] if blocks else [])]))
     touchdown = LANDING_LANE_A + (LANDING_LANE_B-LANDING_LANE_A)*.36
     parts.append(section("RecoveryPoint1",[
@@ -287,7 +288,7 @@ def vessel_ini(material: dict[str,str]) -> str:
         parts.append(section(f"RecoveryPoint{i}",[
             "AllowedType=Helicopter,VTOL",f"AssociatedElevators={elevator}"+(",4" if i>=4 else ""),
             "BlocksRecoveryPoints="+",".join(other),
-            f"Position={point(x,z,.08)}","Rotation=-12",
+            f"Position={point(x,z,HELIPAD_SURFACE_Y-DECK_SURFACE_Y)}","Rotation=-12",
             "HelicopterCircuitWaypoints=0,300,-2|0,300,-1",
             "FinalApproachPath=0.8,300|0.4,200|0,100",
             "LandingInterval=80"]))
@@ -532,6 +533,10 @@ def build(destination: Path = DEST) -> None:
         "countermeasure capacities are retained. Select an armed loadout and Ready the aircraft. "
         "Use a fresh carrier in a new mission so saved ammunition and old deck positions do "
         "not override this revision.\n"
+        "The rebuilt deck has lift platforms and painted helipads at 22.002 m, only 2 mm above the main deck. "
+        "Contact coordinates follow those exported surfaces. Ordinary deck markings are "
+        "millimetres thick; stowed blast deflectors and closed laser hatches sit within 2 mm of the deck. "
+        "Visible arresting wires rise 3 cm and launch shuttles 6 cm above deck.\n"
         "Test with the failed Melbourne prototype disabled. If the editor "
         "errors, collect the current logs, withdraw only this mod, and share "
         "the latest Sea Power Player.log.\n",
