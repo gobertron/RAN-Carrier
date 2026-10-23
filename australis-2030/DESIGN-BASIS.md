@@ -57,21 +57,45 @@ crew or water-production keys are added to the vessel INI.
 
 ## Five steam CATOBAR lanes
 
-| Catapult | Launch position, metres (x, z) | Heading | Stroke | Aircraft test scope |
+| Catapult | Launch position, metres (x, z) | Heading | Stroke | Eligible types |
 |---|---|---:|---:|---|
-| 1, port bow | (-14, 88) | Ahead, 0° | 95 m | Carrier-capable aircraft; large reference envelope checked |
-| 2, centre bow | (0, 88) | Ahead, 0° | 95 m | Carrier-capable aircraft; large reference envelope checked |
-| 3, starboard bow | (14, 88) | Ahead, 0° | 95 m | Carrier-capable aircraft; large reference envelope checked |
-| 4, outer port waist | (-26.4, -1) | 6° to port | 95 m | Stock A-7E only pending other footprint checks |
-| 5, inner port waist | (-10, -22) | 6° to port | 95 m | Stock A-7E only pending other footprint checks |
+| 1, port bow | (-14, 88) | Ahead, 0° | 95 m | Plane, VTOL, STOL |
+| 2, centre bow | (0, 88) | Ahead, 0° | 95 m | Plane, VTOL, STOL |
+| 3, starboard bow | (14, 88) | Ahead, 0° | 95 m | Plane, VTOL, STOL |
+| 4, outer port waist | (-20.2, -1) | 6° to port | 95 m | Plane, VTOL, STOL |
+| 5, inner port waist | (-10, -22) | 6° to port | 95 m | Plane, VTOL, STOL |
+
+The arrested-recovery point accepts the same three types. Vertical launch and
+recovery spots accept Helicopter and VTOL types. Aircraft discovery remains
+automatic; there are no carrier-specific class whitelists or size, role or
+loadout exclusions. Correct installation, `CarrierCapable` eligibility and
+the aircraft's squadron definitions remain necessary. The empty air group
+leaves aircraft selection to the user and adds no aircraft-pack dependency.
+
+Each catapult is checked at its staging position and aligned approach 20 m
+behind the launch point using these span × length footprints:
+
+| Reference | Span × length |
+|---|---:|
+| Stock A-7E | 11.8 × 14.06 m |
+| Stock F-14A | 19.545 × 19.1 m |
+| Broad reference envelope | 25 × 30 m |
+
+The checks cover deck boundaries and lift/island footprints. They apply to
+these catapult staging and approach positions, rather than every add-on,
+lift transit or swept taxi turn. Rotor envelopes and runtime mixed deck
+operations remain unvalidated. Eligibility is independent of that physical
+QA scope.
 
 Coordinates are physical metres, with +x starboard and +z toward the bow.
 This is the requested three-bow/two-waist Australis layout. The two waist
 tracks turn toward the port deck edge instead of forming a five-track bank
 at the bow. The exact five-catapult count and 6-degree waist angle are Australis
 design choices. The waist launch positions are staggered 21 m fore-and-aft,
-with both starts on the port half of the deck. The outer track finishes near
-the port deck edge. These changes avoid the earlier steep diagonal layout.
+with both starts on the port half of the deck. The outer track is moved
+6.2 m inboard to clear the larger reference footprints at the aligned approach;
+it still departs toward the port deck edge. These changes avoid the earlier
+steep diagonal layout.
 
 The bow deck is broader while the immersed bow retains a fine stem. The
 starboard forward lift moves from z=69 m to z=54 m to clear the launch/taxi
@@ -95,15 +119,15 @@ panel seams. These details follow the equipment families described by
 not a copied installation drawing. Hardware motion, panel deployment, steam
 delivery and exhaust flow are not implemented or certified by these blockouts.
 Actual timing depends on the shared one-second minimum, preparation, occupancy
-and ship course. Forward helicopter spots 6/7 share the waist departure area:
-they block lanes 4/5 and those lanes block spots 6/7. All four helicopter spots
-leave the bow bank available. Exhaust, rotor and full deck-cycle clearance
-still need game QA.
+and ship course. All four vertical launch spots 6–9 interlock bidirectionally
+with waist lanes 4/5 because the larger aircraft references share their deck
+area. Vertical launches leave the bow bank available. Exhaust, rotor,
+swept taxi turns and full deck-cycle clearance still need game QA.
 
 Recovery uses a 9-degree port axis with four perpendicular cable indications,
 and the hook on the aircraft. This is an Australis adaptation of a US-carrier
-angled deck, not a surveyed Ford installation. The prototype blocks launches
-during recovery. Sea Power does not
+angled deck, not a surveyed Ford installation. Every recovery point explicitly
+blocks all nine launch points during recovery. Sea Power does not
 model our steam plant: accumulator volume, steam demand, recharge and deck
 cycle remain studies. No unverified steam-particle prefab is enabled.
 Ford uses [EMALS](https://www.navair.navy.mil/product/Electromagnetic-Aircraft-Launch-System-EMALS);

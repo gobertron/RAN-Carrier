@@ -34,6 +34,17 @@ gun/contact/ammunition configurations. Isolated install, backup, removal and
 reinstall checks pass. Live firing, wheel contact and flight cycles remain
 pending the in-game checks below.
 
+The aircraft-eligibility revision removes the waist class whitelist. All five
+catapults and arrested recovery accept Plane, VTOL and STOL types; vertical
+launch/recovery spots accept Helicopter and VTOL types. Discovery remains
+automatic with no carrier-specific size, role or loadout exclusions. Aircraft
+must be correctly installed and carrier-capable, including their squadron
+definitions. The air group remains empty and has no aircraft-pack dependency.
+Catapult 4 moves 6.2 m inboard to physical (-20.2, -1) m. All five catapults
+are checked at staging and their aligned 20 m approaches using A-7E
+11.8 × 14.06 m, F-14A 19.545 × 19.1 m and a broad 25 × 30 m footprint
+(span × length) against deck, lift and island footprints.
+
 ## Install from the draft branch
 
 In a terminal on the Sea Power computer, run:
@@ -89,29 +100,38 @@ stop there and share its output.
    Check that lifts and pads have no visible step, painted lines sit close
    to the deck and stowed deflectors/laser covers stay within 2 mm of it.
    Watch for overlapping surfaces flickering at close and distant views.
-4. Use **A-7Es** for all five catapults. IDs 1/2/3 are the straight bow bank
-   and accept other carrier-capable aircraft. IDs 4/5 are the angled port-waist
-   pair, currently restricted to the stock A-7E. Check each lane separately,
-   including taxi alignment, deflector position and actual departure heading.
+4. Use **A-7Es**, then **F-14As**, for all five catapults. IDs 1/2/3 are the
+   straight bow bank; IDs 4/5 are the angled port-waist pair. All five accept
+   Plane, VTOL and STOL types without an aircraft-class whitelist. Repeat with
+   correctly installed carrier-capable aircraft from other packs, including
+   available STOL and large fixed-wing types. Check each lane separately,
+   including the swept taxi path, aligned approach, wing/lift/island clearance,
+   deflector position and actual departure heading.
    Check the flush slots, shuttles, trimmed white guides and the staggered
    waist positions; neither track may project beyond the deck edge.
 5. Test bow pair 1/3, then centre bow 2. Check waist 4 and 5 separately: each
    must wait for every bow lane and the other waist lane to be clear. Then
    queue a mixed bow/waist group and verify those interlocks. The shared
    one-second minimum does not guarantee an actual interval or lane assignment.
-6. Ready and queue a helicopter first, followed by jets. Spots 6/7 are ahead
+6. Ready and queue a helicopter first, followed by jets. Repeat with a
+   carrier-capable VTOL aircraft. Spots 6/7 are ahead
    of the main island; 8/9 are ahead of the rear island. Check helicopter
-   preparation alongside the bow catapults while holding course. Forward
-   helicopter spots 6/7 and waist catapults 4/5 must wait for one another;
-   bow lanes must remain available. Rear spots can use lifts 1 or 4.
-7. Test arrested recovery and taxi back to a lift separately. Recovery blocks
-   launches. Check the aircraft hook and stopping point; visible cable lines
-   alone do not prove the recovery works.
+   preparation and rotor/wing clearance alongside the bow catapults while
+   holding course. Each vertical launch spot 6–9 and waist catapults 4/5 must
+   wait for one another; bow lanes must remain available during vertical
+   launches. Rear spots can use lifts 1 or 4.
+7. Test arrested recovery and taxi back to a lift separately, then each
+   helicopter/VTOL recovery spot. Every recovery point explicitly blocks all
+   nine launch points. Check actual launch inhibition, aircraft hook and
+   stopping point; visible cable lines alone do not prove recovery works.
 
-Bow-lane staging checks use a 25 m span × 30 m length envelope. Waist
-lanes have only been checked for the A-7E; they are not yet cleared for the
-F-111N families. Five installed lanes do not imply five simultaneous launches
-or a validated 99-aircraft deck cycle.
+The reference footprints check staging and aligned approaches at all five
+catapults. They do not establish universal physical clearance for add-on
+aircraft. Swept taxi turns, rotor envelopes and actual mixed deck operations
+still require QA. Five installed lanes do not imply five simultaneous launches
+or a validated 99-aircraft deck cycle. Confirm catalogue eligibility with
+compatible aircraft roles and loadouts as well as checking their actual deck
+behaviour.
 
 This revision keeps the port lift abreast of the aft part of the main island and checks a
 12 m plan-view launch corridor past lifts/islands. Waist departure uses shared

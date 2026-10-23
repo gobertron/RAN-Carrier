@@ -211,11 +211,9 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
         heading = math.degrees(math.atan2(dx,dz))
         if i <= 3:
             assert abs(heading) < .002 and start[2]*METRES_PER_UNIT > 80, (i,"bow track")
-            assert "SupportedClasses" not in launch
         else:
             assert abs(heading+6) < .002 and start[0] < 0 and start[2] < 0, (i,"port-waist track")
             assert end[0] < start[0] and end[0] < 0
-            assert launch["SupportedClasses"] == "usn_a-7e"
         length = math.hypot(dx,dz)
         direction = (dx/length,dz/length)
         actual_catapults.append((start,end,direction))
@@ -247,8 +245,8 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
             x = start[0]*METRES_PER_UNIT+n*direction[0]
             z = start[2]*METRES_PER_UNIT+n*direction[1]
             assert inside_deck(x,z,outline), (i,"track runs off the deck")
-    # Check the user's stock A-7E reference at all five catapults, with
-    # wings open. This is a staging footprint check, not a taxi simulation.
+    # Measure reference footprints from the exported INI, including the
+    # aligned approach 20 m behind each shuttle. This is not swept taxi QA.
     obstacles = list(lift_bounds)
     for name in ("DeckZone8","DeckZone9"):
         zone = ship[name]
@@ -257,17 +255,51 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
                           max(v[0] for v in points)*METRES_PER_UNIT,
                           min(v[2] for v in points)*METRES_PER_UNIT,
                           max(v[2] for v in points)*METRES_PER_UNIT))
+    references = (("A-7E",11.8,14.06),("F-14A",19.545,19.1),("broad envelope",25,30))
     for i in range(1,6):
         launch = ship[f"LaunchPoint{i}"]
         x,_,z = (v*METRES_PER_UNIT for v in vector(launch["Position"]))
         angle = math.radians(float(launch["Rotation"]))
-        for along in (-14.06/2,0,14.06/2):
-            for across in (-11.8/2,0,11.8/2):
-                px = x+along*math.sin(angle)+across*math.cos(angle)
-                pz = z+along*math.cos(angle)-across*math.sin(angle)
-                assert inside_deck(px,pz,outline), (i,"A-7E off deck")
-                assert all(not(x0 <= px <= x1 and z0 <= pz <= z1)
-                           for x0,x1,z0,z1 in obstacles), (i,"A-7E overlaps lift or island")
+        for label,span,length in references:
+            for approach in (0,-20):
+                for n in range(7):
+                    along = approach-length/2+n*length/6
+                    for m in range(7):
+                        across = -span/2+m*span/6
+                        px = x+along*math.sin(angle)+across*math.cos(angle)
+                        pz = z+along*math.cos(angle)-across*math.sin(angle)
+                        assert inside_deck(px,pz,outline), (i,label,approach,"off deck")
+                        for x0,x1,z0,z1 in obstacles:
+                            gap = math.hypot(max(x0-px,px-x1,0),max(z0-pz,pz-z1,0))
+                            assert gap >= 1.5-.001, (i,label,approach,"lift/island clearance")
+    # Automatic discovery is driven by recovery support. Launches and lifts
+    # must also remain unrestricted, including all native size declarations.
+    deck = ship["FlightDeck"]
+    assert not deck.get("AircraftSupported", "").strip()
+    assert not deck.get("UnsupportedAircraft", "").strip()
+    for prefix,count in (("Elevator",4),("LaunchPoint",9),("RecoveryPoint",5)):
+        for i in range(1,count+1):
+            support = ship[f"{prefix}{i}"]
+            for size in ("Small","Large","VeryLarge"):
+                assert support.getboolean(f"Supports{size}"), (prefix,i,size)
+            for field in ("SupportedClasses","ForbiddenClasses","SupportedRoles",
+                          "ForbiddenRoles","VTOL_AllowedLoadouts"):
+                assert not support.get(field, "").strip(), (prefix,i,field)
+            if prefix != "Elevator":
+                expected = {"Plane","VTOL","STOL"} if \
+                    (prefix=="LaunchPoint" and i<=5) or (prefix=="RecoveryPoint" and i==1) \
+                    else {"Helicopter","VTOL"}
+                assert set(support["AllowedType"].split(",")) == expected, (prefix,i,"type coverage")
+            if prefix == "RecoveryPoint":
+                assert set(support["BlocksLaunchPoints"].split(",")) == set(map(str,range(1,10)))
+    route_pairs = {(ship[f"TaxiPath{i}"]["From"],ship[f"TaxiPath{i}"]["To"])
+                   for i in range(1,int(deck["NumberOfTaxiPaths"])+1)}
+    for i in range(1,5):
+        for launch_id in ship[f"Elevator{i}"]["AssociatedLaunchPoints"].split(","):
+            assert (f"Elevator{i}",f"LaunchPoint{launch_id}") in route_pairs
+    for i in range(1,6):
+        for elevator_id in ship[f"RecoveryPoint{i}"]["AssociatedElevators"].split(","):
+            assert (f"RecoveryPoint{i}",f"Elevator{elevator_id}") in route_pairs
     # Independently check real exported corridors and the safety interlocks.
     # The extra rollout is a plan-view obstruction check, not blast analysis.
     for i,(start,end,direction) in enumerate(actual_catapults,1):
@@ -278,7 +310,7 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
             for x0,x1,z0,z1 in obstacles:
                 gap = math.hypot(max(x0-x,x-x1,0),max(z0-z,z-z1,0))
                 assert gap >= 12-.001, (i,"launch corridor overlaps island/lift")
-    interlocks = {1:"2,4,5",2:"1,3,4,5",3:"2,4,5",4:"1,2,3,5,6,7",5:"1,2,3,4,6,7"}
+    interlocks = {1:"2,4,5",2:"1,3,4,5",3:"2,4,5",4:"1,2,3,5,6,7,8,9",5:"1,2,3,4,6,7,8,9"}
     for i,blocks in interlocks.items():
         assert ship[f"LaunchPoint{i}"]["BlocksLaunchPoints"] == blocks
         assert ship[f"LaunchPoint{i}"]["TakeoffRequiresFreeLaunchpoints"] == blocks
@@ -289,9 +321,9 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
     for i in range(6,10):
         launch=ship[f"LaunchPoint{i}"]
         blocks=launch.get("BlocksLaunchPoints","")
-        assert blocks == ("4,5" if i<=7 else "")
+        assert blocks == "4,5"
         assert not ({"1","2","3"}&set(blocks.split(","))), "Helicopters must leave bow catapults available"
-        if i<=7: assert launch["TakeoffRequiresFreeLaunchpoints"] == blocks
+        assert launch["TakeoffRequiresFreeLaunchpoints"] == blocks
     for i in range(1,int(deck["NumberOfTaxiPaths"])+1):
         route = ship[f"TaxiPath{i}"]
         assert ship.has_section(route["From"]) and ship.has_section(route["To"])
@@ -464,9 +496,11 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
     print(f"[OK] {vertex_count} vertices with UVs and {normal_count} indexed face normals")
     print("[OK] 4 lifts, 3 bow + 2 port-waist steam CATOBAR tracks, 4 vertical spots, 5 recovery points")
     print("[OK] Four 22 x 26 m lifts; ride/spawn centres and F-14A reference footprint fit")
-    print("[OK] A-7E open-wing staging footprint clear at all five catapults")
+    print("[OK] A-7E, F-14A and 25 x 30 m sampled staging/approach envelopes clear at all five catapults")
     print("[OK] 82 m deck; launch tracks, rotated deflectors and taxi approaches align")
-    print("[OK] Bow-pair / waist / recovery interlocks; forward helicopter pair blocks waist lanes only")
+    print("[OK] Bow-pair / waist / recovery interlocks; all four vertical spots block waist lanes only")
+    print("[OK] Automatic carrier-aircraft discovery; Plane/VTOL/STOL runways and Helicopter/VTOL pads")
+    print("[OK] No class, size, role or loadout exclusions; all elevator/launch/recovery associations have routes")
     print("[OK] Flush lifts/pads, thin deck paint and matching tyre-contact positions")
     print("[OK] Closed laser hatches and stowed deflectors are flush; nine-degree recovery and perpendicular wires")
     print("[OK] Smaller rear tower with six-face glazing; eight defensive deck no-parking zones")

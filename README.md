@@ -21,13 +21,25 @@ as a pair; the centre bow lane interlocks with its neighbours. Waist lanes
 4/5 use a shallow 6-degree port heading and staggered launch positions; they
 interlock with all bow lanes and each other. Flush metal slots, small shuttles,
 white guides and segmented stowed deflectors replace the plain yellow bars.
-The waist pair currently accepts stock A-7Es pending checks for other aircraft.
-The three bow lanes accept other carrier-capable aircraft. The port lift stays
-beside the aft part of the main island at z=-32 m. The helicopter spots now
-form two pairs ahead of the islands; the forward pair interlocks with the
-waist lanes while leaving the bow bank available. The smaller aft island has
+All five catapults and the arrested-recovery point accept Plane, VTOL and
+STOL types. The four vertical spots accept Helicopter and VTOL types. Aircraft
+discovery remains automatic, with no carrier-specific class whitelist or
+size, role or loadout exclusions. Aircraft must be correctly installed and
+carrier-capable, including their squadron definitions; the air group starts
+empty and requires no aircraft pack. The port lift stays beside the aft part
+of the main island at z=-32 m. The helicopter spots form two pairs ahead of
+the islands; all four interlock with the waist lanes while leaving the bow
+bank available during vertical launches. Every recovery point explicitly
+blocks all nine launch points. The smaller aft island has
 wraparound glazing. Arrested recovery uses a 9-degree port axis with four
 perpendicular wire indications.
+
+The outer waist track is moved 6.2 m inboard to clear the larger reference
+footprints on its aligned taxi approach. All five catapults are checked at
+staging and 20 m behind the launch point using A-7E, F-14A and a 25 m span ×
+30 m length reference envelope against deck, lift and island footprints.
+These checks support broader eligibility; swept taxi turns, rotor clearances,
+individual add-on aircraft and mixed deck cycles still need in-game QA.
 
 Design targets are **370 m overall, 82 m main flight deck, 112,000 metric
 tonnes, 99 aircraft and 5,300 embarked personnel**, with 5,800 berths. Maximum

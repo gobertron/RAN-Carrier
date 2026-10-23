@@ -43,13 +43,26 @@ moving yaw/elevation meshes; missile housings and hatches remain static.
 Bow catapults 1/3 can operate as a pair; centre bow lane 2 interlocks with both.
 Waist catapults 4/5 interlock with all bow lanes and with each other because
 their departure/taxi areas are shared. The one-second minimum interval remains
-subject to the game scheduler. Waist lanes are restricted to the stock A-7E
-pending other footprint checks. The bow lanes use a checked 25 m span × 30 m length
-reference envelope. The starboard forward lift is moved to z=54 m; the port
+subject to the game scheduler. All five catapults and arrested recovery accept
+Plane, VTOL and STOL types; vertical spots accept Helicopter and VTOL types.
+Automatic discovery has no carrier-specific class whitelist or size, role or
+loadout exclusions. Aircraft must be correctly installed and carrier-capable,
+including their squadron definitions. The air group remains empty for user
+selection, without an aircraft-pack dependency.
+
+The outer waist catapult starts at physical (-20.2, -1) m, 6.2 m inboard of its
+earlier position. All five lanes are checked at staging and their aligned
+20 m approach using A-7E (11.8 × 14.06 m), F-14A (19.545 × 19.1 m) and a
+25 × 30 m reference footprint, with span listed before length. These checks
+cover deck, lift and island footprints; they do not validate every add-on,
+swept taxi turns, rotor clearance or a mixed deck cycle.
+
+The starboard forward lift is moved to z=54 m; the port
 lift remains abreast of the aft part of the main island at z=-32 m. Four
-12-degree H markings form two pairs ahead of the islands. Forward spots 6/7
-share the waist departure area and interlock with lanes 4/5; all four leave
-bow launch points available. Recovery blocks launches.
+12-degree H markings form two pairs ahead of the islands. All vertical launch
+spots 6–9 interlock bidirectionally with waist lanes 4/5, leaving bow launch
+points available during vertical launches. Every recovery point explicitly
+blocks launch points 1–9.
 
 The 30 mm normal-gun sections now use the engine-required NumberOfGuns/Gun1
 keys and registered barrels, correcting the null reference in AlignTurret.
@@ -67,7 +80,7 @@ The three-bow/two-waist arrangement is our requested Australis adaptation of
 the bow-and-waist carrier layout, not a claim that an American class has this
 exact five-catapult arrangement. Tracks, deflector panels, taxi approaches and
 native launch headings share the same axes; the waist tracks turn to port.
-The waist tracks now use a shallow 6-degree heading, outboard positioning and
+The waist tracks now use a shallow 6-degree heading, port-side positioning and
 a 21 m fore-and-aft stagger. Small launch shuttles, flush metal troughs/dark
 slots, white guides and segmented stowed deflectors give them a more credible
 appearance. Those details are static; deflector deployment and shuttle motion

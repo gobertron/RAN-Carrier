@@ -36,6 +36,9 @@ DEST = ROOT / "game-mod" / MOD_NAME
 SCALE = 1 / METRES_PER_UNIT
 DECK_HEIGHT = DECK_SURFACE_Y * SCALE
 LAUNCH_ASSOC = ((1,2,3,8,9),(3,2,1,6,7),(4,5,1),(8,9))
+# Native FlightDeckAircraftSupportPoint keys, verified against the supplied
+# engine schema. Do not restrict aircraft classes, roles or VTOL loadouts.
+AIRCRAFT_SIZE_SUPPORT = ["SupportsSmall=True", "SupportsLarge=True", "SupportsVeryLarge=True"]
 
 
 def vec(x: float, y: float, z: float) -> str:
@@ -254,6 +257,7 @@ def vessel_ini(material: dict[str,str]) -> str:
     for i,(x,z) in enumerate(ELEVATORS,1):
         parts.append(section(f"Elevator{i}",[
             "AssociatedLaunchPoints="+",".join(map(str,LAUNCH_ASSOC[i-1])),
+            *AIRCRAFT_SIZE_SUPPORT,
             "Mesh=Dummy",f"SpawnPosition={point(x,z,LIFT_SURFACE_Y-DECK_SURFACE_Y)}",
             "SpawnRotation=0",f"RidePosition={point(x,z,LIFT_SURFACE_Y-DECK_SURFACE_Y)}","RideRotation=0",
             "EmbarkTime=10","RecycleTime=15"]))
@@ -261,8 +265,8 @@ def vessel_ini(material: dict[str,str]) -> str:
         rotation = math.degrees(math.atan2((ex-x)*WIDTH_SCALE,ez-z))
         interlock = ",".join(map(str,CATAPULT_INTERLOCKS[i]))
         parts.append(section(f"LaunchPoint{i}",[
-            "AllowedType=Plane,VTOL",f"Position={point(x,z)}",
-            *(["SupportedClasses=usn_a-7e"] if i in WAIST_CATAPULT_IDS else []),
+            "AllowedType=Plane,VTOL,STOL", *AIRCRAFT_SIZE_SUPPORT,
+            f"Position={point(x,z)}",
             f"BlocksLaunchPoints={interlock}",
             f"TakeoffRequiresFreeLaunchpoints={interlock}",
             f"Rotation={rotation:.3f}","CatapultParticles=None",
@@ -270,12 +274,13 @@ def vessel_ini(material: dict[str,str]) -> str:
     for i,(x,z) in enumerate(VERTICAL_SPOTS,6):
         blocks=",".join(map(str,HELO_INTERLOCKS[i]))
         parts.append(section(f"LaunchPoint{i}",[
-            "AllowedType=Helicopter,VTOL",
+            "AllowedType=Helicopter,VTOL", *AIRCRAFT_SIZE_SUPPORT,
             f"Position={point(x,z,HELIPAD_SURFACE_Y-DECK_SURFACE_Y)}","Rotation=-12",
             *([f"BlocksLaunchPoints={blocks}",f"TakeoffRequiresFreeLaunchpoints={blocks}"] if blocks else [])]))
     touchdown = LANDING_LANE_A + (LANDING_LANE_B-LANDING_LANE_A)*.36
     parts.append(section("RecoveryPoint1",[
-        "AllowedType=Plane,VTOL","AssociatedElevators=1,2,3",
+        "AllowedType=Plane,VTOL,STOL", *AIRCRAFT_SIZE_SUPPORT,
+        "AssociatedElevators=1,2,3",
         "BlocksLaunchPoints=1,2,3,4,5,6,7,8,9",
         "BlocksRecoveryPoints=2,3,4,5",
         f"Position={point(*touchdown)}",f"ExitPosition={point(*LANDING_LANE_B)}",
@@ -286,7 +291,9 @@ def vessel_ini(material: dict[str,str]) -> str:
         elevator = HELO_ELEVATORS[i-2]
         other = [str(j) for j in range(1,6) if j != i]
         parts.append(section(f"RecoveryPoint{i}",[
-            "AllowedType=Helicopter,VTOL",f"AssociatedElevators={elevator}"+(",4" if i>=4 else ""),
+            "AllowedType=Helicopter,VTOL", *AIRCRAFT_SIZE_SUPPORT,
+            "BlocksLaunchPoints=1,2,3,4,5,6,7,8,9",
+            f"AssociatedElevators={elevator}"+(",4" if i>=4 else ""),
             "BlocksRecoveryPoints="+",".join(other),
             f"Position={point(x,z,HELIPAD_SURFACE_Y-DECK_SURFACE_Y)}","Rotation=-12",
             "HelicopterCircuitWaypoints=0,300,-2|0,300,-1",
@@ -498,8 +505,10 @@ def build(destination: Path = DEST) -> None:
         "Five 95 m steam CATOBAR tracks: three bow and two shallow 6-degree "
         "port-waist lanes, staggered 21 m. Flush metal tracks, small shuttles, "
         "white guides and segmented deflectors are static visual details. "
-        "The waist pair currently accepts the stock A-7E; three bow lanes "
-        "accept other carrier aircraft. Combat-fit.json declares modern "
+        "All five rolling lanes accept Plane, VTOL and STOL; four dedicated spots "
+        "accept Helicopter and VTOL. Automatic discovery accepts correctly installed "
+        "carrier-capable aircraft with no class, size, role or loadout exclusions. "
+        "Combat-fit.json declares modern "
         "targets and stock proxies: Mk41 with Sea Sparrow defensive rounds, plus Sea Sparrow in the "
         "ESSM and 21-round RAM-form launchers, Phalanx, 30 mm, SPY-1A, "
         "SLQ-32, original offensive ECM, SRBOC and two Nixie decoys. "
@@ -513,12 +522,15 @@ def build(destination: Path = DEST) -> None:
         "The port lift sits beside the aft part of the main island at z=-32 m, "
         "behind the waist launch run. Four 22 x 26 m lifts use centred ride/spawn positions "
         "and fore-and-aft parking, checked against the stock F-14A reference. "
-        "Catapult staging is checked using the stock A-7E. "
+        "All five catapult staging positions and aligned approaches are checked "
+        "with A-7E, F-14A and a 25 m span x 30 m length reference envelope. "
         "LaunchDelay=1 is a shared one-second minimum, not a "
         "guarantee of synchronized launches. Bow 1/3 can be paired; waist "
-        "launches block all bow lanes, each other and the forward helicopter pair. "
-        "The forward helicopter pair blocks waist lanes 4/5, leaving bow lanes available. "
-        "Recovery blocks all launches. Flight operations need game QA.\n"
+        "launches block all bow lanes, each other and all four vertical spots. "
+        "All four vertical spots block waist lanes 4/5, leaving bow lanes available. "
+        "All recovery points explicitly block all launches. Native eligibility does not "
+        "verify every aircraft model: swept taxi turns, rotor clearance and mixed "
+        "deck operations still need game QA.\n"
         "The rear island is narrower, shorter and lower with six-face wraparound glazing. "
         "The arrested-recovery axis is 9 degrees to port and its wires are perpendicular. "
         "Four defensive VLS banks and four missile housings occupy main-deck edge positions "

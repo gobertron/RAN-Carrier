@@ -75,19 +75,19 @@ CATAPULTS = [((x/WIDTH_SCALE, 88), (x/WIDTH_SCALE, 183))
     ((x/WIDTH_SCALE, z),
      ((x+95*math.sin(math.radians(WAIST_CATAPULT_HEADING_DEG)))/WIDTH_SCALE,
       z+95*math.cos(math.radians(WAIST_CATAPULT_HEADING_DEG))))
-    for x,z in ((-26.4,-1),(-10,-22))
+    for x,z in ((-20.2,-1),(-10,-22))
 ]
 # Bow 1/3 can operate as a pair. Waist launches interlock with all bow
 # lanes and with each other because departure/taxi areas are shared.
 CATAPULT_INTERLOCKS = {
     1: (2, 4, 5), 2: (1, 3, 4, 5), 3: (2, 4, 5),
-    4: (1, 2, 3, 5, 6, 7), 5: (1, 2, 3, 4, 6, 7),
+    4: (1, 2, 3, 5, 6, 7, 8, 9), 5: (1, 2, 3, 4, 6, 7, 8, 9),
 }
-# Two pairs ahead of the two islands. Forward spots share the waist-launch
-# area and are interlocked with lanes 4/5, while bow lanes remain available.
+# Two pairs ahead of the two islands. All four spots share waist staging
+# or launch space for larger aircraft; bow lanes remain available.
 VERTICAL_SPOTS = [(x/WIDTH_SCALE,z) for x,z in
                   ((-25,60),(1.5,60),(9.5,-60),(9.5,-31))]
-HELO_INTERLOCKS = {6:(4,5), 7:(4,5), 8:(), 9:()}
+HELO_INTERLOCKS = {i:(4,5) for i in range(6,10)}
 HELO_ELEVATORS = (2,2,1,1)
 LANDING_HEADING_DEG = -9.0
 LANDING_LANE_A = np.array((3./WIDTH_SCALE, -166.))
@@ -635,21 +635,23 @@ def main():
     assert LIFT_WIDTH_M >= 19.545+2, "F-14A full-span reference needs side clearance"
     f14_reference_shift = abs(-.074+.012+.0126)*METRES_PER_UNIT
     assert LIFT_LENGTH_M/2 >= 19.1/2+f14_reference_shift
-    # Bow lanes accept a 25 x 30 m reference footprint. Angled waist lanes
-    # use an A-7E-sized 12 x 16 m footprint and explicit class filters.
+    # All five lanes accept the same broad reference envelope. Check both
+    # staging and the aligned taxi approach against fixed deck obstacles.
+    # This does not establish clearance through taxi turns or rotor arcs.
     for index in range(5):
         start,end = np.array(physical_xz(CATAPULTS[index]))
         direction = (end-start)/np.linalg.norm(end-start)
         lateral = np.array((direction[1],-direction[0]))
-        half_length,half_span = (8,6) if index+1 in WAIST_CATAPULT_IDS else (15,12.5)
-        for along in np.linspace(-half_length,half_length,7):
-            for across in np.linspace(-half_span,half_span,7):
-                x,z = start+along*direction+across*lateral
-                assert inside_deck(x,z), (index,"staged aircraft off deck")
-                assert min(rectangle_distance(x,z,*b) for b in obstacles) >= 1.5, \
-                    (index,"staged aircraft overlaps an island or lift")
-                assert all(rectangle_distance(x,z,*b)>0 for b in weapon_bounds), \
-                    (index,"staged aircraft overlaps a defensive deck mount")
+        half_length,half_span = 15,12.5
+        for approach in (0,-20):
+            for along in np.linspace(-half_length,half_length,7):
+                for across in np.linspace(-half_span,half_span,7):
+                    x,z = start+(approach+along)*direction+across*lateral
+                    assert inside_deck(x,z), (index,approach,"aircraft off deck")
+                    assert min(rectangle_distance(x,z,*b) for b in obstacles) >= 1.5, \
+                        (index,approach,"aircraft overlaps an island or lift")
+                    assert all(rectangle_distance(x,z,*b)>0 for b in weapon_bounds), \
+                        (index,approach,"aircraft overlaps a defensive deck mount")
         for along in np.linspace(0,95,96):
             for across in (-half_span,0,half_span):
                 x,z=start+along*direction+across*lateral
@@ -736,7 +738,10 @@ def main():
                    design_mass_budget_matches_hull_volume_within_one_percent=abs(submerged_volume*1.025-FIT["full_load_displacement_tonnes"])/FIT["full_load_displacement_tonnes"]<.01,
                    aft_spot_clearance_geometry_checked=True,
                    pads_forward_of_their_islands=True,
-                   forward_helicopter_pair_waist_interlocked=True,
+                   all_vertical_spots_waist_interlocked=True,
+                   catapult_reference_envelope_span_m=25,
+                   catapult_reference_envelope_length_m=30,
+                   catapult_staging_and_aligned_approaches_checked=True,
                    recovery_heading_degrees=LANDING_HEADING_DEG,
                    aft_island_scale=list(AFT_ISLAND_SCALE),
                    aft_bridge_glazing_faces=6,
