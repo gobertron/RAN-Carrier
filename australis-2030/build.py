@@ -18,7 +18,8 @@ from generate_source_models import Mesh, COLORS, render, validate  # noqa: E402
 from rebuild_game_scale import METRES_PER_UNIT  # noqa: E402
 from build_3d_viewer import build_viewer  # noqa: E402
 from combat_fit import (add_geometry as add_combat_geometry, FIT, VLS_BANKS,
-                        SAM_POS, RAM_POS, CIWS_POS, GUN_POS, CHAFF_POS, NULKA_POS)  # noqa: E402
+                        SAM_POS, RAM_POS, CIWS_POS, GUN_POS, CHAFF_POS, NULKA_POS,
+                        deck_weapon_zones)  # noqa: E402
 
 COLORS.update({
     "hull": "#778b96", "underwater": "#394954", "deck": "#394953",
@@ -44,12 +45,16 @@ MAIN_ISLAND_BASE = [
     (26, -30), (33, -33), (39, -23), (39, 28),
     (33, 39), (26, 32),
 ]
-AFT_ISLAND_BASE = [
+AFT_ISLAND_REFERENCE = [
     (26, -110), (33, -112), (39, -104), (39, -74),
     (33, -66), (26, -69),
 ]
+AFT_ISLAND_SCALE = (.80, .72, .65)
+AFT_ISLAND_BASE = [(32.5+(x-32.5)*AFT_ISLAND_SCALE[0],
+                    -89+(z+89)*AFT_ISLAND_SCALE[2])
+                   for x,z in AFT_ISLAND_REFERENCE]
 # Abreast the aft part of the main island, behind the waist launch run.
-PORT_LIFT_Z = -27.0
+PORT_LIFT_Z = -32.0
 # Actual metre dimensions are independent of the hull's width reduction.
 # Fore-and-aft parking accommodates the Tomcat without a wide cross-deck lift.
 LIFT_WIDTH_M = 22.0
@@ -59,7 +64,7 @@ ELEVATORS = [(LIFT_CENTRE_X_M/WIDTH_SCALE, -50),
              (LIFT_CENTRE_X_M/WIDTH_SCALE, 54),
              (-LIFT_CENTRE_X_M/WIDTH_SCALE, PORT_LIFT_Z),
              (LIFT_CENTRE_X_M/WIDTH_SCALE, -132)]
-LASERS = [(-35, 109), (36, 119), (-40, -60), (31, -157)]
+LASERS = [(-35, 109), (34, 158), (-40, -60), (31, -157)]
 # Three bow tracks and two port-waist tracks, each with a 95 m stroke.
 # Waist departures are angled to port, using the shared recovery-deck area.
 BOW_CATAPULT_IDS = (1, 2, 3)
@@ -76,11 +81,17 @@ CATAPULTS = [((x/WIDTH_SCALE, 88), (x/WIDTH_SCALE, 183))
 # lanes and with each other because departure/taxi areas are shared.
 CATAPULT_INTERLOCKS = {
     1: (2, 4, 5), 2: (1, 3, 4, 5), 3: (2, 4, 5),
-    4: (1, 2, 3, 5), 5: (1, 2, 3, 4),
+    4: (1, 2, 3, 5, 6, 7), 5: (1, 2, 3, 4, 6, 7),
 }
-VERTICAL_SPOTS = [(6, -165), (6, -136), (6, -107), (6, -78)]
-LANDING_LANE_A = np.array((-23., -155.))
-LANDING_LANE_B = np.array((-15., 62.))
+# Two pairs ahead of the two islands. Forward spots share the waist-launch
+# area and are interlocked with lanes 4/5, while bow lanes remain available.
+VERTICAL_SPOTS = [(x/WIDTH_SCALE,z) for x,z in
+                  ((-25,60),(1.5,60),(9.5,-60),(9.5,-31))]
+HELO_INTERLOCKS = {6:(4,5), 7:(4,5), 8:(), 9:()}
+HELO_ELEVATORS = (2,2,1,1)
+LANDING_HEADING_DEG = -9.0
+LANDING_LANE_A = np.array((3./WIDTH_SCALE, -166.))
+LANDING_LANE_B = np.array(((3.-186*math.tan(math.radians(9)))/WIDTH_SCALE, 20.))
 VERTICAL_SPOT_RADIUS = 10.5
 PAD_MARK_ANGLE_DEG = -12
 DECK_UNDERSIDE_Y = 20.3
@@ -100,6 +111,14 @@ def catapult_point(route, along, across=0):
     lateral = np.array((direction[1], -direction[0]))
     x, z = start+along*direction+across*lateral
     return (x/WIDTH_SCALE, z)
+
+
+def landing_point(fraction, across=0):
+    a,b = np.array(physical_xz((LANDING_LANE_A,LANDING_LANE_B)))
+    direction = (b-a)/np.linalg.norm(b-a)
+    lateral = np.array((direction[1],-direction[0]))
+    x,z = a+(b-a)*fraction+across*lateral
+    return (x/WIDTH_SCALE,z)
 
 
 def catapult_deflector(route):
@@ -251,21 +270,38 @@ def geometry(closed_lasers=True):
     m.box("ShipboardECM_Module_PortPanel", 30.2, 51.3, 10, .24, 2.1, 5, "dark")
     m.box("ShipboardECM_Module_StarboardPanel", 36.8, 51.3, 10, .24, 2.1, 5, "dark")
 
-    aft_top = scaled_polygon(AFT_ISLAND_BASE, 32.5, -89, .82, .80)
+    aft_start = len(m.parts)
+    aft_top = scaled_polygon(AFT_ISLAND_REFERENCE, 32.5, -89, .82, .80)
     loft(m, "AftAviationIsland",
-         [polygon_at_y(AFT_ISLAND_BASE, 22), polygon_at_y(aft_top, 33.5)], "island")
+         [polygon_at_y(AFT_ISLAND_REFERENCE, 22), polygon_at_y(aft_top, 33.5)], "island")
     aft_bridge = [(28, -104), (34, -105), (38, -98),
                   (38, -78), (32, -72), (28, -76)]
+    aft_bridge_top = scaled_polygon(aft_bridge, 33, -88, .8, .82)
     loft(m, "AftAviationBridge",
          [polygon_at_y(aft_bridge, 33.3),
-          polygon_at_y(scaled_polygon(aft_bridge, 33, -88, .8, .82), 39)], "island")
-    m.box("AftAviationWindowPort", 28.2, 36.8, -89, .22, 1.55, 24, "glass")
-    m.box("AftAviationWindowStarboard", 37.8, 36.8, -88, .22, 1.55, 20, "glass")
-    m.box("AftAviationWindowForward", 33, 36.8, -73.55, 8, 1.55, .2, "glass")
+          polygon_at_y(aft_bridge_top, 39)], "island")
+    # A closed glazed band follows every raked bridge face, including the
+    # aft face and chamfered corners. Each pane is a thin closed prism.
+    rings = []
+    for y in (35.8,38.0):
+        t=(y-33.3)/(39-33.3)
+        rings.append([(x+(tx-x)*t,y,z+(tz-z)*t)
+                      for (x,z),(tx,tz) in zip(aft_bridge,aft_bridge_top)])
+    for i in range(6):
+        j=(i+1)%6
+        outer=[];inner=[]
+        for ring in rings:
+            for index in (i,j):
+                x,y,z=ring[index]
+                v=np.array((x-33,z+88));v/=np.linalg.norm(v)
+                outer.append((x+v[0]*.09,y,z+v[1]*.09))
+                inner.append((x+v[0]*.02,y,z+v[1]*.02))
+        m.add(f"AftAviationWindow360_{i+1}",outer+inner,
+              [[0,1,3,2],[4,6,7,5],[0,4,5,1],[2,3,7,6],[0,2,6,4],[1,5,7,3]],"glass")
     for face, xyz, dims in [
-        ("Port", (28.2, 35, -90), (.18, 2.8, 6)),
-        ("Starboard", (37.8, 35, -90), (.18, 2.8, 6)),
-        ("Fore", (33, 35, -74), (5.4, 2.8, .18)),
+        ("Port", (28.2, 33.7, -90), (.18, 2.8, 6)),
+        ("Starboard", (37.8, 33.7, -90), (.18, 2.8, 6)),
+        ("Fore", (33, 33.7, -74), (5.4, 2.8, .18)),
     ]:
         m.box(f"AftSideRadar_{face}", *xyz, *dims, "sensor")
     aft_mast = [(30, -95), (35, -96), (37, -91),
@@ -274,6 +310,10 @@ def geometry(closed_lasers=True):
          [polygon_at_y(aft_mast, 38.8),
           polygon_at_y(scaled_polygon(aft_mast, 33.5, -88, .70, .70), 44)],
          "island")
+    for _,vertices,_,_ in m.parts[aft_start:]:
+        vertices[:,0] = 32.5+(vertices[:,0]-32.5)*AFT_ISLAND_SCALE[0]
+        vertices[:,1] = 22+(vertices[:,1]-22)*AFT_ISLAND_SCALE[1]
+        vertices[:,2] = -89+(vertices[:,2]+89)*AFT_ISLAND_SCALE[2]
 
     for i, (x, z) in enumerate(ELEVATORS, 1):
         half_width = LIFT_WIDTH_M/(2*WIDTH_SCALE)
@@ -315,23 +355,23 @@ def geometry(closed_lasers=True):
 
     a, b = LANDING_LANE_A, LANDING_LANE_B
     for side in (-1, 1):
-        v = np.array((side*11.3, 0.))
-        m.stripe(f"AngledLandingEdge_{side}", a+v, b+v, .34, 22.15, "white")
+        m.stripe(f"AngledLandingEdge_{side}", landing_point(0,side*11.3),
+                 landing_point(1,side*11.3), .34, 22.15, "white")
     for i in range(13):
         p = a+(b-a)*(i+.10)/13
         q = a+(b-a)*(i+.49)/13
         m.stripe(f"LandingCentreline_{i+1:02d}", p, q, .44, 22.16, "white")
     for i, t in enumerate((.31, .39, .47, .55), 1):
-        p = a+(b-a)*t
-        m.stripe(f"ArrestingWire_{i}", p+(-11, 0), p+(11, 0),
+        m.stripe(f"ArrestingWire_{i}", landing_point(t,-11), landing_point(t,11),
                  .24, 22.19, "gold")
         for side in (-1, 1):
-            m.box(f"ArrestingWireAnchor_{i}_{side}",
-                  p[0]+side*11.25, 22.16, p[1], .85, .20, 1.4, "dark")
-    m.stripe("LandingThresholdStripe", (-33, -154), (-11, -154), .38, 22.16, "white")
+            x,z=landing_point(t,side*11.25)
+            m.box(f"ArrestingWireAnchor_{i}_{side}",x,22.16,z,.85,.20,1.4,"dark")
+    m.stripe("LandingThresholdStripe", landing_point(.02,-11),
+             landing_point(.02,11), .38, 22.16, "white")
 
-    # Four aligned off-centre aft spots for vertical takeoff or helicopters.
-    # These are visual positions, not operational flight-deck routing.
+    # Offset helicopter pairs forward of each island; bow launches can run
+    # alongside these, but the forward pair shares the waist runway area.
     for i, (x, z) in enumerate(VERTICAL_SPOTS, 1):
         rim = [(x+VERTICAL_SPOT_RADIUS*math.cos(2*math.pi*j/20)/WIDTH_SCALE,
                 z+VERTICAL_SPOT_RADIUS*math.sin(2*math.pi*j/20))
@@ -401,23 +441,27 @@ def plan_preview(path):
         b = point((x+w/2)/WIDTH_SCALE,z+l/2)
         draw.rectangle((min(a[0],b[0]),min(a[1],b[1]),max(a[0],b[0]),max(a[1],b[1])),
                        fill=fill,outline="#9aacb3",width=1)
-    for x,z in VLS_BANKS:
-        physical_box(x*.8,z,25,21,"#52626b")
-        physical_box(x,z,4.6,19,"#20333c")
-    for positions in (SAM_POS,RAM_POS,CIWS_POS,GUN_POS,CHAFF_POS,NULKA_POS):
+    for positions in (CIWS_POS,GUN_POS,CHAFF_POS,NULKA_POS):
         for x,y,z in positions:
             physical_box(x*.8,z,24 if positions in (SAM_POS,RAM_POS,CIWS_POS,GUN_POS) else 21,
                          7 if positions in (SAM_POS,RAM_POS,CIWS_POS,GUN_POS) else 2.8,"#52626b")
             physical_box(x,z,3,2.8,"#a4b5bb")
     draw.polygon(shape(DECK), fill="#40535e", outline="#b3c4c4", width=3)
+    for x,z in VLS_BANKS:
+        physical_box(x,z,4.6,19,"#20333c")
+        for row in range(10):
+            for side in (-1,1):
+                physical_box(x+side*.9,z+(row-4.5)*1.7,1.45,1.35,"#8198a2")
+    for positions in (SAM_POS,RAM_POS):
+        for x,y,z in positions: physical_box(x,z,3,2.8,"#a4b5bb")
     for a, b in zip(DECK, DECK[1:]+DECK[:1]):
         draw.line([point(*a), point(*b)], fill="#758f95", width=3)
     draw.polygon(shape(MAIN_ISLAND_BASE), fill="#9eafb6", outline="#d8e3e2", width=2)
     draw.polygon(shape([(30, -3), (35, -4), (37, 19), (30, 18)]),
                  fill="#366072")
     draw.polygon(shape(AFT_ISLAND_BASE), fill="#8198a2", outline="#c1d8da", width=2)
-    draw.polygon(shape([(30, -95), (37, -91), (37, -83), (30, -84)]),
-                 fill="#366072")
+    draw.polygon(shape([(32.5+(x-32.5)*.8,-89+(z+89)*.65)
+                        for x,z in ((30,-95),(37,-91),(37,-83),(30,-84))]),fill="#366072")
     for x, z in ELEVATORS:
         p = point(x-LIFT_WIDTH_M/(2*WIDTH_SCALE), z+LIFT_LENGTH_M/2)
         q = point(x+LIFT_WIDTH_M/(2*WIDTH_SCALE), z-LIFT_LENGTH_M/2)
@@ -452,20 +496,18 @@ def plan_preview(path):
         draw.ellipse((sx-2,sy-2,sx+2,sy+2),fill="#d8b66e")
     a, b = LANDING_LANE_A, LANDING_LANE_B
     for side in (-1, 1):
-        shift = np.array((side*11.3, 0.))
-        draw.line([point(*(a+shift)), point(*(b+shift))],
+        draw.line([point(*landing_point(0,side*11.3)),point(*landing_point(1,side*11.3))],
                   fill="#d4e3e3", width=3)
     for i in range(13):
         draw.line([point(*(a+(b-a)*(i+.1)/13)),
                    point(*(a+(b-a)*(i+.49)/13))], fill="#f2f5f3", width=3)
     for t in (.31, .39, .47, .55):
-        p = a+(b-a)*t
-        draw.line([point(*(p+(-11, 0))), point(*(p+(11, 0)))],
+        draw.line([point(*landing_point(t,-11)),point(*landing_point(t,11))],
                   fill="#d8b66e", width=3)
         for side in (-1, 1):
-            px, py = point(*(p+(side*11.25, 0)))
+            px, py = point(*landing_point(t,side*11.25))
             draw.ellipse((px-3, py-3, px+3, py+3), fill="#11212c")
-    draw.line([point(-33, -154), point(-11, -154)], fill="#eef4f3", width=3)
+    draw.line([point(*landing_point(.02,-11)),point(*landing_point(.02,11))],fill="#eef4f3",width=3)
     for x, z in LASERS:
         px, py = point(x, z)
         draw.rectangle((px-10, py-9, px+10, py+9),
@@ -477,12 +519,12 @@ def plan_preview(path):
         ("MAIN COMMAND ISLAND", (35, 10), (912, 216)),
         ("AFT AVIATION ISLAND", (34, -88), (590, 207)),
         ("4 LIFTS / 22 x 26 m", (57, 54), (1250, 207)),
-        ("4 OFFSET VTOL / HELO SPOTS", (6, -136), (158, 204)),
+        ("4 FORWARD-OFFSET HELO SPOTS", (9.5/WIDTH_SCALE, -60), (158, 204)),
         ("3 BOW CATAPULTS", (0, 136), (1335, 655)),
         ("2 STAGGERED WAIST CATAPULTS", (-28, 45), (850, 715)),
         ("4 FLUSH LASER HATCHES", (-35, 109), (1266, 784)),
-        ("4 ARRESTING WIRES", (-23, -75), (160, 689)),
-        ("ANGLED RECOVERY", (-27, -100), (155, 736)),
+        ("4 ARRESTING WIRES", landing_point(.47), (160, 689)),
+        ("9 DEGREE PORT RECOVERY", landing_point(.15), (155, 736)),
     ]:
         ax, ay = point(*anchor)
         tx, ty = xy
@@ -526,22 +568,39 @@ def main():
                                z+VERTICAL_SPOT_RADIUS*math.sin(theta))
         p = np.array((x, z))
         t = min(1., max(0., float(np.dot(p-lane_a, line)/np.dot(line, line))))
-        assert np.linalg.norm(p-(lane_a+t*line)) > VERTICAL_SPOT_RADIUS+11.3*WIDTH_SCALE+1
+        assert np.linalg.norm(p-(lane_a+t*line)) > VERTICAL_SPOT_RADIUS+11.3+1
         for lift_x, lift_z in lifts:
             assert rectangle_distance(x, z, lift_x-LIFT_WIDTH_M/2, lift_x+LIFT_WIDTH_M/2,
                                       lift_z-LIFT_LENGTH_M/2, lift_z+LIFT_LENGTH_M/2) > VERTICAL_SPOT_RADIUS+1
-            gap = lateral_gap(x-VERTICAL_SPOT_RADIUS, x+VERTICAL_SPOT_RADIUS,
-                              lift_x-LIFT_WIDTH_M/2, lift_x+LIFT_WIDTH_M/2)
+            gap = rectangle_distance(x,z,lift_x-LIFT_WIDTH_M/2,lift_x+LIFT_WIDTH_M/2,
+                                     lift_z-LIFT_LENGTH_M/2,lift_z+LIFT_LENGTH_M/2)-VERTICAL_SPOT_RADIUS
             min_lift_gap = min(min_lift_gap, gap)
-            assert gap >= 8
+            assert gap >= 1
         for island in islands:
             xmin, xmax = min(px for px, _ in island), max(px for px, _ in island)
             zmin, zmax = min(pz for _, pz in island), max(pz for _, pz in island)
             assert rectangle_distance(x, z, xmin, xmax, zmin, zmax) > VERTICAL_SPOT_RADIUS+1
-            gap = lateral_gap(x-VERTICAL_SPOT_RADIUS, x+VERTICAL_SPOT_RADIUS,
-                              xmin, xmax)
+            gap = rectangle_distance(x,z,xmin,xmax,zmin,zmax)-VERTICAL_SPOT_RADIUS
             min_island_gap = min(min_island_gap, gap)
-            assert gap >= 4
+            assert gap >= 1
+    for i,(_,z) in enumerate(spots):
+        island=islands[0 if i<2 else 1]
+        assert z-VERTICAL_SPOT_RADIUS > max(pz for _,pz in island)+1
+    # Main-deck weapon keep-outs match the native no-parking zones. Their
+    # physical footprints must clear pads, islands, lifts and all launch runs.
+    weapon_bounds=[]
+    for name,(x,z,w,l) in deck_weapon_zones():
+        bounds=(x-w/2,x+w/2,z-l/2,z+l/2)
+        weapon_bounds.append(bounds)
+        assert all(inside_deck(px,pz) for px in bounds[:2] for pz in bounds[2:]),name
+        assert all(rectangle_distance(px,pz,*bounds)>VERTICAL_SPOT_RADIUS
+                   for px,pz in spots),name
+        for lx,lz in lifts:
+            assert bounds[1]<lx-LIFT_WIDTH_M/2 or bounds[0]>lx+LIFT_WIDTH_M/2 or \
+                   bounds[3]<lz-LIFT_LENGTH_M/2 or bounds[2]>lz+LIFT_LENGTH_M/2,name
+        for px,pz in physical_xz(LASERS):
+            assert bounds[1]<px-2.5*WIDTH_SCALE or bounds[0]>px+2.5*WIDTH_SCALE or \
+                   bounds[3]<pz-2.9 or bounds[2]>pz+2.9,(name,"laser hatch overlap")
     # The launch line and up to 60 m of forward rollout within the ship's
     # length keep a 12 m plan-view corridor clear of island/lift footprints.
     obstacles = [(min(x for x, _ in island), max(x for x, _ in island),
@@ -573,6 +632,13 @@ def main():
                 assert inside_deck(x,z), (index,"staged aircraft off deck")
                 assert min(rectangle_distance(x,z,*b) for b in obstacles) >= 1.5, \
                     (index,"staged aircraft overlaps an island or lift")
+                assert all(rectangle_distance(x,z,*b)>0 for b in weapon_bounds), \
+                    (index,"staged aircraft overlaps a defensive deck mount")
+        for along in np.linspace(0,95,96):
+            for across in (-half_span,0,half_span):
+                x,z=start+along*direction+across*lateral
+                assert all(rectangle_distance(x,z,*b)>0 for b in weapon_bounds), \
+                    (index,"launch run intersects a defensive deck mount")
     for route in CATAPULTS:
         (sx, sz), (ex, ez) = physical_xz(route)
         length = math.hypot(ex-sx,ez-sz)
@@ -642,11 +708,15 @@ def main():
                    islands=2, aft_h_mark_angle_degrees=PAD_MARK_ANGLE_DEG,
                    design_mass_budget_matches_hull_volume_within_one_percent=abs(submerged_volume*1.025-FIT["full_load_displacement_tonnes"])/FIT["full_load_displacement_tonnes"]<.01,
                    aft_spot_clearance_geometry_checked=True,
-                   pad_longitudinal_corridors_clear=True,
+                   pads_forward_of_their_islands=True,
+                   forward_helicopter_pair_waist_interlocked=True,
+                   recovery_heading_degrees=LANDING_HEADING_DEG,
+                   aft_island_scale=list(AFT_ISLAND_SCALE),
+                   aft_bridge_glazing_faces=6,
                    catapult_launch_corridors_clear=True,
                    minimum_spot_edge_spacing_m=round(min_spot_edge_gap, 2),
-                   minimum_pad_to_island_lateral_gap_m=round(min_island_gap, 2),
-                   minimum_pad_to_lift_lateral_gap_m=round(min_lift_gap, 2),
+                   minimum_pad_to_island_footprint_gap_m=round(min_island_gap, 2),
+                   minimum_pad_to_lift_footprint_gap_m=round(min_lift_gap, 2),
                    minimum_catapult_to_obstruction_plan_gap_m=round(min_cat_clearance, 2),
                    hull_deck_perimeter_mates=True,
                    bow_waterline_tip_width_m=round(bow_tip_width, 2),

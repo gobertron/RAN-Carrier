@@ -14,7 +14,7 @@
   "islands": {
     "count": 2,
     "main": "larger integrated command and sensor island amidships",
-    "aft": "smaller aviation-control island aft"
+    "aft": "20% narrower, 35% shorter and 28% lower aft aviation island, with glazing on all six bridge faces"
   },
   "deck": {
     "catapult_tracks": 5,
@@ -23,15 +23,13 @@
       3
     ],
     "minimum_launch_interval_seconds": 1,
-    "independent_helicopter_launch_spots": true,
+    "independent_helicopter_launch_spots": false,
     "deck_edge_lifts": 4,
     "aft_vertical_operation_spots": 4,
-    "aft_spot_use": "VTOL aircraft and helicopters; recover fixed-wing aircraft separately",
-    "aft_spot_layout": "four evenly spaced off-centre positions aligned fore-to-aft next to the smaller aft island, with H markings angled twelve degrees",
+    "aft_spot_use": "Helicopter/VTOL operations ahead of the islands; bow catapults remain available, recovery remains separate",
+    "aft_spot_layout": "Two offset pairs ahead of the islands; forward pair interlocked with waist launch lanes only",
     "aft_h_mark_angle_degrees": -12,
     "catapult_to_island_and_lift_plan_clearance_m": 12,
-    "aft_spot_lateral_clearance_from_islands_m": 4,
-    "aft_spot_lateral_clearance_from_lifts_m": 8,
     "angled_recovery_lane": true,
     "arresting_wire_indications": 4,
     "landing_threshold_indicated": true,
@@ -69,8 +67,31 @@
       ]
     ],
     "port_waist_launch_stagger_m": 21,
-    "port_lift_longitudinal_position_m": -27,
-    "catapult_visual_details": "Flush metal troughs, dark slots, launch shuttles and segmented stowed deflectors; static geometry"
+    "port_lift_longitudinal_position_m": -32,
+    "catapult_visual_details": "Flush metal troughs, dark slots, launch shuttles and segmented stowed deflectors; static geometry",
+    "minimum_pad_footprint_clearance_m": 1,
+    "recovery_heading_degrees": -9,
+    "vertical_spot_centres_m": [
+      [
+        -25,
+        60
+      ],
+      [
+        1.5,
+        60
+      ],
+      [
+        9.5,
+        -60
+      ],
+      [
+        9.5,
+        -31
+      ]
+    ],
+    "tyre_contact_height_m": 22.0,
+    "helipad_contact_height_m": 22.08,
+    "lift_contact_height_m": 22.205
   },
   "systems_visual_studies": {
     "integrated_radar_arrays": 7,
@@ -80,7 +101,9 @@
     "laser_default_state": "flush armoured deck hatches; raised visual state in the viewer and a separate OBJ overlay",
     "sonar_bow_fairing": true,
     "recessed_vls_cells": 80,
-    "ford_zumwalt_derived_fit": "Original geometry and declared stock-compatible game proxies; see DESIGN-BASIS.md"
+    "ford_zumwalt_derived_fit": "Original geometry and declared stock-compatible game proxies; see DESIGN-BASIS.md",
+    "vls_and_missile_launchers": "Four VLS banks and four defensive missile housings on the marked main-deck edge positions",
+    "defensive_kinetic_armament_only": true
   },
   "integration": {
     "model_units": "metres",
@@ -89,7 +112,9 @@
     "operational_weapons_or_sensors": false,
     "native_carrier_routes_and_collision": true,
     "native_combat_fit_configured": true,
-    "combat_tested": false
+    "combat_tested": false,
+    "gun_objects_registered": true,
+    "aviation_ammo_capacity_points": 6000000
   },
   "crew_design_target": {
     "ships_company": 2850,

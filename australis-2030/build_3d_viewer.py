@@ -115,12 +115,12 @@ TEMPLATE = r'''<!doctype html>
     <label><input type="checkbox" value="islands" checked> Two islands and radar</label>
     <label><input type="checkbox" value="catapults" checked> Three bow + two port-waist catapults</label>
     <label><input type="checkbox" value="lifts" checked> Four deck-edge lifts</label>
-    <label><input type="checkbox" value="spots" checked> Four VTOL / helicopter spots</label>
-    <label><input type="checkbox" value="recovery" checked> Angled deck, four arresting wires</label>
+    <label><input type="checkbox" value="spots" checked> Four helicopter spots ahead of islands</label>
+    <label><input type="checkbox" value="recovery" checked> 9° port recovery, four arresting wires</label>
     <label><input type="checkbox" value="laser" checked> Retractable laser positions</label>
     <label><input type="checkbox" value="equipment" checked> Other equipment</label>
   </div>
-  <div class="footer muted">Drag to rotate. Scroll or pinch to zoom. Laser deployment is an animated visual study, not implemented game behavior. Stability, seakeeping, deck operations and Sea Power integration have not been tested.<br><br>
+  <div class="footer muted">Drag to rotate. Scroll or pinch to zoom. The smaller rear bridge has wraparound glazing. Laser deployment is a visual study. The original hull loads in Sea Power; this revised deck and combat fit still need in-game testing. Stability and seakeeping remain unverified.<br><br>
     <a href="../model/source/ran_cvn_australis_2030.obj" download>Download OBJ mesh</a> ·
     <a href="../model/source/ran_cvn_australis_2030.mtl" download>Materials</a> ·
     <a href="../model/source/ran_cvn_australis_2030_deployed_lasers.obj" download>Raised laser overlay</a>

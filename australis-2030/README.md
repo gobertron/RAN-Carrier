@@ -3,7 +3,7 @@
 The current concept uses the supplied Ford flight-deck reference with our
 original faceted hull and two islands. It has **five 95 m steam catapults**:
 three at the bow and two angled on the port waist, plus an arrested-recovery lane,
-four aft helicopter/VTOL spots and four 22 × 26 m lifts. A broader bow flight
+four helicopter/VTOL spots ahead of the islands and four 22 × 26 m lifts. A broader bow flight
 deck sits above the fine immersed stem. The main flight deck remains 82 m
 wide; the maximum width including the lift extensions is 109 m.
 
@@ -19,8 +19,9 @@ wide; the maximum width including the lift extensions is 109 m.
 | Steam CATOBAR tracks | Five, each 95 m; IDs 1/2/3 bow and 4/5 port waist |
 | Waist launch heading | 6 degrees to port; launch positions staggered 21 m |
 | Deck-edge lifts | Four, each 22 × 26 m, bow-facing parking |
-| Recovery | Angled lane, four cable indications; hook belongs to aircraft |
-| Islands | Larger command island and smaller aft aviation island |
+| Recovery | 9° to port, four perpendicular cable indications; aircraft carries the hook |
+| Islands | Larger command island; reduced aft island with wraparound bridge glazing |
+| Aviation ammunition | 6,000,000 finite supply points, no per-category caps |
 
 [DESIGN-BASIS.md](DESIGN-BASIS.md) provides the crew and mass budget, space
 allowances, references and complete modern-target/stock-proxy equipment table.
@@ -32,10 +33,12 @@ The combat layout includes 80 peripheral VLS cells, two self-defence missile
 mounts, two 21-position RAM-form mounts, three Phalanx mounts, two 30 mm guns,
 radars, ESM, defensive ECM, one offensive ECM, eight SRBOC positions and two
 Nixie decoys. The current native package uses declared stock-compatible
-proxies. In particular its ESSM/RAM-form mounts fire stock Sea Sparrows;
+proxies. All missile stores now use stock Sea Sparrows as defensive proxies;
 changing their housing does not implement RIM-116/ESSM performance. Four
-Nulka positions and four laser hatches are visual studies. Turrets/hatches
-are not animated in the game prototype.
+Nulka positions and four laser hatches are visual studies. RIM-66E and
+RGM-109 have been removed. Four VLS banks and four missile housings occupy
+the marked main-deck edge areas, with no-parking zones. Guns have original
+moving yaw/elevation meshes; missile housings and hatches remain static.
 
 Bow catapults 1/3 can operate as a pair; centre bow lane 2 interlocks with both.
 Waist catapults 4/5 interlock with all bow lanes and with each other because
@@ -43,9 +46,18 @@ their departure/taxi areas are shared. The one-second minimum interval remains
 subject to the game scheduler. Waist lanes are restricted to the stock A-7E
 pending other footprint checks. The bow lanes use a checked 25 m span × 30 m length
 reference envelope. The starboard forward lift is moved to z=54 m; the port
-lift remains abreast of the aft part of the main island at z=-27 m, behind the
-waist launch run. Four 12-degree H markings remain
-29 m apart near the aft island. Recovery blocks launches.
+lift remains abreast of the aft part of the main island at z=-32 m. Four
+12-degree H markings form two pairs ahead of the islands. Forward spots 6/7
+share the waist departure area and interlock with lanes 4/5; all four leave
+bow launch points available. Recovery blocks launches.
+
+The 30 mm normal-gun sections now use the engine-required NumberOfGuns/Gun1
+keys and registered barrels, correcting the null reference in AlignTurret.
+Taxi/launch contact points match the deck surface, removing the former
+16 cm height offset. Lift and helicopter contact points match their surfaces.
+Stock aircraft magazines remain intact; the carrier reserve increases to
+6,000,000 points for repeated armed sorties. The new gun and wheel-contact
+corrections still need an in-game firing and aircraft check.
 
 The three-bow/two-waist arrangement is our requested Australis adaptation of
 the bow-and-waist carrier layout, not a claim that an American class has this

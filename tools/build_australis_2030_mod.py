@@ -22,11 +22,11 @@ from build import (  # noqa: E402
     AFT_ISLAND_BASE, CATAPULTS, COLORS, DECK, DECK_SURFACE_Y, ELEVATORS,
     LANDING_LANE_A, LANDING_LANE_B, MAIN_ISLAND_BASE, VERTICAL_SPOTS, geometry,
     WIDTH_SCALE, BOW_CATAPULT_IDS, WAIST_CATAPULT_IDS, CATAPULT_INTERLOCKS,
-    catapult_point,
+    HELO_INTERLOCKS, HELO_ELEVATORS, catapult_point, landing_point,
 )
 from generate_source_models import Mesh  # noqa: E402
 from rebuild_game_scale import METRES_PER_UNIT  # noqa: E402
-from combat_fit import FIT, native_sections, custom_profiles  # noqa: E402
+from combat_fit import FIT, native_sections, custom_profiles, gun_mounts, deck_weapon_zones  # noqa: E402
 
 ID = "ran_cvn_australis_2030"
 MOD_NAME = "RAN-Carrier-Australis-2030"
@@ -34,14 +34,16 @@ SHIP_DIR = f"ships/{ID}"
 DEST = ROOT / "game-mod" / MOD_NAME
 SCALE = 1 / METRES_PER_UNIT
 DECK_HEIGHT = DECK_SURFACE_Y * SCALE
-LAUNCH_ASSOC = ((1,2,3),(3,2,1),(4,5,1),(6,7,8,9))
+LAUNCH_ASSOC = ((1,2,3,8,9),(3,2,1,6,7),(4,5,1),(8,9))
 
 
 def vec(x: float, y: float, z: float) -> str:
     return f"{x*WIDTH_SCALE*SCALE:.6f},{y*SCALE:.6f},{z*SCALE:.6f}"
 
 
-def point(x: float, z: float, above: float = .16) -> str:
+def point(x: float, z: float, above: float = 0) -> str:
+    # Sea Power already adds each aircraft's GroundPivot correction. These
+    # are tyre-contact heights, not the aircraft model's centre or pivot.
     return vec(x, DECK_SURFACE_Y + above, z)
 
 
@@ -66,6 +68,8 @@ def model(ship: Path) -> dict[str, str]:
     source = geometry()
     out = Mesh()
     materials = {}
+    gun_parts = {f"{mount['label']}_{part}_{mount['index']}"
+                 for mount in gun_mounts() for part in ("Housing","Barrel")}
     for src,dst in (("HardChineHull","Hull"),("FacetedFlightDeck","Deck")):
         name,v,faces,mat = next(part for part in source.parts if part[0] == src)
         out.add(dst,v,faces,mat)
@@ -73,7 +77,7 @@ def model(ship: Path) -> dict[str, str]:
     for material in COLORS:
         elements = [(v,faces) for name,v,faces,mat in source.parts
                     if mat == material and name not in
-                    ("HardChineHull","FacetedFlightDeck")]
+                    ("HardChineHull","FacetedFlightDeck") and name not in gun_parts]
         if not elements:
             continue
         vertices,all_faces = [],[]
@@ -90,6 +94,13 @@ def model(ship: Path) -> dict[str, str]:
                       "Rudder": (.25,1.1,1.05)}.items():
         out.box(name,0,0,0,*dims,"dark")
         materials[name] = "dark"
+    # Original moving yaw bodies and elevation barrels. Each gun resolves
+    # to a real registered object rather than a placeholder dictionary key.
+    for mount in gun_mounts():
+        out.box(mount["mount"],0,0,0,2.8,1.7,3,"island")
+        materials[mount["mount"]]="island"
+        out.box(mount["barrel"],0,0,1.8,.3,.22,2.1,"dark")
+        materials[mount["barrel"]]="dark"
     # Collision geometry is a separate OBJ object. It is never listed as a
     # visible submodel, but the game can use it in preference to its fallback.
     out.box("coll_hull_main",0,10,0,52*WIDTH_SCALE,20,320,"hull")
@@ -160,6 +171,7 @@ def routes() -> list[tuple[str, str, list[tuple[float,float]]]]:
     out: list[tuple[str,str,list[tuple[float,float]]]] = []
     for e, launches in enumerate(LAUNCH_ASSOC[:3],1):
         for launch in launches:
+            if launch > 5: continue
             approach = catapult_point(CATAPULTS[launch-1],-20)
             if e == 1: way = [(0,-48),(0,32),approach]
             elif e == 2: way = [(23,50),approach]
@@ -168,17 +180,22 @@ def routes() -> list[tuple[str, str, list[tuple[float,float]]]]:
             else: way = [(-30,ELEVATORS[2][1]+12),(-28,32),approach]
             out.append((f"Elevator{e}",f"LaunchPoint{launch}",way))
     for i,(x,z) in enumerate(VERTICAL_SPOTS,6):
-        out.append(("Elevator4",f"LaunchPoint{i}",[(10,-128),(x,z-12)]))
+        elevator=HELO_ELEVATORS[i-6]
+        way = [(15,54),(x,z-12)] if elevator==2 else [(10,-50),(x,z-12)]
+        out.append((f"Elevator{elevator}",f"LaunchPoint{i}",way))
+        if i >= 8:
+            out.append(("Elevator4",f"LaunchPoint{i}",[(14,-128),(x,z-12)]))
     out += [
         ("RecoveryPoint1","Elevator1",[(-25,-62),(0,-50)]),
         ("RecoveryPoint1","Elevator2",[(-26,-35),(0,46),(23,63)]),
         ("RecoveryPoint1","Elevator3",[(-30,50),(-34,ELEVATORS[2][1]+8)]),
     ]
     for i,(x,z) in enumerate(VERTICAL_SPOTS,2):
-        if i < 5:
-            out.append((f"RecoveryPoint{i}","Elevator4",[(10,-128)]))
-        else:
-            out.append((f"RecoveryPoint{i}","Elevator1",[(10,-61)]))
+        elevator=HELO_ELEVATORS[i-2]
+        way = [(15,54)] if elevator==2 else [(10,-50)]
+        out.append((f"RecoveryPoint{i}",f"Elevator{elevator}",way))
+        if i >= 4:
+            out.append((f"RecoveryPoint{i}","Elevator4",[(14,-128)]))
     # Join the main deck at each lift's inboard edge before crossing it.
     # Ride positions are on the visible platform, outside the main outline.
     for frm,to,waypoints in out:
@@ -193,6 +210,8 @@ def routes() -> list[tuple[str, str, list[tuple[float,float]]]]:
 
 def vessel_ini(material: dict[str,str]) -> str:
     moving = {"Propeller_1","Propeller_2","Rudder"}
+    moving.update(name for mount in gun_mounts()
+                  for name in (mount["mount"],mount["barrel"]))
     static = [name for name in material if name not in moving
               and name not in ("Hull", "coll_hull_main")]
     mounts = {"Propeller_1": (-7,-6,-147),
@@ -217,7 +236,7 @@ def vessel_ini(material: dict[str,str]) -> str:
         section("FlightDeck",[
             "AircraftCapacity=99","NumberOfElevators=4",
             "NumberOfLaunchPoints=9","NumberOfRecoveryPoints=5",
-            f"NumberOfTaxiPaths={len(routes())}","NumberOfDeckZones=9",
+            f"NumberOfTaxiPaths={len(routes())}","NumberOfDeckZones=17",
             "ForwardsTaxiVelocity=12","BackwardsTaxiVelocity=-8",
             "SlowTaxiVelocity=6","LaunchDelay=1","GroundCrewCount=16",
             "DeckParkSlots=44","LandingWhileLaunching=False",
@@ -227,7 +246,7 @@ def vessel_ini(material: dict[str,str]) -> str:
             "HoldEnterDistance=3",
             "HelicopterHoldWaypoints=1,400,-2.92|1,400,-1.46",
             "HelicopterHoldStackSeparation=500","HelicopterHoldEnterDistance=2",
-            "FlightDeck_AmmoCapacity=1200000/1200000",
+            f"FlightDeck_AmmoCapacity={FIT['aviation_ammunition']['capacity_points']}/{FIT['aviation_ammunition']['capacity_points']}",
             "FlightDeck_NumberOfAccountableAmmunitionCategories=0",
             "ArmorType=Moderate","Collider=coll_hangar"]),
     ]
@@ -235,7 +254,7 @@ def vessel_ini(material: dict[str,str]) -> str:
         parts.append(section(f"Elevator{i}",[
             "AssociatedLaunchPoints="+",".join(map(str,LAUNCH_ASSOC[i-1])),
             "Mesh=Dummy",f"SpawnPosition={point(x,z,.205)}",
-            "SpawnRotation=0",f"RidePosition={point(x,z,.205)}",
+            "SpawnRotation=0",f"RidePosition={point(x,z,.205)}","RideRotation=0",
             "EmbarkTime=10","RecycleTime=15"]))
     for i,((x,z),(ex,ez)) in enumerate(CATAPULTS,1):
         rotation = math.degrees(math.atan2((ex-x)*WIDTH_SCALE,ez-z))
@@ -248,9 +267,11 @@ def vessel_ini(material: dict[str,str]) -> str:
             f"Rotation={rotation:.3f}","CatapultParticles=None",
             f"CatapultLength={math.hypot((ex-x)*WIDTH_SCALE,ez-z):.3f}"]))
     for i,(x,z) in enumerate(VERTICAL_SPOTS,6):
+        blocks=",".join(map(str,HELO_INTERLOCKS[i]))
         parts.append(section(f"LaunchPoint{i}",[
             "AllowedType=Helicopter,VTOL",
-            f"Position={point(x,z)}","Rotation=-12"]))
+            f"Position={point(x,z,.08)}","Rotation=-12",
+            *([f"BlocksLaunchPoints={blocks}",f"TakeoffRequiresFreeLaunchpoints={blocks}"] if blocks else [])]))
     touchdown = LANDING_LANE_A + (LANDING_LANE_B-LANDING_LANE_A)*.36
     parts.append(section("RecoveryPoint1",[
         "AllowedType=Plane,VTOL","AssociatedElevators=1,2,3",
@@ -261,12 +282,12 @@ def vessel_ini(material: dict[str,str]) -> str:
         "CircuitWaypoints=0.5,800,-4.5|0.5,800,2.5|-0.75,800,3.2|-2,800,2.2|-2,500,-2.5|-0.75,500,-3.5|0.42,500,-3",
         "LandingInterval=56","Arrested=True"]))
     for i,(x,z) in enumerate(VERTICAL_SPOTS,2):
-        elevator = 4 if i < 5 else 1
+        elevator = HELO_ELEVATORS[i-2]
         other = [str(j) for j in range(1,6) if j != i]
         parts.append(section(f"RecoveryPoint{i}",[
-            "AllowedType=Helicopter,VTOL",f"AssociatedElevators={elevator}",
+            "AllowedType=Helicopter,VTOL",f"AssociatedElevators={elevator}"+(",4" if i>=4 else ""),
             "BlocksRecoveryPoints="+",".join(other),
-            f"Position={point(x,z)}","Rotation=-12",
+            f"Position={point(x,z,.08)}","Rotation=-12",
             "HelicopterCircuitWaypoints=0,300,-2|0,300,-1",
             "FinalApproachPath=0.8,300|0.4,200|0,100",
             "LandingInterval=80"]))
@@ -277,13 +298,15 @@ def vessel_ini(material: dict[str,str]) -> str:
     deckzones = [(f"{'Bow' if i in BOW_CATAPULT_IDS else 'Port-waist'} catapult {i}",
                   "Runway",catapult_zone(*route))
                  for i,route in enumerate(CATAPULTS,1)]
-    a,b = LANDING_LANE_A,LANDING_LANE_B
     deckzones += [("Angled recovery","Runway",
-                   [(a[0]-11,a[1]),(a[0]+11,a[1]),
-                    (b[0]+11,b[1]),(b[0]-11,b[1])]),
+                   [landing_point(t,across) for t,across in
+                    ((0,-11.3),(0,11.3),(1,11.3),(1,-11.3))]),
                   ("Flight deck","Deck",DECK),
                   ("Main island","NoPark",MAIN_ISLAND_BASE),
                   ("Aft island","NoPark",AFT_ISLAND_BASE)]
+    for name,(x,z,w,l) in deck_weapon_zones():
+        deckzones.append((name,"NoPark",[((x+dx)/WIDTH_SCALE,z+dz)
+                         for dx,dz in ((-w/2,-l/2),(w/2,-l/2),(w/2,l/2),(-w/2,l/2))]))
     for i,(name,kind,coords) in enumerate(deckzones,1):
         parts.append(section(f"DeckZone{i}",zone(name,kind,coords)))
     parts += [
@@ -304,7 +327,7 @@ def vessel_ini(material: dict[str,str]) -> str:
             "MinNoiseClassificationTreshold=5","ElectricFrequency=60"]),
         section("AI",[
             "UnitCostValue=12000","UnitScoreValue=15","Role=Carrier",
-            "AAW_Capability=3","ASuW_Capability=2","ASW_Capability=1",
+            "AAW_Capability=3","ASuW_Capability=0","ASW_Capability=1",
             "HasChaff=True",
             "MissilesToSaturate=16","TorpedoesToSaturate=5"]),
         section("ControlSystem",["Collider=coll_bridge",
@@ -341,7 +364,10 @@ def vessel_ini(material: dict[str,str]) -> str:
         section("Submodels",[
             *[f"Main_{i}={name}" for i,name in enumerate(static,1)],
             "MainSystems_1=Propeller_1","MainSystems_2=Propeller_2",
-            "MainSystems_3=Rudder","General_1=Flag1"]),
+            "MainSystems_3=Rudder",
+            *[f"MainSystems_{i}={name}" for i,name in enumerate(
+              (name for mount in gun_mounts() for name in (mount["mount"],mount["barrel"])),4)],
+            "General_1=Flag1"]),
     ]
     for name in static:
         parts.append(section(name,[
@@ -351,6 +377,17 @@ def vessel_ini(material: dict[str,str]) -> str:
             f"ResourcesMeshFolder={SHIP_DIR}/",f"RootMesh={ID}.obj",
             f"Mesh={name}",f"Material={material[name]}_mat.ini",
             f"Position={vec(*mounts[name])}"]))
+    for mount in gun_mounts():
+        x,y,z=mount["position"]
+        for key in ("mount","barrel"):
+            name=mount[key]
+            rows=[f"ResourcesMeshFolder={SHIP_DIR}/",f"RootMesh={ID}.obj",
+                  f"Mesh={name}",f"Material={material[name]}_mat.ini"]
+            rows += ([f"Position={vec(x/WIDTH_SCALE,y+1,z)}",
+                      "Rotation=0,"+("90" if x>0 else "-90")+",0"]
+                     if key=="mount" else
+                     [f"Parent={mount['mount']}","Position=0,0,0"])
+            parts.append(section(name,rows))
     parts.append(section("Flag1",[
         "ResourcesMeshFolder=ships/usn_ddg_adams/",
         "RootMesh=usn_ddg_adams",
@@ -462,7 +499,7 @@ def build(destination: Path = DEST) -> None:
         "white guides and segmented deflectors are static visual details. "
         "The waist pair currently accepts the stock A-7E; three bow lanes "
         "accept other carrier aircraft. Combat-fit.json declares modern "
-        "targets and stock proxies: Mk41/SM-2/Tomahawk, Sea Sparrow in the "
+        "targets and stock proxies: Mk41 with Sea Sparrow defensive rounds, plus Sea Sparrow in the "
         "ESSM and 21-round RAM-form launchers, Phalanx, 30 mm, SPY-1A, "
         "SLQ-32, original offensive ECM, SRBOC and two Nixie decoys. "
         "Nulka and lasers remain visual positions. New combat behaviour "
@@ -471,15 +508,30 @@ def build(destination: Path = DEST) -> None:
         "no stock or Workshop asset bytes are copied.\n"
         "The user confirmed mission loading and original hull rendering on "
         "22 October 2026 after the Foam section was added. This revision "
-        "uses an 82 m main deck and four independent aft helicopter spots. "
-        "The port lift sits beside the aft part of the main island at z=-27 m, "
+        "uses an 82 m main deck and four offset helicopter spots ahead of the islands. "
+        "The port lift sits beside the aft part of the main island at z=-32 m, "
         "behind the waist launch run. Four 22 x 26 m lifts use centred ride/spawn positions "
         "and fore-and-aft parking, checked against the stock F-14A reference. "
         "Catapult staging is checked using the stock A-7E. "
         "LaunchDelay=1 is a shared one-second minimum, not a "
         "guarantee of synchronized launches. Bow 1/3 can be paired; waist "
-        "launches block all bow lanes and each other. Recovery blocks all "
-        "launches. Flight operations need game QA.\n"
+        "launches block all bow lanes, each other and the forward helicopter pair. "
+        "The forward helicopter pair blocks waist lanes 4/5, leaving bow lanes available. "
+        "Recovery blocks all launches. Flight operations need game QA.\n"
+        "The rear island is narrower, shorter and lower with six-face wraparound glazing. "
+        "The arrested-recovery axis is 9 degrees to port and its wires are perpendicular. "
+        "Four defensive VLS banks and four missile housings occupy main-deck edge positions "
+        "with NoPark zones. RIM-66E and RGM-109 are removed. Sea Sparrow retains stock "
+        "guidance; the vertical-launch proxy requires in-game checking. "
+        "All five guns use original moving yaw bodies and elevation barrels. The normal "
+        "30 mm guns now provide NumberOfGuns/Gun1, correcting the null barrel that caused "
+        "WeaponSystemGun.AlignTurret to fail. This correction still needs an in-game firing test.\n"
+        "Aircraft contact points use the actual deck/pad/lift surface heights; the former "
+        "16 cm taxi/launch offset is removed. Aviation stores now contain 6000000/6000000 "
+        "ammo points, with no individual ammunition-category caps. Stock aircraft gun and "
+        "countermeasure capacities are retained. Select an armed loadout and Ready the aircraft. "
+        "Use a fresh carrier in a new mission so saved ammunition and old deck positions do "
+        "not override this revision.\n"
         "Test with the failed Melbourne prototype disabled. If the editor "
         "errors, collect the current logs, withdraw only this mod, and share "
         "the latest Sea Power Player.log.\n",

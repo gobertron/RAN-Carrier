@@ -85,7 +85,7 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
     assert len(groups) == len(names_in_obj)
     assert {"Hull","Deck","Rudder","Propeller_1","Propeller_2",
             "Surface_Hatch","Surface_Sensor","coll_hull_main"} <= groups
-    assert len(groups) <= 20, "Static materials should be batched"
+    assert len(groups) <= 30, "Static details are batched; five guns need ten moving objects"
     object_faces: dict[str,int] = {}
     object_vertices: dict[str,list[tuple[float,float,float]]] = {}
     current_object = None
@@ -177,7 +177,7 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
                 for i in range(1,int(main_island["NumberOfPoints"])+1)]
     assert port_lift[0] < 0 and min(island_z) <= port_lift[2] <= max(island_z), \
         "Port lift must remain abreast of the main island"
-    assert abs(port_lift[2]*METRES_PER_UNIT+27) < .001
+    assert abs(port_lift[2]*METRES_PER_UNIT+32) < .001
     assert ship["RecoveryPoint1"]["Arrested"] == "True"
     deck_outline = ship["DeckZone7"]
     assert deck_outline["Type"] == "Deck"
@@ -278,7 +278,7 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
             for x0,x1,z0,z1 in obstacles:
                 gap = math.hypot(max(x0-x,x-x1,0),max(z0-z,z-z1,0))
                 assert gap >= 12-.001, (i,"launch corridor overlaps island/lift")
-    interlocks = {1:"2,4,5",2:"1,3,4,5",3:"2,4,5",4:"1,2,3,5",5:"1,2,3,4"}
+    interlocks = {1:"2,4,5",2:"1,3,4,5",3:"2,4,5",4:"1,2,3,5,6,7",5:"1,2,3,4,6,7"}
     for i,blocks in interlocks.items():
         assert ship[f"LaunchPoint{i}"]["BlocksLaunchPoints"] == blocks
         assert ship[f"LaunchPoint{i}"]["TakeoffRequiresFreeLaunchpoints"] == blocks
@@ -287,7 +287,11 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
     right = vector(ship["LaunchPoint3"]["Position"])
     assert abs((right[0]-left[0])*METRES_PER_UNIT-28) < .001
     for i in range(6,10):
-        assert not ship[f"LaunchPoint{i}"].get("BlocksLaunchPoints"), "Aft spots must not block the forward pair"
+        launch=ship[f"LaunchPoint{i}"]
+        blocks=launch.get("BlocksLaunchPoints","")
+        assert blocks == ("4,5" if i<=7 else "")
+        assert not ({"1","2","3"}&set(blocks.split(","))), "Helicopters must leave bow catapults available"
+        if i<=7: assert launch["TakeoffRequiresFreeLaunchpoints"] == blocks
     for i in range(1,int(deck["NumberOfTaxiPaths"])+1):
         route = ship[f"TaxiPath{i}"]
         assert ship.has_section(route["From"]) and ship.has_section(route["To"])
@@ -295,7 +299,7 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
         for item in route["Waypoints"].split("|"):
             x,y,z=vector(item)
             assert inside_deck(x*METRES_PER_UNIT,z*METRES_PER_UNIT,outline), (i,item)
-            assert abs(y - 22.16/METRES_PER_UNIT) < 1e-5
+            assert abs(y - 22/METRES_PER_UNIT) < 1e-5
         if route["To"].startswith("LaunchPoint") and int(route["To"][11:]) <= 5:
             launch = ship[route["To"]]
             end = vector(route["Waypoints"].split("|")[-1])
@@ -354,6 +358,89 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
         for i in range(1,count+1):
             assert system[f"Container{i}"] == "Dummy"
             vector(system[f"Container{i}_Position"])
+    # Regression for the actual AlignTurret exception: the normal-gun loader
+    # reads Gun1..GunN, whereas the CIWS loader reads Gun. Resolve those exact
+    # keys to original moving OBJ objects, not merely to existing INI sections.
+    guns=[ship[s] for s in ship.sections() if re.fullmatch(r"WeaponSystem\d+",s)
+          and ship[s]["Type"] in ("Gun","CIWS")]
+    assert len(guns)==5
+    moving_names={v for k,v in ship["Submodels"].items() if k.startswith("MainSystems_")}
+    for gun in guns:
+        if gun["Type"]=="Gun":
+            assert gun["NumberOfGuns"]=="1"
+            barrel=gun["Gun1"]
+        else: barrel=gun["Gun"]
+        mount=gun["Mount"]
+        assert barrel in groups and mount in groups and barrel!="Dummy"
+        assert {barrel,mount} <= moving_names
+        assert gun["ContainerBase"] == barrel
+        assert ship[barrel]["Parent"] == mount
+        assert gun["IsMountRotatable"] == gun["AreContainersRotatable"] == "True"
+        assert object_faces[barrel] >= 12 and object_faces[mount] >= 12
+        assert min(v[2] for v in object_vertices[barrel]) > 0
+        assert int(ship[gun["AssociatedMagazine"]]["Ammunition1_Count"]) > 0
+    assert local_weapons["RAN_Australis_30mm"]["RoundsMax"] == "400"
+    for part in registered:
+        parent=ship[part].get("Parent")
+        if parent: assert parent in registered and parent!=part
+    # Tyre-contact coordinates must match the mesh surface; the engine adds
+    # GroundPivot itself. The old 22.16 m route height visibly floated tyres.
+    surface=max(v[1] for v in object_vertices["Deck"])
+    assert abs(surface*METRES_PER_UNIT-22)<.001
+    for i in range(1,6):
+        assert abs(vector(ship[f"LaunchPoint{i}"]["Position"])[1]-surface)<1e-6
+    assert abs(vector(ship["RecoveryPoint1"]["Position"])[1]-surface)<1e-6
+    for i in range(6,10):
+        assert abs(vector(ship[f"LaunchPoint{i}"]["Position"])[1]*METRES_PER_UNIT-22.08)<.001
+    # The actual recovery zone and exported cable ends must share one nine
+    # degree port axis; wires cross that axis at ninety degrees.
+    assert float(ship["RecoveryPoint1"]["Rotation"]) == -9
+    recovery=ship["DeckZone6"]
+    corners=[vector(recovery[f"Point{i}"]) for i in range(1,5)]
+    start=tuple((a+b)/2 for a,b in zip(corners[0],corners[1]))
+    end=tuple((a+b)/2 for a,b in zip(corners[2],corners[3]))
+    dx,dz=end[0]-start[0],end[2]-start[2]
+    assert abs(math.degrees(math.atan2(dx,dz))+9)<.002
+    assert math.dist((start[0],start[2]),(end[0],end[2]))*METRES_PER_UNIT > 185
+    for i in range(4):
+        wire=gold[40+i*8:48+i*8]
+        wx,wz=wire[1][0]-wire[0][0],wire[1][2]-wire[0][2]
+        assert abs((wx*dx+wz*dz)/(math.hypot(wx,wz)*math.hypot(dx,dz)))<.0001
+    # Six wrapped rear windows follow all bridge faces, below a reduced mast.
+    panes=object_vertices["Surface_Glass"][-48:]
+    assert len(panes)==48
+    centres=[(sum(v[0] for v in panes[i:i+8])/8,
+              sum(v[2] for v in panes[i:i+8])/8) for i in range(0,48,8)]
+    cx=sum(x for x,z in centres)/6;cz=sum(z for x,z in centres)/6
+    assert len({(x>cx,z>cz) for x,z in centres})==4
+    assert all(31.9 < y*METRES_PER_UNIT < 33.6 for x,y,z in panes)
+    aft=ship["DeckZone9"]
+    aft_points=[vector(aft[f"Point{i}"]) for i in range(1,int(aft["NumberOfPoints"])+1)]
+    assert abs((max(v[2] for v in aft_points)-min(v[2] for v in aft_points))*METRES_PER_UNIT-29.9)<.001
+    for i in range(6,10):
+        x,y,z=vector(ship[f"LaunchPoint{i}"]["Position"])
+        island=ship["DeckZone8" if i<=7 else "DeckZone9"]
+        front=max(vector(island[f"Point{j}"])[2] for j in range(1,int(island["NumberOfPoints"])+1))
+        assert (z-front)*METRES_PER_UNIT > 11.5
+    # Main-deck defensive mounts need no-parking footprints, and no strike
+    # missile or removed area-defence round may remain in the native stores.
+    assert int(deck["NumberOfDeckZones"])==17
+    assert all(ship[f"DeckZone{i}"]["Type"]=="NoPark" for i in range(10,18))
+    for system in vls:
+        assert vector(system["MountPosition"])[1]*METRES_PER_UNIT > 22
+        magazine=ship[system["AssociatedMagazine"]]
+        assert magazine["NumberOfAmmunitionTypes"]=="1"
+        assert magazine["Ammunition1"]=="usn_rim-7m"
+        assert magazine["Ammunition1_Count"]=="20"
+    ammunition={value for name in ship.sections() for key,value in ship[name].items()
+                if re.fullmatch(r"Ammunition\d*",key)}
+    assert not {"usn_rim-66e","usn_rgm-109c"}&ammunition
+    assert ship["AI"]["ASuW_Capability"]=="0"
+    current,capacity=map(int,deck["FlightDeck_AmmoCapacity"].split("/"))
+    budget=fit["aviation_ammunition"]
+    assert current==capacity==budget["capacity_points"]==6000000
+    assert capacity>=budget["planning_aircraft"]*budget["planning_sorties_per_aircraft"]*budget["planning_points_per_sortie"]
+    assert deck["FlightDeck_NumberOfAccountableAmmunitionCategories"]=="0"
     if stock_root is not None: check_stock(ship,destination,stock_root)
     print(f"[OK] {ID}: {len(groups)} OBJ groups, {len(registered)} submodels")
     print(f"[OK] {vertex_count} vertices with UVs and {normal_count} indexed face normals")
@@ -361,7 +448,11 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
     print("[OK] Four 22 x 26 m lifts; ride/spawn centres and F-14A reference footprint fit")
     print("[OK] A-7E open-wing staging footprint clear at all five catapults")
     print("[OK] 82 m deck; launch tracks, rotated deflectors and taxi approaches align")
-    print("[OK] Bow-pair / waist / recovery interlocks and independent aft launch spots")
+    print("[OK] Bow-pair / waist / recovery interlocks; forward helicopter pair blocks waist lanes only")
+    print("[OK] Tyre-contact heights match deck/pads/lifts; nine-degree recovery and perpendicular wires")
+    print("[OK] Smaller rear tower with six-face glazing; eight defensive deck no-parking zones")
+    print("[OK] Five guns have real yaw/barrel meshes; normal guns resolve NumberOfGuns/Gun1")
+    print("[OK] 6,000,000 aviation-ammunition points; RIM-66E and RGM-109 removed")
     print("[OK] 5300 embarked / 5800 berths; 112000 t concept mass budget balances")
     print("[OK] 80 VLS cells, 21 weapon systems, 11 sensors and two towed decoys configured")
     print("[OK] Rudder/propeller mounts, materials, effects, names, routes and colliders resolve")

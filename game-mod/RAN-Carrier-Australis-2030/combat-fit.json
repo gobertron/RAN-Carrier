@@ -47,10 +47,16 @@
     "radar": "SPY-6(V)3/EASR-style volume search and SPY-3-style multifunction faces",
     "ew": "SLQ-32/SEWIP-style passive warning and defensive/offensive jamming"
   },
+  "aviation_ammunition": {
+    "capacity_points": 6000000,
+    "accountable_categories": 0,
+    "planning_aircraft": 99,
+    "planning_sorties_per_aircraft": 4,
+    "planning_points_per_sortie": 15000,
+    "note": "Shared finite reserve; actual endurance depends on selected loadouts. Aircraft gun and countermeasure magazines retain their stock capacities."
+  },
   "native_proxies": {
-    "vls_launcher": "MK41",
-    "area_defence": "usn_rim-66e",
-    "land_attack": "usn_rgm-109c",
+    "vls_launcher": "MK41 with usn_rim-7m defensive proxy",
     "essm": "usn_rim-7m",
     "ram": "21-position original launcher with usn_rim-7m; SARH, not RAM guidance",
     "30mm": "original gun profile with rn_cal_30mm",

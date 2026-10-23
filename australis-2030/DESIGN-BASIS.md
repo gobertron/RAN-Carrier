@@ -76,8 +76,11 @@ the port deck edge. These changes avoid the earlier steep diagonal layout.
 The bow deck is broader while the immersed bow retains a fine stem. The
 starboard forward lift moves from z=69 m to z=54 m to clear the launch/taxi
 area. The port lift stays abreast of the aft part of the main island, at
-z=-27 m; its entire platform is behind the waist launch positions. Four helicopter/VTOL
-spots remain aft.
+z=-32 m, slightly aft to clear the revised recovery lane. Four helicopter/VTOL
+spots form two pairs ahead of the two islands, at physical (x,z) positions
+(-25,60), (1.5,60), (9.5,-60) and (9.5,-31) metres. The rear island is
+20% narrower, 35% shorter and 28% lower above deck, with a glazed band on all
+six bridge faces.
 
 Bow lanes 1/3 can operate as a pair; bow lane 2 interlocks with both. Each
 waist lane interlocks with all bow lanes and with the other waist lane because
@@ -92,11 +95,15 @@ panel seams. These details follow the equipment families described by
 not a copied installation drawing. Hardware motion, panel deployment, steam
 delivery and exhaust flow are not implemented or certified by these blockouts.
 Actual timing depends on the shared one-second minimum, preparation, occupancy
-and ship course. Helicopter launch spots retain independent launch-point
-interlocks; exhaust, rotor and full deck-cycle clearance still need game QA.
+and ship course. Forward helicopter spots 6/7 share the waist departure area:
+they block lanes 4/5 and those lanes block spots 6/7. All four helicopter spots
+leave the bow bank available. Exhaust, rotor and full deck-cycle clearance
+still need game QA.
 
-Recovery uses the angled deck and arresting cables, with the hook on the
-aircraft. The prototype blocks launches during recovery. Sea Power does not
+Recovery uses a 9-degree port axis with four perpendicular cable indications,
+and the hook on the aircraft. This is an Australis adaptation of a US-carrier
+angled deck, not a surveyed Ford installation. The prototype blocks launches
+during recovery. Sea Power does not
 model our steam plant: accumulator volume, steam demand, recharge and deck
 cycle remain studies. No unverified steam-particle prefab is enabled.
 Ford uses [EMALS](https://www.navair.navy.mil/product/Electromagnetic-Aircraft-Launch-System-EMALS);
@@ -109,7 +116,7 @@ names describe desired equipment, not performance silently assigned to it.
 
 | Equipment target | Positions | Current native representation |
 |---|---:|---|
-| Mk57-style peripheral VLS | 80 cells, four banks | Mk41; 64 stock RIM-66E SM-2 and 16 RGM-109C Tomahawks total |
+| Defensive VLS | 80 cells, four main-deck edge banks | Mk41; 80 stock RIM-7M defensive proxies total; vertical-launch behaviour needs game QA |
 | ESSM self-defence | Two eight-round mounts | Mk29; 16 stock RIM-7M Sea Sparrows total |
 | RIM-116 RAM-form launchers | Two 21-position mounts | Original launcher; 42 stock RIM-7Ms total; SARH, **not RAM guidance** |
 | Phalanx | Three | Stock Mk15 Block 1; 12,000 shared rounds |
@@ -125,10 +132,47 @@ names describe desired equipment, not performance silently assigned to it.
 | Nixie torpedo decoy | Two stern attachments | Stock SLQ-25/Nixie countermeasure |
 | Retracting defensive lasers | Four hatches | Visual study; operational weapon and game deployment animation unimplemented |
 
-The native fit has 21 weapons, 11 sensors and two towed decoys. Mounts and
-hatches are fixed original blockouts in this trial. Port/starboard weapon
+The native fit has 21 weapons, 11 sensors and two towed decoys. RIM-66E and
+RGM-109 are absent from the magazines, and the native anti-surface capability
+rating is zero. Self-defence guns and stock Sea Sparrow can still engage
+surface targets where the game permits; no dedicated ship strike missiles
+are carried. VLS banks are centred at (-32,140), (32,140), (-32,-92),
+(32,78) metres. The four missile housings also sit on the main deck, with
+eight matching no-parking zones. Gun/decoy shelves remain below deck.
+
+Five guns have original moving yaw bodies and elevation barrels. Missile
+housings, VLS caps and laser hatches remain static. Port/starboard weapon
 sectors face outboard; blast, fragmentation and arc masking are unverified.
 Zumwalt's former AGS and an unverified hypersonic installation are not added.
+
+## Aircraft ammunition and deck contact
+
+The finite aviation reserve is **6,000,000/6,000,000 ammo points**, five times
+the former value. There are no individual accountable-category limits. A
+planning allowance of 99 aircraft × four sorties × 15,000 points fits within
+that reserve; actual endurance depends on selected aircraft and loadouts.
+These are game supply points, not a direct mass conversion. Stock F-14A and
+A-7E gun magazines retain 675 and 1,000 rounds respectively, with stock
+countermeasure capacities. No aircraft files are overridden. Aircraft must
+use an armed loadout and complete preparation/rearming between sorties.
+
+Main-deck taxi, launch and fixed-wing recovery contact heights are 22 m,
+matching the exported deck. Helicopter contacts are on the 22.08 m pads and
+lift contacts on the 22.205 m platforms. Sea Power applies each aircraft's
+GroundPivot correction itself. The former 16 cm extra main-deck offset is
+removed. This aligns the declared contact plane; tyre appearance still
+requires in-game inspection for each aircraft type.
+
+## Gun error correction
+
+The supplied game DLL's ObjectBaseLoader loads ordinary gun barrels using
+NumberOfGuns and Gun1..GunN. The previous 30 mm sections used Gun=Dummy,
+which is a supported CIWS pattern but leaves the normal-gun barrel null.
+WeaponSystemGun.AlignTurret immediately dereferences that barrel. Both 30 mm
+guns now supply NumberOfGuns=1 and a registered original Gun1 mesh. All five
+guns resolve their mount, elevation base and barrel through native submodels
+and parent links. The validator checks these exact engine-consumed keys.
+This traces and corrects the reported failure; live firing remains pending.
 
 ## Reference basis
 

@@ -23,7 +23,11 @@ interlock with all bow lanes and each other. Flush metal slots, small shuttles,
 white guides and segmented stowed deflectors replace the plain yellow bars.
 The waist pair currently accepts stock A-7Es pending checks for other aircraft.
 The three bow lanes accept other carrier-capable aircraft. The port lift stays
-beside the aft part of the main island at z=-27 m, behind the waist launch run.
+beside the aft part of the main island at z=-32 m. The helicopter spots now
+form two pairs ahead of the islands; the forward pair interlocks with the
+waist lanes while leaving the bow bank available. The smaller aft island has
+wraparound glazing. Arrested recovery uses a 9-degree port axis with four
+perpendicular wire indications.
 
 Design targets are **370 m overall, 82 m main flight deck, 112,000 metric
 tonnes, 99 aircraft and 5,300 embarked personnel**, with 5,800 berths. Maximum
@@ -36,9 +40,20 @@ launchers, two 21-position RAM-form launchers, three Phalanx mounts, two 30 mm
 guns, conformal radar faces, ESM, defensive/offensive ECM, SRBOC and two Nixie
 decoys. Available stock profiles provide explicitly declared compatibility
 proxies: the ESSM/RAM-form mounts currently fire **RIM-7M Sea Sparrows**.
+The VLS banks now also carry RIM-7M defensive proxies; **RIM-66E and RGM-109
+are removed**. Four VLS banks and four missile housings are on the marked
+main-deck edge positions, with matching no-parking zones.
 SPY-1A represents the modern search-radar role. Nulka and retractable lasers
 remain visual positions. This is an original game design, not an exact Ford
 or Zumwalt simulation.
+
+The reported normal-gun aiming error is corrected by registering real
+barrels and supplying the engine-required `NumberOfGuns`/`Gun1` fields.
+All five guns now have original moving yaw/elevation objects. Aircraft
+taxi/launch coordinates match the deck surface, removing the former 16 cm
+offset. The finite aviation reserve is **6,000,000 supply points**, with no
+per-category limits; stock aircraft gun capacities are preserved. These gun
+and contact-height corrections pass static checks and need in-game verification.
 
 The user confirmed mission loading and original hull rendering with `cbdaef4`
 on 22 October 2026 after the missing `[Foam]` configuration was added. The new
