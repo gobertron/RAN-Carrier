@@ -1,0 +1,33 @@
+{
+  "revision": "64724edac9bc",
+  "closed_model_parts": 348,
+  "closed_model_triangles": 5788,
+  "photos": [
+    {
+      "id": "starboard",
+      "filename": "australis_2030_current_starboard.png",
+      "sha256": "d18fb7c9a88eb9a6a415c62a45b1910d7511e004496a27c9d22474289ca4116b",
+      "embedded_sha256": "1b43e4d94af5710234d238993f623c304a766199ac453fbf59381c51657454c6"
+    },
+    {
+      "id": "port_waist",
+      "filename": "australis_2030_current_port_waist.png",
+      "sha256": "40e0c32dca3a6a23f4f84961dce287216d140ab00c2c3f1d38782cf786f5e228",
+      "embedded_sha256": "bc19769b6d2fff856ea40abface21673fe15f8cfcd2c7c84485fcf199d82c6e9"
+    },
+    {
+      "id": "deck",
+      "filename": "australis_2030_current_deck.png",
+      "sha256": "b77d3948562e68496408ebe8da3c338af06c3346f18d1a52a51a7c0cd80f9264",
+      "embedded_sha256": "4085ba750920191f3caf409f5b77e9fa46f21f250bc8ef86826b4a96428b8fce"
+    },
+    {
+      "id": "bow",
+      "filename": "australis_2030_current_bow.png",
+      "sha256": "16636d363e1c603d2afacfb2fb199baa60318fed59bb0aaaac3e841015676cfa",
+      "embedded_sha256": "c5db48f64c282c772a29ccf9871a70b3bdfc3463a511b5f4c22fd0d980c5a22a"
+    }
+  ],
+  "view": "Actual current design mesh; not an in-game screenshot",
+  "air_group": "Empty; aircraft selected in Sea Power"
+}

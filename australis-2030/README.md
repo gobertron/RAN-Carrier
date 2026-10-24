@@ -86,13 +86,22 @@ slots, white guides and segmented stowed deflectors give them a more credible
 appearance. Those details are static; deflector deployment and shuttle motion
 are not animated. The chosen angle is an Australis design value.
 
-The [deck plan](previews/australis_2030_deck_plan.png),
-[perspective](previews/australis_2030_perspective.png) and
-[bow view](previews/australis_2030_bow.png) are geometry renders. Open the
-[offline viewer](viewer/australis_2030_3d.html) to rotate and inspect the model.
-The [port-waist view](previews/australis_2030_port_waist.png) and the viewer's
-**Port waist** preset show the shallow, staggered tracks from their outboard side.
-Its laser deployment control is a visual demonstration, not game weapon logic.
+Open the [current photos and 3D viewer](viewer/australis_2030_3d.html).
+It starts with four fresh views of the actual current mesh: [starboard aft](previews/australis_2030_current_starboard.png),
+[port waist](previews/australis_2030_current_port_waist.png),
+[flight deck](previews/australis_2030_current_deck.png) and
+[bow](previews/australis_2030_current_bow.png). Lightweight copies of these views are embedded
+inside the HTML, so the gallery works from a single downloaded file. The linked PNGs retain the full-colour originals. The
+**Rotate 3D model** tab shows that same mesh. Each image and the HTML carry
+the same model revision; the builder rejects photos from another revision.
+The original viewer filename is also refreshed for existing links.
+
+The [annotated deck plan](previews/australis_2030_deck_plan.png) is generated
+from the same layout. These are model renders, not gameplay screenshots.
+The earlier photorealistic concept image included aircraft and finishing
+details absent from the model and is not a source of geometry. The current
+air group is empty for user-selected aircraft. Laser deployment in the viewer
+is a visual demonstration, not game weapon logic.
 
 `model/source/` contains metre OBJ/MTL files. The deployed-laser OBJ is an
 overlay for the base hull; `model/game-scale/` contains an approximate Sea

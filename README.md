@@ -4,13 +4,13 @@
 
 We are refining the newest Australis first, then moving backward through its earlier concepts. The original 2030 silhouette, editable model source, deck plan and rendered preview are in [australis-2030](australis-2030/README.md).
 
-![Australis 2030 perspective](australis-2030/previews/australis_2030_perspective.png)
+![Australis 2030 current starboard model render](australis-2030/previews/australis_2030_current_starboard.png)
 
 ![Australis 2030 deck plan](australis-2030/previews/australis_2030_deck_plan.png)
 
-![Australis 2030 bow view](australis-2030/previews/australis_2030_bow.png)
+![Australis 2030 current bow model render](australis-2030/previews/australis_2030_current_bow.png)
 
-[Open the interactive 3D model](australis-2030/viewer/australis_2030_3d.html) to rotate and inspect the deck, radar panels and laser hatches. Use **Deploy four lasers** to see the raised visual state. Download the self-contained HTML file to open it offline.
+[Open the current model photos and 3D viewer](australis-2030/viewer/australis_2030_3d.html). The first tab contains four current model renders; **Rotate 3D model** lets you inspect the same deck, radar panels and laser hatches. Use **Deploy four lasers** to see the raised visual state. Download the self-contained HTML file to open it offline.
 
 The current Australis is a **steam CATOBAR carrier** with five 95 m launch
 tracks: **three at the bow and two angled on the port waist**. It retains the original two
@@ -78,6 +78,12 @@ The installer checks stock dependencies before staging the independent
 [game package](game-mod/RAN-Carrier-Australis-2030/). See [upgrade, test and
 rollback steps](australis-2030/GAME-TEST.md). RADF, Workshop, original game files
 and User Data are not modified. The earlier 14 fleet studies remain below.
+
+The [current model photos and 3D viewer](australis-2030/viewer/australis_2030_3d.html)
+display the same model revision. Four matching model renders are embedded
+in the standalone HTML and available as PNGs in `australis-2030/previews/`.
+They show the actual empty-air-group design mesh; the earlier photorealistic
+concept image included finishing details and aircraft absent from the model.
 
 ## Earlier fleet studies
 

@@ -3,10 +3,15 @@
 from collections import defaultdict
 from pathlib import Path
 import base64
+import gzip
+import hashlib
+import html
+import io
 import json
 import struct
 
 import numpy as np
+from PIL import Image, PngImagePlugin
 
 
 def category(name):
@@ -30,12 +35,57 @@ def category(name):
                         "AftAviation", "AftEnclosed", "AftSideRadar")):
         return "islands"
     if name.startswith(("Laser", "OutboardFairing", "DefensiveHatch",
-                        "BowSonarFairing")):
+                        "BowSonarFairing", "PVLS", "ESSM", "RAM", "CIWS",
+                        "Mk46", "SRBOC", "Nulka", "Nixie")):
         return "equipment"
     return "hull"
 
 
-def build_viewer(mesh, colors, path, deployed_mesh=None):
+def model_revision(mesh, colors):
+    """Stable identity shared by the mesh viewer and its exact-model photos."""
+    digest = hashlib.sha256(b"Australis exact-model presentation v2\0")
+    digest.update(json.dumps(colors, sort_keys=True).encode())
+    for name, vertices, faces, material in mesh.parts:
+        digest.update(json.dumps([name, faces, material], separators=(",", ":")).encode())
+        digest.update(np.asarray(vertices, dtype="<f8").tobytes())
+    return digest.hexdigest()[:12]
+
+
+def build_viewer(mesh, colors, path, deployed_mesh=None, photos=None):
+    revision = model_revision(mesh, colors)
+    photo_buttons, photo_figures, photo_manifest = [], [], []
+    for index, photo in enumerate(photos or []):
+        image_path = Path(photo["path"])
+        binary = image_path.read_bytes()
+        with Image.open(image_path) as image:
+            image.load()
+            if image.text.get("Source revision") != revision:
+                raise ValueError(f"Photo does not match the current model revision: {image_path}")
+            # Keep the full-colour originals separately. Indexed preview
+            # copies make the offline gallery much smaller at the same size.
+            metadata = PngImagePlugin.PngInfo()
+            metadata.add_text("Source revision", revision)
+            preview = io.BytesIO()
+            image.quantize(colors=256, dither=Image.Dither.NONE).save(
+                preview, format="PNG", optimize=True, pnginfo=metadata)
+            embedded_image = preview.getvalue()
+        photo_buttons.append(
+            f'<button type="button" data-photo="{index}"'
+            f' aria-pressed="{str(index == 0).lower()}"'
+            f' class="{"active" if index == 0 else ""}">{html.escape(photo["title"])}</button>')
+        photo_figures.append(
+            f'<figure data-photo="{index}"{" hidden" if index else ""}>'
+            f'<img alt="{html.escape(photo["title"])} — exact current carrier mesh" '
+            f'width="2400" height="1400" src="data:image/png;base64,{base64.b64encode(embedded_image).decode()}">'
+            f'<figcaption><strong>{html.escape(photo["title"])}</strong> '
+            f'{html.escape(photo["caption"])} '
+            f'<a href="" download="{image_path.name}" data-download-photo>Download PNG</a>'
+            '</figcaption></figure>')
+        photo_manifest.append({"id": photo["id"], "filename": image_path.name,
+                               "sha256": hashlib.sha256(binary).hexdigest(),
+                               "embedded_sha256": hashlib.sha256(embedded_image).hexdigest()})
+    if not photo_figures:
+        raise ValueError("Build the current model photos before building its viewer")
     groups = defaultdict(list)
     triangles = list(mesh.triangles())
     if deployed_mesh is not None:
@@ -55,7 +105,24 @@ def build_viewer(mesh, colors, path, deployed_mesh=None):
                         "count": len(coordinates) // 6,
                         "data": base64.b64encode(values).decode("ascii")})
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(TEMPLATE.replace("__MESH_DATA__", json.dumps(payload, separators=(",", ":"))))
+    manifest = {"revision": revision, "closed_model_parts": len(mesh.parts),
+                "closed_model_triangles": sum(1 for _ in mesh.triangles()),
+                "photos": photo_manifest,
+                "view": "Actual current design mesh; not an in-game screenshot",
+                "air_group": "Empty; aircraft selected in Sea Power"}
+    document = (TEMPLATE
+                .replace("__REVISION__", revision)
+                .replace("__PHOTO_BUTTONS__", "\n".join(photo_buttons))
+                .replace("__PHOTO_FIGURES__", "\n".join(photo_figures))
+                .replace("__PRESENTATION_MANIFEST__", json.dumps(manifest, separators=(",", ":")))
+                .replace("__MESH_DATA__", json.dumps(base64.b64encode(gzip.compress(
+                    json.dumps(payload, separators=(",", ":")).encode(), mtime=0)).decode())))
+    path.write_text(document)
+    # A distinct filename avoids reopening the older same-name download.
+    path.with_name(f"australis_2030_{revision}_3d.html").write_text(document)
+    path.with_name(f"australis_2030_{revision}_preview.html").write_text(document)
+    (path.parent.parent / "model/presentation-manifest.json").write_text(
+        json.dumps(manifest, indent=2) + "\n")
     return len(payload), sum(part["count"] // 3 for part in payload)
 
 
@@ -64,16 +131,18 @@ TEMPLATE = r'''<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Australis 2030 — interactive 3D design preview</title>
+<meta name="ran-model-revision" content="__REVISION__">
+<title>Australis 2030 — current model photos and 3D · __REVISION__</title>
 <style>
   :root { color-scheme: dark; font-family: system-ui, sans-serif; background: #101c27; color: #e8f1f1; }
   * { box-sizing: border-box; }
   body { margin: 0; min-height: 100vh; display: grid; grid-template-columns: minmax(220px, 285px) 1fr; }
-  aside { background: #172a36; border-right: 1px solid #36505d; padding: 24px; z-index: 1; }
+  aside { background: #172a36; border-right: 1px solid #36505d; padding: 24px; z-index: 1; max-height:100vh; overflow:auto; }
   h1 { font-size: 1.58rem; margin: 0 0 4px; line-height: 1.13; letter-spacing: .025em; }
   .eyebrow { font-size: .7rem; letter-spacing: .15em; color: #87bfc4; font-weight: 700; margin-bottom: 16px; }
   .muted { color: #b0c4cb; font-size: .86rem; line-height: 1.48; }
   .pill { display: inline-block; padding: 5px 9px; border: 1px solid #7ca6a6; border-radius: 100px; color: #a9dbd8; font-size: .72rem; letter-spacing: .06em; margin: 13px 0 24px; }
+  .revision { font-family: ui-monospace, monospace; color: #a9dbd8; font-size: .76rem; margin-top: 10px; }
   h2 { font-size: .72rem; color: #82bfc5; text-transform: uppercase; letter-spacing: .13em; margin: 20px 0 9px; }
   .buttons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
   button { color: #e1edef; background: #263e4c; border: 1px solid #496572; border-radius: 7px; padding: 9px; font: inherit; font-size: .82rem; cursor: pointer; }
@@ -83,13 +152,23 @@ TEMPLATE = r'''<!doctype html>
   input[type=checkbox] { accent-color: #7fd1cf; width: 16px; height: 16px; }
   .footer { margin-top: 23px; border-top: 1px solid #35505c; padding-top: 14px; }
   a { color: #a8e3e0; }
-  main { position: relative; min-width: 0; height: 100vh; overflow: hidden; background: radial-gradient(ellipse at 54% 40%, #263f50 0%, #152734 55%, #101b27 100%); }
+  [hidden] { display: none !important; }
+  main { position: relative; min-width: 0; height: 100vh; overflow: hidden; display:grid; grid-template-rows:auto 1fr; background: #101c27; }
+  .tabs { display:flex; gap:8px; align-items:center; padding:14px 18px; border-bottom:1px solid #36505d; flex-wrap:wrap; }
+  .tabs .muted { margin-left:auto; font-size:.76rem; }
+  #modelPanel { position:relative; min-height:0; }
+  #photosPanel { overflow:auto; padding:16px; }
+  figure { margin:0; }
+  figure img { display:block; width:100%; height:auto; border:1px solid #35505c; border-radius:8px; background:#101c27; }
+  figcaption { padding:14px 3px; font-size:.86rem; color:#b0c4cb; line-height:1.5; }
+  figcaption strong { color:#eef3f4; display:block; font-size:1rem; }
+  figcaption a { display:block; margin-top:10px; }
   canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
   canvas:active { cursor: grabbing; }
   .hint { position: absolute; bottom: 18px; left: 20px; padding: 9px 12px; border-radius: 7px; color: #c6d8d8; background: #11212cbb; font-size: .8rem; pointer-events: none; }
   .bow { position: absolute; top: 22px; right: 22px; padding: 7px 10px; background: #152a37bb; border: 1px solid #51747c; border-radius: 5px; font-size: .78rem; pointer-events: none; }
   #error { position: absolute; top: 30%; left: 15%; right: 15%; text-align: center; background: #3f2730; padding: 22px; display: none; }
-  @media (max-width: 700px) { body { grid-template-columns: 1fr; grid-template-rows: auto minmax(380px, 68vh); } aside { padding: 17px; } main { height: 68vh; } .buttons { grid-template-columns: repeat(4, 1fr); } .footer { margin-top: 12px; } }
+  @media (max-width: 700px) { body { grid-template-columns: 1fr; grid-template-rows: auto minmax(380px, 68vh); } aside { padding: 17px; max-height:none; } main { height: 68vh; } .buttons { grid-template-columns: repeat(2, 1fr); } .footer { margin-top: 12px; } .pill { margin-bottom:8px; } .tabs .muted { margin-left:0; } }
 </style>
 </head>
 <body>
@@ -97,7 +176,15 @@ TEMPLATE = r'''<!doctype html>
   <div class="eyebrow">ROYAL AUSTRALIAN NAVY · DESIGN STUDY</div>
   <h1>Australis 2030</h1>
   <div class="muted">CATOBAR · 370 m · 82 m main deck · 99 aircraft · 5,300 embarked targets</div>
-  <span class="pill">ORIGINAL CONCEPT MESH</span>
+  <span class="pill">CURRENT FIVE-CATAPULT LAYOUT</span>
+  <div class="revision">Model revision __REVISION__</div>
+  <p class="muted">Three bow + two port-waist catapults. Four lifts and four vertical spots. Aircraft support: fixed-wing carrier aircraft, VTOL/STOL and helicopters.</p>
+  <div id="photoControls">
+    <h2>Current model photos</h2>
+    <div class="buttons" id="photoViews">__PHOTO_BUTTONS__</div>
+    <p class="muted">These views and the rotatable model use the same current mesh. Aircraft are selected in Sea Power; this model has no parked aircraft.</p>
+  </div>
+  <div id="modelControls" hidden>
   <h2>Camera</h2>
   <div class="buttons" id="views">
     <button type="button" data-view="perspective" class="active">Perspective</button>
@@ -120,28 +207,72 @@ TEMPLATE = r'''<!doctype html>
     <label><input type="checkbox" value="laser" checked> Retractable laser positions</label>
     <label><input type="checkbox" value="equipment" checked> Other equipment</label>
   </div>
-  <div class="footer muted">Drag to rotate. Scroll or pinch to zoom. The smaller rear bridge has wraparound glazing. Laser deployment is a visual study. The original hull loads in Sea Power; this revised deck and combat fit still need in-game testing. Stability and seakeeping remain unverified.<br><br>
-    <a href="../model/source/ran_cvn_australis_2030.obj" download>Download OBJ mesh</a> ·
-    <a href="../model/source/ran_cvn_australis_2030.mtl" download>Materials</a> ·
-    <a href="../model/source/ran_cvn_australis_2030_deployed_lasers.obj" download>Raised laser overlay</a>
+  </div>
+  <div class="footer muted">Actual design-model views, not in-game screenshots. The smaller rear bridge has wraparound glazing. Laser deployment is a visual study; revised flight operations and combat still need in-game testing.<br><br>
+    <a href="https://github.com/gobertron/RAN-Carrier/tree/feature/australis-2050-concept/australis-2030/model/source" target="_blank" rel="noopener">Source models on GitHub</a>
   </div>
 </aside>
 <main>
+  <nav class="tabs" aria-label="Presentation view">
+    <button type="button" id="photosTab" class="active" aria-pressed="true">Current model photos</button>
+    <button type="button" id="modelTab" aria-pressed="false">Rotate 3D model</button>
+    <span class="muted">Same mesh · revision __REVISION__</span>
+  </nav>
+  <section id="photosPanel" aria-label="Current model photos">__PHOTO_FIGURES__</section>
+  <section id="modelPanel" hidden>
   <canvas id="scene" aria-label="Rotatable three-dimensional Australis carrier model"></canvas>
   <div class="bow">BOW → +Z</div>
   <div class="hint">Drag to orbit · wheel / pinch to zoom</div>
   <div id="error" role="alert"></div>
+  </section>
 </main>
+<script type="application/json" id="presentationManifest">__PRESENTATION_MANIFEST__</script>
 <script>
 "use strict";
-const meshData = __MESH_DATA__;
+document.querySelectorAll('[data-download-photo]').forEach(link => {
+  link.href = link.closest('figure').querySelector('img').src;
+});
+document.getElementById('photoViews').addEventListener('click', event => {
+  const button = event.target.closest('button[data-photo]'); if (!button) return;
+  document.querySelectorAll('#photoViews button').forEach(x => {
+    const active = x === button; x.classList.toggle('active', active);
+    x.setAttribute('aria-pressed', String(active));
+  });
+  document.querySelectorAll('#photosPanel figure').forEach(x => {
+    x.hidden = x.dataset.photo !== button.dataset.photo;
+  });
+});
+for (const id of ['photosTab', 'modelTab']) {
+  document.getElementById(id).addEventListener('click', () => {
+    const model = id === 'modelTab';
+    document.getElementById('modelPanel').hidden = !model;
+    document.getElementById('modelControls').hidden = !model;
+    document.getElementById('photosPanel').hidden = model;
+    document.getElementById('photoControls').hidden = model;
+    for (const tab of ['photosTab', 'modelTab']) {
+      const active = tab === id; document.getElementById(tab).classList.toggle('active', active);
+      document.getElementById(tab).setAttribute('aria-pressed', String(active));
+    }
+    window.dispatchEvent(new Event('resize'));
+  });
+}
 const canvas = document.getElementById("scene");
 const gl = canvas.getContext("webgl", {antialias: true});
 const errorBox = document.getElementById("error");
 if (!gl) {
-  errorBox.textContent = "WebGL is unavailable in this browser. The OBJ download can be opened in Blender.";
+  errorBox.textContent = "WebGL is unavailable in this browser. Current model photos are available in the other tab.";
   errorBox.style.display = "block";
 } else {
+  (async () => {
+  if (typeof DecompressionStream !== 'function') {
+    errorBox.textContent = 'This browser can show the current model photos. Open the HTML in a current Firefox or Chrome browser to rotate the model.';
+    errorBox.style.display = 'block';
+    return;
+  }
+  const packedMesh = __MESH_DATA__;
+  const compressed = Uint8Array.from(atob(packedMesh), c => c.charCodeAt(0));
+  const stream = new Blob([compressed]).stream().pipeThrough(new DecompressionStream('gzip'));
+  const meshData = JSON.parse(await new Response(stream).text());
   const vertexShader = `attribute vec3 position; attribute vec3 normal;
     uniform mat4 projection; uniform mat4 view; uniform float lift;
     varying float light;
@@ -181,14 +312,16 @@ if (!gl) {
   const deployButton = document.getElementById('deploy');
   const laserStatus = document.getElementById('laserStatus');
   let deployTarget = 0, deployProgress = 0, lastFrame = 0, animating = false;
-  let azimuth = -2.48, elevation = 0.48, distance = 540, top = false;
+  let azimuth = 147*Math.PI/180, elevation = 34*Math.PI/180, distance = 540, top = false;
   const target = [0, 19, 0];
   function normalize(a) { const l = Math.hypot(...a); return a.map(x => x / l); }
   function cross(a,b) { return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]]; }
   function lookAt(eye, target, up) {
     const z = normalize(eye.map((v, i) => v - target[i]));
-    const x = normalize(cross(up, z));
-    const y = cross(z, x);
+    // The Sea Power authoring frame is +X starboard, +Y up, +Z bow.
+    // Use its left-handed screen basis so photos and the 3D view agree.
+    const x = normalize(cross(z, up));
+    const y = cross(x, z);
     return new Float32Array([
       x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0,
       -x.reduce((s,v,i)=>s+v*eye[i],0), -y.reduce((s,v,i)=>s+v*eye[i],0),
@@ -216,7 +349,7 @@ if (!gl) {
       distance*Math.cos(azimuth)*Math.cos(elevation)
     ];
     gl.uniformMatrix4fv(uniforms.projection, false, perspective(width/height));
-    gl.uniformMatrix4fv(uniforms.view, false, lookAt(eye, target, top ? [1,0,0] : [0,1,0]));
+    gl.uniformMatrix4fv(uniforms.view, false, lookAt(eye, target, top ? [0,0,1] : [0,1,0]));
     gl.enableVertexAttribArray(attributes.pos);
     gl.enableVertexAttribArray(attributes.norm);
     for (const mesh of meshes) {
@@ -262,7 +395,7 @@ if (!gl) {
     document.querySelectorAll('#views button').forEach(x => x.classList.toggle('active', x === button));
     const view = button.dataset.view;
     top = view === 'top';
-    if (view === 'perspective') { azimuth=-2.48; elevation=.48; distance=540; }
+    if (view === 'perspective') { azimuth=147*Math.PI/180; elevation=34*Math.PI/180; distance=540; }
     if (view === 'top') distance=520;
     if (view === 'starboard') { azimuth=Math.PI/2; elevation=.20; distance=530; }
     if (view === 'port') { azimuth=-Math.PI/2; elevation=.55; distance=530; }
@@ -285,7 +418,7 @@ if (!gl) {
       if (pinchDistance) distance=Math.max(230,Math.min(1100,distance*pinchDistance/next));
       pinchDistance=next;
     } else {
-      if (top) { top=false; azimuth=-2.48; elevation=1.35; }
+      if (top) { top=false; azimuth=147*Math.PI/180; elevation=1.35; }
       azimuth += (event.clientX-previous[0])*.007;
       elevation = Math.max(-.14,Math.min(1.50,elevation+(event.clientY-previous[1])*.006));
       document.querySelectorAll('#views button').forEach(x=>x.classList.remove('active'));
@@ -300,7 +433,12 @@ if (!gl) {
     draw();
   }, {passive:false});
   new ResizeObserver(draw).observe(canvas);
+  window.addEventListener('resize', draw);
   draw();
+  })().catch(() => {
+    errorBox.textContent = 'The 3D view could not start. The Current model photos tab remains available.';
+    errorBox.style.display = 'block';
+  });
 }
 </script>
 </body>
@@ -311,7 +449,5 @@ if (!gl) {
 if __name__ == "__main__":
     import sys
     sys.dont_write_bytecode = True
-    from build import geometry, deployed_lasers, COLORS
-    target = Path(__file__).resolve().parent / "viewer/australis_2030_3d.html"
-    parts, triangles = build_viewer(geometry(), COLORS, target, deployed_lasers())
-    print(f"[OK] {target} ({parts} colored groups, {triangles} triangles)")
+    from build import main
+    main()

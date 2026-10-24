@@ -16,7 +16,8 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, str(HERE.parent))
 from generate_source_models import Mesh, COLORS, render, validate  # noqa: E402
 from rebuild_game_scale import METRES_PER_UNIT  # noqa: E402
-from build_3d_viewer import build_viewer  # noqa: E402
+from build_3d_viewer import build_viewer, model_revision  # noqa: E402
+from render_current_views import render_current_views  # noqa: E402
 from combat_fit import (add_geometry as add_combat_geometry, FIT, VLS_BANKS,
                         SAM_POS, RAM_POS, CIWS_POS, GUN_POS, CHAFF_POS, NULKA_POS,
                         deck_weapon_zones)  # noqa: E402
@@ -790,9 +791,12 @@ def main():
            camera_azimuth_deg=-125, camera_elevation_deg=38)
     (HERE/"model/validation.json").write_text(
         json.dumps(summary, indent=2)+"\n")
-    build_viewer(mesh, COLORS, HERE/"viewer/australis_2030_3d.html", deployed_lasers())
+    revision = model_revision(mesh, COLORS)
+    photos = render_current_views(mesh, COLORS, HERE/"previews", revision)
+    build_viewer(mesh, COLORS, HERE/"viewer/australis_2030_3d.html", deployed_lasers(), photos)
     print(f"[OK] {summary['parts']} closed components; {summary['triangles']} triangles")
-    print("[OK] Original metre OBJ, approximate game-scale OBJ, four PNGs, and 3D viewer")
+    print(f"[OK] Current model photos and self-contained 3D viewer share revision {revision}")
+    print("[OK] Original metre OBJ, approximate game-scale OBJ, four layout previews and four model photos")
     print("[STATUS] User confirmed hull loading; revised visuals and aircraft operations await QA")
 
 
