@@ -13,3 +13,8 @@ in an isolated test game tree; protected files remain unchanged. In-game flight
 cycles, wheel contact and combat still require testing.
 
 Archive SHA256: `eaa109f2caa56943250e9d2fe2f17892b82fefd7f14c80d1c8fc3ea69dfd591a`.
+
+
+## Retractable CIWS build
+
+[RAN-Carrier-Australis-2030-CIWS-2026-10-24.zip](RAN-Carrier-Australis-2030-CIWS-2026-10-24.zip) includes39 game files and native engagement-drivenCIWSdeployment. Opening is0.4s; closing1s after the nativeidle/restcondition. Source `6bd0366bde6667178909198f43b0ed68c24c355f`. Extracted ZIP validation and isolated install/backup/removal/reinstall pass; actual in-game engagement testing remains pending.
