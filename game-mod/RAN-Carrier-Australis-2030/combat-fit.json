@@ -70,5 +70,14 @@
     "nulka": "visual positions only; active hovering behaviour unimplemented",
     "lasers": "visual hatches only; weapon/animation unimplemented"
   },
+  "ciws_retraction": {
+    "count": 3,
+    "open_seconds": 0.4,
+    "close_seconds": 1.0,
+    "lift_stroke_m": 5,
+    "idle_close_seconds_native": 10,
+    "native_engagement_hooks": true,
+    "in_game_tested": false
+  },
   "native_combat_tested": false
 }

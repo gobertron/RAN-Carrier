@@ -85,7 +85,7 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
     assert len(groups) == len(names_in_obj)
     assert {"Hull","Deck","Rudder","Propeller_1","Propeller_2",
             "Surface_Hatch","Surface_Sensor","coll_hull_main"} <= groups
-    assert len(groups) <= 30, "Static details are batched; five guns need ten moving objects"
+    assert len(groups) <= 40, "Static details are batched; five guns need ten moving objects"
     object_faces: dict[str,int] = {}
     object_vertices: dict[str,list[tuple[float,float,float]]] = {}
     current_object = None
@@ -411,6 +411,29 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
         assert object_faces[barrel] >= 12 and object_faces[mount] >= 12
         assert min(v[2] for v in object_vertices[barrel]) > 0
         assert int(ship[gun["AssociatedMagazine"]]["Ammunition1_Count"]) > 0
+    # Native CIWS engagement animations must bind real independent lift/door
+    # transforms while the original yaw and barrel hierarchy remains intact.
+    animation_file=destination/"animations/animations_ran_cvn_australis_2030_ciws.ini"
+    animations=ini(animation_file)
+    assert ship["Animations"]["AnimationFile_1"]==animation_file.stem
+    assert animations["Animations"]["NumberOfAnimations"]=="6"
+    for index,gun in enumerate((g for g in guns if g["Type"]=="CIWS"),1):
+        lift=f"CIWS_Lift_{index}"
+        assert ship[gun["Mount"]]["Parent"]==lift
+        assert math.isclose(vector(ship[lift]["Position"])[1]*METRES_PER_UNIT,19,abs_tol=.001)
+        for kind,duration in (("Deploy",.4),("Stow",1)):
+            name=f"CIWS_{kind}_{index}"
+            assert gun["OpenSystemAnimation" if kind=="Deploy" else "CloseSystemAnimation"]==name
+            for seq in range(1,4):
+                model=animations[name][f"Sequence{seq}_Model"]
+                assert model in groups and model in registered
+                steps=animations[animations[name][f"Sequence{seq}"]]
+                parsed=[steps[f"Step{n}"].split("|") for n in range(1,4)]
+                assert float(parsed[-1][0])==duration
+                assert all(p[2:]==["none","linear"] for p in parsed)
+                if seq==1:
+                    ys=[vector(p[1])[1]*METRES_PER_UNIT for p in parsed]
+                    assert math.isclose(ys[-1]-ys[0],5 if kind=="Deploy" else -5,abs_tol=.001)
     assert local_weapons["RAN_Australis_30mm"]["RoundsMax"] == "400"
     for part in registered:
         parent=ship[part].get("Parent")
@@ -504,7 +527,7 @@ def main(destination: Path = DEST, stock_root: Path | None = None) -> None:
     print("[OK] Flush lifts/pads, thin deck paint and matching tyre-contact positions")
     print("[OK] Closed laser hatches and stowed deflectors are flush; nine-degree recovery and perpendicular wires")
     print("[OK] Smaller rear tower with six-face glazing; eight defensive deck no-parking zones")
-    print("[OK] Five guns have real yaw/barrel meshes; normal guns resolve NumberOfGuns/Gun1")
+    print("[OK] Five guns have real yaw/barrel meshes; three CIWS lifts/doors bind native 0.4-second deployment animations")
     print("[OK] 6,000,000 aviation-ammunition points; RIM-66E and RGM-109 removed")
     print("[OK] 5300 embarked / 5800 berths; 112000 t concept mass budget balances")
     print("[OK] 80 VLS cells, 21 weapon systems, 11 sensors and two towed decoys configured")

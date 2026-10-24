@@ -30,6 +30,12 @@ def category(name):
         return "laser_open"
     if name.startswith(("LaserTurret", "LaserEmitter")):
         return "laser_turret"
+    if name.startswith("CIWS_Door_") and name.endswith("_L"):
+        return "ciws_door_l"
+    if name.startswith("CIWS_Door_") and name.endswith("_R"):
+        return "ciws_door_r"
+    if name.startswith(("CIWS_Housing_", "CIWS_Barrel_", "CIWS_Lift_")):
+        return "ciws_moving"
     if name.startswith(("MainRaked", "IntegratedBridge", "BridgeWindow",
                         "EnclosedSensor", "IntegratedRadar", "ShipboardECM",
                         "AftAviation", "AftEnclosed", "AftSideRadar")):
@@ -147,7 +153,8 @@ TEMPLATE = r'''<!doctype html>
   .buttons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
   button { color: #e1edef; background: #263e4c; border: 1px solid #496572; border-radius: 7px; padding: 9px; font: inherit; font-size: .82rem; cursor: pointer; }
   button:hover, button:focus-visible, button.active { background: #32626b; border-color: #8fcdcc; }
-  #deploy { width: 100%; margin-bottom: 7px; }
+  #deploy, #deployCIWS { width: 100%; margin-bottom: 7px; }
+  #deployCIWS { margin-top: 14px; }
   label { display: flex; align-items: center; gap: 9px; margin: 8px 0; font-size: .84rem; cursor: pointer; }
   input[type=checkbox] { accent-color: #7fd1cf; width: 16px; height: 16px; }
   .footer { margin-top: 23px; border-top: 1px solid #35505c; padding-top: 14px; }
@@ -196,6 +203,9 @@ TEMPLATE = r'''<!doctype html>
   <h2>Defensive mount study</h2>
   <button type="button" id="deploy" aria-pressed="false">Deploy four lasers</button>
   <div id="laserStatus" class="muted" aria-live="polite">Flush hatches closed</div>
+  <button type="button" id="deployCIWS" aria-pressed="false">Raise three CIWS</button>
+  <div id="ciwsStatus" class="muted" aria-live="polite">Three CIWS stowed beneath flush covers</div>
+  <p class="muted">Deployment demonstration only. The viewer does not fire weapons.</p>
   <h2>Show parts</h2>
   <div id="layers">
     <label><input type="checkbox" value="hull" checked> Hull and flight deck</label>
@@ -208,7 +218,7 @@ TEMPLATE = r'''<!doctype html>
     <label><input type="checkbox" value="equipment" checked> Other equipment</label>
   </div>
   </div>
-  <div class="footer muted">Actual design-model views, not in-game screenshots. The smaller rear bridge has wraparound glazing. Laser deployment is a visual study; revised flight operations and combat still need in-game testing.<br><br>
+  <div class="footer muted">Actual design-model views, not in-game screenshots. The smaller rear bridge has wraparound glazing. Laser and CIWS deployment are visual studies; revised flight operations and combat still need in-game testing.<br><br>
     <a href="https://github.com/gobertron/RAN-Carrier/tree/feature/australis-2050-concept/australis-2030/model/source" target="_blank" rel="noopener">Source models on GitHub</a>
   </div>
 </aside>
@@ -274,12 +284,12 @@ if (!gl) {
   const stream = new Blob([compressed]).stream().pipeThrough(new DecompressionStream('gzip'));
   const meshData = JSON.parse(await new Response(stream).text());
   const vertexShader = `attribute vec3 position; attribute vec3 normal;
-    uniform mat4 projection; uniform mat4 view; uniform float lift;
+    uniform mat4 projection; uniform mat4 view; uniform vec3 offset;
     varying float light;
     void main() {
       vec3 sun = normalize(vec3(-0.38, 0.86, 0.42));
       light = 0.51 + 0.49 * abs(dot(normalize(normal), sun));
-      gl_Position = projection * view * vec4(position + vec3(0.0, lift, 0.0), 1.0);
+      gl_Position = projection * view * vec4(position + offset, 1.0);
     }`;
   const fragmentShader = `precision mediump float; uniform vec3 color;
     varying float light;
@@ -296,7 +306,7 @@ if (!gl) {
   if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program));
   gl.useProgram(program);
   const attributes = {pos: gl.getAttribLocation(program, "position"), norm: gl.getAttribLocation(program, "normal")};
-  const uniforms = {projection: gl.getUniformLocation(program, "projection"), view: gl.getUniformLocation(program, "view"), color: gl.getUniformLocation(program, "color"), lift: gl.getUniformLocation(program, "lift")};
+  const uniforms = {projection: gl.getUniformLocation(program, "projection"), view: gl.getUniformLocation(program, "view"), color: gl.getUniformLocation(program, "color"), offset: gl.getUniformLocation(program, "offset")};
   const meshes = meshData.map(item => {
     const binary = atob(item.data);
     const bytes = new Uint8Array(binary.length);
@@ -311,7 +321,25 @@ if (!gl) {
   const enabled = new Set([...document.querySelectorAll('#layers input:checked')].map(x => x.value));
   const deployButton = document.getElementById('deploy');
   const laserStatus = document.getElementById('laserStatus');
-  let deployTarget = 0, deployProgress = 0, lastFrame = 0, animating = false;
+  const ciwsButton = document.getElementById('deployCIWS');
+  const ciwsStatus = document.getElementById('ciwsStatus');
+  let deployTarget = 0, deployProgress = 0;
+  let ciwsTarget = 0, ciwsProgress = 0;
+  let lastFrame = null, animating = false;
+  function ciwsMotion(progress) {
+    // Native demonstration: doors open over the first 0.10 s, then the
+    // three mount assemblies rise 5 m over 0.10–0.40 s. Reverse to stow.
+    return {door: Math.min(1, Math.max(0, progress/.25)),
+            lift: Math.min(1, Math.max(0, (progress-.25)/.75))};
+  }
+  function updateCiwsStatus() {
+    let text;
+    if (ciwsProgress <= .000001) text = 'Three CIWS stowed beneath flush covers';
+    else if (ciwsProgress >= .999999) text = 'Three CIWS raised — visual demonstration';
+    else if (ciwsTarget) text = ciwsProgress < .25 ? 'CIWS hatches opening' : 'Three CIWS rising';
+    else text = ciwsProgress > .25 ? 'Three CIWS lowering' : 'CIWS hatches closing';
+    if (ciwsStatus.textContent !== text) ciwsStatus.textContent = text;
+  }
   let azimuth = 147*Math.PI/180, elevation = 34*Math.PI/180, distance = 540, top = false;
   const target = [0, 19, 0];
   function normalize(a) { const l = Math.hypot(...a); return a.map(x => x / l); }
@@ -357,34 +385,60 @@ if (!gl) {
         if (!enabled.has('laser')) continue;
         if (mesh.category === 'laser_closed' && deployProgress > .001) continue;
         if (mesh.category !== 'laser_closed' && deployProgress < .001) continue;
+      } else if (mesh.category.startsWith('ciws_')) {
+        if (!enabled.has('equipment')) continue;
       } else if (!enabled.has(mesh.category)) continue;
       gl.bindBuffer(gl.ARRAY_BUFFER, mesh.buffer);
       gl.vertexAttribPointer(attributes.pos, 3, gl.FLOAT, false, 24, 0);
       gl.vertexAttribPointer(attributes.norm, 3, gl.FLOAT, false, 24, 12);
       gl.uniform3fv(uniforms.color, mesh.color);
-      gl.uniform1f(uniforms.lift, mesh.category === 'laser_turret' ? (deployProgress-1)*4.3 : 0);
+      const offset = [0, 0, 0];
+      if (mesh.category === 'laser_turret') offset[1] = (deployProgress-1)*4.3;
+      const ciws = ciwsMotion(ciwsProgress);
+      if (mesh.category === 'ciws_moving') offset[1] = ciws.lift*5;
+      if (mesh.category === 'ciws_door_l') offset[0] = -ciws.door*3.2;
+      if (mesh.category === 'ciws_door_r') offset[0] = ciws.door*3.2;
+      gl.uniform3fv(uniforms.offset, offset);
       gl.drawArrays(gl.TRIANGLES, 0, mesh.count);
     }
   }
   function animate(timestamp) {
-    const step = lastFrame ? Math.min((timestamp-lastFrame)/800, .1) : 0;
+    const elapsed = lastFrame === null ? 0 : Math.max(0, (timestamp-lastFrame)/1000);
     lastFrame = timestamp;
-    deployProgress += Math.sign(deployTarget-deployProgress) *
-      Math.min(Math.abs(deployTarget-deployProgress), step);
+    function advance(current, targetValue, duration) {
+      return current + Math.sign(targetValue-current) *
+        Math.min(Math.abs(targetValue-current), elapsed/duration);
+    }
+    deployProgress = advance(deployProgress, deployTarget, .8);
+    ciwsProgress = advance(ciwsProgress, ciwsTarget, .4);
+    updateCiwsStatus();
     draw();
-    if (Math.abs(deployTarget-deployProgress) > .001) requestAnimationFrame(animate);
-    else {
-      deployProgress = deployTarget; animating = false; lastFrame = 0;
+    if (Math.abs(deployTarget-deployProgress) > .000001 || Math.abs(ciwsTarget-ciwsProgress) > .000001) {
+      requestAnimationFrame(animate);
+    } else {
+      deployProgress = deployTarget; ciwsProgress = ciwsTarget;
+      animating = false; lastFrame = null;
       laserStatus.textContent = deployTarget ? 'Four turrets raised' : 'Flush hatches closed';
+      updateCiwsStatus();
       draw();
     }
+  }
+  function startDeploymentAnimation() {
+    if (!animating) { animating = true; lastFrame = null; requestAnimationFrame(animate); }
   }
   deployButton.addEventListener('click', () => {
     deployTarget = deployTarget ? 0 : 1;
     deployButton.textContent = deployTarget ? 'Retract four lasers' : 'Deploy four lasers';
     deployButton.setAttribute('aria-pressed', String(Boolean(deployTarget)));
     laserStatus.textContent = deployTarget ? 'Hatches open; turrets rising' : 'Turrets lowering; hatches closing';
-    if (!animating) { animating = true; requestAnimationFrame(animate); }
+    startDeploymentAnimation();
+  });
+  ciwsButton.addEventListener('click', () => {
+    ciwsTarget = ciwsTarget ? 0 : 1;
+    ciwsButton.textContent = ciwsTarget ? 'Retract three CIWS' : 'Raise three CIWS';
+    ciwsButton.setAttribute('aria-pressed', String(Boolean(ciwsTarget)));
+    ciwsStatus.textContent = ciwsTarget ? 'CIWS hatches opening' : 'Three CIWS lowering';
+    startDeploymentAnimation();
   });
   document.querySelectorAll('#layers input').forEach(input => input.addEventListener('change', () => {
     if (input.checked) enabled.add(input.value); else enabled.delete(input.value);

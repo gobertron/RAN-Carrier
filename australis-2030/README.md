@@ -118,3 +118,14 @@ Foam configuration was added. The new CATOBAR/combat fit needs an in-game
 check using [GAME-TEST.md](GAME-TEST.md). Geometry is original; stock profile
 and resource references do not bundle stock or Workshop asset bytes. The
 installer changes only the standalone Australis mod folder.
+
+
+The three CIWS mounts now stow under covered deck-edge wells. Native engagement
+hooks slide the covers open in 0.10 s and raise the assemblies vertically by
+5 m over the next 0.30 s. The engine permits firing after the opening animation
+completes. They lower over 1 s after the native idle/rest condition (more than
+10 s unused). The adjacent starboard Nulka and aft-port SRBOC positions are
+moved clear of the wells. These native animations require an in-game engagement
+test: check concealment at spawn, cover/lift order, fire only after clearance,
+and retraction after disengagement. The viewer's Raise CIWS control demonstrates
+only the motion. Keep the previous build for rollback.

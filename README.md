@@ -120,3 +120,14 @@ The Australis editor test uses the supplied smaller reference archives of stock 
 
 - Sea Power carrier INI format, navigation fields and ECM key names were checked against the local Project Southern Cross examples supplied earlier in this conversation. They are used as schema reference only.
 - The [Project Southern Cross Workshop page](https://steamcommunity.com/sharedfiles/filedetails/?id=3574957049) credits Peter Garrett. Specific third-party models would require their own permission and contributor checks if incorporated later.
+
+
+The three CIWS mounts now stow under covered deck-edge wells. Native engagement
+hooks slide the covers open in 0.10 s and raise the assemblies vertically by
+5 m over the next 0.30 s. The engine permits firing after the opening animation
+completes. They lower over 1 s after the native idle/rest condition (more than
+10 s unused). The adjacent starboard Nulka and aft-port SRBOC positions are
+moved clear of the wells. These native animations require an in-game engagement
+test: check concealment at spawn, cover/lift order, fire only after clearance,
+and retraction after disengagement. The viewer's Raise CIWS control demonstrates
+only the motion. Keep the previous build for rollback.

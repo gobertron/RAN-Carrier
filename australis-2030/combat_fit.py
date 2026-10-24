@@ -3,6 +3,8 @@
 Modern equipment names are design targets. Native stock proxies are declared
 explicitly; their presence does not implement the modern systems' performance.
 """
+from ciws_retraction import CIWS_POSITIONS_M, add_pod_geometry, weapon_animation_rows
+
 FIT = {
     "crew": {"ships_company": 2850, "air_wing": 2250, "staff": 200,
              "total": 5300, "berths": 5800},
@@ -39,15 +41,16 @@ FIT = {
         "towed_decoy": "SLQ-25_Nixie",
         "nulka": "visual positions only; active hovering behaviour unimplemented",
         "lasers": "visual hatches only; weapon/animation unimplemented"},
+    "ciws_retraction": {"count":3,"open_seconds":0.4,"close_seconds":1.0,"lift_stroke_m":5,"idle_close_seconds_native":10,"native_engagement_hooks":True,"in_game_tested":False},
     "native_combat_tested": False,
 }
 VLS_BANKS = [(-32,140),(32,140),(-32,-92),(32,78)]
 SAM_POS = [(-32,23.3,-112),(32,23.3,104)]
 RAM_POS = [(-32,23.3,118),(32,23.3,118)]
-CIWS_POS = [(-44,19,148),(44,19,-65),(-44,19,-166)]
+CIWS_POS = list(CIWS_POSITIONS_M)
 GUN_POS = [(44,18,148),(-44,18,-65)]
-CHAFF_POS = [(side*43,18,z) for side in (-1,1) for z in (-169,-116,-38,126)]
-NULKA_POS = [(side*44,18,z) for side in (-1,1) for z in (-74,74)]
+CHAFF_POS = [(side*43,18,(-178 if side<0 and z==-169 else z)) for side in (-1,1) for z in (-169,-116,-38,126)]
+NULKA_POS = [(side*44,18,(-84 if side>0 and z==-74 else z)) for side in (-1,1) for z in (-74,74)]
 
 
 def gun_mounts():
@@ -95,6 +98,13 @@ def add_geometry(mesh,width_scale):
         box(f"PVLS_Bank_{i}",x,21.96,z,4.6,.24,19,"dark")
         for j,(cx,cz) in enumerate(cells(x,z),1):
             box(f"PVLS_Cell_{i}_{j:02d}",cx,22.12,cz,1.45,.06,1.35,"hatch")
+    # Open-topped deck-edge wells conceal the CIWS at their initial poses.
+    for i,(x,y,z) in enumerate(CIWS_POS,1):
+        box(f"CIWS_WellFloor_{i}",x,15.8,z,7,.3,7,"hull")
+        for side in (-1,1):
+            box(f"CIWS_WellSide_{i}_{side}",x+side*3.4,19,z,.2,6,7,"hull")
+            box(f"CIWS_WellEnd_{i}_{side}",x,19,z+side*3.4,6.6,6,.2,"hull")
+    add_pod_geometry(mesh,width_scale)
     groups = [("ESSM",SAM_POS),("RAM",RAM_POS),("CIWS",CIWS_POS),("Mk46",GUN_POS)]
     for kind,positions in groups:
         for i,(x,y,z) in enumerate(positions,1):
@@ -179,6 +189,7 @@ def native_sections(section,vec,width_scale):
               "WorksStandalone=True","Collider=coll_engine"]
         rows += ([f"Gun={mount['barrel']}"] if mount["kind"]=="CIWS" else
                  ["NumberOfGuns=1",f"Gun1={mount['barrel']}"])
+        if mount["kind"]=="CIWS": rows += weapon_animation_rows(mount["index"])
         weapons.append(rows)
     for pos in CHAFF_POS:
         weapons.append(["Type=Chaff","SystemName=Mk_36_SRBOC","Mount=Dummy",

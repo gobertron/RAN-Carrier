@@ -29,6 +29,9 @@ from generate_source_models import Mesh  # noqa: E402
 from rebuild_game_scale import METRES_PER_UNIT  # noqa: E402
 from combat_fit import FIT, native_sections, custom_profiles, gun_mounts, deck_weapon_zones  # noqa: E402
 
+from ciws_retraction import (PODS, moving_model_specs, add_moving_meshes,
+    animation_reference_rows, native_animation_ini, ANIMATION_RELATIVE_PATH)
+
 ID = "ran_cvn_australis_2030"
 MOD_NAME = "RAN-Carrier-Australis-2030"
 SHIP_DIR = f"ships/{ID}"
@@ -39,6 +42,14 @@ LAUNCH_ASSOC = ((1,2,3,8,9),(3,2,1,6,7),(4,5,1),(8,9))
 # Native FlightDeckAircraftSupportPoint keys, verified against the supplied
 # engine schema. Do not restrict aircraft classes, roles or VTOL loadouts.
 AIRCRAFT_SIZE_SUPPORT = ["SupportsSmall=True", "SupportsLarge=True", "SupportsVeryLarge=True"]
+
+
+def weapon_model_names():
+    for mount in gun_mounts():
+        if mount["kind"]=="CIWS":
+            pod=PODS[mount["index"]-1]
+            yield from (pod.lift,pod.door("L"),pod.door("R"))
+        yield from (mount["mount"],mount["barrel"])
 
 
 def vec(x: float, y: float, z: float) -> str:
@@ -74,6 +85,7 @@ def model(ship: Path) -> dict[str, str]:
     materials = {}
     gun_parts = {f"{mount['label']}_{part}_{mount['index']}"
                  for mount in gun_mounts() for part in ("Housing","Barrel")}
+    gun_parts.update(spec["name"] for spec in moving_model_specs())
     for src,dst in (("HardChineHull","Hull"),("FacetedFlightDeck","Deck")):
         name,v,faces,mat = next(part for part in source.parts if part[0] == src)
         out.add(dst,v,faces,mat)
@@ -105,6 +117,9 @@ def model(ship: Path) -> dict[str, str]:
         materials[mount["mount"]]="island"
         out.box(mount["barrel"],0,0,1.8,.3,.22,2.1,"dark")
         materials[mount["barrel"]]="dark"
+    add_moving_meshes(out)
+    materials.update({s["name"]:("hatch" if "Door" in s["name"] else "dark")
+                      for s in moving_model_specs() if s["name"] not in materials})
     # Collision geometry is a separate OBJ object. It is never listed as a
     # visible submodel, but the game can use it in preference to its fallback.
     out.box("coll_hull_main",0,10,0,52*WIDTH_SCALE,20,320,"hull")
@@ -216,6 +231,7 @@ def vessel_ini(material: dict[str,str]) -> str:
     moving = {"Propeller_1","Propeller_2","Rudder"}
     moving.update(name for mount in gun_mounts()
                   for name in (mount["mount"],mount["barrel"]))
+    moving.update(s["name"] for s in moving_model_specs())
     static = [name for name in material if name not in moving
               and name not in ("Hull", "coll_hull_main")]
     mounts = {"Propeller_1": (-7,-6,-147),
@@ -374,8 +390,9 @@ def vessel_ini(material: dict[str,str]) -> str:
             "MainSystems_1=Propeller_1","MainSystems_2=Propeller_2",
             "MainSystems_3=Rudder",
             *[f"MainSystems_{i}={name}" for i,name in enumerate(
-              (name for mount in gun_mounts() for name in (mount["mount"],mount["barrel"])),4)],
+              weapon_model_names(),4)],
             "General_1=Flag1"]),
+        section("Animations",animation_reference_rows()),
     ]
     for name in static:
         parts.append(section(name,[
@@ -395,7 +412,17 @@ def vessel_ini(material: dict[str,str]) -> str:
                       "Rotation=0,"+("90" if x>0 else "-90")+",0"]
                      if key=="mount" else
                      [f"Parent={mount['mount']}","Position=0,0,0"])
+            if mount["kind"]=="CIWS":
+                spec=next(s for s in moving_model_specs() if s["name"]==name)
+                rows=[r for r in rows if not r.startswith(("Parent=","Position="))]
+                rows += [f"Parent={spec['parent']}","Position="+",".join(f"{v/METRES_PER_UNIT:.9f}" for v in spec["position"])]
             parts.append(section(name,rows))
+    for spec in moving_model_specs():
+        name=spec["name"]
+        if "Lift" not in name and "Door" not in name: continue
+        rows=[f"ResourcesMeshFolder={SHIP_DIR}/",f"RootMesh={ID}.obj",f"Mesh={name}",
+              f"Material={material[name]}_mat.ini", "Position="+",".join(f"{v/METRES_PER_UNIT:.9f}" for v in spec["position"])]
+        parts.append(section(name,rows))
     parts.append(section("Flag1",[
         "ResourcesMeshFolder=ships/usn_ddg_adams/",
         "RootMesh=usn_ddg_adams",
@@ -458,6 +485,7 @@ def vessel_ini(material: dict[str,str]) -> str:
 
 
 def build(destination: Path = DEST) -> None:
+    write_ini(destination/ANIMATION_RELATIVE_PATH,native_animation_ini(METRES_PER_UNIT))
     ship = destination / SHIP_DIR
     ship.mkdir(parents=True, exist_ok=True)
     materials = model(ship)
@@ -536,6 +564,9 @@ def build(destination: Path = DEST) -> None:
         "Four defensive VLS banks and four missile housings occupy main-deck edge positions "
         "with NoPark zones. RIM-66E and RGM-109 are removed. Sea Sparrow retains stock "
         "guidance; the vertical-launch proxy requires in-game checking. "
+        "Three CIWS mounts now hide in covered deck-edge wells, open in 0.4 seconds, "
+        "and fire after the native opening animation completes. Retraction takes 1 second "
+        "after the native idle/rest condition (over 10 seconds). In-game QA is pending. "
         "All five guns use original moving yaw bodies and elevation barrels. The normal "
         "30 mm guns now provide NumberOfGuns/Gun1, correcting the null barrel that caused "
         "WeaponSystemGun.AlignTurret to fail. This correction still needs an in-game firing test.\n"

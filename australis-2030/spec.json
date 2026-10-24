@@ -117,7 +117,18 @@
     "recessed_vls_cells": 80,
     "ford_zumwalt_derived_fit": "Original geometry and declared stock-compatible game proxies; see DESIGN-BASIS.md",
     "vls_and_missile_launchers": "Four VLS banks and four defensive missile housings on the marked main-deck edge positions",
-    "defensive_kinetic_armament_only": true
+    "defensive_kinetic_armament_only": true,
+    "ciws_retraction": {
+      "positions": 3,
+      "type": "Covered deck-edge wells with independent lift/yaw/barrel and sliding covers",
+      "open_seconds": 0.4,
+      "rise_seconds": 0.3,
+      "stroke_m": 5,
+      "close_seconds": 1,
+      "native_idle_close_seconds": 10,
+      "engagement_driven": true,
+      "in_game_verified": false
+    }
   },
   "integration": {
     "model_units": "metres",
