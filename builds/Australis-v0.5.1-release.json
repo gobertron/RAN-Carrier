@@ -1,0 +1,13 @@
+{
+  "version": "0.5.1",
+  "previous_version": "0.5.0",
+  "change": "Five native repair teams and dedicated ship page",
+  "model_revision": "ef6114ea54f8",
+  "cutaway_revision": "4036593dc26c",
+  "in_game_tested": false,
+  "github_publication": "Prepared for gobertron/RAN-Carrier; publication checked separately",
+  "artifacts": {
+    "RAN-Carrier-Australis-v0.5.1-Five-Repair-Teams.zip": "7de822cd47c36ce74f835157f909b87b43e4bd1f78535973c53cbabb9059b68b",
+    "install-ran-australis-v0.5.1.sh": "479266abbe9f3384f6c6161b10b8ba0f4d1d7a50f546588259b9df74d6062481"
+  }
+}
