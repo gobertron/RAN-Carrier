@@ -32,5 +32,7 @@
     "ran_cvn_southern_cross_2002": 1158,
     "ran_cvn_southern_cross_2009": 1174,
     "ran_cvn_australis_2023": 1238
-  }
+  },
+  "scope": "Historical14fleetstudies, originally prepared8October2026; excludes currentAustralis2030 runtime validation",
+  "current_project": "australis-2030/README.md"
 }

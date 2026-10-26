@@ -1,5 +1,7 @@
 # Commonwealth class — 1980s late
 
+> Historical fleet-design study. The current Australis 2030 test build and installation guide are in [australis-2030](../australis-2030/README.md). Figures on this page describe this earlier edition.
+
 **Sea Power design edition:** 1980s late (1988); nuclear propulsion; 98 aircraft.
 
 The hull is original geometry using US Nimitz lineage; Australian island, electronics and sponsons as a design cue. The proposed ship is alternate history. Length 354 m, flight-deck width 91 m, estimated displacement 110,000 t, design speed 32 kn. The deck plan has 4 physical lifts and 4 indicated catapult tracks. These positions still need native taxi, launch and recovery routing.

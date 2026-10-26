@@ -1,5 +1,7 @@
 # Australis v0.5.9 — defensive platforms and helicopter operations
 
+> Archived v0.5.9 notes. See the [current project guide](../../README.md) for v0.8.2 and current downloads.
+
 Deck defensive platforms stop 0.08 m above the 22 m deck, replacing the former 24 m base height. Deployment still takes 0.75 simulation seconds after committed aircraft clear; the 300-second last-shot hold and 10-second stow remain.
 
 The Phalanx count rises from three to five. The two additional mounts retract inside the main and rear tower roofs. Their split covers fold inward before the gun platforms rise. Tower caps are reshaped to enclose the pockets; the rear bridge retains six-face glazing. Roof CIWS bases stop 0.08 m above their roofs. The original CIWS between the towers moves to starboard (29.4,-142) m, behind the aft pad and beside the aft VLS bank. Its covers slide fore/aft to clear the adjacent VLS covers. Shared 20 mm ammunition rises to 20,000 rounds.

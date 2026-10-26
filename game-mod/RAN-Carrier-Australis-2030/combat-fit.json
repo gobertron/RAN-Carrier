@@ -1,4 +1,10 @@
 {
+  "damage_control": {
+    "teams": 5,
+    "native_section": "General",
+    "native_key": "NumberOfDCTeams",
+    "in_game_verified": false
+  },
   "crew": {
     "ships_company": 2850,
     "air_wing": 2250,
@@ -20,12 +26,21 @@
     "design_allowance": 9500
   },
   "hangar": {
-    "length_m": 245,
-    "width_m": 30,
+    "length_m": 280,
+    "width_m": 50,
     "height_m": 8,
     "proposed_aircraft_allocation": 36,
     "proposed_deck_allocation": 63,
-    "parking_layout_validated": false
+    "parking_layout_validated": false,
+    "mixed_reference_parking_boxes_validated": true,
+    "floor_height_m": 11.8,
+    "ceiling_height_m": 19.8,
+    "reference_mix": {
+      "large_folded": 24,
+      "compact_uav": 8,
+      "folded_rotor": 4
+    },
+    "note": "36 folded reference boxes fit; actual aircraft towing and 63-plane flight-deck parking remain unverified"
   },
   "hotel_services": {
     "fresh_water_litres_per_person_day": 150,
@@ -38,7 +53,7 @@
     "mk57_style_vls_cells": 80,
     "essm_launchers": 2,
     "ram_21_round_launchers": 2,
-    "phalanx": 3,
+    "phalanx": 5,
     "mk46_style_30mm": 2,
     "srboc_launchers": 8,
     "nulka_launchers": 4,
@@ -56,7 +71,7 @@
     "note": "Shared finite reserve; actual endurance depends on selected loadouts. Aircraft gun and countermeasure magazines retain their stock capacities."
   },
   "native_proxies": {
-    "vls_launcher": "MK41 with usn_rim-7m defensive proxy",
+    "vls_launcher": "MK41, 40 stock RIM-66E long-range SAM proxies and 40 RIM-7M; not SM-6",
     "essm": "usn_rim-7m",
     "ram": "21-position original launcher with usn_rim-7m; SARH, not RAM guidance",
     "30mm": "original gun profile with rn_cal_30mm",
@@ -71,12 +86,13 @@
     "lasers": "visual hatches only; weapon/animation unimplemented"
   },
   "ciws_retraction": {
-    "count": 3,
-    "open_seconds": 0.4,
-    "close_seconds": 1.0,
+    "count": 5,
+    "open_seconds": 0.75,
+    "close_seconds": 10,
     "lift_stroke_m": 5,
-    "idle_close_seconds_native": 10,
-    "native_engagement_hooks": true,
+    "hold_after_last_shot_seconds": 300,
+    "controller": "AnchorChain",
+    "native_engagement_hooks": false,
     "in_game_tested": false
   },
   "native_combat_tested": false

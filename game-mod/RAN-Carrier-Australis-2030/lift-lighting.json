@@ -1,0 +1,758 @@
+{
+  "schema": 1,
+  "groups": [
+    {
+      "id": 1,
+      "model": "LiftPlatform1",
+      "centre_xz_m": [
+        27.5,
+        82
+      ],
+      "fixtures": [
+        {
+          "name": "LiftWallLamp_1_outer_15_-7",
+          "position": [
+            38.64,
+            15.0,
+            75.0
+          ],
+          "rotation_degrees": [
+            30.0,
+            -90.0,
+            0.0
+          ],
+          "wall": "outer",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_1_outer_15_+7",
+          "position": [
+            38.64,
+            15.0,
+            89.0
+          ],
+          "rotation_degrees": [
+            30.0,
+            -90.0,
+            0.0
+          ],
+          "wall": "outer",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_1_forward_15",
+          "position": [
+            31.5,
+            15.0,
+            95.14
+          ],
+          "rotation_degrees": [
+            30.0,
+            180.0,
+            0.0
+          ],
+          "wall": "forward",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_1_aft_15",
+          "position": [
+            31.5,
+            15.0,
+            68.86
+          ],
+          "rotation_degrees": [
+            30.0,
+            0.0,
+            0.0
+          ],
+          "wall": "aft",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_1_outer_19_-7",
+          "position": [
+            38.64,
+            19.0,
+            75.0
+          ],
+          "rotation_degrees": [
+            30.0,
+            -90.0,
+            0.0
+          ],
+          "wall": "outer",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_1_outer_19_+7",
+          "position": [
+            38.64,
+            19.0,
+            89.0
+          ],
+          "rotation_degrees": [
+            30.0,
+            -90.0,
+            0.0
+          ],
+          "wall": "outer",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_1_forward_19",
+          "position": [
+            31.5,
+            19.0,
+            95.14
+          ],
+          "rotation_degrees": [
+            30.0,
+            180.0,
+            0.0
+          ],
+          "wall": "forward",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_1_aft_19",
+          "position": [
+            31.5,
+            19.0,
+            68.86
+          ],
+          "rotation_degrees": [
+            30.0,
+            0.0,
+            0.0
+          ],
+          "wall": "aft",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "model": "LiftPlatform2",
+      "centre_xz_m": [
+        27.5,
+        54
+      ],
+      "fixtures": [
+        {
+          "name": "LiftWallLamp_2_outer_15_-7",
+          "position": [
+            38.64,
+            15.0,
+            47.0
+          ],
+          "rotation_degrees": [
+            30.0,
+            -90.0,
+            0.0
+          ],
+          "wall": "outer",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_2_outer_15_+7",
+          "position": [
+            38.64,
+            15.0,
+            61.0
+          ],
+          "rotation_degrees": [
+            30.0,
+            -90.0,
+            0.0
+          ],
+          "wall": "outer",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_2_forward_15",
+          "position": [
+            31.5,
+            15.0,
+            67.14
+          ],
+          "rotation_degrees": [
+            30.0,
+            180.0,
+            0.0
+          ],
+          "wall": "forward",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_2_aft_15",
+          "position": [
+            31.5,
+            15.0,
+            40.86
+          ],
+          "rotation_degrees": [
+            30.0,
+            0.0,
+            0.0
+          ],
+          "wall": "aft",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_2_outer_19_-7",
+          "position": [
+            38.64,
+            19.0,
+            47.0
+          ],
+          "rotation_degrees": [
+            30.0,
+            -90.0,
+            0.0
+          ],
+          "wall": "outer",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_2_outer_19_+7",
+          "position": [
+            38.64,
+            19.0,
+            61.0
+          ],
+          "rotation_degrees": [
+            30.0,
+            -90.0,
+            0.0
+          ],
+          "wall": "outer",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_2_forward_19",
+          "position": [
+            31.5,
+            19.0,
+            67.14
+          ],
+          "rotation_degrees": [
+            30.0,
+            180.0,
+            0.0
+          ],
+          "wall": "forward",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_2_aft_19",
+          "position": [
+            31.5,
+            19.0,
+            40.86
+          ],
+          "rotation_degrees": [
+            30.0,
+            0.0,
+            0.0
+          ],
+          "wall": "aft",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "model": "LiftPlatform3",
+      "centre_xz_m": [
+        11.0,
+        -18.0
+      ],
+      "fixtures": [
+        {
+          "name": "LiftWallLamp_3_outer_15_-7",
+          "position": [
+            22.14,
+            15.0,
+            -25.0
+          ],
+          "rotation_degrees": [
+            30.0,
+            -90.0,
+            0.0
+          ],
+          "wall": "outer",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_3_outer_15_+7",
+          "position": [
+            22.14,
+            15.0,
+            -11.0
+          ],
+          "rotation_degrees": [
+            30.0,
+            -90.0,
+            0.0
+          ],
+          "wall": "outer",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_3_forward_15",
+          "position": [
+            15.0,
+            15.0,
+            -4.859999999999999
+          ],
+          "rotation_degrees": [
+            30.0,
+            180.0,
+            0.0
+          ],
+          "wall": "forward",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_3_aft_15",
+          "position": [
+            15.0,
+            15.0,
+            -31.14
+          ],
+          "rotation_degrees": [
+            30.0,
+            0.0,
+            0.0
+          ],
+          "wall": "aft",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_3_outer_19_-7",
+          "position": [
+            22.14,
+            19.0,
+            -25.0
+          ],
+          "rotation_degrees": [
+            30.0,
+            -90.0,
+            0.0
+          ],
+          "wall": "outer",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_3_outer_19_+7",
+          "position": [
+            22.14,
+            19.0,
+            -11.0
+          ],
+          "rotation_degrees": [
+            30.0,
+            -90.0,
+            0.0
+          ],
+          "wall": "outer",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_3_forward_19",
+          "position": [
+            15.0,
+            19.0,
+            -4.859999999999999
+          ],
+          "rotation_degrees": [
+            30.0,
+            180.0,
+            0.0
+          ],
+          "wall": "forward",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_3_aft_19",
+          "position": [
+            15.0,
+            19.0,
+            -31.14
+          ],
+          "rotation_degrees": [
+            30.0,
+            0.0,
+            0.0
+          ],
+          "wall": "aft",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "model": "LiftPlatform4",
+      "centre_xz_m": [
+        26.0,
+        -50
+      ],
+      "fixtures": [
+        {
+          "name": "LiftWallLamp_4_outer_15_-7",
+          "position": [
+            37.14,
+            15.0,
+            -57.0
+          ],
+          "rotation_degrees": [
+            30.0,
+            -90.0,
+            0.0
+          ],
+          "wall": "outer",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_4_outer_15_+7",
+          "position": [
+            37.14,
+            15.0,
+            -43.0
+          ],
+          "rotation_degrees": [
+            30.0,
+            -90.0,
+            0.0
+          ],
+          "wall": "outer",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_4_forward_15",
+          "position": [
+            30.0,
+            15.0,
+            -36.86
+          ],
+          "rotation_degrees": [
+            30.0,
+            180.0,
+            0.0
+          ],
+          "wall": "forward",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_4_aft_15",
+          "position": [
+            30.0,
+            15.0,
+            -63.14
+          ],
+          "rotation_degrees": [
+            30.0,
+            0.0,
+            0.0
+          ],
+          "wall": "aft",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_4_outer_19_-7",
+          "position": [
+            37.14,
+            19.0,
+            -57.0
+          ],
+          "rotation_degrees": [
+            30.0,
+            -90.0,
+            0.0
+          ],
+          "wall": "outer",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_4_outer_19_+7",
+          "position": [
+            37.14,
+            19.0,
+            -43.0
+          ],
+          "rotation_degrees": [
+            30.0,
+            -90.0,
+            0.0
+          ],
+          "wall": "outer",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_4_forward_19",
+          "position": [
+            30.0,
+            19.0,
+            -36.86
+          ],
+          "rotation_degrees": [
+            30.0,
+            180.0,
+            0.0
+          ],
+          "wall": "forward",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        },
+        {
+          "name": "LiftWallLamp_4_aft_19",
+          "position": [
+            30.0,
+            19.0,
+            -63.14
+          ],
+          "rotation_degrees": [
+            30.0,
+            0.0,
+            0.0
+          ],
+          "wall": "aft",
+          "color": [
+            1.0,
+            0.88,
+            0.65
+          ],
+          "range": 7.0,
+          "intensity": 0.65,
+          "spot_angle": 50.0
+        }
+      ]
+    }
+  ],
+  "deck_level_m": 22.002,
+  "lower_level_m": 11.8,
+  "off_depth_m": 0.1,
+  "full_depth_m": 0.6,
+  "gating": "Actual independent platform height, every controller tick; smoothstep fade in both directions",
+  "daytime_operation": true,
+  "missing_or_invalid_platform": "Off",
+  "lens_material": "Non-emissive; ordinary recessed wall fitting",
+  "in_game_tested": false
+}

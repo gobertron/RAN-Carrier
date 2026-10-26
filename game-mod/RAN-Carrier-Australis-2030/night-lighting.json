@@ -1,0 +1,632 @@
+[
+  {
+    "position": [
+      -29,
+      22.25,
+      -150
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      29,
+      22.25,
+      -150
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      -29,
+      22.25,
+      -120
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      29,
+      22.25,
+      -120
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      -29,
+      22.25,
+      -90
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      29,
+      22.25,
+      -90
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      -29,
+      22.25,
+      -60
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      29,
+      22.25,
+      -60
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      -29,
+      22.25,
+      -30
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      29,
+      22.25,
+      -30
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      -29,
+      22.25,
+      0
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      29,
+      22.25,
+      0
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      -29,
+      22.25,
+      30
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      29,
+      22.25,
+      30
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      -29,
+      22.25,
+      60
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      29,
+      22.25,
+      60
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      -29,
+      22.25,
+      90
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      29,
+      22.25,
+      90
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      -29,
+      22.25,
+      120
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      29,
+      22.25,
+      120
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      -29,
+      22.25,
+      150
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      29,
+      22.25,
+      150
+    ],
+    "color": [
+      0.15,
+      0.38,
+      0.8
+    ],
+    "range": 5,
+    "intensity": 0.22,
+    "kind": "guide"
+  },
+  {
+    "position": [
+      -18,
+      19.35,
+      -120
+    ],
+    "color": [
+      1.0,
+      0.88,
+      0.65
+    ],
+    "range": 13,
+    "intensity": 0.9,
+    "kind": "hangar"
+  },
+  {
+    "position": [
+      18,
+      19.35,
+      -120
+    ],
+    "color": [
+      1.0,
+      0.88,
+      0.65
+    ],
+    "range": 13,
+    "intensity": 0.9,
+    "kind": "hangar"
+  },
+  {
+    "position": [
+      -18,
+      19.35,
+      -85
+    ],
+    "color": [
+      1.0,
+      0.88,
+      0.65
+    ],
+    "range": 13,
+    "intensity": 0.9,
+    "kind": "hangar"
+  },
+  {
+    "position": [
+      18,
+      19.35,
+      -85
+    ],
+    "color": [
+      1.0,
+      0.88,
+      0.65
+    ],
+    "range": 13,
+    "intensity": 0.9,
+    "kind": "hangar"
+  },
+  {
+    "position": [
+      -18,
+      19.35,
+      -50
+    ],
+    "color": [
+      1.0,
+      0.88,
+      0.65
+    ],
+    "range": 13,
+    "intensity": 0.9,
+    "kind": "hangar"
+  },
+  {
+    "position": [
+      18,
+      19.35,
+      -50
+    ],
+    "color": [
+      1.0,
+      0.88,
+      0.65
+    ],
+    "range": 13,
+    "intensity": 0.9,
+    "kind": "hangar"
+  },
+  {
+    "position": [
+      -18,
+      19.35,
+      -15
+    ],
+    "color": [
+      1.0,
+      0.88,
+      0.65
+    ],
+    "range": 13,
+    "intensity": 0.9,
+    "kind": "hangar"
+  },
+  {
+    "position": [
+      18,
+      19.35,
+      -15
+    ],
+    "color": [
+      1.0,
+      0.88,
+      0.65
+    ],
+    "range": 13,
+    "intensity": 0.9,
+    "kind": "hangar"
+  },
+  {
+    "position": [
+      -18,
+      19.35,
+      20
+    ],
+    "color": [
+      1.0,
+      0.88,
+      0.65
+    ],
+    "range": 13,
+    "intensity": 0.9,
+    "kind": "hangar"
+  },
+  {
+    "position": [
+      18,
+      19.35,
+      20
+    ],
+    "color": [
+      1.0,
+      0.88,
+      0.65
+    ],
+    "range": 13,
+    "intensity": 0.9,
+    "kind": "hangar"
+  },
+  {
+    "position": [
+      -18,
+      19.35,
+      55
+    ],
+    "color": [
+      1.0,
+      0.88,
+      0.65
+    ],
+    "range": 13,
+    "intensity": 0.9,
+    "kind": "hangar"
+  },
+  {
+    "position": [
+      18,
+      19.35,
+      55
+    ],
+    "color": [
+      1.0,
+      0.88,
+      0.65
+    ],
+    "range": 13,
+    "intensity": 0.9,
+    "kind": "hangar"
+  },
+  {
+    "position": [
+      -18,
+      19.35,
+      90
+    ],
+    "color": [
+      1.0,
+      0.88,
+      0.65
+    ],
+    "range": 13,
+    "intensity": 0.9,
+    "kind": "hangar"
+  },
+  {
+    "position": [
+      18,
+      19.35,
+      90
+    ],
+    "color": [
+      1.0,
+      0.88,
+      0.65
+    ],
+    "range": 13,
+    "intensity": 0.9,
+    "kind": "hangar"
+  },
+  {
+    "position": [
+      -18,
+      19.35,
+      125
+    ],
+    "color": [
+      1.0,
+      0.88,
+      0.65
+    ],
+    "range": 13,
+    "intensity": 0.9,
+    "kind": "hangar"
+  },
+  {
+    "position": [
+      18,
+      19.35,
+      125
+    ],
+    "color": [
+      1.0,
+      0.88,
+      0.65
+    ],
+    "range": 13,
+    "intensity": 0.9,
+    "kind": "hangar"
+  },
+  {
+    "position": [
+      26,
+      24,
+      50
+    ],
+    "color": [
+      1.0,
+      0.82,
+      0.55
+    ],
+    "range": 8,
+    "intensity": 0.35,
+    "kind": "task"
+  },
+  {
+    "position": [
+      26,
+      24,
+      -45
+    ],
+    "color": [
+      1.0,
+      0.82,
+      0.55
+    ],
+    "range": 8,
+    "intensity": 0.35,
+    "kind": "task"
+  },
+  {
+    "position": [
+      30,
+      24,
+      -116
+    ],
+    "color": [
+      1.0,
+      0.82,
+      0.55
+    ],
+    "range": 8,
+    "intensity": 0.35,
+    "kind": "task"
+  },
+  {
+    "position": [
+      30,
+      24,
+      86
+    ],
+    "color": [
+      1.0,
+      0.82,
+      0.55
+    ],
+    "range": 8,
+    "intensity": 0.35,
+    "kind": "task"
+  }
+]

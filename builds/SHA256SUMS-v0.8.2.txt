@@ -1,0 +1,2 @@
+d01b90ca371c708cebf590efe5a19465c13cd2977f4402e53de1566d37250bdb  RAN-Carrier-Australis-v0.8.2-Lift-Lighting.zip
+b5d02ee3660d8c205583046052f8018500fd3b0f4ff9092a4137246730a30d5f  install-ran-australis-v0.8.2-lift-lighting.sh

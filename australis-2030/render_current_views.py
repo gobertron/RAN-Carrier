@@ -20,7 +20,7 @@ VIEWS = (
     ("deck", "Flight deck — bow up", None, None),
     ("bow", "Bow", 90.0, 10.0),
 )
-CAPTION = "3 bow + 2 waist catapults · 2 islands · 4 lifts · 4 vertical pads"
+CAPTION = "v0.8.2 Lift lighting · 3 catapults · 4 lifts · 3 helipads"
 
 
 def _font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
@@ -43,7 +43,7 @@ def _basis(azimuth: float | None, elevation: float | None):
 
 
 def _render(triangles, colors, title: str, azimuth, elevation,
-            revision: str, path: Path) -> None:
+            revision: str, path: Path, caption=None, footer=None, light_direction=None, exposure=1.0) -> None:
     # A 1.5x depth-buffer render resolves narrow painted lines cleanly while
     # keeping each file practical to embed in the offline HTML gallery.
     width, height = 3600, 2100
@@ -62,7 +62,7 @@ def _render(triangles, colors, title: str, azimuth, elevation,
                   + np.array((12., 22., 32.))*gradient).astype(np.uint8)
     rgb = np.repeat(background, width, axis=1)
     depth = np.full((height, width), -np.inf, dtype=np.float32)
-    light = np.array((.25, -.40, .88))
+    light = np.array(light_direction if light_direction is not None else (.25, -.40, .88))
     light /= np.linalg.norm(light)
     palette = {name: np.array([int(color[i:i+2], 16) for i in (1, 3, 5)])
                for name, color in colors.items()}
@@ -100,7 +100,7 @@ def _render(triangles, colors, title: str, azimuth, elevation,
         # Soft key and fill illumination keep facet boundaries readable,
         # without changing any model materials or painting fictional detail.
         shade = .58+.42*max(float(normal@light), 0.)
-        color = np.clip(palette[material]*shade, 0, 255).astype(np.uint8)
+        color = np.clip(palette[material]*shade*exposure, 0, 255).astype(np.uint8)
         depth_region[mask] = distance[mask]
         rgb[ymin:ymax+1, xmin:xmax+1][mask] = color
     image = Image.fromarray(rgb).resize(final_size, Image.Resampling.LANCZOS)
@@ -114,13 +114,13 @@ def _render(triangles, colors, title: str, azimuth, elevation,
               font=revision_font, fill="#b1c3cb")
     draw.line((88, 161, 2312, 161), fill="#405664", width=2)
     draw.line((88, 1276, 2312, 1276), fill="#405664", width=2)
-    draw.text((88, 1301), CAPTION, font=_font(23), fill="#b1d2d6")
-    draw.text((88, 1342), "Model geometry only · no aircraft displayed · not a gameplay screenshot",
+    draw.text((88, 1301), caption or CAPTION, font=_font(23), fill="#b1d2d6")
+    draw.text((88, 1342), footer or "Model geometry only · no aircraft displayed · not a gameplay screenshot",
               font=_font(19), fill="#94aab7")
     metadata = PngImagePlugin.PngInfo()
     metadata.add_text("Title", f"Australis 2030 — {title}")
     metadata.add_text("Source revision", revision)
-    metadata.add_text("Description", "Actual closed source mesh; "+CAPTION)
+    metadata.add_text("Description", "Actual exported model geometry; "+CAPTION)
     buffer = io.BytesIO()
     image.save(buffer, format="PNG", pnginfo=metadata, optimize=True)
     data = buffer.getvalue()

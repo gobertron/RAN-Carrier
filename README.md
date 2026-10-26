@@ -1,89 +1,54 @@
 # Royal Australian Navy carrier game design
 
-## Current focus: Australis 2030
+## Current release: Australis v0.8.2 — lift lighting
 
-We are refining the newest Australis first, then moving backward through its earlier concepts. The original 2030 silhouette, editable model source, deck plan and rendered preview are in [australis-2030](australis-2030/README.md).
+An original alternate-history carrier prototype for **Sea Power**, supplied as four numbered ships: **HMSCS Australis 91, Southern Cross 92, Federation 93 and Commonwealth 94**. The active build is experimental: geometry, configuration and installer checks pass; the latest version still needs an in-game flight, combat and lighting trial.
 
-![Australis 2030 current starboard model render](australis-2030/previews/australis_2030_current_starboard.png)
+[Download the v0.8.2 installer](builds/install-ran-australis-v0.8.2-lift-lighting.sh) · [Source and game package ZIP](builds/RAN-Carrier-Australis-v0.8.2-Lift-Lighting.zip) · [Checksums](builds/SHA256SUMS-v0.8.2.txt) · [Install/test/rollback](australis-2030/GAME-TEST.md)
 
-![Australis 2030 deck plan](australis-2030/previews/australis_2030_deck_plan.png)
+![Australis v0.8.2 actual model render](australis-2030/previews/australis_2030_current_starboard.png)
 
-![Australis 2030 current bow model render](australis-2030/previews/australis_2030_current_bow.png)
+[Download the current photos and rotatable 3D viewer](australis-2030/viewer/australis_2030_3d.html). Open the self-contained HTML locally; GitHub's file view does not run the model viewer. The model has an empty air group for user-selected aircraft. Renders show the exported model, not gameplay screenshots.
 
-[Open the current model photos and 3D viewer](australis-2030/viewer/australis_2030_3d.html). The first tab contains four current model renders; **Rotate 3D model** lets you inspect the same deck, radar panels and laser hatches. Use **Deploy four lasers** to see the raised visual state. Download the self-contained HTML file to open it offline.
+### Current arrangement
 
-The current Australis is a **steam CATOBAR carrier** with five 95 m launch
-tracks: **three at the bow and two angled on the port waist**. It retains the original two
-islands, four offset helicopter/VTOL spots, four 22 × 26 m lifts and an angled
-recovery deck with arresting cables. A broader bow deck follows the supplied
-Ford reference while the immersed bow remains fine. Bow lanes 1/3 can operate
-as a pair; the centre bow lane interlocks with its neighbours. Waist lanes
-4/5 use a shallow 6-degree port heading and staggered launch positions; they
-interlock with all bow lanes and each other. Flush metal slots, small shuttles,
-white guides and segmented stowed deflectors replace the plain yellow bars.
-All five catapults and the arrested-recovery point accept Plane, VTOL and
-STOL types. The four vertical spots accept Helicopter and VTOL types. Aircraft
-discovery remains automatic, with no carrier-specific class whitelist or
-size, role or loadout exclusions. Aircraft must be correctly installed and
-carrier-capable, including their squadron definitions; the air group starts
-empty and requires no aircraft pack. The port lift stays beside the aft part
-of the main island at z=-32 m. The helicopter spots form two pairs ahead of
-the islands; all four interlock with the waist lanes while leaving the bow
-bank available during vertical launches. Every recovery point explicitly
-blocks all nine launch points. The smaller aft island has
-wraparound glazing. Arrested recovery uses a 9-degree port axis with four
-perpendicular wire indications.
+| Feature | v0.8.2 configuration |
+|---|---|
+| Overall length / flight-deck width | 370 m / 82 m |
+| Waterline length / maximum beam / draft | 362.6 m / 41 m / 11.5 m |
+| Displacement | 112,000 t native target; approximately 112,000.07 t net geometric wet-boundary result |
+| Aviation | Three catapults: two bow, one port waist; angled arrested recovery |
+| Lifts | Four internal 22 × 26 m platforms; front two for fixed-wing, rear two for helicopters/VTOL |
+| Helicopter pads | Three; preference aft, front, then middle |
+| Air group / personnel | 99-aircraft design target; 5,300 embarked target and 5,800 planning berths |
+| Hangar | 280 × 50 × 8 m reservation; 36 folded reference parking slots |
+| Defence | Five retractable CIWS, two 30 mm guns, 80 VLS cells and five repair teams |
+| Propulsion appearance | Eight waterjets: four outer steering nozzles and four fixed boosters |
+| Normal aviation / emergency speed orders | Standard 20 kn / Full 30 kn; Flank also capped at 30 kn |
 
-The outer waist track is moved 6.2 m inboard to clear the larger reference
-footprints on its aligned taxi approach. All five catapults are checked at
-staging and 20 m behind the launch point using A-7E, F-14A and a 25 m span ×
-30 m length reference envelope against deck, lift and island footprints.
-These checks support broader eligibility; swept taxi turns, rotor clearances,
-individual add-on aircraft and mixed deck cycles still need in-game QA.
+Carrier-capable aircraft are discovered without a carrier-specific class, size, role or loadout whitelist. The aircraft and its squadron definitions must be correctly installed. Eligibility does not establish swept-clearance compatibility for every add-on. Shared taxi lanes, lifts, recovery corridors and defensive-bay interlocks still govern operations.
 
-Design targets are **370 m overall, 82 m main flight deck, 112,000 metric
-tonnes, 99 aircraft and 5,300 embarked personnel**, with 5,800 berths. Maximum
-width including the lifts is 109 m. The [design basis](australis-2030/DESIGN-BASIS.md)
-sets out the crew, space and mass allocations and distinguishes them from
-verified game behaviour.
+The forward CIWS is clear of the bow catapult at the corrected port-side position. The five CIWS and other defensive equipment use covered bays controlled by the bundled AnchorChain add-on: deploy after committed aviation clears in 0.75 simulation seconds, hold for 300 seconds after the last actual shot, then stow over 10 seconds. Aviation remains locked until stowed. The five repair teams use the native damage-control setting.
 
-The Ford/Zumwalt-inspired fit has 80 peripheral VLS cells, two self-defence
-launchers, two 21-position RAM-form launchers, three Phalanx mounts, two 30 mm
-guns, conformal radar faces, ESM, defensive/offensive ECM, SRBOC and two Nixie
-decoys. Available stock profiles provide explicitly declared compatibility
-proxies: the ESSM/RAM-form mounts currently fire **RIM-7M Sea Sparrows**.
-The VLS banks now also carry RIM-7M defensive proxies; **RIM-66E and RGM-109
-are removed**. Four VLS banks and four missile housings are on the marked
-main-deck edge positions, with matching no-parking zones.
-SPY-1A represents the modern search-radar role. Nulka and retractable lasers
-remain visual positions. This is an original game design, not an exact Ford
-or Zumwalt simulation.
+The current VLS stores include **40 stock RIM-66E SAM proxy rounds and 40 RIM-7M Sea Sparrows**. These retain stock guidance and performance. They are not an SM-6 implementation, and no ballistic-missile interception capability is claimed. Nulka and laser positions remain visual studies; a raised laser demonstration is not an operational laser weapon.
 
-The reported normal-gun aiming error is corrected by registering real
-barrels and supplying the engine-required `NumberOfGuns`/`Gun1` fields.
-All five guns now have original moving yaw/elevation objects. Aircraft
-taxi/launch coordinates match the deck surface, removing the former 16 cm
-offset. The rebuild also makes the lift surfaces nearly flush, reduces the helipads to
-painted surfaces and lowers thick deck markings and stowed covers. Aircraft
-contact points follow the actual exported surfaces. The finite aviation
-reserve is **6,000,000 supply points**, with no
-per-category limits; stock aircraft gun capacities are preserved. These gun
-and contact-height corrections pass static checks and need in-game verification.
+### Lift-wall lighting
 
-The user confirmed mission loading and original hull rendering with `cbdaef4`
-on 22 October 2026 after the missing `[Foam]` configuration was added. The new
-five-lane/combat revision passes static geometry, references, size/budget and
-installer checks, and **still needs in-game flight and combat testing**.
-The installer checks stock dependencies before staging the independent
-[game package](game-mod/RAN-Carrier-Australis-2030/). See [upgrade, test and
-rollback steps](australis-2030/GAME-TEST.md). RADF, Workshop, original game files
-and User Data are not modified. The earlier 14 fleet studies remain below.
+Eight recessed warm-white work lights serve each shaft, **32 total**, on its existing outer, forward and aft walls. Each lift's actual platform height controls its own lights, during both day and night. They fade out within the final 0.60 m of upward travel and are fully off within 0.10 m of the deck-level stop. Downward spotlight cones and non-emissive lenses avoid a permanently glowing closed lift.
 
-The [current model photos and 3D viewer](australis-2030/viewer/australis_2030_3d.html)
-display the same model revision. Four matching model renders are embedded
-in the standalone HTML and available as PNGs in `australis-2030/previews/`.
-They show the actual empty-air-group design mesh; the earlier photorealistic
-concept image included finishing details and aircraft absent from the model.
+![Australis v0.8.2 lift-wall lighting cutaway](australis-2030/previews/Australis-v0.8.2-Lift-Cutaway.png)
+
+The cutaway uses actual model geometry with **illustrative lamp shading**, not Unity or in-game rendering. Native lift movement takes six seconds between the lower and flight-deck levels. The controller's 193 lighting-policy and reflection-integration checks pass; an in-game visual check remains necessary.
+
+### Engineering and implementation limits
+
+The eight intake mouths, open transom bores and connected internal wet ducts are actual mesh openings. The hull is recalibrated after deducting approximately **900.40 m³** of flooded duct volume. This is a geometric hydrostatic check using an assumed planning CG, not a complete weight-centre or stability assessment.
+
+Sea Power uses its aggregate conventional propulsion model for this prototype. The eight internal impellers and four steering assemblies have native moving bindings; independent jet thrust, booster staging, reverse-bucket actuation and eight physical jet wakes are not simulated. The existing **280,000 hp (about 208.8 MW)** setting and 30-knot maximum are retained. Real 30-knot capability is unresolved: the preliminary resistance sensitivity spans approximately 99–310 MW under its stated assumptions. CFD, cavitation, actual machinery weights, structural design and full intact/damage stability have not been validated.
+
+See the [current project guide](australis-2030/README.md), [design basis](australis-2030/DESIGN-BASIS.md) and [engineering review](WATERJET-ENGINEERING-REVIEW.md). Geometry/native-reference checks and transactional installer tests cover fresh installation, repeat installation, upgrade, backups, restore, removal, rejected incompatible game versions and failure rollback. These checks do not establish in-game aircraft cycles or seaworthiness.
+
+The installer requires an existing compatible AnchorChain installation and the supported game build. It replaces only the independent Australis mod/controller, retains a verified backup and leaves stock, Workshop, RADF, User Data, BepInEx and launch options unchanged. Close Sea Power before installing; restart and test a fresh carrier in a new mission. [Build history](builds/README.md) separates the current release from archived prototypes.
 
 ## Earlier fleet studies
 
@@ -108,7 +73,7 @@ Fourteen original Sea Power carrier **designs** covering every edition in the br
 
 Each edition has a separate design sheet with the proposed air group, dated combat systems and hull dimensions. `design-manifest.json` provides machine-readable values, including a single carrier-mounted offensive ECM module from 1972 onward. ECM uses no aircraft slots and there is no carrier-dedicated EF-111N aircraft. The 2023 hull has four visible laser mount studies; beam weapon logic and effects need implementation and testing.
 
-`metre-source-models/` holds the original OBJ/MTL authoring coordinates. `game-scale-models/ships/` holds approximately scaled copies using one observed Sea Power OBJ reference ratio, with the same object groups (Hull, FlightDeck, elevators, catapult markings, ECM and laser mounts). `previews/` are geometry renders, not screenshots. `generate_source_models.py` rebuilds the original metre models from `fleet-source.json` with Python, NumPy and Pillow; `rebuild_game_scale.py` recreates the approximate game-scale OBJ copies from the packaged metre sources. The design manifest remains the editable source of the gameplay proposals.
+`metre-source-models/` holds the original OBJ/MTL authoring coordinates. `game-scale-models/ships/` holds approximately scaled copies using one observed Sea Power OBJ reference ratio, with the same object groups (Hull, FlightDeck, elevators, catapult markings, ECM and laser mounts). `previews/` are geometry renders, not screenshots. `generate_source_models.py` rebuilds the original metre models from `fleet-source.json` with Python, NumPy and Pillow; `rebuild_game_scale.py` recreates the approximate game-scale OBJ copies from the packaged metre sources. The design manifest remains the editable source of those earlier gameplay proposals. The active Australis 2030 build uses its own source and specification in `australis-2030/`.
 
 `draft-ini/` has Sea Power-shaped **reference templates**, including eight original ECM sensor profiles with native-style `Kind=ECM` and `Type=Offensive` fields. The files deliberately end in `.draft.ini`. Do not copy them into the live game's `StreamingAssets/user` tree. They omit engine-required taxi paths, launch/recovery points, collision, animations, damage models, materials, aircraft IDs, weapon mounts, sonar routing and an operational laser. Ship propulsion labels are design requirements; the game's native nuclear-power type remains to be confirmed. Numeric ECM performance is proposed game balance, constrained in practice by jamming and horizon calculations.
 
@@ -118,16 +83,6 @@ The Australis editor test uses the supplied smaller reference archives of stock 
 
 ## Source notes
 
-- Sea Power carrier INI format, navigation fields and ECM key names were checked against the local Project Southern Cross examples supplied earlier in this conversation. They are used as schema reference only.
-- The [Project Southern Cross Workshop page](https://steamcommunity.com/sharedfiles/filedetails/?id=3574957049) credits Peter Garrett. Specific third-party models would require their own permission and contributor checks if incorporated later.
-
-
-The three CIWS mounts now stow under covered deck-edge wells. Native engagement
-hooks slide the covers open in 0.10 s and raise the assemblies vertically by
-5 m over the next 0.30 s. The engine permits firing after the opening animation
-completes. They lower over 1 s after the native idle/rest condition (more than
-10 s unused). The adjacent starboard Nulka and aft-port SRBOC positions are
-moved clear of the wells. These native animations require an in-game engagement
-test: check concealment at spawn, cover/lift order, fire only after clearance,
-and retraction after disengagement. The viewer's Raise CIWS control demonstrates
-only the motion. Keep the previous build for rollback.
+- The current original source, exported native fleet and controller are in `australis-2030/`, `game-mod/RAN-Carrier-Australis-2030/` and `addon/DeckController/`.
+- The supplied game assembly was inspected privately to verify native loading, telegraph speeds, aircraft operations and mount behavior. It is not redistributed.
+- [CREDITS.md](CREDITS.md) records scale references, third-party runtime dependencies and the distinction between concept art and actual model renders.

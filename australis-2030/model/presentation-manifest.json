@@ -1,33 +1,42 @@
 {
-  "revision": "613f6cdc1fdb",
-  "closed_model_parts": 372,
-  "closed_model_triangles": 6076,
-  "photos": [
-    {
-      "id": "starboard",
-      "filename": "australis_2030_current_starboard.png",
-      "sha256": "d17e65d1e369c6427023f77ade61999b17962d3c4afed325d3cd0b6d174f165b",
-      "embedded_sha256": "24b116643f453418633adf3ebea6d8629775d4a31babe04083a83cc9169ab5f1"
-    },
-    {
-      "id": "port_waist",
-      "filename": "australis_2030_current_port_waist.png",
-      "sha256": "4edb466012939263c0a9066b734fdcb1d6ae3a770b3d1e8eac5a3093b1d5bf98",
-      "embedded_sha256": "673a790fc57be950e76064fa9444492603966d2ca7a9b850d84c3f993eaffe4e"
-    },
-    {
-      "id": "deck",
-      "filename": "australis_2030_current_deck.png",
-      "sha256": "9a728eb7084982eb7a75142873fa745e93aebe45b972e235e0130f732c559778",
-      "embedded_sha256": "35c239b8fb919d0fe9ffcc73cf5c1a3050f41c0e3e8c36ddfd8e300f5e64a6b6"
-    },
-    {
-      "id": "bow",
-      "filename": "australis_2030_current_bow.png",
-      "sha256": "ddb2db8e7fae63053064e99334db4c0b658e61bd70afd26d778b0453af4e5253",
-      "embedded_sha256": "1674c26e9713e6059aefb538b833131cca29d6cc493de81f3d8f2b7956dc5f7f"
+  "version": "0.8.2-lift-lighting",
+  "revision": "c6f74183cff1",
+  "source": "Current exported native OBJ/INI",
+  "obj_sha256": "cea47680a8cec6d40d26b9299c776f6ab728d37c3ec0bbb6b46d18a004fc2fbe",
+  "ini_sha256": "a1467251414d7c216b8ea3f2410b8bb4225e2196e6c3c78f5eedf912376405dd",
+  "view": "Actual empty-air-group geometry; studio/illustrative shading, not game screenshots",
+  "viewer": "../viewer/australis_2030_3d.html",
+  "previews": {
+    "version": "0.8.2-lift-lighting",
+    "revision": "c6f74183cff1",
+    "source": "Actual exported Sea Power OBJ and INI transforms",
+    "obj_sha256": "cea47680a8cec6d40d26b9299c776f6ab728d37c3ec0bbb6b46d18a004fc2fbe",
+    "ini_sha256": "a1467251414d7c216b8ea3f2410b8bb4225e2196e6c3c78f5eedf912376405dd",
+    "visible_parts": 182,
+    "triangles": 37273,
+    "rendered_lighting": "Studio surface shading only; no Unity runtime lighting simulation",
+    "omitted": [
+      "stock runtime flag",
+      "collision-only mesh"
+    ],
+    "artifacts": [
+      "Australis-v0.8.2-Full-Ship-3D.html",
+      "Australis-v0.8.2-Full-Ship.png"
+    ],
+    "lift_cutaway": {
+      "source_obj_sha256": "cea47680a8cec6d40d26b9299c776f6ab728d37c3ec0bbb6b46d18a004fc2fbe",
+      "source_ini_sha256": "a1467251414d7c216b8ea3f2410b8bb4225e2196e6c3c78f5eedf912376405dd",
+      "crop_bounds": "First lift only; surrounding hull/deck omitted",
+      "rendered_triangles": [
+        326,
+        326
+      ],
+      "lighting": "Illustrative Lambert spotlight shading using actual fixture profiles; no Unity renderer, shadows or gameplay validation",
+      "states_m": [
+        11.8,
+        22.002
+      ],
+      "fixture_count": 8
     }
-  ],
-  "view": "Actual current design mesh; not an in-game screenshot",
-  "air_group": "Empty; aircraft selected in Sea Power"
+  }
 }

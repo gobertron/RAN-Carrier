@@ -202,7 +202,7 @@ def render(s,m,path,top=False,camera_azimuth_deg=None,camera_elevation_deg=None)
 
 ROOT = Path(__file__).resolve().parent
 
-def validate(s,m):
+def validate(s,m,open_roofs=()):
     from collections import Counter
     if sum(x['count'] for x in s['air_group'])!=s['aircraft_capacity']:
         raise ValueError(s['id']+': air group does not match capacity')
@@ -220,12 +220,17 @@ def validate(s,m):
                 triangles+=1
             for a,b in zip(f,f[1:]+f[:1]):
                 edges[tuple(sorted((a,b)))]+=1;directed[(a,b)]+=1
-        assert all(n==2 for n in edges.values()),name+' has an open construction surface'
-        assert all(directed[(a,b)]==directed[(b,a)] for a,b in directed),name+' has inconsistent winding'
+        boundary=[(a,b) for (a,b),count in edges.items() if count==1]
+        if name in open_roofs:
+            # The separate perforated flight-deck assembly supplies the roof.
+            assert len(boundary)==sum(abs(v[:,1]-20.3)<1e-9) and all(abs(v[i,1]-20.3)<1e-9 for edge in boundary for i in edge),name
+            assert all(n in (1,2) for n in edges.values()),name
+        else: assert all(n==2 for n in edges.values()),name+' has an open construction surface'
+        assert all(directed[(a,b)]==directed[(b,a)] for a,b in directed if edges[tuple(sorted((a,b)))]==2),name+' has inconsistent winding'
         assert mat in COLORS,name
     return dict(unit=s['id'],capacity=s['aircraft_capacity'],air_group_total=sum(x['count'] for x in s['air_group']),
                 offensive_ecm_modules=s['offensive_ecm_modules'],parts=len(m.parts),triangles=triangles,
-                finite_vertices=True,valid_faces=True,nonzero_triangles=True,closed_construction_parts=True,
+                finite_vertices=True,valid_faces=True,nonzero_triangles=True,closed_construction_parts=not bool(open_roofs),intentional_roof_interfaces=list(open_roofs),
                 game_integration_tested=False)
 
 def main():

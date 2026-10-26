@@ -1,0 +1,3939 @@
+{
+  "schema": 1,
+  "version": "0.7.0-recovery",
+  "origin": "Original Australis game-model general-arrangement blockout",
+  "game_obj_sha256": "cea47680a8cec6d40d26b9299c776f6ab728d37c3ec0bbb6b46d18a004fc2fbe",
+  "hangar_bounds_m": [
+    -25.0,
+    25.0,
+    11.8,
+    19.8,
+    -137.0,
+    143.0
+  ],
+  "hangar_clear_length_width_height_m": [
+    280,
+    50,
+    8
+  ],
+  "hangar_towing_spine_bounds_m": [
+    -10.5,
+    -4.5,
+    11.8,
+    19.8,
+    -137,
+    143
+  ],
+  "parking_reference_mix": {
+    "large_folded_12_by_20_5_m": 24,
+    "compact_uav_9_by_11_m": 8,
+    "folded_rotor_9_by_14_m": 4
+  },
+  "parking_slots": [
+    {
+      "name": "Port-01 large",
+      "category": "aircraft",
+      "bounds": [
+        -23.5,
+        -11.5,
+        11.802,
+        17.802,
+        -132,
+        -111.5
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Port-02 large",
+      "category": "aircraft",
+      "bounds": [
+        -23.5,
+        -11.5,
+        11.802,
+        17.802,
+        -111.5,
+        -91.0
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Port-03 large",
+      "category": "aircraft",
+      "bounds": [
+        -23.5,
+        -11.5,
+        11.802,
+        17.802,
+        -91.0,
+        -70.5
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Port-04 large",
+      "category": "aircraft",
+      "bounds": [
+        -23.5,
+        -11.5,
+        11.802,
+        17.802,
+        -70.5,
+        -50.0
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Port-05 large",
+      "category": "aircraft",
+      "bounds": [
+        -23.5,
+        -11.5,
+        11.802,
+        17.802,
+        -50.0,
+        -29.5
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Port-06 large",
+      "category": "aircraft",
+      "bounds": [
+        -23.5,
+        -11.5,
+        11.802,
+        17.802,
+        -29.5,
+        -9.0
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Port-07 large",
+      "category": "aircraft",
+      "bounds": [
+        -23.5,
+        -11.5,
+        11.802,
+        17.802,
+        -9.0,
+        11.5
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Port-08 large",
+      "category": "aircraft",
+      "bounds": [
+        -23.5,
+        -11.5,
+        11.802,
+        17.802,
+        11.5,
+        32.0
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Port-09 large",
+      "category": "aircraft",
+      "bounds": [
+        -23.5,
+        -11.5,
+        11.802,
+        17.802,
+        32.0,
+        52.5
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Port-10 large",
+      "category": "aircraft",
+      "bounds": [
+        -23.5,
+        -11.5,
+        11.802,
+        17.802,
+        52.5,
+        73.0
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Port-11 large",
+      "category": "aircraft",
+      "bounds": [
+        -23.5,
+        -11.5,
+        11.802,
+        17.802,
+        73.0,
+        93.5
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Port-12 large",
+      "category": "aircraft",
+      "bounds": [
+        -23.5,
+        -11.5,
+        11.802,
+        17.802,
+        93.5,
+        114.0
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Port-13 compact",
+      "category": "aircraft",
+      "bounds": [
+        -22.0,
+        -13.0,
+        11.802,
+        17.802,
+        114.0,
+        125.0
+      ],
+      "berths": 0,
+      "note": "compact folded planning slot",
+      "floor_area_m2": 99.0,
+      "volume_m3": 594.0
+    },
+    {
+      "name": "Port-14 compact",
+      "category": "aircraft",
+      "bounds": [
+        -22.0,
+        -13.0,
+        11.802,
+        17.802,
+        125.0,
+        136.0
+      ],
+      "berths": 0,
+      "note": "compact folded planning slot",
+      "floor_area_m2": 99.0,
+      "volume_m3": 594.0
+    },
+    {
+      "name": "Centre aft-15 large",
+      "category": "aircraft",
+      "bounds": [
+        -3.0,
+        9.0,
+        11.802,
+        17.802,
+        -136.5,
+        -116.0
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Centre aft-16 large",
+      "category": "aircraft",
+      "bounds": [
+        -3.0,
+        9.0,
+        11.802,
+        17.802,
+        -116.0,
+        -95.5
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Centre aft-17 large",
+      "category": "aircraft",
+      "bounds": [
+        -3.0,
+        9.0,
+        11.802,
+        17.802,
+        -95.5,
+        -75.0
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Centre aft-18 large",
+      "category": "aircraft",
+      "bounds": [
+        -3.0,
+        9.0,
+        11.802,
+        17.802,
+        -75.0,
+        -54.5
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Centre aft-19 compact",
+      "category": "aircraft",
+      "bounds": [
+        -1.5,
+        7.5,
+        11.802,
+        17.802,
+        -54.5,
+        -43.5
+      ],
+      "berths": 0,
+      "note": "compact folded planning slot",
+      "floor_area_m2": 99.0,
+      "volume_m3": 594.0
+    },
+    {
+      "name": "Centre aft-20 compact",
+      "category": "aircraft",
+      "bounds": [
+        -1.5,
+        7.5,
+        11.802,
+        17.802,
+        -43.5,
+        -32.5
+      ],
+      "berths": 0,
+      "note": "compact folded planning slot",
+      "floor_area_m2": 99.0,
+      "volume_m3": 594.0
+    },
+    {
+      "name": "Centre forward-21 large",
+      "category": "aircraft",
+      "bounds": [
+        -3.0,
+        9.0,
+        11.802,
+        17.802,
+        27,
+        47.5
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Centre forward-22 large",
+      "category": "aircraft",
+      "bounds": [
+        -3.0,
+        9.0,
+        11.802,
+        17.802,
+        47.5,
+        68.0
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Centre forward-23 large",
+      "category": "aircraft",
+      "bounds": [
+        -3.0,
+        9.0,
+        11.802,
+        17.802,
+        68.0,
+        88.5
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Centre forward-24 large",
+      "category": "aircraft",
+      "bounds": [
+        -3.0,
+        9.0,
+        11.802,
+        17.802,
+        88.5,
+        109.0
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Centre forward-25 compact",
+      "category": "aircraft",
+      "bounds": [
+        -1.5,
+        7.5,
+        11.802,
+        17.802,
+        109.0,
+        120.0
+      ],
+      "berths": 0,
+      "note": "compact folded planning slot",
+      "floor_area_m2": 99.0,
+      "volume_m3": 594.0
+    },
+    {
+      "name": "Centre forward-26 compact",
+      "category": "aircraft",
+      "bounds": [
+        -1.5,
+        7.5,
+        11.802,
+        17.802,
+        120.0,
+        131.0
+      ],
+      "berths": 0,
+      "note": "compact folded planning slot",
+      "floor_area_m2": 99.0,
+      "volume_m3": 594.0
+    },
+    {
+      "name": "Centre forward-27 compact",
+      "category": "aircraft",
+      "bounds": [
+        -1.5,
+        7.5,
+        11.802,
+        17.802,
+        131.0,
+        142.0
+      ],
+      "berths": 0,
+      "note": "compact folded planning slot",
+      "floor_area_m2": 99.0,
+      "volume_m3": 594.0
+    },
+    {
+      "name": "Starboard aft-28 large",
+      "category": "aircraft",
+      "bounds": [
+        12.0,
+        24.0,
+        11.802,
+        17.802,
+        -135,
+        -114.5
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Starboard aft-29 large",
+      "category": "aircraft",
+      "bounds": [
+        12.0,
+        24.0,
+        11.802,
+        17.802,
+        -114.5,
+        -94.0
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Starboard aft-30 rotor",
+      "category": "aircraft",
+      "bounds": [
+        13.5,
+        22.5,
+        11.802,
+        17.802,
+        -94.0,
+        -80.0
+      ],
+      "berths": 0,
+      "note": "rotor folded planning slot",
+      "floor_area_m2": 126.0,
+      "volume_m3": 756.0
+    },
+    {
+      "name": "Starboard aft-31 rotor",
+      "category": "aircraft",
+      "bounds": [
+        13.5,
+        22.5,
+        11.802,
+        17.802,
+        -80.0,
+        -66.0
+      ],
+      "berths": 0,
+      "note": "rotor folded planning slot",
+      "floor_area_m2": 126.0,
+      "volume_m3": 756.0
+    },
+    {
+      "name": "Starboard forward-32 large",
+      "category": "aircraft",
+      "bounds": [
+        12.0,
+        24.0,
+        11.802,
+        17.802,
+        96,
+        116.5
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Starboard forward-33 large",
+      "category": "aircraft",
+      "bounds": [
+        12.0,
+        24.0,
+        11.802,
+        17.802,
+        116.5,
+        137.0
+      ],
+      "berths": 0,
+      "note": "large folded planning slot",
+      "floor_area_m2": 246.0,
+      "volume_m3": 1476.0
+    },
+    {
+      "name": "Starboard freed lift-34 rotor",
+      "category": "aircraft",
+      "bounds": [
+        13.5,
+        22.5,
+        11.802,
+        17.802,
+        -1,
+        13
+      ],
+      "berths": 0,
+      "note": "rotor folded planning slot",
+      "floor_area_m2": 126.0,
+      "volume_m3": 756.0
+    },
+    {
+      "name": "Starboard freed lift-35 rotor",
+      "category": "aircraft",
+      "bounds": [
+        13.5,
+        22.5,
+        11.802,
+        17.802,
+        13,
+        27
+      ],
+      "berths": 0,
+      "note": "rotor folded planning slot",
+      "floor_area_m2": 126.0,
+      "volume_m3": 756.0
+    },
+    {
+      "name": "Starboard pocket-36 compact",
+      "category": "aircraft",
+      "bounds": [
+        13.5,
+        22.5,
+        11.802,
+        17.802,
+        27,
+        38
+      ],
+      "berths": 0,
+      "note": "compact folded planning slot",
+      "floor_area_m2": 99.0,
+      "volume_m3": 594.0
+    }
+  ],
+  "spaces": [
+    {
+      "name": "Lift shaft 1",
+      "category": "lift",
+      "bounds": [
+        16.15,
+        38.85,
+        11.45,
+        22.0,
+        68.65,
+        95.35
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 606.09,
+      "volume_m3": 6394.249
+    },
+    {
+      "name": "Lift shaft 2",
+      "category": "lift",
+      "bounds": [
+        16.15,
+        38.85,
+        11.45,
+        22.0,
+        40.65,
+        67.35
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 606.09,
+      "volume_m3": 6394.25
+    },
+    {
+      "name": "Lift shaft 3",
+      "category": "lift",
+      "bounds": [
+        -0.35,
+        22.35,
+        11.45,
+        22.0,
+        -31.35,
+        -4.65
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 606.09,
+      "volume_m3": 6394.25
+    },
+    {
+      "name": "Lift shaft 4",
+      "category": "lift",
+      "bounds": [
+        14.65,
+        37.35,
+        11.45,
+        22.0,
+        -63.35,
+        -36.65
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 606.09,
+      "volume_m3": 6394.25
+    },
+    {
+      "name": "CIWS_1 well",
+      "category": "weapon",
+      "bounds": [
+        -33.900000000000006,
+        -27.1,
+        15.9,
+        22.002,
+        154.60000000000002,
+        161.39999999999998
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 46.24,
+      "volume_m3": 282.156
+    },
+    {
+      "name": "CIWS_2 well",
+      "category": "weapon",
+      "bounds": [
+        26.0,
+        32.800000000000004,
+        15.9,
+        22.002,
+        -145.39999999999998,
+        -138.60000000000002
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 46.24,
+      "volume_m3": 282.156
+    },
+    {
+      "name": "CIWS_3 well",
+      "category": "weapon",
+      "bounds": [
+        -28.4,
+        -21.6,
+        15.9,
+        22.002,
+        -161.39999999999998,
+        -154.60000000000002
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 46.24,
+      "volume_m3": 282.156
+    },
+    {
+      "name": "Mk46_1 well",
+      "category": "weapon",
+      "bounds": [
+        16.6,
+        23.4,
+        15.9,
+        22.002,
+        154.60000000000002,
+        161.39999999999998
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 46.24,
+      "volume_m3": 282.156
+    },
+    {
+      "name": "Mk46_2 well",
+      "category": "weapon",
+      "bounds": [
+        -33.400000000000006,
+        -26.6,
+        15.9,
+        22.002,
+        -71.4,
+        -64.6
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 46.24,
+      "volume_m3": 282.156
+    },
+    {
+      "name": "ESSM_1 well",
+      "category": "weapon",
+      "bounds": [
+        -34.5,
+        -29.5,
+        15.9,
+        22.002,
+        -114.4,
+        -109.6
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 24.0,
+      "volume_m3": 146.448
+    },
+    {
+      "name": "ESSM_2 well",
+      "category": "weapon",
+      "bounds": [
+        29.5,
+        34.5,
+        15.9,
+        22.002,
+        101.6,
+        106.4
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 24.0,
+      "volume_m3": 146.448
+    },
+    {
+      "name": "RAM_1 well",
+      "category": "weapon",
+      "bounds": [
+        -34.5,
+        -29.5,
+        15.9,
+        22.002,
+        -50.400000000000006,
+        -45.599999999999994
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 24.0,
+      "volume_m3": 146.448
+    },
+    {
+      "name": "RAM_2 well",
+      "category": "weapon",
+      "bounds": [
+        29.5,
+        34.5,
+        15.9,
+        22.002,
+        115.6,
+        120.4
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 24.0,
+      "volume_m3": 146.448
+    },
+    {
+      "name": "PVLS_1 well",
+      "category": "weapon",
+      "bounds": [
+        -34.5,
+        -29.5,
+        15.9,
+        22.002,
+        -144.7,
+        -125.3
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 97.0,
+      "volume_m3": 591.894
+    },
+    {
+      "name": "PVLS_2 well",
+      "category": "weapon",
+      "bounds": [
+        29.5,
+        34.5,
+        15.9,
+        22.002,
+        130.3,
+        149.7
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 97.0,
+      "volume_m3": 591.894
+    },
+    {
+      "name": "PVLS_3 well",
+      "category": "weapon",
+      "bounds": [
+        -34.5,
+        -29.5,
+        15.9,
+        22.002,
+        -101.7,
+        -82.3
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 97.0,
+      "volume_m3": 591.894
+    },
+    {
+      "name": "PVLS_4 well",
+      "category": "weapon",
+      "bounds": [
+        20.5,
+        25.5,
+        15.9,
+        22.002,
+        -157.7,
+        -138.3
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 97.0,
+      "volume_m3": 591.894
+    },
+    {
+      "name": "SRBOC_1 well",
+      "category": "weapon",
+      "bounds": [
+        -25.2,
+        -22.8,
+        15.9,
+        22.002,
+        -170.2,
+        -167.8
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 5.76,
+      "volume_m3": 35.148
+    },
+    {
+      "name": "SRBOC_2 well",
+      "category": "weapon",
+      "bounds": [
+        -28.2,
+        -25.8,
+        15.9,
+        22.002,
+        -117.2,
+        -114.8
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 5.76,
+      "volume_m3": 35.148
+    },
+    {
+      "name": "SRBOC_3 well",
+      "category": "weapon",
+      "bounds": [
+        -31.2,
+        -28.8,
+        15.9,
+        22.002,
+        -39.2,
+        -36.8
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 5.76,
+      "volume_m3": 35.148
+    },
+    {
+      "name": "SRBOC_4 well",
+      "category": "weapon",
+      "bounds": [
+        -31.2,
+        -28.8,
+        15.9,
+        22.002,
+        124.8,
+        127.2
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 5.76,
+      "volume_m3": 35.148
+    },
+    {
+      "name": "SRBOC_5 well",
+      "category": "weapon",
+      "bounds": [
+        22.8,
+        25.2,
+        15.9,
+        22.002,
+        -170.2,
+        -167.8
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 5.76,
+      "volume_m3": 35.148
+    },
+    {
+      "name": "SRBOC_6 well",
+      "category": "weapon",
+      "bounds": [
+        14.8,
+        17.2,
+        15.9,
+        22.002,
+        -158.2,
+        -155.8
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 5.76,
+      "volume_m3": 35.148
+    },
+    {
+      "name": "SRBOC_7 well",
+      "category": "weapon",
+      "bounds": [
+        16.8,
+        19.2,
+        15.9,
+        22.002,
+        -180.2,
+        -177.8
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 5.76,
+      "volume_m3": 35.148
+    },
+    {
+      "name": "SRBOC_8 well",
+      "category": "weapon",
+      "bounds": [
+        25.8,
+        28.2,
+        15.9,
+        22.002,
+        124.8,
+        127.2
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 5.76,
+      "volume_m3": 35.148
+    },
+    {
+      "name": "Nulka_1 well",
+      "category": "weapon",
+      "bounds": [
+        -10.2,
+        -7.8,
+        15.9,
+        22.002,
+        -177.2,
+        -174.8
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 5.76,
+      "volume_m3": 35.148
+    },
+    {
+      "name": "Nulka_2 well",
+      "category": "weapon",
+      "bounds": [
+        -31.2,
+        -28.8,
+        15.9,
+        22.002,
+        72.8,
+        75.2
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 5.76,
+      "volume_m3": 35.148
+    },
+    {
+      "name": "Nulka_3 well",
+      "category": "weapon",
+      "bounds": [
+        7.8,
+        10.2,
+        15.9,
+        22.002,
+        -177.2,
+        -174.8
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 5.76,
+      "volume_m3": 35.148
+    },
+    {
+      "name": "Nulka_4 well",
+      "category": "weapon",
+      "bounds": [
+        16.8,
+        19.2,
+        15.9,
+        22.002,
+        -147.2,
+        -144.8
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 5.76,
+      "volume_m3": 35.148
+    },
+    {
+      "name": "Laser reservation 1",
+      "category": "laser",
+      "bounds": [
+        -35.21363636363636,
+        -30.01363636363636,
+        16.2,
+        22.0,
+        105.9,
+        112.1
+      ],
+      "berths": 0,
+      "note": "Space reserved for a future visual/functional laser mechanism; not an implemented weapon",
+      "floor_area_m2": 32.24,
+      "volume_m3": 186.992
+    },
+    {
+      "name": "Laser reservation 2",
+      "category": "laser",
+      "bounds": [
+        29.08181818181818,
+        34.28181818181818,
+        16.2,
+        22.0,
+        154.9,
+        161.1
+      ],
+      "berths": 0,
+      "note": "Space reserved for a future visual/functional laser mechanism; not an implemented weapon",
+      "floor_area_m2": 32.24,
+      "volume_m3": 186.992
+    },
+    {
+      "name": "Laser reservation 3",
+      "category": "laser",
+      "bounds": [
+        -39.872727272727275,
+        -34.67272727272727,
+        16.2,
+        22.0,
+        -63.1,
+        -56.9
+      ],
+      "berths": 0,
+      "note": "Space reserved for a future visual/functional laser mechanism; not an implemented weapon",
+      "floor_area_m2": 32.24,
+      "volume_m3": 186.992
+    },
+    {
+      "name": "Laser reservation 4",
+      "category": "laser",
+      "bounds": [
+        24.4,
+        29.6,
+        16.2,
+        22.0,
+        -166.1,
+        -159.9
+      ],
+      "berths": 0,
+      "note": "Space reserved for a future visual/functional laser mechanism; not an implemented weapon",
+      "floor_area_m2": 32.24,
+      "volume_m3": 186.992
+    },
+    {
+      "name": "Machinery and power reservation",
+      "category": "machinery",
+      "bounds": [
+        -8,
+        8,
+        -4.2,
+        7.8,
+        -74,
+        46
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 1920,
+      "volume_m3": 23040.0
+    },
+    {
+      "name": "Forward auxiliary machinery",
+      "category": "machinery",
+      "bounds": [
+        -8,
+        8,
+        -4.2,
+        7.8,
+        48,
+        77
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 464,
+      "volume_m3": 5568.0
+    },
+    {
+      "name": "Aft auxiliary machinery",
+      "category": "machinery",
+      "bounds": [
+        -8,
+        8,
+        -4.2,
+        7.8,
+        -107,
+        -77
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 480,
+      "volume_m3": 5760.0
+    },
+    {
+      "name": "Forward aviation magazine reservation",
+      "category": "magazine",
+      "bounds": [
+        -7,
+        7,
+        -4.2,
+        1.8,
+        82,
+        104
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 308,
+      "volume_m3": 1848.0
+    },
+    {
+      "name": "Aft aviation magazine reservation",
+      "category": "magazine",
+      "bounds": [
+        -7,
+        7,
+        -4.2,
+        1.8,
+        -136,
+        -111
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 350,
+      "volume_m3": 2100.0
+    },
+    {
+      "name": "Distributed aviation fuel tank reservation",
+      "category": "fuel",
+      "bounds": [
+        -7,
+        7,
+        -8.8,
+        -4.7,
+        -116,
+        116
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 3248,
+      "volume_m3": 13316.8
+    },
+    {
+      "name": "Forward catapult machinery reservation",
+      "category": "aviation_service",
+      "bounds": [
+        -13,
+        13,
+        11.8,
+        19.8,
+        148,
+        169
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 546,
+      "volume_m3": 4368.0
+    },
+    {
+      "name": "Forward hotel and medical lower deck",
+      "category": "hotel_service",
+      "bounds": [
+        -8,
+        8,
+        2.3,
+        4.9,
+        82,
+        122
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 640,
+      "volume_m3": 1664.0
+    },
+    {
+      "name": "Forward hotel and medical upper deck",
+      "category": "hotel_service",
+      "bounds": [
+        -8,
+        8,
+        5.2,
+        7.8,
+        82,
+        122
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 640,
+      "volume_m3": 1664.0
+    },
+    {
+      "name": "Aft hotel and damage-control lower deck",
+      "category": "hotel_service",
+      "bounds": [
+        -8,
+        8,
+        2.3,
+        4.9,
+        -148,
+        -111
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 592,
+      "volume_m3": 1539.2
+    },
+    {
+      "name": "Aft hotel and damage-control upper deck",
+      "category": "hotel_service",
+      "bounds": [
+        -8,
+        8,
+        5.2,
+        7.8,
+        -148,
+        -111
+      ],
+      "berths": 0,
+      "note": "",
+      "floor_area_m2": 592,
+      "volume_m3": 1539.2
+    },
+    {
+      "name": "Berthing D6 X-22 Z-144",
+      "category": "accommodation",
+      "bounds": [
+        -27.0,
+        -17.0,
+        8.7,
+        11.299999999999999,
+        -152,
+        -136
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-10 Z-144",
+      "category": "accommodation",
+      "bounds": [
+        -15.0,
+        -5.0,
+        8.7,
+        11.299999999999999,
+        -152,
+        -136
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+0 Z-144",
+      "category": "accommodation",
+      "bounds": [
+        -3.0,
+        3.0,
+        8.7,
+        11.299999999999999,
+        -152,
+        -136
+      ],
+      "berths": 24,
+      "note": "",
+      "floor_area_m2": 96.0,
+      "volume_m3": 249.6
+    },
+    {
+      "name": "Berthing D6 X+10 Z-144",
+      "category": "accommodation",
+      "bounds": [
+        5.0,
+        15.0,
+        8.7,
+        11.299999999999999,
+        -152,
+        -136
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+22 Z-144",
+      "category": "accommodation",
+      "bounds": [
+        17.0,
+        27.0,
+        8.7,
+        11.299999999999999,
+        -152,
+        -136
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-33 Z-126",
+      "category": "accommodation",
+      "bounds": [
+        -37.0,
+        -29.0,
+        8.7,
+        11.299999999999999,
+        -134,
+        -118
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-22 Z-126",
+      "category": "accommodation",
+      "bounds": [
+        -27.0,
+        -17.0,
+        8.7,
+        11.299999999999999,
+        -134,
+        -118
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-10 Z-126",
+      "category": "accommodation",
+      "bounds": [
+        -15.0,
+        -5.0,
+        8.7,
+        11.299999999999999,
+        -134,
+        -118
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+0 Z-126",
+      "category": "accommodation",
+      "bounds": [
+        -3.0,
+        3.0,
+        8.7,
+        11.299999999999999,
+        -134,
+        -118
+      ],
+      "berths": 24,
+      "note": "",
+      "floor_area_m2": 96.0,
+      "volume_m3": 249.6
+    },
+    {
+      "name": "Berthing D6 X+10 Z-126",
+      "category": "accommodation",
+      "bounds": [
+        5.0,
+        15.0,
+        8.7,
+        11.299999999999999,
+        -134,
+        -118
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+22 Z-126",
+      "category": "accommodation",
+      "bounds": [
+        17.0,
+        27.0,
+        8.7,
+        11.299999999999999,
+        -134,
+        -118
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-33 Z-108",
+      "category": "accommodation",
+      "bounds": [
+        -37.0,
+        -29.0,
+        8.7,
+        11.299999999999999,
+        -116,
+        -100
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-22 Z-108",
+      "category": "accommodation",
+      "bounds": [
+        -27.0,
+        -17.0,
+        8.7,
+        11.299999999999999,
+        -116,
+        -100
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-10 Z-108",
+      "category": "accommodation",
+      "bounds": [
+        -15.0,
+        -5.0,
+        8.7,
+        11.299999999999999,
+        -116,
+        -100
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+0 Z-108",
+      "category": "accommodation",
+      "bounds": [
+        -3.0,
+        3.0,
+        8.7,
+        11.299999999999999,
+        -116,
+        -100
+      ],
+      "berths": 24,
+      "note": "",
+      "floor_area_m2": 96.0,
+      "volume_m3": 249.6
+    },
+    {
+      "name": "Berthing D6 X+10 Z-108",
+      "category": "accommodation",
+      "bounds": [
+        5.0,
+        15.0,
+        8.7,
+        11.299999999999999,
+        -116,
+        -100
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+22 Z-108",
+      "category": "accommodation",
+      "bounds": [
+        17.0,
+        27.0,
+        8.7,
+        11.299999999999999,
+        -116,
+        -100
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-33 Z-90",
+      "category": "accommodation",
+      "bounds": [
+        -37.0,
+        -29.0,
+        8.7,
+        11.299999999999999,
+        -98,
+        -82
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-22 Z-90",
+      "category": "accommodation",
+      "bounds": [
+        -27.0,
+        -17.0,
+        8.7,
+        11.299999999999999,
+        -98,
+        -82
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-10 Z-90",
+      "category": "accommodation",
+      "bounds": [
+        -15.0,
+        -5.0,
+        8.7,
+        11.299999999999999,
+        -98,
+        -82
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+0 Z-90",
+      "category": "accommodation",
+      "bounds": [
+        -3.0,
+        3.0,
+        8.7,
+        11.299999999999999,
+        -98,
+        -82
+      ],
+      "berths": 24,
+      "note": "",
+      "floor_area_m2": 96.0,
+      "volume_m3": 249.6
+    },
+    {
+      "name": "Berthing D6 X+10 Z-90",
+      "category": "accommodation",
+      "bounds": [
+        5.0,
+        15.0,
+        8.7,
+        11.299999999999999,
+        -98,
+        -82
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+22 Z-90",
+      "category": "accommodation",
+      "bounds": [
+        17.0,
+        27.0,
+        8.7,
+        11.299999999999999,
+        -98,
+        -82
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-33 Z-72",
+      "category": "accommodation",
+      "bounds": [
+        -37.0,
+        -29.0,
+        8.7,
+        11.299999999999999,
+        -80,
+        -64
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-22 Z-72",
+      "category": "accommodation",
+      "bounds": [
+        -27.0,
+        -17.0,
+        8.7,
+        11.299999999999999,
+        -80,
+        -64
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-10 Z-72",
+      "category": "accommodation",
+      "bounds": [
+        -15.0,
+        -5.0,
+        8.7,
+        11.299999999999999,
+        -80,
+        -64
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+0 Z-72",
+      "category": "accommodation",
+      "bounds": [
+        -3.0,
+        3.0,
+        8.7,
+        11.299999999999999,
+        -80,
+        -64
+      ],
+      "berths": 24,
+      "note": "",
+      "floor_area_m2": 96.0,
+      "volume_m3": 249.6
+    },
+    {
+      "name": "Berthing D6 X+10 Z-72",
+      "category": "accommodation",
+      "bounds": [
+        5.0,
+        15.0,
+        8.7,
+        11.299999999999999,
+        -80,
+        -64
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+22 Z-72",
+      "category": "accommodation",
+      "bounds": [
+        17.0,
+        27.0,
+        8.7,
+        11.299999999999999,
+        -80,
+        -64
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+33 Z-72",
+      "category": "accommodation",
+      "bounds": [
+        29.0,
+        37.0,
+        8.7,
+        11.299999999999999,
+        -80,
+        -64
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-33 Z-54",
+      "category": "accommodation",
+      "bounds": [
+        -37.0,
+        -29.0,
+        8.7,
+        11.299999999999999,
+        -62,
+        -46
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-22 Z-54",
+      "category": "accommodation",
+      "bounds": [
+        -27.0,
+        -17.0,
+        8.7,
+        11.299999999999999,
+        -62,
+        -46
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-10 Z-54",
+      "category": "accommodation",
+      "bounds": [
+        -15.0,
+        -5.0,
+        8.7,
+        11.299999999999999,
+        -62,
+        -46
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+0 Z-54",
+      "category": "accommodation",
+      "bounds": [
+        -3.0,
+        3.0,
+        8.7,
+        11.299999999999999,
+        -62,
+        -46
+      ],
+      "berths": 24,
+      "note": "",
+      "floor_area_m2": 96.0,
+      "volume_m3": 249.6
+    },
+    {
+      "name": "Berthing D6 X+10 Z-54",
+      "category": "accommodation",
+      "bounds": [
+        5.0,
+        15.0,
+        8.7,
+        11.299999999999999,
+        -62,
+        -46
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+22 Z-54",
+      "category": "accommodation",
+      "bounds": [
+        17.0,
+        27.0,
+        8.7,
+        11.299999999999999,
+        -62,
+        -46
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+33 Z-54",
+      "category": "accommodation",
+      "bounds": [
+        29.0,
+        37.0,
+        8.7,
+        11.299999999999999,
+        -62,
+        -46
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-33 Z-36",
+      "category": "accommodation",
+      "bounds": [
+        -37.0,
+        -29.0,
+        8.7,
+        11.299999999999999,
+        -44,
+        -28
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-22 Z-36",
+      "category": "accommodation",
+      "bounds": [
+        -27.0,
+        -17.0,
+        8.7,
+        11.299999999999999,
+        -44,
+        -28
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-10 Z-36",
+      "category": "accommodation",
+      "bounds": [
+        -15.0,
+        -5.0,
+        8.7,
+        11.299999999999999,
+        -44,
+        -28
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+0 Z-36",
+      "category": "accommodation",
+      "bounds": [
+        -3.0,
+        3.0,
+        8.7,
+        11.299999999999999,
+        -44,
+        -28
+      ],
+      "berths": 24,
+      "note": "",
+      "floor_area_m2": 96.0,
+      "volume_m3": 249.6
+    },
+    {
+      "name": "Berthing D6 X+10 Z-36",
+      "category": "accommodation",
+      "bounds": [
+        5.0,
+        15.0,
+        8.7,
+        11.299999999999999,
+        -44,
+        -28
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+22 Z-36",
+      "category": "accommodation",
+      "bounds": [
+        17.0,
+        27.0,
+        8.7,
+        11.299999999999999,
+        -44,
+        -28
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+33 Z-36",
+      "category": "accommodation",
+      "bounds": [
+        29.0,
+        37.0,
+        8.7,
+        11.299999999999999,
+        -44,
+        -28
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-33 Z-18",
+      "category": "accommodation",
+      "bounds": [
+        -37.0,
+        -29.0,
+        8.7,
+        11.299999999999999,
+        -26,
+        -10
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-22 Z-18",
+      "category": "accommodation",
+      "bounds": [
+        -27.0,
+        -17.0,
+        8.7,
+        11.299999999999999,
+        -26,
+        -10
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-10 Z-18",
+      "category": "accommodation",
+      "bounds": [
+        -15.0,
+        -5.0,
+        8.7,
+        11.299999999999999,
+        -26,
+        -10
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+0 Z-18",
+      "category": "accommodation",
+      "bounds": [
+        -3.0,
+        3.0,
+        8.7,
+        11.299999999999999,
+        -26,
+        -10
+      ],
+      "berths": 24,
+      "note": "",
+      "floor_area_m2": 96.0,
+      "volume_m3": 249.6
+    },
+    {
+      "name": "Berthing D6 X+10 Z-18",
+      "category": "accommodation",
+      "bounds": [
+        5.0,
+        15.0,
+        8.7,
+        11.299999999999999,
+        -26,
+        -10
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+22 Z-18",
+      "category": "accommodation",
+      "bounds": [
+        17.0,
+        27.0,
+        8.7,
+        11.299999999999999,
+        -26,
+        -10
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+33 Z-18",
+      "category": "accommodation",
+      "bounds": [
+        29.0,
+        37.0,
+        8.7,
+        11.299999999999999,
+        -26,
+        -10
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-33 Z+0",
+      "category": "accommodation",
+      "bounds": [
+        -37.0,
+        -29.0,
+        8.7,
+        11.299999999999999,
+        -8,
+        8
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-22 Z+0",
+      "category": "accommodation",
+      "bounds": [
+        -27.0,
+        -17.0,
+        8.7,
+        11.299999999999999,
+        -8,
+        8
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-10 Z+0",
+      "category": "accommodation",
+      "bounds": [
+        -15.0,
+        -5.0,
+        8.7,
+        11.299999999999999,
+        -8,
+        8
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+0 Z+0",
+      "category": "accommodation",
+      "bounds": [
+        -3.0,
+        3.0,
+        8.7,
+        11.299999999999999,
+        -8,
+        8
+      ],
+      "berths": 24,
+      "note": "",
+      "floor_area_m2": 96.0,
+      "volume_m3": 249.6
+    },
+    {
+      "name": "Berthing D6 X+10 Z+0",
+      "category": "accommodation",
+      "bounds": [
+        5.0,
+        15.0,
+        8.7,
+        11.299999999999999,
+        -8,
+        8
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+22 Z+0",
+      "category": "accommodation",
+      "bounds": [
+        17.0,
+        27.0,
+        8.7,
+        11.299999999999999,
+        -8,
+        8
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+33 Z+0",
+      "category": "accommodation",
+      "bounds": [
+        29.0,
+        37.0,
+        8.7,
+        11.299999999999999,
+        -8,
+        8
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-33 Z+18",
+      "category": "accommodation",
+      "bounds": [
+        -37.0,
+        -29.0,
+        8.7,
+        11.299999999999999,
+        10,
+        26
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-22 Z+18",
+      "category": "accommodation",
+      "bounds": [
+        -27.0,
+        -17.0,
+        8.7,
+        11.299999999999999,
+        10,
+        26
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-10 Z+18",
+      "category": "accommodation",
+      "bounds": [
+        -15.0,
+        -5.0,
+        8.7,
+        11.299999999999999,
+        10,
+        26
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+0 Z+18",
+      "category": "accommodation",
+      "bounds": [
+        -3.0,
+        3.0,
+        8.7,
+        11.299999999999999,
+        10,
+        26
+      ],
+      "berths": 24,
+      "note": "",
+      "floor_area_m2": 96.0,
+      "volume_m3": 249.6
+    },
+    {
+      "name": "Berthing D6 X+10 Z+18",
+      "category": "accommodation",
+      "bounds": [
+        5.0,
+        15.0,
+        8.7,
+        11.299999999999999,
+        10,
+        26
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+22 Z+18",
+      "category": "accommodation",
+      "bounds": [
+        17.0,
+        27.0,
+        8.7,
+        11.299999999999999,
+        10,
+        26
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+33 Z+18",
+      "category": "accommodation",
+      "bounds": [
+        29.0,
+        37.0,
+        8.7,
+        11.299999999999999,
+        10,
+        26
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-22 Z+36",
+      "category": "accommodation",
+      "bounds": [
+        -27.0,
+        -17.0,
+        8.7,
+        11.299999999999999,
+        28,
+        44
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-10 Z+36",
+      "category": "accommodation",
+      "bounds": [
+        -15.0,
+        -5.0,
+        8.7,
+        11.299999999999999,
+        28,
+        44
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+0 Z+36",
+      "category": "accommodation",
+      "bounds": [
+        -3.0,
+        3.0,
+        8.7,
+        11.299999999999999,
+        28,
+        44
+      ],
+      "berths": 24,
+      "note": "",
+      "floor_area_m2": 96.0,
+      "volume_m3": 249.6
+    },
+    {
+      "name": "Berthing D6 X+10 Z+36",
+      "category": "accommodation",
+      "bounds": [
+        5.0,
+        15.0,
+        8.7,
+        11.299999999999999,
+        28,
+        44
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+22 Z+36",
+      "category": "accommodation",
+      "bounds": [
+        17.0,
+        27.0,
+        8.7,
+        11.299999999999999,
+        28,
+        44
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+33 Z+36",
+      "category": "accommodation",
+      "bounds": [
+        29.0,
+        37.0,
+        8.7,
+        11.299999999999999,
+        28,
+        44
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-22 Z+54",
+      "category": "accommodation",
+      "bounds": [
+        -27.0,
+        -17.0,
+        8.7,
+        11.299999999999999,
+        46,
+        62
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-10 Z+54",
+      "category": "accommodation",
+      "bounds": [
+        -15.0,
+        -5.0,
+        8.7,
+        11.299999999999999,
+        46,
+        62
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+0 Z+54",
+      "category": "accommodation",
+      "bounds": [
+        -3.0,
+        3.0,
+        8.7,
+        11.299999999999999,
+        46,
+        62
+      ],
+      "berths": 24,
+      "note": "",
+      "floor_area_m2": 96.0,
+      "volume_m3": 249.6
+    },
+    {
+      "name": "Berthing D6 X+10 Z+54",
+      "category": "accommodation",
+      "bounds": [
+        5.0,
+        15.0,
+        8.7,
+        11.299999999999999,
+        46,
+        62
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+22 Z+54",
+      "category": "accommodation",
+      "bounds": [
+        17.0,
+        27.0,
+        8.7,
+        11.299999999999999,
+        46,
+        62
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+33 Z+54",
+      "category": "accommodation",
+      "bounds": [
+        29.0,
+        37.0,
+        8.7,
+        11.299999999999999,
+        46,
+        62
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-22 Z+72",
+      "category": "accommodation",
+      "bounds": [
+        -27.0,
+        -17.0,
+        8.7,
+        11.299999999999999,
+        64,
+        80
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-10 Z+72",
+      "category": "accommodation",
+      "bounds": [
+        -15.0,
+        -5.0,
+        8.7,
+        11.299999999999999,
+        64,
+        80
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+0 Z+72",
+      "category": "accommodation",
+      "bounds": [
+        -3.0,
+        3.0,
+        8.7,
+        11.299999999999999,
+        64,
+        80
+      ],
+      "berths": 24,
+      "note": "",
+      "floor_area_m2": 96.0,
+      "volume_m3": 249.6
+    },
+    {
+      "name": "Berthing D6 X+10 Z+72",
+      "category": "accommodation",
+      "bounds": [
+        5.0,
+        15.0,
+        8.7,
+        11.299999999999999,
+        64,
+        80
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+22 Z+72",
+      "category": "accommodation",
+      "bounds": [
+        17.0,
+        27.0,
+        8.7,
+        11.299999999999999,
+        64,
+        80
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+33 Z+72",
+      "category": "accommodation",
+      "bounds": [
+        29.0,
+        37.0,
+        8.7,
+        11.299999999999999,
+        64,
+        80
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-22 Z+90",
+      "category": "accommodation",
+      "bounds": [
+        -27.0,
+        -17.0,
+        8.7,
+        11.299999999999999,
+        82,
+        98
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-10 Z+90",
+      "category": "accommodation",
+      "bounds": [
+        -15.0,
+        -5.0,
+        8.7,
+        11.299999999999999,
+        82,
+        98
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+0 Z+90",
+      "category": "accommodation",
+      "bounds": [
+        -3.0,
+        3.0,
+        8.7,
+        11.299999999999999,
+        82,
+        98
+      ],
+      "berths": 24,
+      "note": "",
+      "floor_area_m2": 96.0,
+      "volume_m3": 249.6
+    },
+    {
+      "name": "Berthing D6 X+10 Z+90",
+      "category": "accommodation",
+      "bounds": [
+        5.0,
+        15.0,
+        8.7,
+        11.299999999999999,
+        82,
+        98
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+22 Z+90",
+      "category": "accommodation",
+      "bounds": [
+        17.0,
+        27.0,
+        8.7,
+        11.299999999999999,
+        82,
+        98
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+33 Z+90",
+      "category": "accommodation",
+      "bounds": [
+        29.0,
+        37.0,
+        8.7,
+        11.299999999999999,
+        82,
+        98
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-22 Z+108",
+      "category": "accommodation",
+      "bounds": [
+        -27.0,
+        -17.0,
+        8.7,
+        11.299999999999999,
+        100,
+        116
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-10 Z+108",
+      "category": "accommodation",
+      "bounds": [
+        -15.0,
+        -5.0,
+        8.7,
+        11.299999999999999,
+        100,
+        116
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+0 Z+108",
+      "category": "accommodation",
+      "bounds": [
+        -3.0,
+        3.0,
+        8.7,
+        11.299999999999999,
+        100,
+        116
+      ],
+      "berths": 24,
+      "note": "",
+      "floor_area_m2": 96.0,
+      "volume_m3": 249.6
+    },
+    {
+      "name": "Berthing D6 X+10 Z+108",
+      "category": "accommodation",
+      "bounds": [
+        5.0,
+        15.0,
+        8.7,
+        11.299999999999999,
+        100,
+        116
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+22 Z+108",
+      "category": "accommodation",
+      "bounds": [
+        17.0,
+        27.0,
+        8.7,
+        11.299999999999999,
+        100,
+        116
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+33 Z+108",
+      "category": "accommodation",
+      "bounds": [
+        29.0,
+        37.0,
+        8.7,
+        11.299999999999999,
+        100,
+        116
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-22 Z+126",
+      "category": "accommodation",
+      "bounds": [
+        -27.0,
+        -17.0,
+        8.7,
+        11.299999999999999,
+        118,
+        134
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-10 Z+126",
+      "category": "accommodation",
+      "bounds": [
+        -15.0,
+        -5.0,
+        8.7,
+        11.299999999999999,
+        118,
+        134
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+0 Z+126",
+      "category": "accommodation",
+      "bounds": [
+        -3.0,
+        3.0,
+        8.7,
+        11.299999999999999,
+        118,
+        134
+      ],
+      "berths": 24,
+      "note": "",
+      "floor_area_m2": 96.0,
+      "volume_m3": 249.6
+    },
+    {
+      "name": "Berthing D6 X+10 Z+126",
+      "category": "accommodation",
+      "bounds": [
+        5.0,
+        15.0,
+        8.7,
+        11.299999999999999,
+        118,
+        134
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+22 Z+126",
+      "category": "accommodation",
+      "bounds": [
+        17.0,
+        27.0,
+        8.7,
+        11.299999999999999,
+        118,
+        134
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+33 Z+126",
+      "category": "accommodation",
+      "bounds": [
+        29.0,
+        37.0,
+        8.7,
+        11.299999999999999,
+        118,
+        134
+      ],
+      "berths": 32,
+      "note": "",
+      "floor_area_m2": 128.0,
+      "volume_m3": 332.8
+    },
+    {
+      "name": "Berthing D6 X-22 Z+144",
+      "category": "accommodation",
+      "bounds": [
+        -27.0,
+        -17.0,
+        8.7,
+        11.299999999999999,
+        136,
+        152
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X-10 Z+144",
+      "category": "accommodation",
+      "bounds": [
+        -15.0,
+        -5.0,
+        8.7,
+        11.299999999999999,
+        136,
+        152
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+0 Z+144",
+      "category": "accommodation",
+      "bounds": [
+        -3.0,
+        3.0,
+        8.7,
+        11.299999999999999,
+        136,
+        152
+      ],
+      "berths": 24,
+      "note": "",
+      "floor_area_m2": 96.0,
+      "volume_m3": 249.6
+    },
+    {
+      "name": "Berthing D6 X+10 Z+144",
+      "category": "accommodation",
+      "bounds": [
+        5.0,
+        15.0,
+        8.7,
+        11.299999999999999,
+        136,
+        152
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D6 X+22 Z+144",
+      "category": "accommodation",
+      "bounds": [
+        17.0,
+        27.0,
+        8.7,
+        11.299999999999999,
+        136,
+        152
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D5 X-18 Z-144",
+      "category": "accommodation",
+      "bounds": [
+        -25.0,
+        -11.0,
+        5.6,
+        8.2,
+        -152,
+        -136
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X+17 Z-144",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        24.0,
+        5.6,
+        8.2,
+        -152,
+        -136
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X-18 Z-126",
+      "category": "accommodation",
+      "bounds": [
+        -25.0,
+        -11.0,
+        5.6,
+        8.2,
+        -134,
+        -118
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X+17 Z-126",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        24.0,
+        5.6,
+        8.2,
+        -134,
+        -118
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X-18 Z-108",
+      "category": "accommodation",
+      "bounds": [
+        -25.0,
+        -11.0,
+        5.6,
+        8.2,
+        -116,
+        -100
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X+17 Z-108",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        24.0,
+        5.6,
+        8.2,
+        -116,
+        -100
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X-18 Z-90",
+      "category": "accommodation",
+      "bounds": [
+        -25.0,
+        -11.0,
+        5.6,
+        8.2,
+        -98,
+        -82
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X+17 Z-90",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        24.0,
+        5.6,
+        8.2,
+        -98,
+        -82
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X-18 Z-72",
+      "category": "accommodation",
+      "bounds": [
+        -25.0,
+        -11.0,
+        5.6,
+        8.2,
+        -80,
+        -64
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X+17 Z-72",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        24.0,
+        5.6,
+        8.2,
+        -80,
+        -64
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X-18 Z-54",
+      "category": "accommodation",
+      "bounds": [
+        -25.0,
+        -11.0,
+        5.6,
+        8.2,
+        -62,
+        -46
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X+17 Z-54",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        24.0,
+        5.6,
+        8.2,
+        -62,
+        -46
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X-18 Z-36",
+      "category": "accommodation",
+      "bounds": [
+        -25.0,
+        -11.0,
+        5.6,
+        8.2,
+        -44,
+        -28
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X+17 Z-36",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        24.0,
+        5.6,
+        8.2,
+        -44,
+        -28
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X-18 Z-18",
+      "category": "accommodation",
+      "bounds": [
+        -25.0,
+        -11.0,
+        5.6,
+        8.2,
+        -26,
+        -10
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X+17 Z-18",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        24.0,
+        5.6,
+        8.2,
+        -26,
+        -10
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X-18 Z+0",
+      "category": "accommodation",
+      "bounds": [
+        -25.0,
+        -11.0,
+        5.6,
+        8.2,
+        -8,
+        8
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X+17 Z+0",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        24.0,
+        5.6,
+        8.2,
+        -8,
+        8
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X-18 Z+18",
+      "category": "accommodation",
+      "bounds": [
+        -25.0,
+        -11.0,
+        5.6,
+        8.2,
+        10,
+        26
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X+17 Z+18",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        24.0,
+        5.6,
+        8.2,
+        10,
+        26
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X-18 Z+36",
+      "category": "accommodation",
+      "bounds": [
+        -25.0,
+        -11.0,
+        5.6,
+        8.2,
+        28,
+        44
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X+17 Z+36",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        24.0,
+        5.6,
+        8.2,
+        28,
+        44
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X-18 Z+54",
+      "category": "accommodation",
+      "bounds": [
+        -25.0,
+        -11.0,
+        5.6,
+        8.2,
+        46,
+        62
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X+17 Z+54",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        24.0,
+        5.6,
+        8.2,
+        46,
+        62
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X-18 Z+72",
+      "category": "accommodation",
+      "bounds": [
+        -25.0,
+        -11.0,
+        5.6,
+        8.2,
+        64,
+        80
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X+17 Z+72",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        24.0,
+        5.6,
+        8.2,
+        64,
+        80
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X-18 Z+90",
+      "category": "accommodation",
+      "bounds": [
+        -25.0,
+        -11.0,
+        5.6,
+        8.2,
+        82,
+        98
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X+17 Z+90",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        24.0,
+        5.6,
+        8.2,
+        82,
+        98
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X-18 Z+108",
+      "category": "accommodation",
+      "bounds": [
+        -25.0,
+        -11.0,
+        5.6,
+        8.2,
+        100,
+        116
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X+17 Z+108",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        24.0,
+        5.6,
+        8.2,
+        100,
+        116
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X-18 Z+126",
+      "category": "accommodation",
+      "bounds": [
+        -25.0,
+        -11.0,
+        5.6,
+        8.2,
+        118,
+        134
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X+17 Z+126",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        24.0,
+        5.6,
+        8.2,
+        118,
+        134
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X-18 Z+144",
+      "category": "accommodation",
+      "bounds": [
+        -25.0,
+        -11.0,
+        5.6,
+        8.2,
+        136,
+        152
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D5 X+17 Z+144",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        24.0,
+        5.6,
+        8.2,
+        136,
+        152
+      ],
+      "berths": 56,
+      "note": "",
+      "floor_area_m2": 224.0,
+      "volume_m3": 582.4
+    },
+    {
+      "name": "Berthing D4 X-15 Z-144",
+      "category": "accommodation",
+      "bounds": [
+        -20.0,
+        -10.0,
+        2.5,
+        5.1,
+        -152,
+        -136
+      ],
+      "berths": 40,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Berthing D4 X+14.5 Z-144",
+      "category": "accommodation",
+      "bounds": [
+        10.0,
+        19.0,
+        2.5,
+        5.1,
+        -152,
+        -136
+      ],
+      "berths": 36,
+      "note": "",
+      "floor_area_m2": 144.0,
+      "volume_m3": 374.4
+    },
+    {
+      "name": "Berthing D4 X-15 Z-126",
+      "category": "accommodation",
+      "bounds": [
+        -20.0,
+        -10.0,
+        2.5,
+        5.1,
+        -134,
+        -118
+      ],
+      "berths": 20,
+      "note": "",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Hotel/workshop D4 X+14.5 Z-126",
+      "category": "hotel_service",
+      "bounds": [
+        10.0,
+        19.0,
+        2.5,
+        5.1,
+        -134,
+        -118
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 144.0,
+      "volume_m3": 374.4
+    },
+    {
+      "name": "Hotel/workshop D4 X-15 Z-108",
+      "category": "hotel_service",
+      "bounds": [
+        -20.0,
+        -10.0,
+        2.5,
+        5.1,
+        -116,
+        -100
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Hotel/workshop D4 X+14.5 Z-108",
+      "category": "hotel_service",
+      "bounds": [
+        10.0,
+        19.0,
+        2.5,
+        5.1,
+        -116,
+        -100
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 144.0,
+      "volume_m3": 374.4
+    },
+    {
+      "name": "Hotel/workshop D4 X-15 Z-90",
+      "category": "hotel_service",
+      "bounds": [
+        -20.0,
+        -10.0,
+        2.5,
+        5.1,
+        -98,
+        -82
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Hotel/workshop D4 X+14.5 Z-90",
+      "category": "hotel_service",
+      "bounds": [
+        10.0,
+        19.0,
+        2.5,
+        5.1,
+        -98,
+        -82
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 144.0,
+      "volume_m3": 374.4
+    },
+    {
+      "name": "Hotel/workshop D4 X-15 Z-72",
+      "category": "hotel_service",
+      "bounds": [
+        -20.0,
+        -10.0,
+        2.5,
+        5.1,
+        -80,
+        -64
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Hotel/workshop D4 X+14.5 Z-72",
+      "category": "hotel_service",
+      "bounds": [
+        10.0,
+        19.0,
+        2.5,
+        5.1,
+        -80,
+        -64
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 144.0,
+      "volume_m3": 374.4
+    },
+    {
+      "name": "Hotel/workshop D4 X-15 Z-54",
+      "category": "hotel_service",
+      "bounds": [
+        -20.0,
+        -10.0,
+        2.5,
+        5.1,
+        -62,
+        -46
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Hotel/workshop D4 X+14.5 Z-54",
+      "category": "hotel_service",
+      "bounds": [
+        10.0,
+        19.0,
+        2.5,
+        5.1,
+        -62,
+        -46
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 144.0,
+      "volume_m3": 374.4
+    },
+    {
+      "name": "Hotel/workshop D4 X-15 Z-36",
+      "category": "hotel_service",
+      "bounds": [
+        -20.0,
+        -10.0,
+        2.5,
+        5.1,
+        -44,
+        -28
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Hotel/workshop D4 X+14.5 Z-36",
+      "category": "hotel_service",
+      "bounds": [
+        10.0,
+        19.0,
+        2.5,
+        5.1,
+        -44,
+        -28
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 144.0,
+      "volume_m3": 374.4
+    },
+    {
+      "name": "Hotel/workshop D4 X-15 Z-18",
+      "category": "hotel_service",
+      "bounds": [
+        -20.0,
+        -10.0,
+        2.5,
+        5.1,
+        -26,
+        -10
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Hotel/workshop D4 X+14.5 Z-18",
+      "category": "hotel_service",
+      "bounds": [
+        10.0,
+        19.0,
+        2.5,
+        5.1,
+        -26,
+        -10
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 144.0,
+      "volume_m3": 374.4
+    },
+    {
+      "name": "Hotel/workshop D4 X-15 Z+0",
+      "category": "hotel_service",
+      "bounds": [
+        -20.0,
+        -10.0,
+        2.5,
+        5.1,
+        -8,
+        8
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Hotel/workshop D4 X+14.5 Z+0",
+      "category": "hotel_service",
+      "bounds": [
+        10.0,
+        19.0,
+        2.5,
+        5.1,
+        -8,
+        8
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 144.0,
+      "volume_m3": 374.4
+    },
+    {
+      "name": "Hotel/workshop D4 X-15 Z+18",
+      "category": "hotel_service",
+      "bounds": [
+        -20.0,
+        -10.0,
+        2.5,
+        5.1,
+        10,
+        26
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Hotel/workshop D4 X+14.5 Z+18",
+      "category": "hotel_service",
+      "bounds": [
+        10.0,
+        19.0,
+        2.5,
+        5.1,
+        10,
+        26
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 144.0,
+      "volume_m3": 374.4
+    },
+    {
+      "name": "Hotel/workshop D4 X-15 Z+36",
+      "category": "hotel_service",
+      "bounds": [
+        -20.0,
+        -10.0,
+        2.5,
+        5.1,
+        28,
+        44
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    },
+    {
+      "name": "Hotel/workshop D4 X+14.5 Z+36",
+      "category": "hotel_service",
+      "bounds": [
+        10.0,
+        19.0,
+        2.5,
+        5.1,
+        28,
+        44
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 144.0,
+      "volume_m3": 374.4
+    },
+    {
+      "name": "Hotel/workshop D4 X-15 Z+54",
+      "category": "hotel_service",
+      "bounds": [
+        -20.0,
+        -10.0,
+        2.5,
+        5.1,
+        46,
+        62
+      ],
+      "berths": 0,
+      "note": "Additional mess, sanitary, recreation, stores or workshop reservation",
+      "floor_area_m2": 160.0,
+      "volume_m3": 416.0
+    }
+  ],
+  "targets": {
+    "aircraft_total": 99,
+    "hangar_reference_slots": 36,
+    "flight_deck_allocation_unvalidated": 63,
+    "embarked": 5300,
+    "berths": 5800,
+    "aviation_fuel_tonnes": 9000
+  },
+  "limitations": [
+    "Reference mixed parking boxes only; unfolded dimensions and towing turns depend on the chosen aircraft.",
+    "63-aircraft flight-deck parking and the complete 99-aircraft operating cycle remain unverified.",
+    "Cabins are space and occupancy reservations; bunk details, stairs, ventilation and evacuation are not engineered.",
+    "Machinery/fuel/magazine zones are conceptual; actual equipment, piping, protection, structure and stability remain unverified.",
+    "Native six-second lift animations are bound; actual loaded-aircraft lift cycles need in-game testing."
+  ]
+}

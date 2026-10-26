@@ -10,24 +10,24 @@
   "hull_deck_join": "upper hull shares the full flight-deck underside perimeter",
   "bow_shape": "high continuous flared topsides with a narrowing faceted lower bow and fine waterline stem; hydrodynamics unverified",
   "aircraft_capacity_design_target": 99,
-  "propulsion_design_target": "Nuclear",
+  "propulsion_design_target": "Nuclear power; eight conceptual waterjets, native conventional propulsion approximation",
   "islands": {
     "count": 2,
     "main": "larger integrated command and sensor island amidships",
     "aft": "20% narrower, 35% shorter and 28% lower aft aviation island, with glazing on all six bridge faces"
   },
   "deck": {
-    "catapult_tracks": 5,
+    "catapult_tracks": 3,
     "primary_launch_pair": [
       1,
-      3
+      2
     ],
     "minimum_launch_interval_seconds": 1,
-    "independent_helicopter_launch_spots": false,
-    "deck_edge_lifts": 4,
-    "aft_vertical_operation_spots": 4,
-    "aft_spot_use": "Helicopter/VTOL operations ahead of the islands; bow catapults remain available, recovery remains separate",
-    "aft_spot_layout": "Two offset pairs ahead of the islands; all four spots interlocked with waist launch lanes only",
+    "independent_helicopter_launch_spots": true,
+    "deck_edge_lifts": 0,
+    "aft_vertical_operation_spots": 3,
+    "aft_spot_use": "Three helicopter/VTOL pads; actual rotor clearances and mixed flight cycles require in-game QA",
+    "aft_spot_layout": "Front, middle beside rear tower, and aft; helicopter preference aft, front, middle",
     "aft_h_mark_angle_degrees": -12,
     "catapult_to_island_and_lift_plan_clearance_m": 12,
     "angled_recovery_lane": true,
@@ -38,56 +38,32 @@
     "lift_aircraft_heading_degrees": 0,
     "lift_reference_aircraft": "Stock F-14A; full-span footprint and stock deck-reference offset",
     "catapult_reference_aircraft": "Stock A-7E, stock F-14A and a 25 m span x 30 m length envelope; staging and aligned approaches",
-    "overall_beam_including_lifts_m": 109,
+    "overall_beam_including_lifts_m": 82,
     "catapult_type": "Steam CATOBAR",
     "catapult_stroke_m": 95,
     "bow_catapult_ids": [
       1,
-      2,
-      3
+      2
     ],
     "port_waist_catapult_ids": [
-      4,
-      5
+      3
     ],
     "port_waist_heading_degrees": -6,
     "bow_adjacent_catapults_interlocked": true,
     "waist_launches_interlocked_with_all_bow_lanes": true,
     "waist_launches_interlocked_with_each_other": true,
-    "layout": "Three straight bow catapults and two angled port-waist catapults",
+    "layout": "Two bow and one angled port-waist catapult",
     "port_waist_launch_positions_m": [
       [
-        -20.2,
+        -25,
         -1
-      ],
-      [
-        -10,
-        -22
       ]
     ],
     "port_waist_launch_stagger_m": 21,
-    "port_lift_longitudinal_position_m": -32,
+    "port_lift_longitudinal_position_m": -18,
     "catapult_visual_details": "Deck-flush metal tracks, thin dark slots and painted guides, compact launch shuttles and flush segmented stowed deflectors; static geometry",
     "minimum_pad_footprint_clearance_m": 1,
     "recovery_heading_degrees": -9,
-    "vertical_spot_centres_m": [
-      [
-        -25,
-        60
-      ],
-      [
-        1.5,
-        60
-      ],
-      [
-        9.5,
-        -60
-      ],
-      [
-        9.5,
-        -31
-      ]
-    ],
     "tyre_contact_height_m": 22.0,
     "helipad_contact_height_m": 22.002,
     "lift_contact_height_m": 22.002,
@@ -105,29 +81,77 @@
     ],
     "aircraft_eligibility": "Automatic installed carrier-capable aircraft discovery; no class, size, role or loadout exclusions",
     "all_vertical_spots_waist_interlocked": true,
-    "aircraft_compatibility_limit": "Reference footprints checked; swept taxi turns, rotor envelopes, loadouts and mixed deck cycles require in-game testing"
+    "aircraft_compatibility_limit": "Reference footprints checked; swept taxi turns, rotor envelopes, loadouts and mixed deck cycles require in-game testing",
+    "internal_lifts": 4,
+    "lift_layout": "Two forward fixed-wing lifts; two rear helicopter/VTOL lifts",
+    "bow_outer_catapult_lateral_separation_m": 26,
+    "bow_catapults_available_during_vertical_launches": true,
+    "vertical_spot_positions_m": [
+      [
+        11.0,
+        12
+      ],
+      [
+        13.6,
+        -79
+      ],
+      [
+        20.2,
+        -116
+      ]
+    ],
+    "bow_catapult_lateral_positions_m": [
+      -23.5,
+      -10.5,
+      2.5
+    ],
+    "helo_pad_minimum_geometry_clearance_m": 1,
+    "helipad_recovery_reference_aircraft_span_m": 25,
+    "aft_helipad_shared_taxi_route_interlocked": true,
+    "lift_positions_m": [
+      [
+        27.5,
+        82
+      ],
+      [
+        27.5,
+        54
+      ],
+      [
+        11.0,
+        -18.0
+      ],
+      [
+        26.0,
+        -50
+      ]
+    ]
   },
   "systems_visual_studies": {
     "integrated_radar_arrays": 7,
     "radar_placement": "conformal panels on the sides and faces of both islands",
     "shipboard_offensive_ecm_modules": 1,
     "retractable_laser_positions": 4,
-    "laser_default_state": "flush armoured deck hatches; raised visual state in the viewer and a separate OBJ overlay",
-    "sonar_bow_fairing": true,
+    "laser_default_state": "Closed flush visual hatches only; no operational laser or raised overlay in current game viewer",
+    "sonar_bow_fairing": false,
     "recessed_vls_cells": 80,
     "ford_zumwalt_derived_fit": "Original geometry and declared stock-compatible game proxies; see DESIGN-BASIS.md",
     "vls_and_missile_launchers": "Four VLS banks and four defensive missile housings on the marked main-deck edge positions",
     "defensive_kinetic_armament_only": true,
     "ciws_retraction": {
-      "positions": 3,
-      "type": "Covered deck-edge wells with independent lift/yaw/barrel and sliding covers",
-      "open_seconds": 0.4,
-      "rise_seconds": 0.3,
-      "stroke_m": 5,
-      "close_seconds": 1,
-      "native_idle_close_seconds": 10,
-      "engagement_driven": true,
-      "in_game_verified": false
+      "positions": 5,
+      "controller": "AnchorChain",
+      "deploy_seconds": 0.75,
+      "hold_after_last_shot_seconds": 300,
+      "stow_seconds": 10,
+      "in_game_verified": false,
+      "lift_strokes_m": {
+        "CIWS_1": 5.0,
+        "CIWS_2": 5.0,
+        "CIWS_3": 5.0,
+        "CIWS_4": 3.08,
+        "CIWS_5": 3.08
+      }
     }
   },
   "integration": {
@@ -148,5 +172,80 @@
     "total": 5300,
     "berths": 5800
   },
-  "full_load_displacement_tonnes_design_target": 112000
+  "full_load_displacement_tonnes_design_target": 112000,
+  "release_version": "0.8.2-lift-lighting",
+  "internal_arrangement": {
+    "hangar_length_width_height_m": [
+      280,
+      50,
+      8
+    ],
+    "hangar_floor_m": 11.8,
+    "planning_berths": 5800,
+    "reference_hangar_aircraft": 36,
+    "reference_mix": {
+      "large_folded": 24,
+      "compact_uav": 8,
+      "folded_rotor": 4
+    },
+    "complete_99_aircraft_cycle_validated": false,
+    "upper_hull_rebalanced_toward_starboard_m": 1.2,
+    "flight_deck_overall_beam_m": 82,
+    "underwater_body": "Rebuilt symmetric broad-stern waterjet hull; v0.8.0 net wet-volume calibration",
+    "lift_platforms": "Original v0.4.0 positions and 22 x 26 m platforms retained",
+    "trunks_and_hangar_floor_in_game_model": true,
+    "accommodation_and_plant": "Space reservations in cutaway; not detailed functional machinery or cabin geometry",
+    "naval_architecture_verified": false
+  },
+  "damage_control": {
+    "teams": 5,
+    "native_section": "General",
+    "native_key": "NumberOfDCTeams",
+    "runtime_verified": false
+  },
+  "version": "0.8.2-lift-lighting",
+  "submerged_hull": "Original symmetric broad-stern hull with eight actual intake/transom openings and connected wet ducts; recalibrated net geometric displacement112000t; four outer steering nozzles and four fixed boosters",
+  "waterline_length_m": 362.6,
+  "naval_hydrostatics_report": "naval-hull-hydrostatics.json",
+  "waterjet_prototype": {
+    "count": 8,
+    "steering_indices": [
+      1,
+      2,
+      7,
+      8
+    ],
+    "fixed_booster_indices": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "outlet_bore_m": 2.35,
+    "target_speed_kn": 30,
+    "horsepower": 280000,
+    "engineering_status": "Preliminary geometric and power sensitivity screen only; real propulsion feasibility unresolved",
+    "in_game_tested": false
+  },
+  "operating_speeds_kn": {
+    "astern": -7,
+    "stop": 0,
+    "creep": 6,
+    "slow": 12,
+    "standard": 20,
+    "full": 30,
+    "flank": 30
+  },
+  "air_operations_speed": "Standard20kn matches native fixed-wing AirOps target; helicopter sea-state and deck-readiness checks retained; in-game trial pending",
+  "lift_wall_lighting": {
+    "fixtures_per_lift": 8,
+    "total": 32,
+    "off_depth_below_deck_m": 0.1,
+    "full_brightness_depth_m": 0.6,
+    "actual_platform_height_control": true,
+    "day_and_night": true,
+    "beams": "Inward/downward spots; non-emissive lenses",
+    "in_game_tested": false
+  },
+  "metadata_scope": "Current v0.8.2 branch metadata; historical release ZIP remains immutable. Geometry and software checks do not establish gameplay or naval-engineering approval."
 }

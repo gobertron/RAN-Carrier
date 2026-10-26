@@ -1,5 +1,7 @@
 # Canberra class — 1970s late
 
+> Historical fleet-design study. The current Australis 2030 test build and installation guide are in [australis-2030](../australis-2030/README.md). Figures on this page describe this earlier edition.
+
 **Sea Power design edition:** 1970s late (1978); nuclear propulsion; 69 aircraft.
 
 The hull is original geometry using US Nimitz nuclear carrier as a design cue. The proposed ship is alternate history. Length 332 m, flight-deck width 76.8 m, estimated displacement 95,000 t, design speed 32 kn. The deck plan has 4 physical lifts and 4 indicated catapult tracks. These positions still need native taxi, launch and recovery routing.

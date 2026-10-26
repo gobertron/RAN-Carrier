@@ -1,5 +1,7 @@
 # Sydney class — 1940s late
 
+> Historical fleet-design study. The current Australis 2030 test build and installation guide are in [australis-2030](../australis-2030/README.md). Figures on this page describe this earlier edition.
+
 **Sea Power design edition:** 1940s late (1948); steam propulsion; 30 aircraft.
 
 The hull is original geometry using British Majestic light fleet carrier as a design cue. The proposed ship is alternate history. Length 211 m, flight-deck width 34 m, estimated displacement 18,000 t, design speed 25 kn. The deck plan has 2 physical lifts and 1 indicated catapult tracks. These positions still need native taxi, launch and recovery routing.

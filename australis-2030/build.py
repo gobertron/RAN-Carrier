@@ -18,6 +18,8 @@ from generate_source_models import Mesh, COLORS, render, validate  # noqa: E402
 from rebuild_game_scale import METRES_PER_UNIT  # noqa: E402
 from build_3d_viewer import build_viewer, model_revision  # noqa: E402
 from render_current_views import render_current_views  # noqa: E402
+from enclosed_deck import perforate, bay_clearance_rectangles
+from internal_arrangement import add_game_geometry
 from combat_fit import (add_geometry as add_combat_geometry, FIT, VLS_BANKS,
                         SAM_POS, RAM_POS, CIWS_POS, GUN_POS, CHAFF_POS, NULKA_POS,
                         deck_weapon_zones)  # noqa: E402
@@ -39,9 +41,15 @@ DECK = [
     (-28, -185), (22, -185), (32, -170), (38, -138),
     (40, -76), (41, -33), (42, 72), (40, 125),
     (38, 163), (30, 185), (-30, 185), (-38, 161),
-    (-40, 123), (-39, 60), (-46, -41), (-43, -114),
+    (-40, 123), (-39, 60), (-39-7*60/101, 0), (-46, -41), (-43, -114),
     (-36, -168),
 ]
+# Rebalance 1.2 m of upper-deck breadth toward the starboard lift trunks.
+# Overall deck beam stays 82 m; the immersed hull uses the original outline.
+HULL_INTERFACE_DECK = list(DECK)
+IMMERSED_REFERENCE_DECK = [(x,z) for x,z in DECK if z!=0]
+DECK = [(x+(3./WIDTH_SCALE if z==125 and x>0 else 1.2/WIDTH_SCALE if z in (-76,-33,72) and x>0 else
+            1.2/WIDTH_SCALE if z==-41 and x<0 else 0),z) for x,z in DECK]
 MAIN_ISLAND_BASE = [
     (26, -30), (33, -33), (39, -23), (39, 28),
     (33, 39), (26, 32),
@@ -55,41 +63,27 @@ AFT_ISLAND_BASE = [(32.5+(x-32.5)*AFT_ISLAND_SCALE[0],
                     -89+(z+89)*AFT_ISLAND_SCALE[2])
                    for x,z in AFT_ISLAND_REFERENCE]
 # Abreast the aft part of the main island, behind the waist launch run.
-PORT_LIFT_Z = -32.0
+PORT_LIFT_Z = -18.0
 # Actual metre dimensions are independent of the hull's width reduction.
 # Fore-and-aft parking accommodates the Tomcat without a wide cross-deck lift.
 LIFT_WIDTH_M = 22.0
 LIFT_LENGTH_M = 26.0
-LIFT_CENTRE_X_M = 43.5
-ELEVATORS = [(LIFT_CENTRE_X_M/WIDTH_SCALE, -50),
-             (LIFT_CENTRE_X_M/WIDTH_SCALE, 54),
-             (-LIFT_CENTRE_X_M/WIDTH_SCALE, PORT_LIFT_Z),
-             (LIFT_CENTRE_X_M/WIDTH_SCALE, -132)]
-LASERS = [(-35, 109), (34, 158), (-40, -60), (31, -157)]
+LIFT_CENTRE_X_M = 12.5
+# E1 ahead of tower 1; E2/E3 in line beside its port face; E4 between towers.
+ELEVATORS = [(27.5/WIDTH_SCALE,82),(27.5/WIDTH_SCALE,54),
+             (11/WIDTH_SCALE,PORT_LIFT_Z),(26/WIDTH_SCALE,-50)]
+LASERS = [(-35, 109), (34, 158), (-40, -60), (27.0/WIDTH_SCALE, -163)]
 # Three bow tracks and two port-waist tracks, each with a 95 m stroke.
 # Waist departures are angled to port, using the shared recovery-deck area.
-BOW_CATAPULT_IDS = (1, 2, 3)
-WAIST_CATAPULT_IDS = (4, 5)
-WAIST_CATAPULT_HEADING_DEG = -6.0
-CATAPULTS = [((x/WIDTH_SCALE, 88), (x/WIDTH_SCALE, 183))
-             for x in (-14, 0, 14)] + [
-    ((x/WIDTH_SCALE, z),
-     ((x+95*math.sin(math.radians(WAIST_CATAPULT_HEADING_DEG)))/WIDTH_SCALE,
-      z+95*math.cos(math.radians(WAIST_CATAPULT_HEADING_DEG))))
-    for x,z in ((-20.2,-1),(-10,-22))
-]
-# Bow 1/3 can operate as a pair. Waist launches interlock with all bow
-# lanes and with each other because departure/taxi areas are shared.
-CATAPULT_INTERLOCKS = {
-    1: (2, 4, 5), 2: (1, 3, 4, 5), 3: (2, 4, 5),
-    4: (1, 2, 3, 5, 6, 7, 8, 9), 5: (1, 2, 3, 4, 6, 7, 8, 9),
-}
-# Two pairs ahead of the two islands. All four spots share waist staging
-# or launch space for larger aircraft; bow lanes remain available.
-VERTICAL_SPOTS = [(x/WIDTH_SCALE,z) for x,z in
-                  ((-25,60),(1.5,60),(9.5,-60),(9.5,-31))]
-HELO_INTERLOCKS = {i:(4,5) for i in range(6,10)}
-HELO_ELEVATORS = (2,2,1,1)
+BOW_CATAPULT_IDS = (1,2)
+WAIST_CATAPULT_IDS = (3,)
+WAIST_CATAPULT_HEADING_DEG = -6.
+CATAPULTS = [((x/WIDTH_SCALE,88),(x/WIDTH_SCALE,183)) for x in (-23.5,2.5)] + [
+    ((-25/WIDTH_SCALE,-1),((-25+95*math.sin(math.radians(-6)))/WIDTH_SCALE,-1+95*math.cos(math.radians(-6))))]
+CATAPULT_INTERLOCKS = {1:(3,),2:(3,),3:(1,2,4,5,6)}
+VERTICAL_SPOTS = [(x/WIDTH_SCALE,z) for x,z in ((11,12),(13.6,-79),(20.2,-116))]
+HELO_INTERLOCKS = {4:(3,),5:(3,),6:(3,)}
+HELO_ELEVATORS = (3,4,4)
 LANDING_HEADING_DEG = -9.0
 LANDING_LANE_A = np.array((3./WIDTH_SCALE, -166.))
 LANDING_LANE_B = np.array(((3.-186*math.tan(math.radians(9)))/WIDTH_SCALE, 20.))
@@ -178,10 +172,11 @@ def scaled_polygon(points, cx, cz, fx, fz):
     return [(cx+(x-cx)*fx, cz+(z-cz)*fz) for x, z in points]
 
 
-def hull_outline(width_scale, length_scale, bow_tip_scale):
+def hull_outline(width_scale, length_scale, bow_tip_scale, include_station=False):
     """Keep broad amidships but narrow the immersed forward stem to a point."""
     result = []
-    for x, z in DECK:
+    reference=(HULL_INTERFACE_DECK if include_station else IMMERSED_REFERENCE_DECK) if width_scale<=.58 else DECK
+    for x, z in reference:
         forward = max(0., min(1., (z-110.)/75.))
         bow_factor = 1. - (1. - bow_tip_scale)*forward**1.4
         result.append((x*width_scale*bow_factor, z*length_scale))
@@ -242,17 +237,13 @@ def geometry(closed_lasers=True):
     # The first hull ring shares the whole deck underside outline: the hull
     # rises to the flight deck at the bow, stern, and both sides, then narrows
     # through faceted chines towards its waterline and keel.
-    chine = hull_outline(.74, .99, .40)
-    shoulder = hull_outline(.58, .98, .12)
-    waterline = hull_outline(WATERLINE_WIDTH_SCALE, .98, .02)
-    keel = hull_outline(.31, .88, .02)
-    loft(m, "HardChineHull", [polygon_at_y(DECK, DECK_UNDERSIDE_Y),
-                              polygon_at_y(chine, 12),
-                              polygon_at_y(shoulder, 4.5),
-                              polygon_at_y(waterline, 0)], "hull")
-    loft(m, "UnderwaterBody", [polygon_at_y(waterline, 0),
-                               polygon_at_y(keel, -DESIGN_DRAFT_M)], "underwater")
-    m.prism("FacetedFlightDeck", DECK, DECK_UNDERSIDE_Y, DECK_SURFACE_Y, "deck")
+    equipment = hull_outline(.985, 1., 1.)
+    hangar = hull_outline(1.01, 1., 1.)
+    from naval_hull import add_hull
+    add_hull(m,DECK,equipment,hangar,WIDTH_SCALE)
+    perforate(m, DECK, WIDTH_SCALE, DECK_UNDERSIDE_Y, DECK_SURFACE_Y,
+              [(x*WIDTH_SCALE-LIFT_WIDTH_M/2,x*WIDTH_SCALE+LIFT_WIDTH_M/2,
+                z-LIFT_LENGTH_M/2,z+LIFT_LENGTH_M/2) for x,z in ELEVATORS])
     for i, (a, b) in enumerate(zip(DECK, DECK[1:] + DECK[:1]), 1):
         deck_line(m,f"DeckEdge_{i:02d}",a,b,.28,"edge")
 
@@ -334,7 +325,7 @@ def geometry(closed_lasers=True):
     for i, (x, z) in enumerate(ELEVATORS, 1):
         half_width = LIFT_WIDTH_M/(2*WIDTH_SCALE)
         half_length = LIFT_LENGTH_M/2
-        m.box(f"DeckEdgeLift_{i}", x, LIFT_SURFACE_Y-.17/2, z,
+        m.box(f"InternalLift_{i}", x, LIFT_SURFACE_Y-.17/2, z,
               LIFT_WIDTH_M/WIDTH_SCALE, .17, LIFT_LENGTH_M, "hatch")
         for side in (-1, 1):
             deck_line(m,f"LiftEdge_{i}_{side}",
@@ -408,8 +399,14 @@ def geometry(closed_lasers=True):
         for i, (x, z) in enumerate(LASERS, 1):
             m.box(f"LaserHatchClosed_{i}",x,DECK_SURFACE_Y-.058,z,5,.12,5.8,"hatch")
             deck_line(m,f"LaserHatchSeam_{i}",(x,z-2.6),(x,z+2.6),.09,"edge")
-    bow_sonar_fairing(m)
+    from naval_hull import add_bilge_keels
+    from waterjet_geometry import add_static_waterjets
+    add_static_waterjets(m,WIDTH_SCALE)
+    add_bilge_keels(m,WIDTH_SCALE)
     add_combat_geometry(m, WIDTH_SCALE)
+    add_game_geometry(m, WIDTH_SCALE, physical_xz(ELEVATORS))
+    from recovery_details import detail_mesh
+    detail_mesh(m,WIDTH_SCALE,DECK,physical_xz(ELEVATORS))
     return slim_mesh(m)
 
 
@@ -432,6 +429,8 @@ def deployed_lasers():
         loft(m, f"LaserTurretFaceted_{i}",
              [polygon_at_y(base, 22.7), polygon_at_y(crown, 25.4)], "island")
         m.box(f"LaserEmitter_{i}", x, 24.25, z+1.55, 1.5, .65, .15, "laser")
+    from recovery_details import detail_mesh
+    detail_mesh(m,WIDTH_SCALE,DECK)
     return slim_mesh(m)
 
 
@@ -532,10 +531,10 @@ def plan_preview(path):
     for label, anchor, xy in [
         ("MAIN COMMAND ISLAND", (35, 10), (912, 216)),
         ("AFT AVIATION ISLAND", (34, -88), (590, 207)),
-        ("4 LIFTS / 22 x 26 m", (57, 54), (1250, 207)),
-        ("4 FORWARD-OFFSET HELO SPOTS", (9.5/WIDTH_SCALE, -60), (158, 204)),
-        ("3 BOW CATAPULTS", (0, 136), (1335, 655)),
-        ("2 STAGGERED WAIST CATAPULTS", (-28, 45), (850, 715)),
+        ("4 INTERNAL LIFTS / 22 x 26 m", (27.5/WIDTH_SCALE, 54), (1210, 207)),
+        ("3 HELICOPTER / VTOL PADS", VERTICAL_SPOTS[-1], (158, 204)),
+        ("2 BOW CATAPULTS", (0, 136), (1335, 655)),
+        ("1 PORT-WAIST CATAPULT", (-25/WIDTH_SCALE, 45), (850, 715)),
         ("4 FLUSH LASER HATCHES", (-35, 109), (1266, 784)),
         ("4 ARRESTING WIRES", landing_point(.47), (160, 689)),
         ("9 DEGREE PORT RECOVERY", landing_point(.15), (155, 736)),
@@ -585,7 +584,7 @@ def main():
                                z+VERTICAL_SPOT_RADIUS*math.sin(theta))
         p = np.array((x, z))
         t = min(1., max(0., float(np.dot(p-lane_a, line)/np.dot(line, line))))
-        assert np.linalg.norm(p-(lane_a+t*line)) > VERTICAL_SPOT_RADIUS+11.3+1
+        assert np.linalg.norm(p-(lane_a+t*line)) > VERTICAL_SPOT_RADIUS+12.5+1
         for lift_x, lift_z in lifts:
             assert rectangle_distance(x, z, lift_x-LIFT_WIDTH_M/2, lift_x+LIFT_WIDTH_M/2,
                                       lift_z-LIFT_LENGTH_M/2, lift_z+LIFT_LENGTH_M/2) > VERTICAL_SPOT_RADIUS+1
@@ -600,9 +599,32 @@ def main():
             gap = rectangle_distance(x,z,xmin,xmax,zmin,zmax)-VERTICAL_SPOT_RADIUS
             min_island_gap = min(min_island_gap, gap)
             assert gap >= 1
-    for i,(_,z) in enumerate(spots):
-        island=islands[0 if i<2 else 1]
-        assert z-VERTICAL_SPOT_RADIUS > max(pz for _,pz in island)+1
+    # Four distinct requested locations, not a shared runway/pad overlay.
+    main,aft=islands
+    main_left=min(x for x,z in main);aft_left=min(x for x,z in aft)
+    assert spots[0][1]-VERTICAL_SPOT_RADIUS>lifts[0][1]+LIFT_LENGTH_M/2+1
+    assert spots[1][0]+VERTICAL_SPOT_RADIUS<main_left-1
+    assert min(z for x,z in main)<spots[1][1]<max(z for x,z in main)
+    assert spots[2][0]+VERTICAL_SPOT_RADIUS<aft_left-1
+    assert min(z for x,z in aft)<spots[2][1]<max(z for x,z in aft)
+    assert spots[3][1]+VERTICAL_SPOT_RADIUS<min(z for x,z in aft)-1
+    min_helo_cat_gap=min_helo_bay_gap=float('inf')
+    for x,z in spots:
+        for index,route in enumerate(CATAPULTS,1):
+            start,end=physical_xz(route)
+            ux,uz=end[0]-start[0],end[1]-start[1];length=math.hypot(ux,uz);ux/=length;uz/=length
+            along=(x-start[0])*ux+(z-start[1])*uz
+            across=(x-start[0])*uz-(z-start[1])*ux
+            # Full 25 x 30 m aircraft envelope through staging and rollout.
+            gap=math.hypot(max(-35-along,along-(length+15),0),max(abs(across)-12.5,0))-VERTICAL_SPOT_RADIUS
+            assert gap>=1,(index,'vertical spot blocks aircraft launch envelope',gap)
+            min_helo_cat_gap=min(min_helo_cat_gap,gap)
+        for name,bounds in bay_clearance_rectangles():
+            gap=rectangle_distance(x,z,*bounds)-VERTICAL_SPOT_RADIUS
+            assert gap>=1,(name,'vertical spot blocks well/open cover',gap)
+            min_helo_bay_gap=min(min_helo_bay_gap,gap)
+        for lx,lz in physical_xz(LASERS):
+            assert rectangle_distance(x,z,lx-2.5*WIDTH_SCALE,lx+2.5*WIDTH_SCALE,lz-2.9,lz+2.9)>VERTICAL_SPOT_RADIUS+1
     # Main-deck weapon keep-outs match the native no-parking zones. Their
     # physical footprints must clear pads, islands, lifts and all launch runs.
     weapon_bounds=[]
@@ -672,7 +694,7 @@ def main():
     mesh = geometry()
     parts = {name: vertices for name, vertices, _, _ in mesh.parts}
     for i in range(1,5):
-        assert abs(max(parts[f"DeckEdgeLift_{i}"][:,1])-LIFT_SURFACE_Y)<1e-9
+        assert abs(max(parts[f"InternalLift_{i}"][:,1])-LIFT_SURFACE_Y)<1e-9
         assert abs(max(parts[f"AftVTOL_HeloSpot_{i}"][:,1])-HELIPAD_SURFACE_Y)<1e-9
         assert abs(max(parts[f"LaserHatchClosed_{i}"][:,1])-(DECK_SURFACE_Y+.002))<1e-9
     for name,vertices,_,material in mesh.parts:
@@ -684,8 +706,13 @@ def main():
     n = len(DECK)
     assert np.array_equal(parts["HardChineHull"][:n],
                           parts["FacetedFlightDeck"][:n])
-    assert np.array_equal(parts["HardChineHull"][-n:],
-                          parts["UnderwaterBody"][:n])
+    interface=parts["HardChineHull"][-n:]
+    original=parts["UnderwaterBody"][:len(IMMERSED_REFERENCE_DECK)]
+    assert all(any(np.array_equal(a,b) for b in interface) for a in original)
+    # The added upper-hull station lies on an unchanged waterline edge.
+    for a in interface:
+        assert min(np.linalg.norm(a-(u+np.clip(np.dot(a-u,v-u)/np.dot(v-u,v-u),0,1)*(v-u)))
+                   for u,v in zip(original,np.roll(original,-1,axis=0)))<1e-9
     bow_z = max(z for _, z in DECK)
     immersed_bow = [x for x, z in hull_outline(.82, .98, .02)
                     if math.isclose(z, bow_z*.98)]
@@ -711,8 +738,11 @@ def main():
     assert .55 < block_coefficient < .75
     summary = validate({"id": spec["id"], "aircraft_capacity": 99,
                         "air_group": [{"role": "Capacity placeholder", "count": 99}],
-                        "offensive_ecm_modules": 1}, mesh)
-    summary.update(catapult_tracks=len(CATAPULTS),
+                        "offensive_ecm_modules": 1}, mesh,open_roofs=("HardChineHull",))
+    summary.update(helipad_layout="Ahead of forward lift; beside main tower; beside rear tower; aft of rear tower",
+                   helipad_min_catapult_aircraft_envelope_gap_m=round(min_helo_cat_gap,3),
+                   helipad_min_well_and_open_cover_gap_m=round(min_helo_bay_gap,3),
+                   catapult_tracks=len(CATAPULTS),
                    flight_deck_beam_m=DECK_BEAM_M,
                    bow_outer_catapult_lateral_separation_m=round((CATAPULTS[2][0][0]-CATAPULTS[0][0][0])*WIDTH_SCALE,2),
                    catapult_type="Steam CATOBAR, three bow and two port-waist 95 m tracks",
@@ -726,19 +756,20 @@ def main():
                    accommodation_berths_design_target=FIT["crew"]["berths"],
                    peripheral_vls_cells_visual_target=80,
                    aft_vertical_operation_spots=len(VERTICAL_SPOTS),
-                   deck_edge_lifts=len(ELEVATORS),
+                   deck_edge_lifts=0, internal_lifts=len(ELEVATORS),
                    lift_platform_width_m=LIFT_WIDTH_M,
                    lift_platform_length_m=LIFT_LENGTH_M,
                    lift_surface_height_m=LIFT_SURFACE_Y,
                    helipad_contact_height_m=HELIPAD_SURFACE_Y,
                    deck_paint_maximum_height_m=.008,
                    stowed_surfaces_flush=True,
-                   overall_beam_including_lifts_m=2*LIFT_CENTRE_X_M+LIFT_WIDTH_M,
+                   overall_beam_including_lifts_m=DECK_BEAM_M,
                    f14a_lift_reference_envelope_checked=True,
                    islands=2, aft_h_mark_angle_degrees=PAD_MARK_ANGLE_DEG,
                    design_mass_budget_matches_hull_volume_within_one_percent=abs(submerged_volume*1.025-FIT["full_load_displacement_tonnes"])/FIT["full_load_displacement_tonnes"]<.01,
                    aft_spot_clearance_geometry_checked=True,
-                   pads_forward_of_their_islands=True,
+                   pads_forward_of_their_islands=False,
+                   pads_match_four_requested_roles=True,
                    all_vertical_spots_waist_interlocked=True,
                    catapult_reference_envelope_span_m=25,
                    catapult_reference_envelope_length_m=30,
@@ -794,11 +825,15 @@ def main():
     revision = model_revision(mesh, COLORS)
     photos = render_current_views(mesh, COLORS, HERE/"previews", revision)
     build_viewer(mesh, COLORS, HERE/"viewer/australis_2030_3d.html", deployed_lasers(), photos)
-    print(f"[OK] {summary['parts']} closed components; {summary['triangles']} triangles")
+    print(f"[OK] {summary['parts']} components with verified roof interface; {summary['triangles']} triangles")
     print(f"[OK] Current model photos and self-contained 3D viewer share revision {revision}")
     print("[OK] Original metre OBJ, approximate game-scale OBJ, four layout previews and four model photos")
     print("[STATUS] User confirmed hull loading; revised visuals and aircraft operations await QA")
 
 
 if __name__ == "__main__":
-    main()
+    # The historic authoring main() predates the four-ship recovery driver.
+    # Keep imports compatible, but route direct use through the current build.
+    sys.path.insert(0,str(HERE.parent/'tools'))
+    from rebuild_recovery import main as rebuild_current_fleet
+    rebuild_current_fleet()

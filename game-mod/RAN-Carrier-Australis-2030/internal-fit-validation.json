@@ -1,0 +1,23 @@
+{
+  "version": "0.7.0-recovery",
+  "hull_clearances_m": {
+    "lift": 0.622,
+    "weapon": 0.8909,
+    "laser": 0.5449,
+    "machinery": 9.6133,
+    "magazine": 9.8554,
+    "fuel": 2.8961,
+    "aviation_service": 19.435,
+    "hotel_service": 5.0018,
+    "accommodation": 0.4146
+  },
+  "hangar_area_m2": 14000.0,
+  "hangar_height_m": 8.0,
+  "mixed_reference_hangar_slots": 36,
+  "berthing_rooms": 143,
+  "berths": 5800,
+  "berthing_floor_area_m2": 23280.0,
+  "aviation_fuel_reservation_m3": 13316.8,
+  "air_group_99_operational_cycle_validated": false,
+  "structural_hydrodynamic_stability_verified": false
+}

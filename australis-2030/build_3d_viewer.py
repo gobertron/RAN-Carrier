@@ -12,12 +12,25 @@ import struct
 
 import numpy as np
 from PIL import Image, PngImagePlugin
+from enclosed_deck import BAYS, moving_specs
+
+MOTIONS={m["name"]:(m["axis"],m["travel"]) for m in moving_specs()}
+for b in BAYS:
+    kind,index=b.key.rsplit("_",1)
+    for part in ("Housing","Barrel","Launcher"):
+        MOTIONS[f"{kind}_{part}_{index}"]=("y",b.stroke)
 
 
 def category(name):
+    if name in MOTIONS:
+        axis,travel=MOTIONS[name]
+        return f'bay:{axis}:{travel:g}'
+    for b in BAYS:
+        if name.startswith(b.key.split('_')[0]+'_Tube_'+b.key.split('_')[1]+'_'):
+            return f'bay:y:{b.stroke:g}' 
     if name.startswith("Catapult"):
         return "catapults"
-    if name.startswith(("DeckEdgeLift", "LiftEdge")):
+    if name.startswith(("DeckEdgeLift", "InternalLift", "LiftPlatform", "LiftEdge")):
         return "lifts"
     if name.startswith(("AftVTOL", "AftSpot")):
         return "spots"
@@ -127,6 +140,7 @@ def build_viewer(mesh, colors, path, deployed_mesh=None, photos=None):
     # A distinct filename avoids reopening the older same-name download.
     path.with_name(f"australis_2030_{revision}_3d.html").write_text(document)
     path.with_name(f"australis_2030_{revision}_preview.html").write_text(document)
+    (path.parent.parent / "model").mkdir(parents=True,exist_ok=True)
     (path.parent.parent / "model/presentation-manifest.json").write_text(
         json.dumps(manifest, indent=2) + "\n")
     return len(payload), sum(part["count"] // 3 for part in payload)
@@ -183,9 +197,9 @@ TEMPLATE = r'''<!doctype html>
   <div class="eyebrow">ROYAL AUSTRALIAN NAVY · DESIGN STUDY</div>
   <h1>Australis 2030</h1>
   <div class="muted">CATOBAR · 370 m · 82 m main deck · 99 aircraft · 5,300 embarked targets</div>
-  <span class="pill">CURRENT FIVE-CATAPULT LAYOUT</span>
+  <span class="pill">v0.8.2 LIFT LIGHTING</span>
   <div class="revision">Model revision __REVISION__</div>
-  <p class="muted">Three bow + two port-waist catapults. Four lifts and four vertical spots. Aircraft support: fixed-wing carrier aircraft, VTOL/STOL and helicopters.</p>
+  <p class="muted">Two bow + one port-waist catapult. Four lifts and three helipads. Aircraft support: fixed-wing carrier aircraft, VTOL/STOL and helicopters.</p>
   <div id="photoControls">
     <h2>Current model photos</h2>
     <div class="buttons" id="photoViews">__PHOTO_BUTTONS__</div>
@@ -200,26 +214,28 @@ TEMPLATE = r'''<!doctype html>
     <button type="button" data-view="bow">Bow</button>
     <button type="button" data-view="port">Port waist</button>
   </div>
-  <h2>Defensive mount study</h2>
+  <h2>Model poses</h2>
+  <button type="button" id="moveLifts">Raise all four lifts</button>
+  <p class="muted">Lifts start at hangar level. Six-second movement preview; Unity runtime lighting is not simulated.</p>
   <button type="button" id="deploy" aria-pressed="false">Deploy four lasers</button>
   <div id="laserStatus" class="muted" aria-live="polite">Flush hatches closed</div>
-  <button type="button" id="deployCIWS" aria-pressed="false">Raise three CIWS</button>
-  <div id="ciwsStatus" class="muted" aria-live="polite">Three CIWS stowed beneath flush covers</div>
+  <button type="button" id="deployCIWS" aria-pressed="false">Raise enclosed weapons</button>
+  <div id="ciwsStatus" class="muted" aria-live="polite">Enclosed bays stowed; flight deck available</div>
   <p class="muted">Deployment demonstration only. The viewer does not fire weapons.</p>
-  <h2>Show parts</h2>
-  <div id="layers">
+  <h2 hidden>Show parts</h2>
+  <div id="layers" hidden>
     <label><input type="checkbox" value="hull" checked> Hull and flight deck</label>
     <label><input type="checkbox" value="islands" checked> Two islands and radar</label>
-    <label><input type="checkbox" value="catapults" checked> Three bow + two port-waist catapults</label>
-    <label><input type="checkbox" value="lifts" checked> Four deck-edge lifts</label>
-    <label><input type="checkbox" value="spots" checked> Four helicopter spots ahead of islands</label>
+    <label><input type="checkbox" value="catapults" checked> Two bow + one port-waist catapult</label>
+    <label><input type="checkbox" value="lifts" checked> Four internal lifts</label>
+    <label><input type="checkbox" value="spots" checked> Three helicopter pads around the towers</label>
     <label><input type="checkbox" value="recovery" checked> 9° port recovery, four arresting wires</label>
     <label><input type="checkbox" value="laser" checked> Retractable laser positions</label>
     <label><input type="checkbox" value="equipment" checked> Other equipment</label>
   </div>
   </div>
-  <div class="footer muted">Actual design-model views, not in-game screenshots. The smaller rear bridge has wraparound glazing. Laser and CIWS deployment are visual studies; revised flight operations and combat still need in-game testing.<br><br>
-    <a href="https://github.com/gobertron/RAN-Carrier/tree/feature/australis-2050-concept/australis-2030/model/source" target="_blank" rel="noopener">Source models on GitHub</a>
+  <div class="footer muted">Actual design-model views, not in-game screenshots. The smaller rear bridge has wraparound glazing. Manual pose preview. AnchorChain addon: .75 s deploy, hold 300 s after last shot, 10 s stow, aviation locked until closed. Combat/flight lock await in-game testing; lasers remain visual concepts.<br><br>
+    Original model sources and installers are included in the numbered release package.
   </div>
 </aside>
 <main>
@@ -325,19 +341,20 @@ if (!gl) {
   const ciwsStatus = document.getElementById('ciwsStatus');
   let deployTarget = 0, deployProgress = 0;
   let ciwsTarget = 0, ciwsProgress = 0;
+  let liftTarget = 0, liftProgress = 0;
   let lastFrame = null, animating = false;
   function ciwsMotion(progress) {
     // Native demonstration: doors open over the first 0.10 s, then the
     // three mount assemblies rise 5 m over 0.10–0.40 s. Reverse to stow.
-    return {door: Math.min(1, Math.max(0, progress/.25)),
-            lift: Math.min(1, Math.max(0, (progress-.25)/.75))};
+    return {door: Math.min(1, Math.max(0, progress/.2)),
+            lift: Math.min(1, Math.max(0, (progress-.2)/.8))};
   }
   function updateCiwsStatus() {
     let text;
-    if (ciwsProgress <= .000001) text = 'Three CIWS stowed beneath flush covers';
-    else if (ciwsProgress >= .999999) text = 'Three CIWS raised — visual demonstration';
-    else if (ciwsTarget) text = ciwsProgress < .25 ? 'CIWS hatches opening' : 'Three CIWS rising';
-    else text = ciwsProgress > .25 ? 'Three CIWS lowering' : 'CIWS hatches closing';
+    if (ciwsProgress <= .000001) text = 'Enclosed bays stowed; flight deck available';
+    else if (ciwsProgress >= .999999) text = 'Weapons raised; aviation locked in the addon';
+    else if (ciwsTarget) text = ciwsProgress < .25 ? 'Bay hatches opening' : 'Weapons rising';
+    else text = ciwsProgress > .25 ? 'Weapons lowering' : 'Bay hatches closing';
     if (ciwsStatus.textContent !== text) ciwsStatus.textContent = text;
   }
   let azimuth = 147*Math.PI/180, elevation = 34*Math.PI/180, distance = 540, top = false;
@@ -385,7 +402,7 @@ if (!gl) {
         if (!enabled.has('laser')) continue;
         if (mesh.category === 'laser_closed' && deployProgress > .001) continue;
         if (mesh.category !== 'laser_closed' && deployProgress < .001) continue;
-      } else if (mesh.category.startsWith('ciws_')) {
+      } else if (mesh.category.startsWith('bay:') || mesh.category.startsWith('ciws_')) {
         if (!enabled.has('equipment')) continue;
       } else if (!enabled.has(mesh.category)) continue;
       gl.bindBuffer(gl.ARRAY_BUFFER, mesh.buffer);
@@ -395,6 +412,11 @@ if (!gl) {
       const offset = [0, 0, 0];
       if (mesh.category === 'laser_turret') offset[1] = (deployProgress-1)*4.3;
       const ciws = ciwsMotion(ciwsProgress);
+      if (mesh.category.startsWith('bay:')) {
+        const [,axis,travel]=mesh.category.split(':');
+        offset['xyz'.indexOf(axis)]=Number(travel)*(axis==='y'?ciws.lift:ciws.door);
+      }
+      if (mesh.category === 'lifts') offset[1] = liftProgress * 10.202;
       if (mesh.category === 'ciws_moving') offset[1] = ciws.lift*5;
       if (mesh.category === 'ciws_door_l') offset[0] = -ciws.door*3.2;
       if (mesh.category === 'ciws_door_r') offset[0] = ciws.door*3.2;
@@ -409,11 +431,12 @@ if (!gl) {
       return current + Math.sign(targetValue-current) *
         Math.min(Math.abs(targetValue-current), elapsed/duration);
     }
+    liftProgress = advance(liftProgress, liftTarget, 6);
     deployProgress = advance(deployProgress, deployTarget, .8);
-    ciwsProgress = advance(ciwsProgress, ciwsTarget, .4);
+    ciwsProgress = advance(ciwsProgress, ciwsTarget, ciwsTarget ? .75 : 10);
     updateCiwsStatus();
     draw();
-    if (Math.abs(deployTarget-deployProgress) > .000001 || Math.abs(ciwsTarget-ciwsProgress) > .000001) {
+    if (Math.abs(liftTarget-liftProgress) > .000001 || Math.abs(deployTarget-deployProgress) > .000001 || Math.abs(ciwsTarget-ciwsProgress) > .000001) {
       requestAnimationFrame(animate);
     } else {
       deployProgress = deployTarget; ciwsProgress = ciwsTarget;
@@ -433,11 +456,16 @@ if (!gl) {
     laserStatus.textContent = deployTarget ? 'Hatches open; turrets rising' : 'Turrets lowering; hatches closing';
     startDeploymentAnimation();
   });
+  document.getElementById('moveLifts').addEventListener('click', event => {
+    liftTarget = liftTarget ? 0 : 1;
+    event.target.textContent = liftTarget ? 'Lower all four lifts' : 'Raise all four lifts';
+    startDeploymentAnimation();
+  });
   ciwsButton.addEventListener('click', () => {
     ciwsTarget = ciwsTarget ? 0 : 1;
-    ciwsButton.textContent = ciwsTarget ? 'Retract three CIWS' : 'Raise three CIWS';
+    ciwsButton.textContent = ciwsTarget ? 'Lower weapons (manual preview)' : 'Raise enclosed weapons';
     ciwsButton.setAttribute('aria-pressed', String(Boolean(ciwsTarget)));
-    ciwsStatus.textContent = ciwsTarget ? 'CIWS hatches opening' : 'Three CIWS lowering';
+    ciwsStatus.textContent = ciwsTarget ? 'Bay hatches opening' : 'Weapons lowering';
     startDeploymentAnimation();
   });
   document.querySelectorAll('#layers input').forEach(input => input.addEventListener('change', () => {
@@ -503,5 +531,6 @@ if (!gl) {
 if __name__ == "__main__":
     import sys
     sys.dont_write_bytecode = True
-    from build import main
+    sys.path.insert(0,str(Path(__file__).resolve().parents[1]/"tools"))
+    from build_current_game_preview import main
     main()
