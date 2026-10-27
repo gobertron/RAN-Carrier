@@ -173,7 +173,7 @@
     "berths": 5800
   },
   "full_load_displacement_tonnes_design_target": 112000,
-  "release_version": "0.8.2-lift-lighting",
+  "release_version": "0.8.5-naval-details",
   "internal_arrangement": {
     "hangar_length_width_height_m": [
       280,
@@ -203,7 +203,7 @@
     "native_key": "NumberOfDCTeams",
     "runtime_verified": false
   },
-  "version": "0.8.2-lift-lighting",
+  "version": "0.8.5-naval-details",
   "submerged_hull": "Original symmetric broad-stern hull with eight actual intake/transom openings and connected wet ducts; recalibrated net geometric displacement112000t; four outer steering nozzles and four fixed boosters",
   "waterline_length_m": 362.6,
   "naval_hydrostatics_report": "naval-hull-hydrostatics.json",
@@ -247,5 +247,46 @@
     "beams": "Inward/downward spots; non-emissive lenses",
     "in_game_tested": false
   },
-  "metadata_scope": "Current v0.8.2 branch metadata; historical release ZIP remains immutable. Geometry and software checks do not establish gameplay or naval-engineering approval."
+  "metadata_scope": "v0.8.5 larger native hull numbers and face-aligned naval-style doors/windows; prior class and flight fixes retained. Geometry/software checks only; live appearance still needs confirmation.",
+  "installer_hotfix": "Stock catalogue section-name inventory accepts repeated headings without altering stock files",
+  "controller_version": "0.8.2",
+  "editor_class": "Australis-class",
+  "editor_variant_count": 4,
+  "flight_deck_cycle": {
+    "idle_lifts": "deck level",
+    "aircraft_lifts": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "helicopter_only_pads": [
+      4,
+      5,
+      6
+    ],
+    "taxi_routes": 22,
+    "native_scheduler": true,
+    "in_game_tested": false
+  },
+  "naval_details": {
+    "framed_windows": 43,
+    "door_assemblies": 11,
+    "maintenance_galleries": 6,
+    "opaque_radar_panels": 7,
+    "hull_numbers": [
+      91,
+      92,
+      93,
+      94
+    ],
+    "markings": [
+      "bow flight deck",
+      "port island",
+      "starboard island"
+    ],
+    "alignment_report": "naval-fittings.json",
+    "number_report": "number-panels.json",
+    "in_game_confirmed": false
+  }
 }

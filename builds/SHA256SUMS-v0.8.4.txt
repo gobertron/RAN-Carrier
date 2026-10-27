@@ -1,0 +1,1 @@
+2c7d143250bba65159ac4d1922525d8c6550745d98d4ad13f9d6d6ae25c5ef69  install-ran-australis-v0.8.4-class-list-fix.sh

@@ -2,7 +2,7 @@
   "schema": 1,
   "version": "0.7.0-recovery",
   "origin": "Original Australis game-model general-arrangement blockout",
-  "game_obj_sha256": "cea47680a8cec6d40d26b9299c776f6ab728d37c3ec0bbb6b46d18a004fc2fbe",
+  "game_obj_sha256": "d2d856e4648c3f23a663463584fd2be5b05047802ea69f0eabef087219da7972",
   "hangar_bounds_m": [
     -25.0,
     25.0,

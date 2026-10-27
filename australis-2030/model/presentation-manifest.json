@@ -1,42 +1,405 @@
 {
-  "version": "0.8.2-lift-lighting",
-  "revision": "c6f74183cff1",
-  "source": "Current exported native OBJ/INI",
-  "obj_sha256": "cea47680a8cec6d40d26b9299c776f6ab728d37c3ec0bbb6b46d18a004fc2fbe",
-  "ini_sha256": "a1467251414d7c216b8ea3f2410b8bb4225e2196e6c3c78f5eedf912376405dd",
-  "view": "Actual empty-air-group geometry; studio/illustrative shading, not game screenshots",
-  "viewer": "../viewer/australis_2030_3d.html",
-  "previews": {
-    "version": "0.8.2-lift-lighting",
-    "revision": "c6f74183cff1",
-    "source": "Actual exported Sea Power OBJ and INI transforms",
-    "obj_sha256": "cea47680a8cec6d40d26b9299c776f6ab728d37c3ec0bbb6b46d18a004fc2fbe",
-    "ini_sha256": "a1467251414d7c216b8ea3f2410b8bb4225e2196e6c3c78f5eedf912376405dd",
-    "visible_parts": 182,
-    "triangles": 37273,
-    "rendered_lighting": "Studio surface shading only; no Unity runtime lighting simulation",
-    "omitted": [
-      "stock runtime flag",
-      "collision-only mesh"
-    ],
-    "artifacts": [
-      "Australis-v0.8.2-Full-Ship-3D.html",
-      "Australis-v0.8.2-Full-Ship.png"
-    ],
-    "lift_cutaway": {
-      "source_obj_sha256": "cea47680a8cec6d40d26b9299c776f6ab728d37c3ec0bbb6b46d18a004fc2fbe",
-      "source_ini_sha256": "a1467251414d7c216b8ea3f2410b8bb4225e2196e6c3c78f5eedf912376405dd",
-      "crop_bounds": "First lift only; surrounding hull/deck omitted",
-      "rendered_triangles": [
-        326,
-        326
-      ],
-      "lighting": "Illustrative Lambert spotlight shading using actual fixture profiles; no Unity renderer, shadows or gameplay validation",
-      "states_m": [
-        11.8,
-        22.002
-      ],
-      "fixture_count": 8
+  "version": "0.8.5-naval-details",
+  "revision": "4c200a176871",
+  "source": "Current canonical native OBJ, INI and per-variant PNG atlases",
+  "obj_sha256": "d7cb53a1b91b5cc309707e78eafd8cc17e7b09bd24eeb6a79909bdf56ff6b157",
+  "ini_sha256": "76bb0ee1af04e1671c5b7c928fcafa51d7e19c3bacb6fc7cb78846a30b73e391",
+  "number_panels_sha256": "9856b2f3e8f9c12af4686f2594b622437004f413703b8b2f0c6692043af49135",
+  "naval_fittings_sha256": "0559647539ecd38eb09414aa46a4589d5d19c185d64c0ddd8cf7e1fcc6b69e53",
+  "native_class": "Australis-class",
+  "fleet": [
+    {
+      "id": "ran_cvn_australis_2030:Variant1",
+      "name": "HMSCS Australis 91",
+      "obj_sha256": "d7cb53a1b91b5cc309707e78eafd8cc17e7b09bd24eeb6a79909bdf56ff6b157",
+      "ini_sha256": "76bb0ee1af04e1671c5b7c928fcafa51d7e19c3bacb6fc7cb78846a30b73e391",
+      "atlas": "ships/ran_cvn_australis_2030/hullnumber_91.png",
+      "atlas_sha256": "c5e6eb9dea21108973abd64d7a5319484e7ed705488572bfe1afedc773cce802",
+      "number_projection": [
+        {
+          "panel": 0,
+          "uv_bounds": [
+            0.0,
+            0.5,
+            1.0,
+            1.0
+          ],
+          "background_rgb": [
+            57,
+            73,
+            83
+          ],
+          "projected_rectangles": 482,
+          "mask_resolution": [
+            384,
+            192
+          ],
+          "affine_max_error_m": 0.0,
+          "normal": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "panel": 1,
+          "uv_bounds": [
+            0.0,
+            0.0,
+            1.0,
+            0.5
+          ],
+          "background_rgb": [
+            154,
+            172,
+            179
+          ],
+          "projected_rectangles": 481,
+          "mask_resolution": [
+            384,
+            192
+          ],
+          "affine_max_error_m": 4.440892098500626e-16,
+          "normal": [
+            -0.9973690934163828,
+            0.07249063041374822,
+            0.0
+          ]
+        },
+        {
+          "panel": 2,
+          "uv_bounds": [
+            0.0,
+            0.0,
+            1.0,
+            0.5
+          ],
+          "background_rgb": [
+            154,
+            172,
+            179
+          ],
+          "projected_rectangles": 481,
+          "mask_resolution": [
+            384,
+            192
+          ],
+          "affine_max_error_m": 0.0,
+          "normal": [
+            0.9973690934163827,
+            0.07249063041374884,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ran_cvn_australis_2030:Variant2",
+      "name": "HMSCS Southern Cross 92",
+      "obj_sha256": "d7cb53a1b91b5cc309707e78eafd8cc17e7b09bd24eeb6a79909bdf56ff6b157",
+      "ini_sha256": "76bb0ee1af04e1671c5b7c928fcafa51d7e19c3bacb6fc7cb78846a30b73e391",
+      "atlas": "ships/ran_cvn_australis_2030/hullnumber_92.png",
+      "atlas_sha256": "50e6a5feb5c7d09dfcda65e962c9725927debc1201e1cb2c397987add622595e",
+      "number_projection": [
+        {
+          "panel": 0,
+          "uv_bounds": [
+            0.0,
+            0.5,
+            1.0,
+            1.0
+          ],
+          "background_rgb": [
+            57,
+            73,
+            83
+          ],
+          "projected_rectangles": 763,
+          "mask_resolution": [
+            384,
+            192
+          ],
+          "affine_max_error_m": 0.0,
+          "normal": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "panel": 1,
+          "uv_bounds": [
+            0.0,
+            0.0,
+            1.0,
+            0.5
+          ],
+          "background_rgb": [
+            154,
+            172,
+            179
+          ],
+          "projected_rectangles": 759,
+          "mask_resolution": [
+            384,
+            192
+          ],
+          "affine_max_error_m": 4.440892098500626e-16,
+          "normal": [
+            -0.9973690934163828,
+            0.07249063041374822,
+            0.0
+          ]
+        },
+        {
+          "panel": 2,
+          "uv_bounds": [
+            0.0,
+            0.0,
+            1.0,
+            0.5
+          ],
+          "background_rgb": [
+            154,
+            172,
+            179
+          ],
+          "projected_rectangles": 759,
+          "mask_resolution": [
+            384,
+            192
+          ],
+          "affine_max_error_m": 0.0,
+          "normal": [
+            0.9973690934163827,
+            0.07249063041374884,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ran_cvn_australis_2030:Variant3",
+      "name": "HMSCS Federation 93",
+      "obj_sha256": "d7cb53a1b91b5cc309707e78eafd8cc17e7b09bd24eeb6a79909bdf56ff6b157",
+      "ini_sha256": "76bb0ee1af04e1671c5b7c928fcafa51d7e19c3bacb6fc7cb78846a30b73e391",
+      "atlas": "ships/ran_cvn_australis_2030/hullnumber_93.png",
+      "atlas_sha256": "1bd6457c4f40b22b9476351b28b18787825eabe8d81d0b08982d10cd4f596a89",
+      "number_projection": [
+        {
+          "panel": 0,
+          "uv_bounds": [
+            0.0,
+            0.5,
+            1.0,
+            1.0
+          ],
+          "background_rgb": [
+            57,
+            73,
+            83
+          ],
+          "projected_rectangles": 777,
+          "mask_resolution": [
+            384,
+            192
+          ],
+          "affine_max_error_m": 0.0,
+          "normal": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "panel": 1,
+          "uv_bounds": [
+            0.0,
+            0.0,
+            1.0,
+            0.5
+          ],
+          "background_rgb": [
+            154,
+            172,
+            179
+          ],
+          "projected_rectangles": 768,
+          "mask_resolution": [
+            384,
+            192
+          ],
+          "affine_max_error_m": 4.440892098500626e-16,
+          "normal": [
+            -0.9973690934163828,
+            0.07249063041374822,
+            0.0
+          ]
+        },
+        {
+          "panel": 2,
+          "uv_bounds": [
+            0.0,
+            0.0,
+            1.0,
+            0.5
+          ],
+          "background_rgb": [
+            154,
+            172,
+            179
+          ],
+          "projected_rectangles": 768,
+          "mask_resolution": [
+            384,
+            192
+          ],
+          "affine_max_error_m": 0.0,
+          "normal": [
+            0.9973690934163827,
+            0.07249063041374884,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ran_cvn_australis_2030:Variant4",
+      "name": "HMSCS Commonwealth 94",
+      "obj_sha256": "d7cb53a1b91b5cc309707e78eafd8cc17e7b09bd24eeb6a79909bdf56ff6b157",
+      "ini_sha256": "76bb0ee1af04e1671c5b7c928fcafa51d7e19c3bacb6fc7cb78846a30b73e391",
+      "atlas": "ships/ran_cvn_australis_2030/hullnumber_94.png",
+      "atlas_sha256": "4caa1d0b461954a50526883a62603b1e9900503dd5528ebada54a85bae9aefb7",
+      "number_projection": [
+        {
+          "panel": 0,
+          "uv_bounds": [
+            0.0,
+            0.5,
+            1.0,
+            1.0
+          ],
+          "background_rgb": [
+            57,
+            73,
+            83
+          ],
+          "projected_rectangles": 653,
+          "mask_resolution": [
+            384,
+            192
+          ],
+          "affine_max_error_m": 0.0,
+          "normal": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "panel": 1,
+          "uv_bounds": [
+            0.0,
+            0.0,
+            1.0,
+            0.5
+          ],
+          "background_rgb": [
+            154,
+            172,
+            179
+          ],
+          "projected_rectangles": 669,
+          "mask_resolution": [
+            384,
+            192
+          ],
+          "affine_max_error_m": 4.440892098500626e-16,
+          "normal": [
+            -0.9973690934163828,
+            0.07249063041374822,
+            0.0
+          ]
+        },
+        {
+          "panel": 2,
+          "uv_bounds": [
+            0.0,
+            0.0,
+            1.0,
+            0.5
+          ],
+          "background_rgb": [
+            154,
+            172,
+            179
+          ],
+          "projected_rectangles": 669,
+          "mask_resolution": [
+            384,
+            192
+          ],
+          "affine_max_error_m": 0.0,
+          "normal": [
+            0.9973690934163827,
+            0.07249063041374884,
+            0.0
+          ]
+        }
+      ]
     }
-  }
+  ],
+  "viewer": "viewer/Australis-v0.8.5-Fleet-3D.html",
+  "viewer_sha256": "375c8c476d5226a5ae1ff2f2c63c24630c8121d037d9fc62cc935e2007077aae",
+  "viewer_bytes": 1567371,
+  "native_number_texture_preview": "Approximate 384-pixel-wide nearest-palette mask projected through actual native panel UVs; backgrounds preserve exported triangles",
+  "default_lift_pose": "Actual native upper-stop coordinates, top surface 22.002 m; initial viewer offset zero",
+  "lift_control": "(progress - 1) \u00d7 10.202 m, where progress starts at 1",
+  "lighting": "Studio Lambert shading; no Unity renderer, runtime illumination or gameplay validation",
+  "omitted": [
+    "stock runtime flag",
+    "collision-only meshes"
+  ],
+  "photos": [
+    {
+      "id": "starboard",
+      "file": "australis_2030_current_starboard.png",
+      "sha256": "9eab8f1434dd433a19debe1cf3a8ff45341e10989c33a9e79a3201d1d740bda8"
+    },
+    {
+      "id": "port_waist",
+      "file": "australis_2030_current_port_waist.png",
+      "sha256": "994d707b4a5b52ca684a53602ead7229bae28688bc370b254819a81747cae388"
+    },
+    {
+      "id": "deck",
+      "file": "australis_2030_current_deck.png",
+      "sha256": "f93020a38dd3d5c4ad2692a9eb8f5377acf6a0c50682f2b845f86f5c2afd2b9e"
+    },
+    {
+      "id": "bow",
+      "file": "australis_2030_current_bow.png",
+      "sha256": "ba46d959ac567d5ec01571540db7d4fb185c5d882491f8fb2c9f232547cd3e12"
+    },
+    {
+      "id": "naval_details",
+      "file": "Australis-v0.8.5-Naval-Details.png",
+      "sha256": "8703516bec8b550758e97311d633635853f5f486a6ec55a548fd3d613a73b0c0"
+    },
+    {
+      "id": "hull_numbers",
+      "file": "Australis-v0.8.5-Hull-Numbers.png",
+      "sha256": "b04147e648e8ccd660dc0b482293805c9cd1d81044c0e96da16083872d5363be"
+    },
+    {
+      "id": "waterjets",
+      "file": "australis_2030_current_waterjets.png",
+      "sha256": "f4de2f299a6a4a8fb7c268906db49c7c2e7d0a7d4e20d1e72421b391d874732d"
+    },
+    {
+      "id": "underwater",
+      "file": "australis_2030_current_underwater.png",
+      "sha256": "010a719958c7da01a525e000a58ec409ba560c2507e6663b9fd9d645a0e0fa32"
+    }
+  ]
 }

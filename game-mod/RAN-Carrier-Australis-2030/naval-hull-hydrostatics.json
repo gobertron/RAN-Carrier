@@ -1,7 +1,7 @@
 {
   "version": "0.8.2-lift-lighting",
   "source": "Measured exported reference-envelope OBJ, visible wet-boundary OBJ and native INIs",
-  "obj_sha256": "cea47680a8cec6d40d26b9299c776f6ab728d37c3ec0bbb6b46d18a004fc2fbe",
+  "obj_sha256": "d7cb53a1b91b5cc309707e78eafd8cc17e7b09bd24eeb6a79909bdf56ff6b157",
   "hydrostatic_reference_obj_sha256": "8fe31e61831c30255cbd2cdcd6664baa2c9355a41ca6f8d97618bf3319d33545",
   "waterline_length_m": 362.5999411126049,
   "waterline_beam_m": 40.99997691310504,

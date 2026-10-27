@@ -1,4 +1,36 @@
-# Australis v0.8.2 — experimental eight-waterjet prototype
+# Australis v0.8.5 — Naval Details
+
+## Naval details in v0.8.5
+
+Hull numbers **91–94** are enlarged on the flight deck and both main-island sides and aligned to their model surfaces. The shared native class still selects the matching number atlas for each named ship. Both bridge structures receive individual framed naval-style windows, with consistent sill heights and mullions on their actual raked faces. Watertight-style doors use raised coamings, rounded corners, hinges, dogs and handles aligned to the supporting surface.
+
+The deck number panel is **10.8 × 8.8 m**, with an approximately **8.44 × 6.53 m** painted glyph. Both port and starboard main-island panels are **9.6 × 5.6 m**, with approximately **7.69 × 4.20 m** glyphs. The panels follow their actual supporting planes with a small surface offset; the enlarged island markings sit between the lower access doors and bridge glazing.
+
+These fittings are original decorative model geometry; they do not create functioning doors or establish watertight integrity, ballistic protection or naval-design certification. Their appearance, texture orientation and visibility still need an in-game check. The change retains the preceding hull, waterjet, class-list and flight-deck configuration.
+
+**The v0.8.4 class-list correction is retained: one Australis-class entry**, using four native ship variants rather than four separate class definitions. This is intended to remove the extra “2025” submenus shown in the earlier build. The target Mission Editor list is:
+
+| Class | Selectable ship |
+|---|---|
+| Australis-class | HMSCS Australis 91 |
+| Australis-class | HMSCS Southern Cross 92 |
+| Australis-class | HMSCS Federation 93 |
+| Australis-class | HMSCS Commonwealth 94 |
+
+The variants share the hull and use native per-variant number textures on deck- and island-coloured panels. Hull shape, propulsion settings and the compiled v0.8.2 deck controller are retained. The v0.8.4 lift-home state and taxi-route corrections are retained as described below. **The class-list presentation and number-panel appearance still need confirmation in the live game.**
+
+Older missions that reference the former Southern Cross, Federation or Commonwealth vessel IDs need those ships re-placed from **Australis-class**. The installer retains a verified backup; it does not edit saved missions.
+
+The flight-deck correction sets each lift's idle/home stop to flight-deck level: `StartsLowered=False`, `CloseDoorsAfterTaxi=False`, with the initial platform at **Y=22.002 m**. The native system lowers a lift on demand and returns it to the upper home stop after launch or recovery. The v0.8.3 lower-home setting conflicted with the native post-taxi upper state, which could leave `IsBusy` permanently true and prevent another aircraft cycle.
+
+All four lifts now have fixed-wing routes: **12 lift-to-catapult routes, four arrested-recovery-to-lift routes, three helicopter launch routes and three helicopter recovery routes — 22 taxi routes in total**. The three dedicated pads accept **Helicopter** only; carrier-capable VTOL/STOL aircraft use the catapult and arrested-recovery paths. Native interlocks remain active. Fixed-wing recovery conservatively blocks all six launch points, so conflicting operations queue.
+
+A state simulation derived from the supplied game IL passes **20 launch/recovery cycles on each of four lifts**. This checks the native lift-state transitions; live Sea Power flight cycles and Unity appearance remain to be confirmed. The compiled v0.8.2 deck controller is retained.
+
+The included v0.8.3 stock-catalogue correction fixes the installer stopping at 40% with `section '---------- Surface ships ----------' already exists` in Sea Power's stock `systems/sensors.ini`. The dependency check now inventories stock section names and tolerates repeated category dividers and values. It does not edit or rewrite the original game files. Strict validation remains enabled for our own mod INIs; missing actual stock systems, ammunition and other dependencies still stop installation.
+
+The class and flight-deck corrections retain the waterjet hull, Standard 20 / Full 30 speed profile and lift-wall lighting. The native fleet now has one vessel definition and four variants, with native hull-number textures. The compiled deck controller remains v0.8.2. Earlier failed attempts stopped before replacement, so the previous installed carrier remains in place until this corrected installer succeeds. A verified backup is made before an existing carrier is replaced.
+
 
 v0.8.2 adds eight recessed warm-white work lights to each lift shaft (32 total), placed in the existing outer, forward and aft walls. The inboard hangar doorway stays open. The lights follow each actual LiftPlatform transform independently, rather than an animation timer or the exterior night-light schedule. They work during the day and at night while the lift is below deck.
 
@@ -22,9 +54,9 @@ The native 30-knot target and 280,000-horsepower setting are retained. Eight equ
 
 Sea Power uses conventional aggregate vessel propulsion. Eight mounts do not multiply thrust: the shared power plant still supplies the vessel. The four steering units follow the same native rudder command. Independent thrust allocation, booster staging, bucket animation, eight individual wakes and physical waterjet flow are not simulated. The raised reverse-bucket shapes are static. Native astern operation is a game approximation. The original Foam section is retained because native rudder initialization requires its stern trail.
 
-The approved flight deck, forward CIWS position, aircraft routes, lift positions and deck controller behavior remain unchanged. All geometry/software checks reported here apply to this exported prototype; no in-game play test has been completed.
+The flight-deck geometry, forward CIWS position and lift locations are retained. Lift-home configuration and aircraft routes are corrected; the compiled deck controller is unchanged. All geometry/software checks reported here apply to this exported prototype; no in-game play test has been completed.
 
-Four ships: HMSCS Australis 91, Southern Cross 92, Federation 93, Commonwealth 94. Three catapults (two bow, one port waist); four 22 × 26 m internal lifts; three helipads. Fixed-wing aircraft use the front two lifts; helicopters/VTOL use the rear two. Helicopters prefer aft, front, middle; shared lifts and taxi/recovery corridors still queue. Bow launches and helicopter pad operations are permitted together when native routes are free. Fixed-wing recovery retains conservative conflicts with helicopter movement across its lane.
+Four native ship variants: HMSCS Australis 91, Southern Cross 92, Federation 93 and Commonwealth 94. Three catapults (two bow, one port waist), four 22 × 26 m internal lifts and three helicopter-only pads are retained. Fixed-wing routes connect all four lifts to all three catapults and the arrested-recovery lane. VTOL/STOL aircraft use those rolling paths. Helicopters prefer aft, front, middle through their native lift/pad routes; shared lifts and taxi/recovery corridors still queue. Fixed-wing recovery blocks all six launch points conservatively.
 
 Five repair teams; 280 × 50 × 8 m hangar and 36 folded reference parking spaces; 5,800 planning berths. The layout is checked by sampled geometric containment and reservation-overlap checks; the current internal-arrangement audit records the final room count. Aircraft turns, 63 deck-parked aircraft, the complete 99-aircraft cycle and naval stability have not been verified.
 
@@ -34,13 +66,17 @@ Original naval paint, small bridge panes, watertight doors, deck tyre marks, pai
 
 ## Install
 
-Close Sea Power. Download the standalone installer, then run:
+Use the supplied complete offline installer for this release. It contains the current game package and editable source, verifies its embedded archive and file manifest, and needs Python 3. No earlier installer is required. GitHub publication of v0.8.5 is pending; do not assume a raw GitHub download of this version is available.
+
+Close Sea Power. Save the supplied v0.8.5 offline installer in Downloads, then run:
 
 ```bash
-bash "$HOME/Downloads/install-ran-australis-v0.8.2-lift-lighting.sh"
+bash "$HOME/Downloads/install-ran-australis-v0.8.5-naval-details-offline.sh"
 ```
 
-The installer checks the embedded package, your previously supplied game-DLL version and existing AnchorChain installation before changing anything. It finds the preloader under **BepInEx/plugins**, including nested folders. It installs our controller inside the enabled carrier mod. Backups are verified before replacing the existing Australis folder. A legacy controller directly under StreamingAssets is backed up and withdrawn to avoid duplicate loading. It does not modify stock, Workshop, RADF, User Data, BepInEx, or your launch options.
+The offline installer verifies its embedded current package before running pre-install checks: your previously supplied game-DLL version, existing AnchorChain installation and current package integrity must pass before replacement. It finds the preloader under **BepInEx/plugins**, including nested folders. It installs our controller inside the enabled carrier mod. Backups are verified before replacing the existing Australis folder. A legacy controller directly under StreamingAssets is backed up and withdrawn to avoid duplicate loading. It does not modify stock, Workshop, RADF, User Data, BepInEx, or your launch options.
+
+After verifying the installed hashes, the installer prints `[VERIFIED] RAN Australis Fleet v0.8.5 Naval Details` so you can identify the exact release. It also scans local mod folders and the Sea Power Workshop directory for competing copies of the same carrier vessel definitions. Each match is listed as `[OTHER COPY]` with its folder path; disable older Australis copies in the game mod menu. The diagnostic does not delete or change those copies. An unreadable folder produces a note that the scan was incomplete without invalidating the verified installation.
 
 Retain your working Steam Proton launch option:
 
@@ -48,7 +84,7 @@ Retain your working Steam Proton launch option:
 WINEDLLOVERRIDES="winhttp.dll=n,b" %command%
 ```
 
-Enable AnchorChain and RAN Australis Fleet v0.8.2 Lift Lighting, restart, then place a fresh carrier in a new blank mission. Ready both aircraft groups before testing. Test one aircraft per front lift, one helicopter per rear lift, pad priority, lift up/down, CIWS deployment, vertical deck VLS firing, five damage-control teams, dusk/night and Standard carrier power. The first combat request waits for committed aviation to clear; aviation remains interlocked while defensive wells are open.
+Enable AnchorChain and RAN Australis Fleet v0.8.5 Naval Details, disable older Australis entries, restart, then open Australis-class and place a fresh variant in a new blank mission. Ready both aircraft groups before testing. Test repeated fixed-wing launch/recovery through all four lifts, the helicopter routes and pad priority, native lift down/up return to its upper home stop, CIWS deployment, vertical deck VLS firing, five damage-control teams, dusk/night and Standard carrier power. The first combat request waits for committed aviation to clear; aviation remains interlocked while defensive wells are open.
 
 After placing a fresh carrier, check static waterline/trim, ahead and astern, steering both directions, nozzle motion, propulsion damage, and the existing aircraft operations. Compare against v0.7.0. Save logs if the hull sits incorrectly, a nozzle does not move or a native exception appears.
 
@@ -58,4 +94,6 @@ This waterjet prototype has not been tested in the Sea Power runtime. Send the i
 
 ## Rebuild dependencies
 
-The source-generation workflow uses NumPy, Pillow, Shapely and SciPy; preview plots also use Matplotlib. The delivered standalone installer needs only Python 3 standard-library modules and does not require these build dependencies.
+The v0.8.5 viewer uses the current exported OBJ and INI geometry. Hull-number appearance is projected from the same per-variant PNG atlas used by the game. Preview texture sampling and studio shading are approximations; they do not simulate Unity lighting, the Mission Editor or native flight scheduling. All four variants use the common current mesh, with lifts at their 22.002 m upper home stop.
+
+The source-generation workflow uses NumPy, Pillow, Shapely and SciPy; preview plots also use Matplotlib. The supplied offline installer uses only Python 3 standard-library modules and needs none of these source-build dependencies. A separately prepared network launcher also uses the standard library but needs an internet connection; its GitHub publication is pending.

@@ -53,7 +53,7 @@ SHIP_DIR = f"ships/{ID}"
 DEST = ROOT / "game-mod" / MOD_NAME
 SCALE = 1 / METRES_PER_UNIT
 DECK_HEIGHT = DECK_SURFACE_Y * SCALE
-LAUNCH_ASSOC = ((1,2,3),(1,2,3),(4,),(6,5))
+LAUNCH_ASSOC = ((1,2,3),(1,2,3),(1,2,3,4),(1,2,3,6,5))
 # Native FlightDeckAircraftSupportPoint keys, verified against the supplied
 # engine schema. Do not restrict aircraft classes, roles or VTOL loadouts.
 AIRCRAFT_SIZE_SUPPORT = ["SupportsSmall=True", "SupportsLarge=True", "SupportsVeryLarge=True"]
@@ -227,20 +227,44 @@ def catapult_zone(start: tuple[float,float],
 
 
 def routes():
+    """Native directed taxi graph; all four lifts serve all three catapults.
+
+    X values below are physical metres.  Port-side longitudinal access avoids
+    the island footprints and the three helicopter pad centres.  These are
+    centreline routes, not a swept-clearance approval for every add-on aircraft.
+    Shared access and the arrested-recovery corridor remain native queues.
+    """
     out=[]
-    for e in (1,2):
-        x,z=ELEVATORS[e-1]
+    def author(points):
+        return [(x/WIDTH_SCALE,z) for x,z in points]
+    corridor=-14.
+    bow_crossing=44.
+    for e,(x,z) in enumerate(ELEVATORS,1):
         for launch in (1,2,3):
             approach=catapult_point(CATAPULTS[launch-1],-20)
-            # Bow aircraft clear the forward pad before entering either bow lane.
-            way=[(14/WIDTH_SCALE,z),(14/WIDTH_SCALE,62),approach] if launch<=2 else [(14/WIDTH_SCALE,z),(14/WIDTH_SCALE,40),(-26/WIDTH_SCALE,40),(-26/WIDTH_SCALE,-38),approach]
-            out.append((f'Elevator{e}',f'LaunchPoint{launch}',way))
-        out.append(('RecoveryPoint1',f'Elevator{e}',[(-12/WIDTH_SCALE,22),(-12/WIDTH_SCALE,62),(14/WIDTH_SCALE,62),(14/WIDTH_SCALE,z)]))
-    for launch,e,way in ((4,3,[(11,-1),(11,2)]),(5,4,[(13,-50),(13.6,-71)]),(6,4,[(-9,-50),(-9,-107),(20.2,-108)])):
-        out.append((f'Elevator{e}',f'LaunchPoint{launch}',[(x/WIDTH_SCALE,z) for x,z in way]))
+            ax,az=approach[0]*WIDTH_SCALE,approach[1]
+            if launch<=2:
+                # All lifts join the same port access lane before lining up.
+                # Bow aircraft approach the staging point facing forward.
+                physical=[(corridor,z),(corridor,bow_crossing),
+                          (ax,bow_crossing),(ax,az)]
+            else:
+                # Approach the waist shuttle from aft, rather than crossing
+                # the main island or a non-origin lift shaft.
+                aft=-50. if e<=3 else -68.
+                physical=[(corridor,z),(corridor,aft),(ax,aft),(ax,az)]
+            out.append((f'Elevator{e}',f'LaunchPoint{launch}',author(physical)))
+        # The recovery endpoint is already the forward end of the angled lane.
+        # Leave it toward port access, then enter only the assigned lift.
+        physical=[(corridor,26.),(corridor,z)]
+        out.append(('RecoveryPoint1',f'Elevator{e}',author(physical)))
+    for launch,e,way in ((4,3,[(11,-1),(11,2)]),
+                         (5,4,[(13,-50),(13.6,-71)]),
+                         (6,4,[(-9,-50),(-9,-132),(20.2,-132),(20.2,-124)])):
+        out.append((f'Elevator{e}',f'LaunchPoint{launch}',author(way)))
         # Recovery order is aft, front, middle.
         recovery={6:2,4:3,5:4}[launch]
-        out.append((f'RecoveryPoint{recovery}',f'Elevator{e}',[(x/WIDTH_SCALE,z) for x,z in reversed(way)]))
+        out.append((f'RecoveryPoint{recovery}',f'Elevator{e}',author(list(reversed(way)))))
     return out
 
 
@@ -294,7 +318,7 @@ def vessel_ini(material: dict[str,str]) -> str:
             *AIRCRAFT_SIZE_SUPPORT,
             f"Mesh=LiftPlatform{i}",f"SpawnPosition={point(x,z,11.8-DECK_SURFACE_Y)}",
             "SpawnRotation=0",f"RidePosition={point(x,z,11.8-DECK_SURFACE_Y)}","RideRotation=0",
-            f"MoveDownAnimation=Lift{i}Down",f"MoveUpAnimation=Lift{i}Up","StartsLowered=True","RequiresFreeLaunchpoint=True","EmbarkTime=10","RecycleTime=15"]))
+            f"MoveDownAnimation=Lift{i}Down",f"MoveUpAnimation=Lift{i}Up","StartsLowered=False","CloseDoorsAfterTaxi=False","RequiresFreeLaunchpoint=True","EmbarkTime=10","RecycleTime=15"]))
     for i,((x,z),(ex,ez)) in enumerate(CATAPULTS,1):
         rotation = math.degrees(math.atan2((ex-x)*WIDTH_SCALE,ez-z))
         interlock = ",".join(map(str,CATAPULT_INTERLOCKS[i]))
@@ -308,14 +332,15 @@ def vessel_ini(material: dict[str,str]) -> str:
     for i,(x,z) in enumerate(VERTICAL_SPOTS,4):
         blocks=",".join(map(str,HELO_INTERLOCKS[i]))
         parts.append(section(f"LaunchPoint{i}",[
-            "AllowedType=Helicopter,VTOL", *AIRCRAFT_SIZE_SUPPORT,
+            "AllowedType=Helicopter", *AIRCRAFT_SIZE_SUPPORT,
             f"Position={point(x,z,HELIPAD_SURFACE_Y-DECK_SURFACE_Y)}","Rotation=-12",
             *([f"BlocksLaunchPoints={blocks}",f"TakeoffRequiresFreeLaunchpoints={blocks}"] if blocks else [])]))
     touchdown = LANDING_LANE_A + (LANDING_LANE_B-LANDING_LANE_A)*.36
     parts.append(section("RecoveryPoint1",[
         "AllowedType=Plane,VTOL,STOL", *AIRCRAFT_SIZE_SUPPORT,
-        "AssociatedElevators=1,2",
-        "BlocksLaunchPoints=3,4,5,6",
+        "AssociatedElevators=1,2,3,4",
+        "; Recovery taxi crosses shared launch access; queue new departures.",
+        "BlocksLaunchPoints=1,2,3,4,5,6",
         "BlocksRecoveryPoints=2,3,4",
         f"Position={point(*touchdown)}",f"ExitPosition={point(*LANDING_LANE_B)}",
         "Rotation="+f"{math.degrees(math.atan2((LANDING_LANE_B[0]-LANDING_LANE_A[0])*WIDTH_SCALE,LANDING_LANE_B[1]-LANDING_LANE_A[1])):.3f}",
@@ -324,7 +349,7 @@ def vessel_ini(material: dict[str,str]) -> str:
     for i,pad in enumerate((2,0,1),2):
         x,z=VERTICAL_SPOTS[pad];elevator=HELO_ELEVATORS[pad];launch=pad+4
         parts.append(section(f"RecoveryPoint{i}",[
-            "AllowedType=Helicopter,VTOL",*AIRCRAFT_SIZE_SUPPORT,
+            "AllowedType=Helicopter",*AIRCRAFT_SIZE_SUPPORT,
             f"BlocksLaunchPoints=3,{launch}",f"AssociatedElevators={elevator}",
             "BlocksRecoveryPoints=1",
             f"Position={point(x,z,HELIPAD_SURFACE_Y-DECK_SURFACE_Y)}","Rotation=-12",
@@ -438,7 +463,7 @@ def vessel_ini(material: dict[str,str]) -> str:
               f"Material={material[name]}_mat.ini", "Position="+",".join(f"{v/METRES_PER_UNIT:.9f}" for v in spec["position"])]
         parts.append(section(name,rows))
     for i,(x,z) in enumerate(ELEVATORS,1):
-        parts.append(section(f"LiftPlatform{i}",[f"Mesh=LiftPlatform{i}","Material=hatch_mat.ini",f"Position={vec(x,11.8,z)}"]))
+        parts.append(section(f"LiftPlatform{i}",[f"Mesh=LiftPlatform{i}","Material=hatch_mat.ini",f"Position={vec(x,LIFT_SURFACE_Y,z)}"]))
     for i in range(1,5):
         parts.append(section(f"PVLS_{i}_LaunchBase",[f"Mesh=PVLS_{i}_LaunchBase","Material=dark_mat.ini",f"Parent=PVLS_{i}_Lift",f"Position=0,{3.16/METRES_PER_UNIT:.9f},0","Rotation=-90,0,0"]))
     parts.append(section("Flag1",[
@@ -499,6 +524,53 @@ def vessel_ini(material: dict[str,str]) -> str:
         "OverlayFoamMaxAlpha=1.0","KelvinWaves=7.65,7.65",
         "VelocityForMaxParticles=15"]))
     return "\n".join(parts)
+
+
+def update_flight_deck_config(path: Path) -> None:
+    """Apply only aviation sections to an existing authored vessel definition.
+
+    Hull-number variants and other native class registration stay untouched.
+    This avoids rebuilding geometry simply to update its route graph.
+    """
+    import configparser
+    import re
+    path=Path(path)
+    original=path.read_text(encoding="utf-8-sig")
+    current=configparser.ConfigParser(interpolation=None)
+    current.optionxform=str
+    current.read_string(original)
+    materials={"Hull":"hull", "coll_hull_main":"hull"}
+    for name in current["Submodels"].values():
+        if name=="Flag1":continue
+        materials[name]=Path(current[name]["Material"]).name.removesuffix("_mat.ini")
+    generated=vessel_ini(materials)
+    def blocks(text):
+        return re.split(r"(?m)(?=^\[)",text)
+    replacement={}
+    taxi=[]
+    for block in blocks(generated):
+        match=re.match(r"\[([^]\n]+)\]",block)
+        if not match:continue
+        name=match.group(1)
+        if re.fullmatch(r"TaxiPath\d+",name):taxi.append(block)
+        else:replacement[name]=block
+    wanted={"FlightDeck",*(f"Elevator{i}" for i in range(1,5)),
+            *(f"LaunchPoint{i}" for i in range(1,7)),
+            *(f"RecoveryPoint{i}" for i in range(1,5)),
+            *(f"LiftPlatform{i}" for i in range(1,5))}
+    result=[];taxi_inserted=False;seen=set()
+    for block in blocks(original):
+        match=re.match(r"\[([^]\n]+)\]",block)
+        if not match:result.append(block);continue
+        name=match.group(1)
+        if re.fullmatch(r"TaxiPath\d+",name):
+            if not taxi_inserted:result.extend(taxi);taxi_inserted=True
+            continue
+        if name in wanted:result.append(replacement[name]);seen.add(name)
+        else:result.append(block)
+    if seen!=wanted:raise ValueError("Missing expected authored aviation sections: "+str(wanted-seen))
+    if not taxi_inserted:result.extend(taxi)
+    write_ini(path,"".join(result))
 
 
 def build(destination: Path = DEST) -> None:

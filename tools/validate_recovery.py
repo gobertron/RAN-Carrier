@@ -1,15 +1,32 @@
 #!/usr/bin/env python3
 """Validate real native fleet files and their bindings with stdlib only."""
 from pathlib import Path
-import configparser,re,math,json
+import configparser,re,math,json,hashlib
 from internal_fit import validate_arrangement
 UNIT=217/3.161967
-IDS=['ran_cvn_australis_2030','ran_cvn_southern_cross_2030','ran_cvn_federation_2030','ran_cvn_commonwealth_2030']
+IDS=['ran_cvn_australis_2030']
 def ini(p):
     c=configparser.ConfigParser(interpolation=None);c.optionxform=str;c.read(p,encoding='utf-8-sig');return c
 def vec(s):return tuple(float(x) for x in s.split(','))
+def stock_section_names(path):
+    """Inventory stock profile names without parsing or merging their values.
+
+    Sea Power catalogues repeat bracketed category dividers, including
+    [---------- Surface ships ----------]. Only section-name membership is
+    required here. Our own mod INIs continue to use strict ConfigParser.
+    """
+    path=Path(path)
+    if not path.is_file():raise ValueError('Missing stock catalogue: '+str(path))
+    names=set()
+    for line in path.read_text(encoding='utf-8-sig').splitlines():
+        header=re.match(r'^\s*\[([^\]\r\n]+)\]',line)
+        if header:names.add(header.group(1))
+    if not names:raise ValueError('Missing or empty stock catalogue: '+str(path))
+    return names
 def validate(package,stock=None):
     package=Path(package)
+    from class_list import validate_class_list
+    validate_class_list(package)
     for ship_id in IDS:
         c=ini(package/'vessels'/f'{ship_id}.ini');deck=c['FlightDeck']
         assert c['General']['NumberOfDCTeams']=='5'
@@ -19,10 +36,18 @@ def validate(package,stock=None):
             assert f'{family}{count+1}' not in c
         assert len([s for s in c.sections() if s.startswith('TaxiPath')])==int(deck['NumberOfTaxiPaths'])
         assert deck['LandingWhileLaunching']=='True' and deck['LaunchDelay']=='1'
+        assert deck['NumberOfTaxiPaths']=='22'
+        pairs={(c[s]['From'],c[s]['To']) for s in c.sections() if s.startswith('TaxiPath')}
+        assert len(pairs)==22
+        assert all((f'Elevator{e}',f'LaunchPoint{p}') in pairs for e in range(1,5) for p in (1,2,3))
+        assert all(('RecoveryPoint1',f'Elevator{e}') in pairs for e in range(1,5))
+        assert c['RecoveryPoint1']['AssociatedElevators']=='1,2,3,4'
+        assert c['RecoveryPoint1']['BlocksLaunchPoints']=='1,2,3,4,5,6'
+        assert all(c[f'RecoveryPoint{i}']['AllowedType']=='Helicopter' for i in range(2,5))
         for e in (1,2):assert set(map(int,c[f'Elevator{e}']['AssociatedLaunchPoints'].split(',')))=={1,2,3}
-        assert c['Elevator3']['AssociatedLaunchPoints']=='4' and c['Elevator4']['AssociatedLaunchPoints']=='6,5'
+        assert c['Elevator3']['AssociatedLaunchPoints']=='1,2,3,4' and c['Elevator4']['AssociatedLaunchPoints']=='1,2,3,6,5'
         for i in range(1,7):
-            allowed=c[f'LaunchPoint{i}']['AllowedType'];assert ('Helicopter' in allowed)==(i>=4)
+            allowed=c[f'LaunchPoint{i}']['AllowedType'];assert allowed==('Plane,VTOL,STOL' if i<=3 else 'Helicopter')
             assert c[f'LaunchPoint{i}']['SupportsVeryLarge']=='True'
         for i in range(2,5):
             assert not set(c[f'RecoveryPoint{i}'].get('BlocksRecoveryPoints','').split(',')) & {'2','3','4'}
@@ -36,7 +61,8 @@ def validate(package,stock=None):
         anim=ini(package/'animations/ran_australis_lifts.ini')
         for i in range(1,5):
             el=c[f'Elevator{i}'];assert el['Mesh']==f'LiftPlatform{i}'
-            assert el['StartsLowered']=='True'
+            assert el['StartsLowered']=='False' and el['CloseDoorsAfterTaxi']=='False'
+            assert abs(vec(c[el['Mesh']]['Position'])[1]*UNIT-22.002)<1e-4
             for direction in ('Up','Down'):
                 key=el[f'Move{direction}Animation'];seq=anim[key]['Sequence1']
                 assert anim[key]['Sequence1_Model']==el['Mesh']
@@ -44,6 +70,12 @@ def validate(package,stock=None):
                 assert abs(abs(ys[1]-ys[0])-10.202)<1e-5
         obj=package/c['Models']['ResourcesFolder']/c['Models']['ResourcesRoot']
         groups=set(re.findall(r'^o (.+)$',obj.read_text(),re.M))
+        fittings=json.loads((package/'naval-fittings.json').read_text())
+        assert fittings['obj_sha256']==hashlib.sha256(obj.read_bytes()).hexdigest(),'Stale naval fitting report'
+        assert fittings['windows']>=40 and fittings['doors']>=10 and fittings['galleries']>=6
+        assert fittings['maximum_host_plane_error_m']<.001
+        assert fittings['minimum_primary_surface_clearance_m']>=.005
+        assert all(row.get('inside_parent_face',True) for row in fittings['features'])
         registered=list(c['Submodels'].values());assert len(registered)==len(set(registered))
         assert set(registered)==groups-{'Hull','coll_hull_main'}|{'Flag1'},(ship_id,'missing submodels',groups-set(registered))
         for name in groups-{'Hull','coll_hull_main'}:
@@ -98,15 +130,14 @@ def validate(package,stock=None):
             roof=44 if m['name']=='CIWS_4_Lift' else 37.84 if m['name']=='CIWS_5_Lift' else 22
             assert abs(m['position'][1]+m['travel']-roof-.08)<1e-6,m
     assert (package/'RAN.Australis.DeckController.dll').read_bytes()[:2]==b'MZ'
-    print('[OK] Four ships; five teams; lift/animation, route and role bindings; all 80 vertical axes; internal fit')
+    print('[OK] One Australis-class with four ships; five teams; lift/animation, route and role bindings; all 80 vertical axes; internal fit')
     return result
 def check_stock(c,package,stock):
     for family,file in (('SensorSystem','sensors.ini'),('WeaponSystem','weapons.ini')):
-        local=ini(package/'systems'/file);catalog=ini(stock/'systems'/file)
-        if not catalog.sections():raise ValueError('Missing stock catalogue: '+file)
+        local=ini(package/'systems'/file);catalog=stock_section_names(stock/'systems'/file)
         for i in range(1,int(c[family+'s']['NumberOf'+family+'s'])+1):
             s=c[f'{family}{i}']
-            if s['Type']!='Visual' and s['SystemName'] not in set(local.sections())|set(catalog.sections()):raise ValueError('Missing stock system '+s['SystemName'])
+            if s['Type']!='Visual' and s['SystemName'] not in set(local.sections())|catalog:raise ValueError('Missing stock system '+s['SystemName'])
     for s in c.sections():
         for key,value in c[s].items():
             if re.fullmatch(r'Ammunition\d*|Countermeasure',key) and not (stock/'ammunition'/f'{value}.ini').is_file():raise ValueError('Missing stock round '+value)

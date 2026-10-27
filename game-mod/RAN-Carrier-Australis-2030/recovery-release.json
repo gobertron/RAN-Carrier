@@ -1,5 +1,5 @@
 {
-  "version": "0.8.2-lift-lighting",
+  "version": "0.8.5-naval-details",
   "recovered_base": "0.5.1",
   "exact_reproduction_of_lost_v060": false,
   "roster": [
@@ -35,6 +35,8 @@
   ],
   "long_range_defence": "40 stock RIM-66E proxy rounds; not SM-6, no ballistic-missile defence claim",
   "native_lift_animation_seconds": 6,
+  "controller_version": "0.8.2",
+  "installer_hotfix": "Stock catalogue section inventory tolerates repeated divider headings; own INIs stay strict",
   "waterjets": 8,
   "steering_nozzles": 4,
   "operating_speeds_kn": {
@@ -53,5 +55,45 @@
     "Helicopter pads can operate independently; shared lifts and recovery/taxi lanes still queue.",
     "Full 99-aircraft deck cycle, night appearance and combat require in-game testing.",
     "Hull spaces are reservations; upright hydrostatics use an explicitly assumed planning CG, with real/in-game stability unverified."
-  ]
+  ],
+  "editor_class": "Australis-class",
+  "native_vessel_definition": "ran_cvn_australis_2030",
+  "native_variant_count": 4,
+  "naval_details": {
+    "framed_windows": 43,
+    "door_assemblies": 11,
+    "maintenance_galleries": 6,
+    "opaque_radar_panels": 7,
+    "hull_numbers": [
+      91,
+      92,
+      93,
+      94
+    ],
+    "markings": [
+      "bow flight deck",
+      "port island",
+      "starboard island"
+    ],
+    "alignment_report": "naval-fittings.json",
+    "number_report": "number-panels.json",
+    "in_game_confirmed": false
+  },
+  "flight_deck_fix": {
+    "starts_lowered": false,
+    "close_doors_after_taxi": false,
+    "lift_home_m": 22.002,
+    "fixed_wing_lifts": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "helicopter_only_launch_points": [
+      4,
+      5,
+      6
+    ],
+    "taxi_routes": 22
+  }
 }

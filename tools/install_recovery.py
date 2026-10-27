@@ -3,14 +3,41 @@
 from pathlib import Path
 from datetime import datetime
 import argparse,contextlib,hashlib,json,os,shutil,sys,tempfile
-from validate_recovery import validate
+from validate_recovery import validate,IDS,ini
 ROOT=Path(__file__).resolve().parents[1]
 MOD='RAN-Carrier-Australis-2030'
 DLL='RAN.Australis.DeckController.dll'
 AUDITED='eab2297ba92c6013958bdb2cf16d5794a4731330818ce353f89dc2241e16a3bd'
-VERSION='0.8.2-lift-lighting'
+VERSION='0.8.5-naval-details'
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def progress(n,msg):print(f'[{n:3d}%] {msg}',flush=True)
+def report_installation(target,assets,workshop_root):
+    release=json.loads((target/'recovery-release.json').read_text())
+    if release['version']!=VERSION:raise ValueError('Installed release version does not match this installer')
+    print('[VERIFIED] '+ini(target/'_info.ini')['Language_en']['Name'])
+    print('[VERIFIED] Four carriers; eight waterjets; Standard 20 kn / Full 30 kn; lift-wall lighting')
+    fittings=json.loads((target/'naval-fittings.json').read_text())
+    print('[VERIFIED] Enlarged numbers 91–94; '+str(fittings['windows'])+' framed windows; '+str(fittings['doors'])+' naval doors; surface alignment verified')
+    # Diagnose competing copies; never remove another mod or Workshop content.
+    duplicates=set();scan_errors=[]
+    wanted={ship_id+'.ini' for ship_id in IDS}
+    for root in (assets,workshop_root):
+        if not root.is_dir():continue
+        # This optional diagnostic must not turn a completed installation into
+        # a failure because another mod has unreadable paths or linked folders.
+        # Walk each tree once, do not follow links, and skip our verified copy.
+        try:
+            for directory,children,files in os.walk(root,followlinks=False,onerror=scan_errors.append):
+                directory=Path(directory)
+                if directory==target:children[:]=[];continue
+                if directory.name=='vessels' and wanted.intersection(files):
+                    duplicates.add(str(directory.parent))
+        except OSError as error:scan_errors.append(error)
+    for folder in sorted(duplicates):print('[OTHER COPY] '+folder)
+    if duplicates:print('[ACTION] Disable older Australis copies in the game mod menu; do not delete Workshop or stock files.')
+    if scan_errors:print('[NOTE] Other-copy scan was incomplete because some folders could not be read; the installed package is verified.')
+    print('[NEXT] Enable AnchorChain and RAN Australis Fleet v0.8.5 Naval Details. Restart Sea Power.')
+    print('[NEXT] Use a fresh ship in a new blank mission; existing missions may retain old models and routes.')
 def fingerprint(root):
     if root.is_symlink() or not root.is_dir():raise ValueError('Expected a real folder: '+str(root))
     out={}
@@ -102,21 +129,23 @@ def install(game,backups,check=False,remove=False,restore=None):
     progress(30,'Supported game scripts confirmed')
     preloaders=list((game/'BepInEx/plugins').rglob('AnchorChain.Preloader.dll'))+list((game/'BepInEx/patchers').rglob('AnchorChain.Preloader.dll'))
     if not any(p.is_file() and p.stat().st_size for p in preloaders) or not (game/'BepInEx/core/0Harmony.dll').is_file():raise ValueError('Working AnchorChain preloader/Harmony not found. Restore the official ACPreloader package, then rerun. Expected preloader location: BepInEx/plugins/AnchorChain.Preloader.dll')
-    workshop=game.parents[1]/'workshop/content/1286220/3380210757'
+    workshop_root=game.parents[1]/'workshop/content/1286220'
+    workshop=workshop_root/'3380210757'
     if not any(p.is_file() for root in (workshop,assets) for p in root.rglob('AnchorChain.dll')):raise ValueError('AnchorChain framework not found. Enable your Workshop subscription 3380210757 before installing.')
     progress(40,'AnchorChain preloader, framework and Harmony found')
     package=ROOT/'game-mod'/MOD
     validate(package,assets/'original')
     progress(60,'Fleet, repair teams, native animations and stock references verified')
     if check:progress(100,'Checks passed; no game files changed');return
-    if target.exists() and fingerprint(target)==fingerprint(package) and not legacy.exists():progress(100,'This waterjet prototype is already installed and verified');return
+    if target.exists() and fingerprint(target)==fingerprint(package) and not legacy.exists():
+        report_installation(target,assets,workshop_root)
+        progress(100,'Australis v'+VERSION+' is already installed; installed package hashes verified');return
     if target.exists() or legacy.exists():snapshot(target,legacy,backups)
     progress(75,'Staging carrier and controller together')
     switch(assets,package)
-    print('[NEXT] Enable AnchorChain and RAN Australis Fleet v0.8.2 Lift Lighting. Restart Sea Power.')
-    print('[NEXT] Use a fresh ship in a new blank mission; existing missions may retain old models and routes.')
+    report_installation(target,assets,workshop_root)
     print('[LIMIT] Waterjet prototype; native propulsion, steering, flight, lift, night and combat trials remain pending.')
-    progress(100,'Installation complete; installed package hashes verified')
+    progress(100,'Australis v'+VERSION+' installed; installed package hashes verified');print('[INSTALLED] '+str(target))
 class Tee:
     def __init__(self,*streams):self.streams=streams
     def write(self,s):
