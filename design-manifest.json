@@ -12,7 +12,7 @@
   "designs": [
     {
       "id": "ran_cvl_endeavour_1944",
-      "name": "Endeavour class — 1940s early",
+      "name": "Endeavour class \u2014 1940s early",
       "era": "1940s early",
       "year": 1944,
       "propulsion": "Steam",
@@ -68,7 +68,7 @@
     },
     {
       "id": "ran_cvl_sydney_1948",
-      "name": "Sydney class — 1940s late",
+      "name": "Sydney class \u2014 1940s late",
       "era": "1940s late",
       "year": 1948,
       "propulsion": "Steam",
@@ -124,7 +124,7 @@
     },
     {
       "id": "ran_cvl_melbourne_1952",
-      "name": "Melbourne class — 1950s early",
+      "name": "Melbourne class \u2014 1950s early",
       "era": "1950s early",
       "year": 1952,
       "propulsion": "Steam",
@@ -180,7 +180,7 @@
     },
     {
       "id": "ran_cvl_melbourne_1959",
-      "name": "Melbourne class — 1950s late",
+      "name": "Melbourne class \u2014 1950s late",
       "era": "1950s late",
       "year": 1959,
       "propulsion": "Steam",
@@ -244,7 +244,7 @@
     },
     {
       "id": "ran_cva_australia_1963",
-      "name": "Australia class — 1960s early",
+      "name": "Australia class \u2014 1960s early",
       "era": "1960s early",
       "year": 1963,
       "propulsion": "Steam",
@@ -308,7 +308,7 @@
     },
     {
       "id": "ran_cvn_federation_1968",
-      "name": "Federation class — 1960s late",
+      "name": "Federation class \u2014 1960s late",
       "era": "1960s late",
       "year": 1968,
       "propulsion": "Nuclear",
@@ -372,7 +372,7 @@
     },
     {
       "id": "ran_cvn_federation_1972",
-      "name": "Federation class — 1970s early",
+      "name": "Federation class \u2014 1970s early",
       "era": "1970s early",
       "year": 1972,
       "propulsion": "Nuclear",
@@ -449,7 +449,7 @@
     },
     {
       "id": "ran_cvn_canberra_1978",
-      "name": "Canberra class — 1970s late",
+      "name": "Canberra class \u2014 1970s late",
       "era": "1970s late",
       "year": 1978,
       "propulsion": "Nuclear",
@@ -526,7 +526,7 @@
     },
     {
       "id": "ran_cvn_commonwealth_1984",
-      "name": "Commonwealth class — 1980s early",
+      "name": "Commonwealth class \u2014 1980s early",
       "era": "1980s early",
       "year": 1984,
       "propulsion": "Nuclear",
@@ -611,7 +611,7 @@
     },
     {
       "id": "ran_cvn_commonwealth_1988",
-      "name": "Commonwealth class — 1980s late",
+      "name": "Commonwealth class \u2014 1980s late",
       "era": "1980s late",
       "year": 1988,
       "propulsion": "Nuclear",
@@ -692,7 +692,7 @@
     },
     {
       "id": "ran_cvn_commonwealth_1993",
-      "name": "Commonwealth class — 1990s early",
+      "name": "Commonwealth class \u2014 1990s early",
       "era": "1990s early",
       "year": 1993,
       "propulsion": "Nuclear",
@@ -773,7 +773,7 @@
     },
     {
       "id": "ran_cvn_southern_cross_2002",
-      "name": "Southern Cross class — 2000s early",
+      "name": "Southern Cross class \u2014 2000s early",
       "era": "2000s early",
       "year": 2002,
       "propulsion": "Nuclear",
@@ -854,7 +854,7 @@
     },
     {
       "id": "ran_cvn_southern_cross_2009",
-      "name": "Southern Cross class — 2000s late",
+      "name": "Southern Cross class \u2014 2000s late",
       "era": "2000s late",
       "year": 2009,
       "propulsion": "Nuclear",
@@ -935,7 +935,7 @@
     },
     {
       "id": "ran_cvn_australis_2023",
-      "name": "Australis class — 2020s early",
+      "name": "Australis class \u2014 2020s early",
       "era": "2020s early",
       "year": 2023,
       "propulsion": "Nuclear",
@@ -1018,5 +1018,7 @@
       "flight_deck_donor_candidate": "usn_cvn_nimitz",
       "ship_mod_status": "Experimental design reference; no in-game trials"
     }
-  ]
+  ],
+  "scope": "Historical14fleetstudies, originally prepared8October2026; excludes currentAustralis2030 runtime validation",
+  "current_project": "australis-2030/README.md"
 }

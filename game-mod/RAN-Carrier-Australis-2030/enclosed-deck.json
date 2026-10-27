@@ -1,0 +1,981 @@
+{
+  "schema": 1,
+  "requires": "RAN.Australis.DeckController.dll",
+  "deployment_seconds": 0.75,
+  "hold_after_last_shot_seconds": 300,
+  "stow_seconds": 10,
+  "motions": [
+    {
+      "name": "CIWS_1_Lift",
+      "parent": null,
+      "position": [
+        -30.5,
+        19.0,
+        158
+      ],
+      "stroke": 5.0,
+      "axis": "y",
+      "travel": 3.0799999999999983
+    },
+    {
+      "name": "CIWS_1_Door_L",
+      "parent": null,
+      "position": [
+        -30.5,
+        22.0,
+        156.4
+      ],
+      "stroke": 0,
+      "axis": "z",
+      "travel": -3.2
+    },
+    {
+      "name": "CIWS_1_Door_R",
+      "parent": null,
+      "position": [
+        -30.5,
+        22.0,
+        159.6
+      ],
+      "stroke": 0,
+      "axis": "z",
+      "travel": 3.2
+    },
+    {
+      "name": "CIWS_2_Lift",
+      "parent": null,
+      "position": [
+        29.4,
+        19.0,
+        -142
+      ],
+      "stroke": 5.0,
+      "axis": "y",
+      "travel": 3.0799999999999983
+    },
+    {
+      "name": "CIWS_2_Door_L",
+      "parent": null,
+      "position": [
+        27.799999999999997,
+        22.0,
+        -142
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -3.2
+    },
+    {
+      "name": "CIWS_2_Door_R",
+      "parent": null,
+      "position": [
+        31.0,
+        22.0,
+        -142
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 3.2
+    },
+    {
+      "name": "CIWS_3_Lift",
+      "parent": null,
+      "position": [
+        -25,
+        19.0,
+        -158
+      ],
+      "stroke": 5.0,
+      "axis": "y",
+      "travel": 3.0799999999999983
+    },
+    {
+      "name": "CIWS_3_Door_L",
+      "parent": null,
+      "position": [
+        -26.6,
+        22.0,
+        -158
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -3.2
+    },
+    {
+      "name": "CIWS_3_Door_R",
+      "parent": null,
+      "position": [
+        -23.4,
+        22.0,
+        -158
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 3.2
+    },
+    {
+      "name": "Mk46_1_Lift",
+      "parent": null,
+      "position": [
+        20,
+        19.0,
+        158
+      ],
+      "stroke": 5.0,
+      "axis": "y",
+      "travel": 3.0799999999999983
+    },
+    {
+      "name": "Mk46_1_Door_L",
+      "parent": null,
+      "position": [
+        18.4,
+        22.0,
+        158
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -3.2
+    },
+    {
+      "name": "Mk46_1_Door_R",
+      "parent": null,
+      "position": [
+        21.6,
+        22.0,
+        158
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 3.2
+    },
+    {
+      "name": "Mk46_2_Lift",
+      "parent": null,
+      "position": [
+        -30,
+        19.0,
+        -68
+      ],
+      "stroke": 5.0,
+      "axis": "y",
+      "travel": 3.0799999999999983
+    },
+    {
+      "name": "Mk46_2_Door_L",
+      "parent": null,
+      "position": [
+        -31.6,
+        22.0,
+        -68
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -3.2
+    },
+    {
+      "name": "Mk46_2_Door_R",
+      "parent": null,
+      "position": [
+        -28.4,
+        22.0,
+        -68
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 3.2
+    },
+    {
+      "name": "CIWS_4_Lift",
+      "parent": null,
+      "position": [
+        30.3,
+        40.92,
+        -11
+      ],
+      "stroke": 3.08,
+      "axis": "y",
+      "travel": 3.1599999999999966
+    },
+    {
+      "name": "CIWS_4_Door_L",
+      "parent": null,
+      "position": [
+        28.7,
+        44.0,
+        -11
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -3.2
+    },
+    {
+      "name": "CIWS_4_Door_R",
+      "parent": null,
+      "position": [
+        31.900000000000002,
+        44.0,
+        -11
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 3.2
+    },
+    {
+      "name": "CIWS_5_Lift",
+      "parent": null,
+      "position": [
+        30.3,
+        34.76,
+        -88
+      ],
+      "stroke": 3.08,
+      "axis": "y",
+      "travel": 3.1600000000000037
+    },
+    {
+      "name": "CIWS_5_Door_L",
+      "parent": null,
+      "position": [
+        28.7,
+        37.84,
+        -88
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -3.2
+    },
+    {
+      "name": "CIWS_5_Door_R",
+      "parent": null,
+      "position": [
+        31.900000000000002,
+        37.84,
+        -88
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 3.2
+    },
+    {
+      "name": "ESSM_1_Lift",
+      "parent": null,
+      "position": [
+        -32,
+        19.0,
+        -112
+      ],
+      "stroke": 5.0,
+      "axis": "y",
+      "travel": 3.0799999999999983
+    },
+    {
+      "name": "ESSM_1_Door_L",
+      "parent": null,
+      "position": [
+        -33.15,
+        22.0,
+        -112
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -2.3
+    },
+    {
+      "name": "ESSM_1_Door_R",
+      "parent": null,
+      "position": [
+        -30.85,
+        22.0,
+        -112
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 2.3
+    },
+    {
+      "name": "ESSM_2_Lift",
+      "parent": null,
+      "position": [
+        32,
+        19.0,
+        104
+      ],
+      "stroke": 5.0,
+      "axis": "y",
+      "travel": 3.0799999999999983
+    },
+    {
+      "name": "ESSM_2_Door_L",
+      "parent": null,
+      "position": [
+        30.85,
+        22.0,
+        104
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -2.3
+    },
+    {
+      "name": "ESSM_2_Door_R",
+      "parent": null,
+      "position": [
+        33.15,
+        22.0,
+        104
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 2.3
+    },
+    {
+      "name": "RAM_1_Lift",
+      "parent": null,
+      "position": [
+        -32,
+        19.0,
+        -48
+      ],
+      "stroke": 5.0,
+      "axis": "y",
+      "travel": 3.0799999999999983
+    },
+    {
+      "name": "RAM_1_Door_L",
+      "parent": null,
+      "position": [
+        -33.15,
+        22.0,
+        -48
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -2.3
+    },
+    {
+      "name": "RAM_1_Door_R",
+      "parent": null,
+      "position": [
+        -30.85,
+        22.0,
+        -48
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 2.3
+    },
+    {
+      "name": "RAM_2_Lift",
+      "parent": null,
+      "position": [
+        32,
+        19.0,
+        118
+      ],
+      "stroke": 5.0,
+      "axis": "y",
+      "travel": 3.0799999999999983
+    },
+    {
+      "name": "RAM_2_Door_L",
+      "parent": null,
+      "position": [
+        30.85,
+        22.0,
+        118
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -2.3
+    },
+    {
+      "name": "RAM_2_Door_R",
+      "parent": null,
+      "position": [
+        33.15,
+        22.0,
+        118
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 2.3
+    },
+    {
+      "name": "PVLS_1_Lift",
+      "parent": null,
+      "position": [
+        -32,
+        19.0,
+        -135
+      ],
+      "stroke": 0,
+      "axis": "y",
+      "travel": 0
+    },
+    {
+      "name": "PVLS_1_Door_L",
+      "parent": null,
+      "position": [
+        -32,
+        22.0,
+        -139.75
+      ],
+      "stroke": 0,
+      "axis": "z",
+      "travel": -9.5
+    },
+    {
+      "name": "PVLS_1_Door_R",
+      "parent": null,
+      "position": [
+        -32,
+        22.0,
+        -130.25
+      ],
+      "stroke": 0,
+      "axis": "z",
+      "travel": 9.5
+    },
+    {
+      "name": "PVLS_2_Lift",
+      "parent": null,
+      "position": [
+        32,
+        19.0,
+        140
+      ],
+      "stroke": 0,
+      "axis": "y",
+      "travel": 0
+    },
+    {
+      "name": "PVLS_2_Door_L",
+      "parent": null,
+      "position": [
+        32,
+        22.0,
+        135.25
+      ],
+      "stroke": 0,
+      "axis": "z",
+      "travel": -9.5
+    },
+    {
+      "name": "PVLS_2_Door_R",
+      "parent": null,
+      "position": [
+        32,
+        22.0,
+        144.75
+      ],
+      "stroke": 0,
+      "axis": "z",
+      "travel": 9.5
+    },
+    {
+      "name": "PVLS_3_Lift",
+      "parent": null,
+      "position": [
+        -32,
+        19.0,
+        -92
+      ],
+      "stroke": 0,
+      "axis": "y",
+      "travel": 0
+    },
+    {
+      "name": "PVLS_3_Door_L",
+      "parent": null,
+      "position": [
+        -32,
+        22.0,
+        -96.75
+      ],
+      "stroke": 0,
+      "axis": "z",
+      "travel": -9.5
+    },
+    {
+      "name": "PVLS_3_Door_R",
+      "parent": null,
+      "position": [
+        -32,
+        22.0,
+        -87.25
+      ],
+      "stroke": 0,
+      "axis": "z",
+      "travel": 9.5
+    },
+    {
+      "name": "PVLS_4_Lift",
+      "parent": null,
+      "position": [
+        23,
+        19.0,
+        -148
+      ],
+      "stroke": 0,
+      "axis": "y",
+      "travel": 0
+    },
+    {
+      "name": "PVLS_4_Door_L",
+      "parent": null,
+      "position": [
+        23,
+        22.0,
+        -152.75
+      ],
+      "stroke": 0,
+      "axis": "z",
+      "travel": -9.5
+    },
+    {
+      "name": "PVLS_4_Door_R",
+      "parent": null,
+      "position": [
+        23,
+        22.0,
+        -143.25
+      ],
+      "stroke": 0,
+      "axis": "z",
+      "travel": 9.5
+    },
+    {
+      "name": "SRBOC_1_Lift",
+      "parent": null,
+      "position": [
+        -24,
+        19.0,
+        -169
+      ],
+      "stroke": 4,
+      "axis": "y",
+      "travel": 3.0799999999999983
+    },
+    {
+      "name": "SRBOC_1_Door_L",
+      "parent": null,
+      "position": [
+        -24.5,
+        22.0,
+        -169
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -1.0
+    },
+    {
+      "name": "SRBOC_1_Door_R",
+      "parent": null,
+      "position": [
+        -23.5,
+        22.0,
+        -169
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 1.0
+    },
+    {
+      "name": "SRBOC_2_Lift",
+      "parent": null,
+      "position": [
+        -27,
+        19.0,
+        -116
+      ],
+      "stroke": 4,
+      "axis": "y",
+      "travel": 3.0799999999999983
+    },
+    {
+      "name": "SRBOC_2_Door_L",
+      "parent": null,
+      "position": [
+        -27.5,
+        22.0,
+        -116
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -1.0
+    },
+    {
+      "name": "SRBOC_2_Door_R",
+      "parent": null,
+      "position": [
+        -26.5,
+        22.0,
+        -116
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 1.0
+    },
+    {
+      "name": "SRBOC_3_Lift",
+      "parent": null,
+      "position": [
+        -30,
+        19.0,
+        -38
+      ],
+      "stroke": 4,
+      "axis": "y",
+      "travel": 3.0799999999999983
+    },
+    {
+      "name": "SRBOC_3_Door_L",
+      "parent": null,
+      "position": [
+        -30.5,
+        22.0,
+        -38
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -1.0
+    },
+    {
+      "name": "SRBOC_3_Door_R",
+      "parent": null,
+      "position": [
+        -29.5,
+        22.0,
+        -38
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 1.0
+    },
+    {
+      "name": "SRBOC_4_Lift",
+      "parent": null,
+      "position": [
+        -30,
+        19.0,
+        126
+      ],
+      "stroke": 4,
+      "axis": "y",
+      "travel": 3.0799999999999983
+    },
+    {
+      "name": "SRBOC_4_Door_L",
+      "parent": null,
+      "position": [
+        -30.5,
+        22.0,
+        126
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -1.0
+    },
+    {
+      "name": "SRBOC_4_Door_R",
+      "parent": null,
+      "position": [
+        -29.5,
+        22.0,
+        126
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 1.0
+    },
+    {
+      "name": "SRBOC_5_Lift",
+      "parent": null,
+      "position": [
+        24,
+        19.0,
+        -169
+      ],
+      "stroke": 4,
+      "axis": "y",
+      "travel": 3.0799999999999983
+    },
+    {
+      "name": "SRBOC_5_Door_L",
+      "parent": null,
+      "position": [
+        23.5,
+        22.0,
+        -169
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -1.0
+    },
+    {
+      "name": "SRBOC_5_Door_R",
+      "parent": null,
+      "position": [
+        24.5,
+        22.0,
+        -169
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 1.0
+    },
+    {
+      "name": "SRBOC_6_Lift",
+      "parent": null,
+      "position": [
+        16,
+        19.0,
+        -157
+      ],
+      "stroke": 4,
+      "axis": "y",
+      "travel": 3.0799999999999983
+    },
+    {
+      "name": "SRBOC_6_Door_L",
+      "parent": null,
+      "position": [
+        15.5,
+        22.0,
+        -157
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -1.0
+    },
+    {
+      "name": "SRBOC_6_Door_R",
+      "parent": null,
+      "position": [
+        16.5,
+        22.0,
+        -157
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 1.0
+    },
+    {
+      "name": "SRBOC_7_Lift",
+      "parent": null,
+      "position": [
+        18,
+        19.0,
+        -179
+      ],
+      "stroke": 4,
+      "axis": "y",
+      "travel": 3.0799999999999983
+    },
+    {
+      "name": "SRBOC_7_Door_L",
+      "parent": null,
+      "position": [
+        17.5,
+        22.0,
+        -179
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -1.0
+    },
+    {
+      "name": "SRBOC_7_Door_R",
+      "parent": null,
+      "position": [
+        18.5,
+        22.0,
+        -179
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 1.0
+    },
+    {
+      "name": "SRBOC_8_Lift",
+      "parent": null,
+      "position": [
+        27,
+        19.0,
+        126
+      ],
+      "stroke": 4,
+      "axis": "y",
+      "travel": 3.0799999999999983
+    },
+    {
+      "name": "SRBOC_8_Door_L",
+      "parent": null,
+      "position": [
+        26.5,
+        22.0,
+        126
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -1.0
+    },
+    {
+      "name": "SRBOC_8_Door_R",
+      "parent": null,
+      "position": [
+        27.5,
+        22.0,
+        126
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 1.0
+    },
+    {
+      "name": "Nulka_1_Lift",
+      "parent": null,
+      "position": [
+        -9,
+        19.0,
+        -176
+      ],
+      "stroke": 0,
+      "axis": "y",
+      "travel": 0
+    },
+    {
+      "name": "Nulka_1_Door_L",
+      "parent": null,
+      "position": [
+        -9.5,
+        22.0,
+        -176
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -1.0
+    },
+    {
+      "name": "Nulka_1_Door_R",
+      "parent": null,
+      "position": [
+        -8.5,
+        22.0,
+        -176
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 1.0
+    },
+    {
+      "name": "Nulka_2_Lift",
+      "parent": null,
+      "position": [
+        -30,
+        19.0,
+        74
+      ],
+      "stroke": 0,
+      "axis": "y",
+      "travel": 0
+    },
+    {
+      "name": "Nulka_2_Door_L",
+      "parent": null,
+      "position": [
+        -30.5,
+        22.0,
+        74
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -1.0
+    },
+    {
+      "name": "Nulka_2_Door_R",
+      "parent": null,
+      "position": [
+        -29.5,
+        22.0,
+        74
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 1.0
+    },
+    {
+      "name": "Nulka_3_Lift",
+      "parent": null,
+      "position": [
+        9,
+        19.0,
+        -176
+      ],
+      "stroke": 0,
+      "axis": "y",
+      "travel": 0
+    },
+    {
+      "name": "Nulka_3_Door_L",
+      "parent": null,
+      "position": [
+        8.5,
+        22.0,
+        -176
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -1.0
+    },
+    {
+      "name": "Nulka_3_Door_R",
+      "parent": null,
+      "position": [
+        9.5,
+        22.0,
+        -176
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 1.0
+    },
+    {
+      "name": "Nulka_4_Lift",
+      "parent": null,
+      "position": [
+        18,
+        19.0,
+        -146
+      ],
+      "stroke": 0,
+      "axis": "y",
+      "travel": 0
+    },
+    {
+      "name": "Nulka_4_Door_L",
+      "parent": null,
+      "position": [
+        17.5,
+        22.0,
+        -146
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": -1.0
+    },
+    {
+      "name": "Nulka_4_Door_R",
+      "parent": null,
+      "position": [
+        18.5,
+        22.0,
+        -146
+      ],
+      "stroke": 0,
+      "axis": "x",
+      "travel": 1.0
+    }
+  ]
+}

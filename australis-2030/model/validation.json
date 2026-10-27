@@ -1,0 +1,16 @@
+{
+  "version": "0.8.5-naval-details",
+  "native_geometry": "game-mod/RAN-Carrier-Australis-2030/ships/ran_cvn_australis_2030/ran_cvn_australis_2030.obj",
+  "checks": [
+    "closed wet hull and native resources",
+    "four class variants and numbered UV panels",
+    "framed glazing and door host-facet alignment",
+    "unchanged native flight, weapon, sensor and physics configuration",
+    "transactional installer replacement and rollback",
+    "current four-ship viewer control simulation"
+  ],
+  "in_game_tested": false,
+  "naval_engineering_approved": false,
+  "number_report": "game-mod/RAN-Carrier-Australis-2030/number-panels.json",
+  "fitting_report": "game-mod/RAN-Carrier-Australis-2030/naval-fittings.json"
+}

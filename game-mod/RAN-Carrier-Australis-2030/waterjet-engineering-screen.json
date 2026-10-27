@@ -1,0 +1,804 @@
+{
+  "status": "PRELIMINARY SENSITIVITY ONLY; NOT ENGINEERING VALIDATION",
+  "source_obj": "game-mod/RAN-Carrier-Australis-2030/hydrostatics-envelope.obj",
+  "source_obj_sha256": "8fe31e61831c30255cbd2cdcd6664baa2c9355a41ca6f8d97618bf3319d33545",
+  "visible_obj_sha256": "d7cb53a1b91b5cc309707e78eafd8cc17e7b09bd24eeb6a79909bdf56ff6b157",
+  "wetted_area_basis": "Closed reference envelope, not perforated hull/duct wetted area; reference only.",
+  "measured_reference_envelope": {
+    "wetted_area_m2": 17062.1613827885,
+    "waterline_length_m": 362.5999411126049,
+    "maximum_beam_m": 40.99997691310504,
+    "draft_m": 11.500021979989038
+  },
+  "geometric_audit": {
+    "version": "0.8.2-lift-lighting",
+    "source": "Measured exported reference-envelope OBJ, visible wet-boundary OBJ and native INIs",
+    "obj_sha256": "d7cb53a1b91b5cc309707e78eafd8cc17e7b09bd24eeb6a79909bdf56ff6b157",
+    "hydrostatic_reference_obj_sha256": "8fe31e61831c30255cbd2cdcd6664baa2c9355a41ca6f8d97618bf3319d33545",
+    "waterline_length_m": 362.5999411126049,
+    "waterline_beam_m": 40.99997691310504,
+    "draft_m": 11.500021979989038,
+    "longitudinal_stations": 110,
+    "section_vertices": 50,
+    "symmetry": "Reference envelope is mirrored about X=0; wet-boundary transverse centroid separately checked",
+    "closed_envelope_volume_m3": 110168.76442387654,
+    "closed_envelope_displacement_t": 112922.98353447345,
+    "bare_hull_volume_m3": 110168.76442387654,
+    "bare_hull_displacement_t": 112922.98353447345,
+    "displacement_label": "Gross reference-envelope volume before flooded-duct deduction; actual wet-boundary target is112000t. Bare-hull aliases retained for compatibility, not loaded displacement approval.",
+    "reference_seawater_density_t_per_m3": 1.025,
+    "block_coefficient": 0.6443902814764613,
+    "centre_of_buoyancy_xyz_m": [
+      -3.069357398610024e-15,
+      -4.624170598654524,
+      -12.558104791397435
+    ],
+    "waterplane_area_m2": 13539.415408797731,
+    "centre_of_flotation_xz_m": [
+      2.6869541241254796e-16,
+      -11.611734762805868
+    ],
+    "transverse_waterplane_second_moment_m4": 1745864.6418050553,
+    "longitudinal_waterplane_second_moment_m4": 127262713.77329065,
+    "transverse_metacentre_y_m": 11.223013046682606,
+    "longitudinal_metacentre_y_m": 1150.5373167685343,
+    "configured_planning_centre_of_mass_xyz_m": [
+      0.0,
+      7.000004427623691,
+      -11.258999856734748
+    ],
+    "conditional_initial_transverse_gm_m": 4.223008619058915,
+    "wet_boundary_volume_m3": 109268.36502901501,
+    "wet_boundary_geometric_displacement_t": 112000.07415474037,
+    "flooded_duct_geometric_volume_m3": 900.3993948615243,
+    "wet_boundary_centre_of_buoyancy_xyz_m": [
+      -2.4623239512321355e-15,
+      -4.616550801735823,
+      -11.258996005428543
+    ],
+    "wet_boundary_conditional_initial_transverse_gm_m": 4.361213279773575,
+    "wet_boundary_lcb_minus_configured_lcg_m": 3.851306205504557e-06,
+    "first_order_extra_immersion_for_112000t_m": -5.343368674830622e-06,
+    "mass_properties_status": "Planning CG height 7 m above design WL and LCG aligned to wet-boundary geometric LCB; actual weight centres, mass balance and loaded draft are unverified.",
+    "waterjet_count": 8,
+    "steerable_waterjet_count": 4,
+    "fixed_booster_count": 4,
+    "waterjet_nominal_clear_bore_m": 2.35,
+    "waterjet_centres_xyz_m": [
+      [
+        -13.3,
+        -3.6,
+        -181.3
+      ],
+      [
+        -9.5,
+        -3.6,
+        -181.3
+      ],
+      [
+        -5.7,
+        -3.6,
+        -181.3
+      ],
+      [
+        -1.9,
+        -3.6,
+        -181.3
+      ],
+      [
+        1.9,
+        -3.6,
+        -181.3
+      ],
+      [
+        5.7,
+        -3.6,
+        -181.3
+      ],
+      [
+        9.5,
+        -3.6,
+        -181.3
+      ],
+      [
+        13.3,
+        -3.6,
+        -181.3
+      ]
+    ],
+    "internal_impeller_centres_xyz_m": [
+      [
+        -13.3,
+        -3.6,
+        -173.3
+      ],
+      [
+        -9.5,
+        -3.6,
+        -173.3
+      ],
+      [
+        -5.7,
+        -3.6,
+        -173.3
+      ],
+      [
+        -1.9,
+        -3.6,
+        -173.3
+      ],
+      [
+        1.9,
+        -3.6,
+        -173.3
+      ],
+      [
+        5.7,
+        -3.6,
+        -173.3
+      ],
+      [
+        9.5,
+        -3.6,
+        -173.3
+      ],
+      [
+        13.3,
+        -3.6,
+        -173.3
+      ]
+    ],
+    "internal_impeller_minimum_geometric_bore_gap_m": [
+      0.03509680664701054,
+      0.03509680664701054,
+      0.03509680664701054,
+      0.03509680664701054,
+      0.03509680664701054,
+      0.03509680664701054,
+      0.03509680664701054,
+      0.03509680664701054
+    ],
+    "aperture_checks": {
+      "intake_count": 8,
+      "outlet_count": 8,
+      "intakes": [
+        {
+          "x_m": -13.3,
+          "minimum_sampled_clearance_above_original_shell_m": 1.253793233412769,
+          "sample_count": 5
+        },
+        {
+          "x_m": -9.5,
+          "minimum_sampled_clearance_above_original_shell_m": 1.7162523404710317,
+          "sample_count": 5
+        },
+        {
+          "x_m": -5.7,
+          "minimum_sampled_clearance_above_original_shell_m": 1.8218643732942024,
+          "sample_count": 5
+        },
+        {
+          "x_m": -1.9,
+          "minimum_sampled_clearance_above_original_shell_m": 1.8024547249279275,
+          "sample_count": 5
+        },
+        {
+          "x_m": 1.9,
+          "minimum_sampled_clearance_above_original_shell_m": 1.8024547249279266,
+          "sample_count": 5
+        },
+        {
+          "x_m": 5.7,
+          "minimum_sampled_clearance_above_original_shell_m": 1.8218643732942024,
+          "sample_count": 5
+        },
+        {
+          "x_m": 9.5,
+          "minimum_sampled_clearance_above_original_shell_m": 1.7162523404710317,
+          "sample_count": 5
+        },
+        {
+          "x_m": 13.3,
+          "minimum_sampled_clearance_above_original_shell_m": 1.2537932334127682,
+          "sample_count": 5
+        }
+      ],
+      "outlets": [
+        {
+          "x_m": -13.3,
+          "sample_count": 5,
+          "transom_shell_cap_absent": true
+        },
+        {
+          "x_m": -9.5,
+          "sample_count": 5,
+          "transom_shell_cap_absent": true
+        },
+        {
+          "x_m": -5.7,
+          "sample_count": 5,
+          "transom_shell_cap_absent": true
+        },
+        {
+          "x_m": -1.9,
+          "sample_count": 5,
+          "transom_shell_cap_absent": true
+        },
+        {
+          "x_m": 1.9,
+          "sample_count": 5,
+          "transom_shell_cap_absent": true
+        },
+        {
+          "x_m": 5.7,
+          "sample_count": 5,
+          "transom_shell_cap_absent": true
+        },
+        {
+          "x_m": 9.5,
+          "sample_count": 5,
+          "transom_shell_cap_absent": true
+        },
+        {
+          "x_m": 13.3,
+          "sample_count": 5,
+          "transom_shell_cap_absent": true
+        }
+      ],
+      "scope": "Five interior samples per aperture in exported wet-boundary mesh; geometric aperture checks, not a flow/cavitation assessment."
+    },
+    "nozzle_packaging_screen": {
+      "stationary_collar_lateral_gap_m": 1.0999999999999996,
+      "common_yaw_samples": [
+        {
+          "common_yaw_degrees": -35,
+          "minimum_adjacent_x_bounding_gap_m": 0.25848002412560867
+        },
+        {
+          "common_yaw_degrees": -25,
+          "minimum_adjacent_x_bounding_gap_m": 0.3962858587831857
+        },
+        {
+          "common_yaw_degrees": -15,
+          "minimum_adjacent_x_bounding_gap_m": 0.5964927583921371
+        },
+        {
+          "common_yaw_degrees": 0,
+          "minimum_adjacent_x_bounding_gap_m": 0.8200277232494848
+        },
+        {
+          "common_yaw_degrees": 15,
+          "minimum_adjacent_x_bounding_gap_m": 0.5964927583921371
+        },
+        {
+          "common_yaw_degrees": 25,
+          "minimum_adjacent_x_bounding_gap_m": 0.3962858587831857
+        },
+        {
+          "common_yaw_degrees": 35,
+          "minimum_adjacent_x_bounding_gap_m": 0.25848002412560867
+        }
+      ],
+      "scope": "Conservative X bounding-box screen of moving sleeves and parked buckets; not swept-solid clearance, actuator clearance or steering performance validation."
+    },
+    "installation_reservation_screen": {
+      "wet_duct_envelopes": [
+        {
+          "name": "Waterjet 1 wet duct",
+          "bounds_m": [
+            -14.65,
+            -11.950000000000001,
+            -8.394892889550615,
+            -2.425,
+            -181.3,
+            -158.7
+          ]
+        },
+        {
+          "name": "Waterjet 2 wet duct",
+          "bounds_m": [
+            -10.85,
+            -8.15,
+            -9.35916169477814,
+            -2.425,
+            -181.3,
+            -158.7
+          ]
+        },
+        {
+          "name": "Waterjet 3 wet duct",
+          "bounds_m": [
+            -7.050000000000001,
+            -4.35,
+            -9.499443369332685,
+            -2.425,
+            -181.3,
+            -158.7
+          ]
+        },
+        {
+          "name": "Waterjet 4 wet duct",
+          "bounds_m": [
+            -3.2500000000000004,
+            -0.5499999999999989,
+            -9.499443369332685,
+            -2.425,
+            -181.3,
+            -158.7
+          ]
+        },
+        {
+          "name": "Waterjet 5 wet duct",
+          "bounds_m": [
+            0.5499999999999989,
+            3.2500000000000004,
+            -9.499443369332685,
+            -2.425,
+            -181.3,
+            -158.7
+          ]
+        },
+        {
+          "name": "Waterjet 6 wet duct",
+          "bounds_m": [
+            4.35,
+            7.050000000000001,
+            -9.499443369332685,
+            -2.425,
+            -181.3,
+            -158.7
+          ]
+        },
+        {
+          "name": "Waterjet 7 wet duct",
+          "bounds_m": [
+            8.15,
+            10.85,
+            -9.35916169477814,
+            -2.425,
+            -181.3,
+            -158.7
+          ]
+        },
+        {
+          "name": "Waterjet 8 wet duct",
+          "bounds_m": [
+            11.950000000000001,
+            14.65,
+            -8.394892889550615,
+            -2.425,
+            -181.3,
+            -158.7
+          ]
+        }
+      ],
+      "existing_reservation_count": 208,
+      "minimum_duct_box_to_existing_reservation_distance_m": 8.31538483775705,
+      "sampled_internal_pump_housing_side_shell_margin_m": [
+        2.016486341127621,
+        5.8164863411276215,
+        9.616486341127622,
+        13.416486341127621,
+        13.416486341127621,
+        9.616486341127622,
+        5.8164863411276215,
+        2.016486341127621
+      ],
+      "scope": "Wet-duct boxes and a radius1.35m pump-housing envelope are preliminary geometric reservations. Existing rooms/shafts clear; drive motors, cable runs, service aisles, supports and machinery removal paths are not dimensioned or certified."
+    },
+    "watertight_reference_mesh_edges": 16494,
+    "watertight_wet_boundary_edges": 20694,
+    "watertight_collision_mesh_edges": 162,
+    "collision_mesh_triangles": 108,
+    "collision_mesh_type": "Simplified closed convex support hull, separate from detailed visible shell and ducts",
+    "native_simulation": "Eight native propeller proxies drive concealed internal impellers; four native rudder proxies yaw nozzle assemblies. Native thrust is not a waterjet momentum/intake model. Reverse buckets remain parked visual details.",
+    "in_game_tested": false,
+    "limitations": [
+      "Duct volume is an integral of preliminary rendered lofts; watertight topology does not exclude self-intersection or validate hydraulic shape.",
+      "Net geometric wet-boundary displacement excludes appendage volumes, shell-thickness deductions, actual loading and duct structural mass.",
+      "Positive small-angle GM applies only to the assumed planning CG; no full GZ, flooding, loading or damage-stability assessment.",
+      "No CFD, towing-tank, cavitation, hydraulic-loss, resistance or manoeuvring performance validation.",
+      "Nozzle yaw screen uses conservative bounding boxes and does not certify swept-solid, bucket, actuator or hull clearances.",
+      "Game speed and power remain baseline settings; actual waterjet speed, efficiency, turning and reversal are not demonstrated.",
+      "Sea Power may approximate buoyancy independently of the visible mesh; in-game draft, steering, damage, wake and rough-sea checks remain pending."
+    ]
+  },
+  "model_inputs": {
+    "displacement_t": 112000.0,
+    "native_game_speed_target_kn": 30.0,
+    "native_horsepower": 280000.0,
+    "mechanical_horsepower_conversion_W_per_hp": 745.6998715822702,
+    "total_nominal_power_MW": 208.79596404303567,
+    "jet_count": 8,
+    "equal_power_share_MW": 26.09949550537946,
+    "concept_exit_bore_m": 2.35,
+    "concept_exit_area_each_m2": 4.337361357362409,
+    "mean_intake_area_each_m2": null,
+    "assumed_water_density_kg_per_m3": 1025.0,
+    "assumed_kinematic_viscosity_m2_per_s": 1.19e-06,
+    "assumed_shaft_to_uniform_jet_energy_efficiency": 0.85,
+    "assumed_service_resistance_allowance": 0.15
+  },
+  "resistance_multiplier_status": "Arbitrary 1.5/2/3/4 times smooth-plate friction sensitivity; not measured predictions, confidence bounds or safe limits.",
+  "speed_cases": [
+    {
+      "speed_kn": 10.0,
+      "speed_m_per_s": 5.144444444444445,
+      "froude_number": 0.08627089015579618,
+      "reynolds_number": 1567542229.0862377,
+      "ittc57_smooth_friction_coefficient": 0.001448682450963957,
+      "smooth_plate_friction_resistance_MN": 0.3352571721736906,
+      "cases": [
+        {
+          "arbitrary_total_to_friction_ratio": 1.5,
+          "calm_water_resistance_MN": 0.5028857582605359,
+          "thrust_with_service_allowance_MN": 0.5783186219996163,
+          "estimated_required_shaft_MW": 4.252211876640053,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 7.355170673072706,
+          "volumetric_flow_per_jet_m3_per_s": 31.902033054190813
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 2.0,
+          "calm_water_resistance_MN": 0.6705143443473812,
+          "thrust_with_service_allowance_MN": 0.7710914959994885,
+          "estimated_required_shaft_MW": 5.912969790190531,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 7.891685114077577,
+          "volumetric_flow_per_jet_m3_per_s": 34.229090058272234
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 3.0,
+          "calm_water_resistance_MN": 1.0057715165210719,
+          "thrust_with_service_allowance_MN": 1.1566372439992325,
+          "estimated_required_shaft_MW": 9.506614470159235,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 8.82816856202504,
+          "volumetric_flow_per_jet_m3_per_s": 38.290957177209066
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 4.0,
+          "calm_water_resistance_MN": 1.3410286886947624,
+          "thrust_with_service_allowance_MN": 1.542182991998977,
+          "estimated_required_shaft_MW": 13.41346409677341,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 9.641666596086296,
+          "volumetric_flow_per_jet_m3_per_s": 41.81939211443665
+        }
+      ],
+      "full_installed_power": {
+        "idealised_available_thrust_MN": 13.105576300016416,
+        "equivalent_calm_water_resistance_to_friction_ratio": 33.99227294817712,
+        "jet_exit_velocity_m_per_s": 21.939686062103057,
+        "flow_per_jet_m3_per_s": 95.16034651842843,
+        "mean_intake_velocity_m_per_s": null,
+        "notional_capture_area_per_jet_Q_over_V_m2": 18.497691547858658
+      }
+    },
+    {
+      "speed_kn": 15.0,
+      "speed_m_per_s": 7.716666666666667,
+      "froude_number": 0.12940633523369427,
+      "reynolds_number": 2351313343.629357,
+      "ittc57_smooth_friction_coefficient": 0.0013802947999594574,
+      "smooth_plate_friction_resistance_MN": 0.7187192023746926,
+      "cases": [
+        {
+          "arbitrary_total_to_friction_ratio": 1.5,
+          "calm_water_resistance_MN": 1.0780788035620388,
+          "thrust_with_service_allowance_MN": 1.2397906240963446,
+          "estimated_required_shaft_MW": 13.585210974181292,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 10.911364718020984,
+          "volumetric_flow_per_jet_m3_per_s": 47.32653168403179
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 2.0,
+          "calm_water_resistance_MN": 1.4374384047493851,
+          "thrust_with_service_allowance_MN": 1.6530541654617925,
+          "estimated_required_shaft_MW": 18.87259467013776,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 11.69189937404227,
+          "volumetric_flow_per_jet_m3_per_s": 50.711992539140674
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 3.0,
+          "calm_water_resistance_MN": 2.1561576071240776,
+          "thrust_with_service_allowance_MN": 2.479581248192689,
+          "estimated_required_shaft_MW": 30.29906893965979,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 13.056363954921135,
+          "volumetric_flow_per_jet_m3_per_s": 56.63016848573436
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 4.0,
+          "calm_water_resistance_MN": 2.8748768094987702,
+          "thrust_with_service_allowance_MN": 3.306108330923585,
+          "estimated_required_shaft_MW": 42.70663050203591,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 14.243071063155185,
+          "volumetric_flow_per_jet_m3_per_s": 61.77734603949602
+        }
+      ],
+      "full_installed_power": {
+        "idealised_available_thrust_MN": 11.765866375358392,
+        "equivalent_calm_water_resistance_to_friction_ratio": 14.235306526778585,
+        "jet_exit_velocity_m_per_s": 22.4513743045065,
+        "flow_per_jet_m3_per_s": 97.37972332804583,
+        "mean_intake_velocity_m_per_s": null,
+        "notional_capture_area_per_jet_Q_over_V_m2": 12.61940259110745
+      }
+    },
+    {
+      "speed_kn": 20.0,
+      "speed_m_per_s": 10.28888888888889,
+      "froude_number": 0.17254178031159237,
+      "reynolds_number": 3135084458.1724753,
+      "ittc57_smooth_friction_coefficient": 0.0013346679361532607,
+      "smooth_plate_friction_resistance_MN": 1.2354867632113555,
+      "cases": [
+        {
+          "arbitrary_total_to_friction_ratio": 1.5,
+          "calm_water_resistance_MN": 1.8532301448170334,
+          "thrust_with_service_allowance_MN": 2.131214666539588,
+          "estimated_required_shaft_MW": 31.00017380989948,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 14.438932434899929,
+          "volumetric_flow_per_jet_m3_per_s": 62.626867584701664
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 2.0,
+          "calm_water_resistance_MN": 2.470973526422711,
+          "thrust_with_service_allowance_MN": 2.8416195553861177,
+          "estimated_required_shaft_MW": 43.03634165376301,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 15.457619179977463,
+          "volumetric_flow_per_jet_m3_per_s": 67.04528010805825
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 3.0,
+          "calm_water_resistance_MN": 3.706460289634067,
+          "thrust_with_service_allowance_MN": 4.262429333079176,
+          "estimated_required_shaft_MW": 69.024246689488,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 17.24029932814188,
+          "volumetric_flow_per_jet_m3_per_s": 74.77740809524369
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 4.0,
+          "calm_water_resistance_MN": 4.941947052845422,
+          "thrust_with_service_allowance_MN": 5.683239110772235,
+          "estimated_required_shaft_MW": 97.22004415552503,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 18.792075653166993,
+          "volumetric_flow_per_jet_m3_per_s": 81.50802276267746
+        }
+      ],
+      "full_installed_power": {
+        "idealised_available_thrust_MN": 10.60989138926436,
+        "equivalent_calm_water_resistance_to_friction_ratio": 7.467496040526575,
+        "jet_exit_velocity_m_per_s": 23.166037825282814,
+        "flow_per_jet_m3_per_s": 100.47947726657756,
+        "mean_intake_velocity_m_per_s": null,
+        "notional_capture_area_per_jet_Q_over_V_m2": 9.765823924397386
+      }
+    },
+    {
+      "speed_kn": 25.0,
+      "speed_m_per_s": 12.861111111111112,
+      "froude_number": 0.21567722538949047,
+      "reynolds_number": 3918855572.715595,
+      "ittc57_smooth_friction_coefficient": 0.0013008171252004732,
+      "smooth_plate_friction_resistance_MN": 1.8814866511102588,
+      "cases": [
+        {
+          "arbitrary_total_to_friction_ratio": 1.5,
+          "calm_water_resistance_MN": 2.822229976665388,
+          "thrust_with_service_allowance_MN": 3.2455644731651963,
+          "estimated_required_shaft_MW": 58.81559661658176,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 17.946015068292247,
+          "volumetric_flow_per_jet_m3_per_s": 77.8383522758543
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 2.0,
+          "calm_water_resistance_MN": 3.7629733022205176,
+          "thrust_with_service_allowance_MN": 4.327419297553595,
+          "estimated_required_shaft_MW": 81.60937823519171,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 19.198630148132484,
+          "volumetric_flow_per_jet_m3_per_s": 83.27139651880277
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 3.0,
+          "calm_water_resistance_MN": 5.644459953330776,
+          "thrust_with_service_allowance_MN": 6.4911289463303925,
+          "estimated_required_shaft_MW": 130.79091816896448,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 21.39249295770604,
+          "volumetric_flow_per_jet_m3_per_s": 92.78697229240163
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 4.0,
+          "calm_water_resistance_MN": 7.525946604441035,
+          "thrust_with_service_allowance_MN": 8.65483859510719,
+          "estimated_required_shaft_MW": 184.1168566076917,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 23.30347506730961,
+          "volumetric_flow_per_jet_m3_per_s": 101.07559224920705
+        }
+      ],
+      "full_installed_power": {
+        "idealised_available_thrust_MN": 9.608563062169551,
+        "equivalent_calm_water_resistance_to_friction_ratio": 4.4407820927366695,
+        "jet_exit_velocity_m_per_s": 24.080223048485323,
+        "flow_per_jet_m3_per_s": 104.44462892716786,
+        "mean_intake_velocity_m_per_s": null,
+        "notional_capture_area_per_jet_Q_over_V_m2": 8.120964668203115
+      }
+    },
+    {
+      "speed_kn": 28.0,
+      "speed_m_per_s": 14.404444444444445,
+      "froude_number": 0.2415584924362293,
+      "reynolds_number": 4389118241.441466,
+      "ittc57_smooth_friction_coefficient": 0.0012841161737533289,
+      "smooth_plate_friction_resistance_MN": 2.3298354928298175,
+      "cases": [
+        {
+          "arbitrary_total_to_friction_ratio": 1.5,
+          "calm_water_resistance_MN": 3.494753239244726,
+          "thrust_with_service_allowance_MN": 4.018966225131434,
+          "estimated_required_shaft_MW": 81.43579288943828,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 20.042435712533617,
+          "volumetric_flow_per_jet_m3_per_s": 86.93128616696362
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 2.0,
+          "calm_water_resistance_MN": 4.659670985659635,
+          "thrust_with_service_allowance_MN": 5.35862163350858,
+          "estimated_required_shaft_MW": 112.96677846190231,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 21.43378719787672,
+          "volumetric_flow_per_jet_m3_per_s": 92.96608033399959
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 3.0,
+          "calm_water_resistance_MN": 6.989506478489452,
+          "thrust_with_service_allowance_MN": 8.037932450262868,
+          "estimated_required_shaft_MW": 180.9769076431684,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 23.871660125621297,
+          "volumetric_flow_per_jet_m3_per_s": 103.54001616495887
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 4.0,
+          "calm_water_resistance_MN": 9.31934197131927,
+          "thrust_with_service_allowance_MN": 10.71724326701716,
+          "estimated_required_shaft_MW": 254.69439848951797,
+          "within_installed_power": false,
+          "uniform_jet_exit_velocity_m_per_s": 25.995914737911626,
+          "volumetric_flow_per_jet_m3_per_s": 112.75367603350581
+        }
+      ],
+      "full_installed_power": {
+        "idealised_available_thrust_MN": 9.071947282190287,
+        "equivalent_calm_water_resistance_to_friction_ratio": 3.385925673670075,
+        "jet_exit_velocity_m_per_s": 24.722010751122156,
+        "flow_per_jet_m3_per_s": 107.22829410821525,
+        "mean_intake_velocity_m_per_s": null,
+        "notional_capture_area_per_jet_Q_over_V_m2": 7.44411174771627
+      }
+    },
+    {
+      "speed_kn": 30.0,
+      "speed_m_per_s": 15.433333333333334,
+      "froude_number": 0.25881267046738854,
+      "reynolds_number": 4702626687.258714,
+      "ittc57_smooth_friction_coefficient": 0.0012741058964502792,
+      "smooth_plate_friction_resistance_MN": 2.653706653577292,
+      "cases": [
+        {
+          "arbitrary_total_to_friction_ratio": 1.5,
+          "calm_water_resistance_MN": 3.9805599803659377,
+          "thrust_with_service_allowance_MN": 4.577643977420828,
+          "estimated_required_shaft_MW": 99.2825562962824,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 21.437237321830555,
+          "volumetric_flow_per_jet_m3_per_s": 92.98104476831506
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 2.0,
+          "calm_water_resistance_MN": 5.307413307154584,
+          "thrust_with_service_allowance_MN": 6.103525303227771,
+          "estimated_required_shaft_MW": 137.70209921564523,
+          "within_installed_power": true,
+          "uniform_jet_exit_velocity_m_per_s": 22.920496140069446,
+          "volumetric_flow_per_jet_m3_per_s": 99.41447424951146
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 3.0,
+          "calm_water_resistance_MN": 7.9611199607318754,
+          "thrust_with_service_allowance_MN": 9.155287954841656,
+          "estimated_required_shaft_MW": 220.5530595004014,
+          "within_installed_power": false,
+          "uniform_jet_exit_velocity_m_per_s": 25.520070098658103,
+          "volumetric_flow_per_jet_m3_per_s": 110.68976588309953
+        },
+        {
+          "arbitrary_total_to_friction_ratio": 4.0,
+          "calm_water_resistance_MN": 10.614826614309168,
+          "thrust_with_service_allowance_MN": 12.207050606455542,
+          "estimated_required_shaft_MW": 310.33933628876616,
+          "within_installed_power": false,
+          "uniform_jet_exit_velocity_m_per_s": 27.78569546399958,
+          "volumetric_flow_per_jet_m3_per_s": 120.51660179299174
+        }
+      ],
+      "full_installed_power": {
+        "idealised_available_thrust_MN": 8.73818199771918,
+        "equivalent_calm_water_resistance_to_friction_ratio": 2.863322936696307,
+        "jet_exit_velocity_m_per_s": 25.18760348920133,
+        "flow_per_jet_m3_per_s": 109.24773805862841,
+        "mean_intake_velocity_m_per_s": null,
+        "notional_capture_area_per_jet_Q_over_V_m2": 7.078687131228623
+      }
+    }
+  ],
+  "hydraulic_efficiency_sensitivity_at_game_speed": [
+    {
+      "assumed_hydraulic_efficiency": 0.7,
+      "full_power_idealised_thrust_MN": 7.398901172292021,
+      "equivalent_calm_water_resistance_to_friction_ratio": 2.424468091704054
+    },
+    {
+      "assumed_hydraulic_efficiency": 0.8,
+      "full_power_idealised_thrust_MN": 8.29737468346029,
+      "equivalent_calm_water_resistance_to_friction_ratio": 2.7188794250012633
+    },
+    {
+      "assumed_hydraulic_efficiency": 0.85,
+      "full_power_idealised_thrust_MN": 8.73818199771918,
+      "equivalent_calm_water_resistance_to_friction_ratio": 2.863322936696307
+    },
+    {
+      "assumed_hydraulic_efficiency": 0.9,
+      "full_power_idealised_thrust_MN": 9.173807408583684,
+      "equivalent_calm_water_resistance_to_friction_ratio": 3.0060684449795705
+    }
+  ],
+  "conclusion": "Eight provisional installations can be drawn and power shared among them, but adequacy at the native speed is unresolved: the unknown real resistance and intake/pump performance can cross the installed-power boundary.",
+  "limitations": [
+    "No CFD, tow/self-propulsion experiment, wave-resistance estimate or validated resistance curve.",
+    "Uniform upstream flow set equal to ship speed; boundary-layer ingestion, hull interaction, suction pressure and nozzle pressure corrections omitted.",
+    "85% shaft-to-jet energy efficiency is an assumed combined pump/duct loss factor, not a measured map; electrical conversion losses are not separately assessed.",
+    "No NPSH, cavitation inception, inlet separation, ventilation in waves, debris-bar loss, bucket load, thrust bearing or structural fatigue analysis.",
+    "Wetted area is measured from the exported reference outer shell excluding the artificial waterplane cap; apertures/duct free flooding and appendage resistance require separate correction.",
+    "112000t displacement and planning CG are game targets; replacement machinery weight, free-flooded duct volume, loading and damaged conditions need a new weight-centre and stability model.",
+    "Concept exit bore is not a catalogue product number or matched pump diameter; no supplier rating accepted.",
+    "Native game speed/horsepower are scenario settings, not proof of real performance or eight independent physical thrust forces."
+  ],
+  "sources": [
+    {
+      "title": "ITTC 7.5-02-02-01 Resistance Test, 2021 revision 05",
+      "url": "https://www.ittc.info/media/11780/75-02-02-01.pdf",
+      "use": "ITTC-1957 friction correlation and resistance definitions only; no towing test performed."
+    },
+    {
+      "title": "ITTC 7.5-02-05-03.1 Waterjet Propulsive Performance Prediction, 2011 revision 02",
+      "url": "https://www.ittc.info/media/8067/75-02-05-031.pdf",
+      "use": "Momentum/energy-flux framework and need for propulsion tests; this simplified screen is not the full ITTC procedure."
+    },
+    {
+      "title": "Wartsila Modular Waterjets, accessed 26 October 2026",
+      "url": "https://www.wartsila.com/marine/products/propulsors-and-gears/waterjets/wartsila-modular-waterjets",
+      "use": "Selection depends on shaft power AND speed; catalogue flange dimensions are not outlet bores."
+    },
+    {
+      "title": "Wartsila waterjets speed towards new innovations, 7 March 2019",
+      "url": "https://www.wartsila.com/insights/article/wartsila-waterjets-speed-towards-new-innovations",
+      "use": "Published portfolio approximately 500 to 33,000kW; no actual product matched to this carrier."
+    }
+  ]
+}

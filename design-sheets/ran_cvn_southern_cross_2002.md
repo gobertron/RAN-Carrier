@@ -1,5 +1,7 @@
 # Southern Cross class — 2000s early
 
+> Historical fleet-design study. The current Australis 2030 test build and installation guide are in [australis-2030](../australis-2030/README.md). Figures on this page describe this earlier edition.
+
 **Sea Power design edition:** 2000s early (2002); nuclear propulsion; 98 aircraft.
 
 The hull is original geometry using Original Australian design; four steam catapults and four lifts as a design cue. The proposed ship is alternate history. Length 360 m, flight-deck width 95 m, estimated displacement 118,000 t, design speed 32 kn. The deck plan has 4 physical lifts and 4 indicated catapult tracks. These positions still need native taxi, launch and recovery routing.

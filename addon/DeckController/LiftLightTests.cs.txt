@@ -1,0 +1,130 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using RAN.Australis;
+
+// A small Unity-shaped test surface exercises the production reflection calls.
+// These tests verify controller behavior, not Unity rendering or the game API.
+namespace UnityEngine {
+public struct Vector3 { public float x,y,z; public Vector3(float x,float y,float z){this.x=x;this.y=y;this.z=z;} }
+public struct Color { public float r,g,b,a; public Color(float r,float g,float b,float a){this.r=r;this.g=g;this.b=b;this.a=a;} }
+public enum LightType { Spot=0,Directional=1,Point=2 }
+public enum LightShadows { None=0,Hard=1,Soft=2 }
+public sealed class Transform {
+    Vector3 position;
+    public bool ThrowOnRead;
+    public Transform parent {get;set;}
+    public Vector3 localPosition {get {if(ThrowOnRead)throw new InvalidOperationException("Destroyed/unavailable transform");return position;} set {position=value;} }
+    public Vector3 localEulerAngles {get;set;}
+}
+public sealed class Light {
+    public static readonly List<Light> All=new List<Light>();
+    public GameObject gameObject;
+    public bool enabled {get;set;}=true;
+    public float intensity {get;set;}=1f;
+    public float range {get;set;}
+    public float spotAngle {get;set;}
+    public Color color {get;set;}
+    public LightType type {get;set;}
+    public LightShadows shadows {get;set;}
+}
+public sealed class GameObject {
+    public static int AddCalls,FailAddAt;
+    public string name {get;set;}
+    public Transform transform {get;}=new Transform();
+    public GameObject(string name){this.name=name;}
+    public object AddComponent(Type type){
+        if(++AddCalls==FailAddAt)throw new InvalidOperationException("Injected light initialization failure");
+        var light=(Light)Activator.CreateInstance(type);light.gameObject=this;Light.All.Add(light);return light;
+    }
+    public static void Reset(){AddCalls=0;FailAddAt=0;Light.All.Clear();}
+}
+}
+namespace RAN.Australis {
+internal static class BayData {public const double MetresPerUnit=217/3.161967;}
+internal static class Bridge {internal static readonly List<string> Logs=new List<string>();internal static void Log(string value){Logs.Add(value);}}
+internal static class Reflect {
+    public static object Get(object o,string name){
+        if(o==null)return null;
+        var flags=BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic;
+        var f=o.GetType().GetField(name,flags);return f!=null?f.GetValue(o):o.GetType().GetProperty(name,flags)?.GetValue(o);
+    }
+    public static object Call(object o,string name,params object[] args){return o.GetType().GetMethod(name,BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic).Invoke(o,args);}
+}
+}
+internal sealed class Owner {
+    public readonly UnityEngine.GameObject Root=new UnityEngine.GameObject("Carrier");
+    public object getRootGameObject(){return Root;}
+}
+internal sealed class Rig {
+    public readonly Owner Owner=new Owner();
+    public readonly Dictionary<string,object> Models=new Dictionary<string,object>();
+    public readonly LiftLights Controller=new LiftLights();
+    public Rig(double height){for(int i=1;i<=4;i++)Models["LiftPlatform"+i]=new UnityEngine.Transform();SetAll(height);}
+    public void Set(int index,double metres){((UnityEngine.Transform)Models["LiftPlatform"+index]).localPosition=new UnityEngine.Vector3(0,(float)(metres/BayData.MetresPerUnit),0);}
+    public void SetAll(double height){for(int i=1;i<=4;i++)Set(i,height);}
+    public void Tick(double now=0){Controller.Tick(Owner,Models,now);}
+    public static UnityEngine.Light[] Group(int index){return UnityEngine.Light.All.Where(l=>l.gameObject.name.Contains("LiftPlatform"+index+" ")).ToArray();}
+}
+internal static class Tests {
+    static int checks;
+    static void Check(bool ok,string message){checks++;if(!ok)throw new Exception(message);}
+    static bool Near(double a,double b,double tolerance=1e-5){return Math.Abs(a-b)<tolerance;}
+    static void AllOff(string message){Check(UnityEngine.Light.All.All(l=>!l.enabled),message);}
+    static void GroupState(int index,bool on,string message){
+        var group=Rig.Group(index);Check(group.Length==8,"Eight lights in lift "+index);
+        Check(group.All(l=>l.enabled==on),message);
+        Check(group.All(l=>Near(l.intensity,on?.65:0)),message+" intensity");
+    }
+    static void Policy(){
+        Check(LiftLightPolicy.Gain(22.002)==0,"Flush platform must be dark");
+        Check(LiftLightPolicy.Gain(22.052)==0,"Slight upper endpoint jitter stays dark");
+        Check(LiftLightPolicy.Gain(22.002-.05)==0,"No light inside the closing clearance band");
+        Check(LiftLightPolicy.Gain(11.8)==1,"Lower endpoint fully lit");
+        Check(LiftLightPolicy.Gain(18)==1,"Intermediate lower travel fully lit");
+        Check(Near(LiftLightPolicy.Gain(22.002-.35),.5),"Half gain at the fade midpoint");
+        foreach(var h in new[]{double.NaN,double.PositiveInfinity,double.NegativeInfinity,11.2,23.0})
+            Check(LiftLightPolicy.Gain(h)==0,"Invalid/out-of-travel position must fail dark");
+        float last=0;
+        for(int i=0;i<=100;i++){
+            var gain=LiftLightPolicy.Gain(22.002-10.202*i/100);
+            Check(gain>=0&&gain<=1&&gain>=last,"Smooth bounded monotonic lowering gain");last=gain;
+        }
+    }
+    static void IndependentAndImmediate(){
+        UnityEngine.GameObject.Reset();var rig=new Rig(22.002);rig.Tick();
+        Check(UnityEngine.Light.All.Count==32,"Four groups create exactly 32 lights");AllOff("Initial closed deck stays dark");
+        Check(UnityEngine.Light.All.All(l=>l.type==UnityEngine.LightType.Spot&&l.shadows==UnityEngine.LightShadows.None),"Only shadowless spotlights are created");
+        Check(UnityEngine.Light.All.All(l=>ReferenceEquals(l.gameObject.transform.parent,rig.Owner.Root.transform)),"All spots attach to this carrier");
+        Check(UnityEngine.Light.All.All(l=>l.gameObject.transform.localEulerAngles.x-l.spotAngle/2>0),"Entire beam cone points below horizontal");
+        Check(UnityEngine.Light.All.All(l=>l.gameObject.transform.localPosition.y*BayData.MetresPerUnit<20.3),"Every light source is below shaft wall top");
+        Check(UnityEngine.Light.All.All(l=>Near(l.range*BayData.MetresPerUnit,7,1e-4)),"Physical metre light ranges are converted to game units");
+        for(int active=1;active<=4;active++){
+            rig.SetAll(22.002);rig.Set(active,11.8);rig.Tick(0);
+            for(int group=1;group<=4;group++)GroupState(group,active==group,"Each lift follows its own actual height");
+        }
+        rig.SetAll(11.8);rig.Tick(0);Check(UnityEngine.Light.All.All(l=>l.enabled&&Near(l.intensity,.65)),"All lowered lift worklights illuminate even without night state");
+        rig.SetAll(22.002);rig.Tick(0);AllOff("Same-clock flush movement extinguishes immediately, no night throttle");
+        rig.SetAll(11.8);rig.Tick(100);rig.SetAll(22.002);rig.Tick(1);AllOff("Mission-time reset cannot leave lights on");
+        for(int i=0;i<20;i++)rig.Tick(i);
+        Check(UnityEngine.GameObject.AddCalls==32,"Repeated ticks do not create duplicate lights");
+    }
+    static void MissingAndBadTransforms(){
+        UnityEngine.GameObject.Reset();var rig=new Rig(11.8);rig.Tick();
+        var first=rig.Models["LiftPlatform1"];rig.Models.Remove("LiftPlatform1");rig.Tick();
+        GroupState(1,false,"Missing lift transform fails dark");GroupState(2,true,"Missing lift does not disable another lift");
+        rig.Models["LiftPlatform1"]=first;rig.Tick();GroupState(1,true,"Restored transform resumes illumination");
+        rig.Set(2,double.NaN);rig.Tick();GroupState(2,false,"Nonfinite transform fails dark");
+        ((UnityEngine.Transform)rig.Models["LiftPlatform3"]).ThrowOnRead=true;rig.Tick();GroupState(3,false,"Destroyed/unreadable transform fails dark");
+        rig.Set(4,0);rig.Tick();GroupState(4,false,"Out-of-travel transform fails dark");
+        rig.Controller.Tick(rig.Owner,null,0);AllOff("Missing model dictionary extinguishes existing lights");
+    }
+    static void PartialInitialization(){
+        UnityEngine.GameObject.Reset();UnityEngine.GameObject.FailAddAt=5;
+        var rig=new Rig(11.8);rig.Tick();
+        Check(UnityEngine.Light.All.Count==4,"Failure injected after partially creating lights");AllOff("Initialization failure disables every light already created");
+        var calls=UnityEngine.GameObject.AddCalls;rig.Tick();Check(UnityEngine.GameObject.AddCalls==calls,"Failed initialization does not repeatedly spawn fixtures");
+    }
+    public static void Main(){Policy();IndependentAndImmediate();MissingAndBadTransforms();PartialInitialization();Console.WriteLine("[PASS] "+checks+" lift-light policy and reflection-integration checks");}
+}

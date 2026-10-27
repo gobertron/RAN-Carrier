@@ -1,0 +1,93 @@
+{
+  "revision": "c6f74183cff1",
+  "closed_model_parts": 182,
+  "closed_model_triangles": 37273,
+  "photos": [
+    {
+      "id": "starboard",
+      "filename": "australis_2030_current_starboard.png",
+      "sha256": "612dd0b1678ec6bf44e2cb22dc6038e14cb6ca2e2ddda278836923936dad3e07",
+      "embedded_sha256": "e7071d1c7d253f4f76ff989a81e9a004bcdeed1186ce85976ccd6f1aa061d26b"
+    },
+    {
+      "id": "port_waist",
+      "filename": "australis_2030_current_port_waist.png",
+      "sha256": "4f29ba8329d9b25a95fe48a9b520c84c1b5e417aa4db3516ceee72f9b30b1c0b",
+      "embedded_sha256": "68ab2dfd66b30044023aec0c94247abab8bac9ebe7709553523bdd59217dd56b"
+    },
+    {
+      "id": "deck",
+      "filename": "australis_2030_current_deck.png",
+      "sha256": "65c610818dbaad6ba362d7d0b525a270c231cd160ec57de8256dbefd77520fb9",
+      "embedded_sha256": "7706dd088690a40c8d66eab8c5b3f8751aa8af754d6312d0b5d0e909b2f8ca20"
+    },
+    {
+      "id": "bow",
+      "filename": "australis_2030_current_bow.png",
+      "sha256": "f16b26939f92c7512925e7ee64e8a8ea578c9e80d59f7909fb55331dfdb2ae6c",
+      "embedded_sha256": "325e10878321def0f08d22d5fca9a914665e618fedbbc38aa314fb70e0df9890"
+    },
+    {
+      "id": "waterjets",
+      "filename": "australis_2030_current_waterjets.png",
+      "sha256": "98ad54c08ef5f3d6a0c2781042d73504fb6d1a4117c89f8e5432453eae198515",
+      "embedded_sha256": "7959a8fe0a139562636d3aace9fc9cd3d954650a3c1b243cb8671a697da2ce47"
+    },
+    {
+      "id": "underwater",
+      "filename": "australis_2030_current_underwater.png",
+      "sha256": "7b5472f62a72623ca9f16cf9f7378e759975d90dfa82ccf97aaf274d91d37fcd",
+      "embedded_sha256": "13a045cef11d3991f41f9f7e65617f2d2f780c2e7d9efc5020568154daba02ac"
+    }
+  ],
+  "view": "Actual current design mesh; not an in-game screenshot",
+  "air_group": "Empty; aircraft selected in Sea Power",
+  "fleet": [
+    {
+      "id": "ran_cvn_australis_2030",
+      "name": "HMSCS Australis 91",
+      "revision": "c6f74183cff1",
+      "obj_sha256": "cea47680a8cec6d40d26b9299c776f6ab728d37c3ec0bbb6b46d18a004fc2fbe",
+      "ini_sha256": "a1467251414d7c216b8ea3f2410b8bb4225e2196e6c3c78f5eedf912376405dd",
+      "visible_parts": 182,
+      "triangles": 37273
+    },
+    {
+      "id": "ran_cvn_southern_cross_2030",
+      "name": "HMSCS Southern Cross 92",
+      "revision": "c79da20e48fe",
+      "obj_sha256": "81c8bdf6b99119daaaa7d538649dec6c908d3b0383fb8e13c0ba50c577505682",
+      "ini_sha256": "2230ae988cefaa01f509566d885589fe6bb4a5ab0092fb28dc36dd8e22057f0f",
+      "visible_parts": 182,
+      "triangles": 37321
+    },
+    {
+      "id": "ran_cvn_federation_2030",
+      "name": "HMSCS Federation 93",
+      "revision": "ba4353017cec",
+      "obj_sha256": "e5c7d093a470061e5c4a8c78adb0700b8486d1955ddad42b9ec77045cace6006",
+      "ini_sha256": "4a42de55ca7a383bd90401390c23f4a54e4741d02e63bee390130f63100f43a3",
+      "visible_parts": 182,
+      "triangles": 37369
+    },
+    {
+      "id": "ran_cvn_commonwealth_2030",
+      "name": "HMSCS Commonwealth 94",
+      "revision": "7ff029deeb2e",
+      "obj_sha256": "3d75c7b72c685898963c89f008677c3af522eb5b7c38815c63f868ca2435a9f1",
+      "ini_sha256": "f8583f2cb49fa49a81b6f8a97c7129a5f59adaf3cc3eaae47fc917d4ba25bb05",
+      "visible_parts": 182,
+      "triangles": 37393
+    }
+  ],
+  "version": "0.8.3-stock-catalogue-fix",
+  "geometry_controller_release": "0.8.2-lift-lighting",
+  "source": "Actual exported Sea Power OBJ and INI transforms",
+  "geometry_changed": false,
+  "viewer": "../viewer/Australis-v0.8.3-Fleet-3D.html",
+  "rendered_lighting": "Studio surface shading only; no Unity runtime lighting simulation",
+  "omitted": [
+    "stock runtime flag",
+    "collision-only mesh"
+  ]
+}

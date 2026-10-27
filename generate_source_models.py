@@ -160,14 +160,15 @@ def geometry(s):
         for sign in (-1,1):m.box(f'OffensiveECM_Array_{sign}',island_x+sign*2.6,ey,island_z,.15,1.8,3.5,'dark')
     return m
 
-def render(s,m,path,top=False):
+def render(s,m,path,top=False,camera_azimuth_deg=None,camera_elevation_deg=None):
     # Orthographic, per-pixel depth buffer: long deck triangles must not hide
     # the island, as a polygon-centre painter sort would do.
     from PIL import Image, ImageDraw, ImageFont
     width,height=1725,885
     rgb=np.empty((height,width,3),dtype=np.uint8);rgb[:]=[15,24,33]
     depth=np.full((height,width),-np.inf)
-    az=math.radians(-85 if top else -57);el=math.radians(89.9 if top else 26)
+    az=math.radians(camera_azimuth_deg if camera_azimuth_deg is not None else (-85 if top else -57))
+    el=math.radians(camera_elevation_deg if camera_elevation_deg is not None else (89.9 if top else 26))
     direction=np.array([math.cos(el)*math.cos(az),math.cos(el)*math.sin(az),math.sin(el)])
     right=np.array([-math.sin(az),math.cos(az),0]);up=np.cross(direction,right)
     tris=list(m.triangles());world=np.concatenate([t[:,[0,2,1]] for _,t,_ in tris])
@@ -201,7 +202,7 @@ def render(s,m,path,top=False):
 
 ROOT = Path(__file__).resolve().parent
 
-def validate(s,m):
+def validate(s,m,open_roofs=()):
     from collections import Counter
     if sum(x['count'] for x in s['air_group'])!=s['aircraft_capacity']:
         raise ValueError(s['id']+': air group does not match capacity')
@@ -219,12 +220,17 @@ def validate(s,m):
                 triangles+=1
             for a,b in zip(f,f[1:]+f[:1]):
                 edges[tuple(sorted((a,b)))]+=1;directed[(a,b)]+=1
-        assert all(n==2 for n in edges.values()),name+' has an open construction surface'
-        assert all(directed[(a,b)]==directed[(b,a)] for a,b in directed),name+' has inconsistent winding'
+        boundary=[(a,b) for (a,b),count in edges.items() if count==1]
+        if name in open_roofs:
+            # The separate perforated flight-deck assembly supplies the roof.
+            assert len(boundary)==sum(abs(v[:,1]-20.3)<1e-9) and all(abs(v[i,1]-20.3)<1e-9 for edge in boundary for i in edge),name
+            assert all(n in (1,2) for n in edges.values()),name
+        else: assert all(n==2 for n in edges.values()),name+' has an open construction surface'
+        assert all(directed[(a,b)]==directed[(b,a)] for a,b in directed if edges[tuple(sorted((a,b)))]==2),name+' has inconsistent winding'
         assert mat in COLORS,name
     return dict(unit=s['id'],capacity=s['aircraft_capacity'],air_group_total=sum(x['count'] for x in s['air_group']),
                 offensive_ecm_modules=s['offensive_ecm_modules'],parts=len(m.parts),triangles=triangles,
-                finite_vertices=True,valid_faces=True,nonzero_triangles=True,closed_construction_parts=True,
+                finite_vertices=True,valid_faces=True,nonzero_triangles=True,closed_construction_parts=not bool(open_roofs),intentional_roof_interfaces=list(open_roofs),
                 game_integration_tested=False)
 
 def main():

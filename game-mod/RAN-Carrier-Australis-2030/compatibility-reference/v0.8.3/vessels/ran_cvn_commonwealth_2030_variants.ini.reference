@@ -1,0 +1,15 @@
+﻿[General]
+NationFlagReference=Flag1
+NumberOfVariants=1
+
+[Default]
+ResourcesFlagFolder=ships/materials/textures/
+FlagTexture=flag_australia
+Nation=Australia
+ServiceDate=2025|2055
+
+[Variant1]
+ResourcesFlagFolder=ships/materials/textures/
+FlagTexture=flag_australia
+Nation=Australia
+ServiceDate=2025|2055

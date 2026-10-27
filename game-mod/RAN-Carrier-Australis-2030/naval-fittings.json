@@ -1,0 +1,1424 @@
+{
+  "schema": 1,
+  "units": "physical metres",
+  "visual_only": true,
+  "windows": 43,
+  "doors": 11,
+  "galleries": 6,
+  "opaque_sensor_panels": 7,
+  "minimum_primary_surface_clearance_m": 0.018,
+  "maximum_primary_surface_clearance_m": 0.2,
+  "maximum_host_plane_error_m": 0.0,
+  "features": [
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_9_0",
+      "parent": "IntegratedBridge",
+      "face": 9,
+      "centre_m": [
+        29.255817,
+        42.5,
+        -14.843243
+      ],
+      "normal": [
+        -0.3052634,
+        0.4613801,
+        -0.8330322
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_10_1",
+      "parent": "IntegratedBridge",
+      "face": 10,
+      "centre_m": [
+        33.854103,
+        42.5,
+        -11.281416
+      ],
+      "normal": [
+        0.8521766,
+        0.2785463,
+        -0.4429526
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_11_0",
+      "parent": "IntegratedBridge",
+      "face": 11,
+      "centre_m": [
+        34.740448,
+        42.5,
+        -5.396216
+      ],
+      "normal": [
+        0.9936394,
+        0.1126084,
+        -0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_11_1",
+      "parent": "IntegratedBridge",
+      "face": 11,
+      "centre_m": [
+        34.740448,
+        42.5,
+        -3.116216
+      ],
+      "normal": [
+        0.9936394,
+        0.1126084,
+        -0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_11_2",
+      "parent": "IntegratedBridge",
+      "face": 11,
+      "centre_m": [
+        34.740448,
+        42.5,
+        -1.002184
+      ],
+      "normal": [
+        0.9936394,
+        0.1126084,
+        -0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_11_3",
+      "parent": "IntegratedBridge",
+      "face": 11,
+      "centre_m": [
+        34.740448,
+        42.5,
+        0.913016
+      ],
+      "normal": [
+        0.9936394,
+        0.1126084,
+        -0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_11_4",
+      "parent": "IntegratedBridge",
+      "face": 11,
+      "centre_m": [
+        34.740448,
+        42.5,
+        2.828216
+      ],
+      "normal": [
+        0.9936394,
+        0.1126084,
+        -0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_11_5",
+      "parent": "IntegratedBridge",
+      "face": 11,
+      "centre_m": [
+        34.740448,
+        42.5,
+        4.743416
+      ],
+      "normal": [
+        0.9936394,
+        0.1126084,
+        -0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_11_6",
+      "parent": "IntegratedBridge",
+      "face": 11,
+      "centre_m": [
+        34.740448,
+        42.5,
+        6.658616
+      ],
+      "normal": [
+        0.9936394,
+        0.1126084,
+        -0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_11_7",
+      "parent": "IntegratedBridge",
+      "face": 11,
+      "centre_m": [
+        34.740448,
+        42.5,
+        8.573816
+      ],
+      "normal": [
+        0.9936394,
+        0.1126084,
+        -0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_11_8",
+      "parent": "IntegratedBridge",
+      "face": 11,
+      "centre_m": [
+        34.740448,
+        42.5,
+        10.489016
+      ],
+      "normal": [
+        0.9936394,
+        0.1126084,
+        -0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_11_9",
+      "parent": "IntegratedBridge",
+      "face": 11,
+      "centre_m": [
+        34.740448,
+        42.5,
+        12.404216
+      ],
+      "normal": [
+        0.9936394,
+        0.1126084,
+        -0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_11_10",
+      "parent": "IntegratedBridge",
+      "face": 11,
+      "centre_m": [
+        34.740448,
+        42.5,
+        14.319416
+      ],
+      "normal": [
+        0.9936394,
+        0.1126084,
+        -0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_11_11",
+      "parent": "IntegratedBridge",
+      "face": 11,
+      "centre_m": [
+        34.740448,
+        42.5,
+        16.234616
+      ],
+      "normal": [
+        0.9936394,
+        0.1126084,
+        -0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_11_12",
+      "parent": "IntegratedBridge",
+      "face": 11,
+      "centre_m": [
+        34.740448,
+        42.5,
+        18.149816
+      ],
+      "normal": [
+        0.9936394,
+        0.1126084,
+        -0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_11_13",
+      "parent": "IntegratedBridge",
+      "face": 11,
+      "centre_m": [
+        34.740448,
+        42.5,
+        20.065016
+      ],
+      "normal": [
+        0.9936394,
+        0.1126084,
+        -0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_12_0",
+      "parent": "IntegratedBridge",
+      "face": 12,
+      "centre_m": [
+        30.96051,
+        42.5,
+        28.389643
+      ],
+      "normal": [
+        0.7493912,
+        0.3114795,
+        0.5842888
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_12_1",
+      "parent": "IntegratedBridge",
+      "face": 12,
+      "centre_m": [
+        32.244183,
+        42.5,
+        26.743243
+      ],
+      "normal": [
+        0.7493912,
+        0.3114795,
+        0.5842888
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_13_0",
+      "parent": "IntegratedBridge",
+      "face": 13,
+      "centre_m": [
+        27.645897,
+        42.5,
+        25.910249
+      ],
+      "normal": [
+        -0.814113,
+        0.3057528,
+        0.4936955
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_14_0",
+      "parent": "IntegratedBridge",
+      "face": 14,
+      "centre_m": [
+        26.759552,
+        42.5,
+        -9.872778
+      ],
+      "normal": [
+        -0.9936394,
+        0.1126084,
+        0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_14_1",
+      "parent": "IntegratedBridge",
+      "face": 14,
+      "centre_m": [
+        26.759552,
+        42.5,
+        -7.655178
+      ],
+      "normal": [
+        -0.9936394,
+        0.1126084,
+        0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_14_2",
+      "parent": "IntegratedBridge",
+      "face": 14,
+      "centre_m": [
+        26.759552,
+        42.5,
+        -5.437578
+      ],
+      "normal": [
+        -0.9936394,
+        0.1126084,
+        0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_14_3",
+      "parent": "IntegratedBridge",
+      "face": 14,
+      "centre_m": [
+        26.759552,
+        42.5,
+        -3.219978
+      ],
+      "normal": [
+        -0.9936394,
+        0.1126084,
+        0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_14_4",
+      "parent": "IntegratedBridge",
+      "face": 14,
+      "centre_m": [
+        26.759552,
+        42.5,
+        -1.002378
+      ],
+      "normal": [
+        -0.9936394,
+        0.1126084,
+        0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_14_5",
+      "parent": "IntegratedBridge",
+      "face": 14,
+      "centre_m": [
+        26.759552,
+        42.5,
+        1.215222
+      ],
+      "normal": [
+        -0.9936394,
+        0.1126084,
+        0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_14_6",
+      "parent": "IntegratedBridge",
+      "face": 14,
+      "centre_m": [
+        26.759552,
+        42.5,
+        3.432822
+      ],
+      "normal": [
+        -0.9936394,
+        0.1126084,
+        0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_14_7",
+      "parent": "IntegratedBridge",
+      "face": 14,
+      "centre_m": [
+        26.759552,
+        42.5,
+        5.650422
+      ],
+      "normal": [
+        -0.9936394,
+        0.1126084,
+        0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_14_8",
+      "parent": "IntegratedBridge",
+      "face": 14,
+      "centre_m": [
+        26.759552,
+        42.5,
+        7.868022
+      ],
+      "normal": [
+        -0.9936394,
+        0.1126084,
+        0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_14_9",
+      "parent": "IntegratedBridge",
+      "face": 14,
+      "centre_m": [
+        26.759552,
+        42.5,
+        10.085622
+      ],
+      "normal": [
+        -0.9936394,
+        0.1126084,
+        0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_14_10",
+      "parent": "IntegratedBridge",
+      "face": 14,
+      "centre_m": [
+        26.759552,
+        42.5,
+        12.303222
+      ],
+      "normal": [
+        -0.9936394,
+        0.1126084,
+        0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_14_11",
+      "parent": "IntegratedBridge",
+      "face": 14,
+      "centre_m": [
+        26.759552,
+        42.5,
+        14.520822
+      ],
+      "normal": [
+        -0.9936394,
+        0.1126084,
+        0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_14_12",
+      "parent": "IntegratedBridge",
+      "face": 14,
+      "centre_m": [
+        26.759552,
+        42.5,
+        16.968649
+      ],
+      "normal": [
+        -0.9936394,
+        0.1126084,
+        0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_IntegratedBridge_14_13",
+      "parent": "IntegratedBridge",
+      "face": 14,
+      "centre_m": [
+        26.759552,
+        42.5,
+        19.608649
+      ],
+      "normal": [
+        -0.9936394,
+        0.1126084,
+        0.0
+      ],
+      "width_m": 1.4600000000000002,
+      "height_m": 1.38,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_AftAviationBridge_4_0",
+      "parent": "AftAviationBridge",
+      "face": 4,
+      "centre_m": [
+        33.854789,
+        33.05,
+        -91.614254
+      ],
+      "normal": [
+        0.9839006,
+        0.1787167,
+        -0.0
+      ],
+      "width_m": 1.29,
+      "height_m": 1.26,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_AftAviationBridge_4_1",
+      "parent": "AftAviationBridge",
+      "face": 4,
+      "centre_m": [
+        33.854789,
+        33.05,
+        -89.130046
+      ],
+      "normal": [
+        0.9839006,
+        0.1787167,
+        -0.0
+      ],
+      "width_m": 1.29,
+      "height_m": 1.26,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_AftAviationBridge_4_2",
+      "parent": "AftAviationBridge",
+      "face": 4,
+      "centre_m": [
+        33.854789,
+        33.05,
+        -86.891446
+      ],
+      "normal": [
+        0.9839006,
+        0.1787167,
+        -0.0
+      ],
+      "width_m": 1.29,
+      "height_m": 1.26,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_AftAviationBridge_4_3",
+      "parent": "AftAviationBridge",
+      "face": 4,
+      "centre_m": [
+        33.854789,
+        33.05,
+        -84.652846
+      ],
+      "normal": [
+        0.9839006,
+        0.1787167,
+        -0.0
+      ],
+      "width_m": 1.29,
+      "height_m": 1.26,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_AftAviationBridge_7_0",
+      "parent": "AftAviationBridge",
+      "face": 7,
+      "centre_m": [
+        27.458847,
+        33.05,
+        -95.182207
+      ],
+      "normal": [
+        -0.9839006,
+        0.1787167,
+        0.0
+      ],
+      "width_m": 1.29,
+      "height_m": 1.26,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_AftAviationBridge_7_1",
+      "parent": "AftAviationBridge",
+      "face": 7,
+      "centre_m": [
+        27.458847,
+        33.05,
+        -93.092847
+      ],
+      "normal": [
+        -0.9839006,
+        0.1787167,
+        0.0
+      ],
+      "width_m": 1.29,
+      "height_m": 1.26,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_AftAviationBridge_7_2",
+      "parent": "AftAviationBridge",
+      "face": 7,
+      "centre_m": [
+        27.458847,
+        33.05,
+        -91.003487
+      ],
+      "normal": [
+        -0.9839006,
+        0.1787167,
+        0.0
+      ],
+      "width_m": 1.29,
+      "height_m": 1.26,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_AftAviationBridge_7_3",
+      "parent": "AftAviationBridge",
+      "face": 7,
+      "centre_m": [
+        27.458847,
+        33.05,
+        -88.914127
+      ],
+      "normal": [
+        -0.9839006,
+        0.1787167,
+        0.0
+      ],
+      "width_m": 1.29,
+      "height_m": 1.26,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_AftAviationBridge_7_4",
+      "parent": "AftAviationBridge",
+      "face": 7,
+      "centre_m": [
+        27.458847,
+        33.05,
+        -86.824767
+      ],
+      "normal": [
+        -0.9839006,
+        0.1787167,
+        0.0
+      ],
+      "width_m": 1.29,
+      "height_m": 1.26,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "window",
+      "name": "NavalWindow_AftAviationBridge_7_5",
+      "parent": "AftAviationBridge",
+      "face": 7,
+      "centre_m": [
+        27.458847,
+        33.05,
+        -84.276895
+      ],
+      "normal": [
+        -0.9839006,
+        0.1787167,
+        0.0
+      ],
+      "width_m": 1.29,
+      "height_m": 1.26,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.13,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "opaque_sensor_panel",
+      "name": "NavalRadarPanel_IntegratedBridge_0",
+      "parent": "IntegratedBridge",
+      "face": 14,
+      "centre_m": [
+        26.453563,
+        39.8,
+        3.616216
+      ],
+      "normal": [
+        -0.9936394,
+        0.1126084,
+        0.0
+      ],
+      "width_m": 6.0,
+      "height_m": 2.65,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.085,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "opaque_sensor_panel",
+      "name": "NavalRadarPanel_IntegratedBridge_1",
+      "parent": "IntegratedBridge",
+      "face": 11,
+      "centre_m": [
+        35.046437,
+        39.8,
+        8.314595
+      ],
+      "normal": [
+        0.9936394,
+        0.1126084,
+        -0.0
+      ],
+      "width_m": 6.0,
+      "height_m": 2.65,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.085,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "opaque_sensor_panel",
+      "name": "NavalRadarPanel_IntegratedBridge_2",
+      "parent": "IntegratedBridge",
+      "face": 12,
+      "centre_m": [
+        33.960365,
+        39.8,
+        26.045203
+      ],
+      "normal": [
+        0.738657,
+        0.326076,
+        0.5899663
+      ],
+      "width_m": 2.271571725942144,
+      "height_m": 2.65,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.085,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "opaque_sensor_panel",
+      "name": "NavalRadarPanel_IntegratedBridge_3",
+      "parent": "IntegratedBridge",
+      "face": 9,
+      "centre_m": [
+        27.539635,
+        39.8,
+        -15.727973
+      ],
+      "normal": [
+        -0.2980036,
+        0.4660607,
+        -0.8330554
+      ],
+      "width_m": 1.4875645090518395,
+      "height_m": 2.65,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.085,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "opaque_sensor_panel",
+      "name": "NavalRadarPanel_AftAviationBridge_0",
+      "parent": "AftAviationBridge",
+      "face": 7,
+      "centre_m": [
+        27.077401,
+        30.95,
+        -89.928474
+      ],
+      "normal": [
+        -0.9839006,
+        0.1787167,
+        0.0
+      ],
+      "width_m": 3.2,
+      "height_m": 1.0,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.085,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "opaque_sensor_panel",
+      "name": "NavalRadarPanel_AftAviationBridge_1",
+      "parent": "AftAviationBridge",
+      "face": 4,
+      "centre_m": [
+        34.236235,
+        30.95,
+        -88.117939
+      ],
+      "normal": [
+        0.9839006,
+        0.1787167,
+        -0.0
+      ],
+      "width_m": 3.2,
+      "height_m": 1.0,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.085,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "opaque_sensor_panel",
+      "name": "NavalRadarPanel_AftAviationBridge_2",
+      "parent": "AftAviationBridge",
+      "face": 5,
+      "centre_m": [
+        32.7159,
+        30.95,
+        -80.756404
+      ],
+      "normal": [
+        0.6233052,
+        0.3170097,
+        0.7148395
+      ],
+      "width_m": 2.720286373427499,
+      "height_m": 1.0,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.085,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "watertight_door_visual",
+      "name": "NavalDoor_MainRakedIsland_-1",
+      "parent": "MainRakedIsland",
+      "face": 7,
+      "centre_m": [
+        24.325393,
+        23.35,
+        19.810135
+      ],
+      "normal": [
+        -0.9973691,
+        0.0724906,
+        0.0
+      ],
+      "width_m": 1.2,
+      "height_m": 2.18,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.2,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "watertight_door_visual",
+      "name": "NavalDoor_MainRakedIsland_1",
+      "parent": "MainRakedIsland",
+      "face": 4,
+      "centre_m": [
+        36.242789,
+        23.35,
+        20.701135
+      ],
+      "normal": [
+        0.9973691,
+        0.0724906,
+        -0.0
+      ],
+      "width_m": 1.2,
+      "height_m": 2.18,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.2,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "watertight_door_visual",
+      "name": "NavalDoor_MainAft",
+      "parent": "MainRakedIsland",
+      "face": 2,
+      "centre_m": [
+        27.586757,
+        23.35,
+        -30.9654
+      ],
+      "normal": [
+        -0.3892763,
+        0.3634602,
+        -0.8463809
+      ],
+      "width_m": 1.2,
+      "height_m": 2.18,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.2,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "watertight_door_visual",
+      "name": "NavalDoor_AftAviationIsland_-1",
+      "parent": "AftAviationIsland",
+      "face": 7,
+      "centre_m": [
+        25.58084,
+        23.35,
+        -89.423913
+      ],
+      "normal": [
+        -0.9944979,
+        0.1047564,
+        0.0
+      ],
+      "width_m": 1.2,
+      "height_m": 2.18,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.2,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "watertight_door_visual",
+      "name": "NavalDoor_AftAviationIsland_1",
+      "parent": "AftAviationIsland",
+      "face": 4,
+      "centre_m": [
+        34.987342,
+        23.35,
+        -88.682065
+      ],
+      "normal": [
+        0.9944979,
+        0.1047564,
+        -0.0
+      ],
+      "width_m": 1.2,
+      "height_m": 2.18,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.2,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "watertight_door_visual",
+      "name": "NavalHullDoor_-1_-105",
+      "parent": "HardChineHull",
+      "face": 414,
+      "centre_m": [
+        -39.824016,
+        13.8,
+        -106.760417
+      ],
+      "normal": [
+        -0.9860373,
+        0.1651659,
+        -0.0212271
+      ],
+      "width_m": 1.2,
+      "height_m": 2.18,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.2,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "maintenance_gallery",
+      "name": "NavalHullGallery_-1_-105",
+      "parent": "HardChineHull",
+      "face": 414,
+      "width_m": 2.1,
+      "depth_m": 0.95,
+      "deck_level_m": 12.72,
+      "access": "Internal watertight door; raised coaming; two hull brackets and outer/side rails"
+    },
+    {
+      "kind": "watertight_door_visual",
+      "name": "NavalHullDoor_-1_0",
+      "parent": "HardChineHull",
+      "face": 384,
+      "centre_m": [
+        -39.908162,
+        13.8,
+        -2.697917
+      ],
+      "normal": [
+        -0.9855788,
+        0.1657082,
+        0.0342818
+      ],
+      "width_m": 1.2,
+      "height_m": 2.18,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.2,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "maintenance_gallery",
+      "name": "NavalHullGallery_-1_0",
+      "parent": "HardChineHull",
+      "face": 384,
+      "width_m": 2.1,
+      "depth_m": 0.95,
+      "deck_level_m": 12.72,
+      "access": "Internal watertight door; raised coaming; two hull brackets and outer/side rails"
+    },
+    {
+      "kind": "watertight_door_visual",
+      "name": "NavalHullDoor_-1_105",
+      "parent": "HardChineHull",
+      "face": 354,
+      "centre_m": [
+        -36.639546,
+        13.8,
+        105.21875
+      ],
+      "normal": [
+        -0.9882262,
+        0.1523212,
+        -0.0143974
+      ],
+      "width_m": 1.2,
+      "height_m": 2.18,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.2,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "maintenance_gallery",
+      "name": "NavalHullGallery_-1_105",
+      "parent": "HardChineHull",
+      "face": 354,
+      "width_m": 2.1,
+      "depth_m": 0.95,
+      "deck_level_m": 12.72,
+      "access": "Internal watertight door; raised coaming; two hull brackets and outer/side rails"
+    },
+    {
+      "kind": "watertight_door_visual",
+      "name": "NavalHullDoor_1_-105",
+      "parent": "HardChineHull",
+      "face": 244,
+      "centre_m": [
+        36.658923,
+        13.8,
+        -105.21875
+      ],
+      "normal": [
+        0.9871293,
+        0.1525364,
+        -0.0480458
+      ],
+      "width_m": 1.2,
+      "height_m": 2.18,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.2,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "maintenance_gallery",
+      "name": "NavalHullGallery_1_-105",
+      "parent": "HardChineHull",
+      "face": 244,
+      "width_m": 2.1,
+      "depth_m": 0.95,
+      "deck_level_m": 12.72,
+      "access": "Internal watertight door; raised coaming; two hull brackets and outer/side rails"
+    },
+    {
+      "kind": "watertight_door_visual",
+      "name": "NavalHullDoor_1_0",
+      "parent": "HardChineHull",
+      "face": 275,
+      "centre_m": [
+        39.324183,
+        13.8,
+        2.697917
+      ],
+      "normal": [
+        0.9865356,
+        0.1633193,
+        -0.0086236
+      ],
+      "width_m": 1.2,
+      "height_m": 2.18,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.2,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "maintenance_gallery",
+      "name": "NavalHullGallery_1_0",
+      "parent": "HardChineHull",
+      "face": 275,
+      "width_m": 2.1,
+      "depth_m": 0.95,
+      "deck_level_m": 12.72,
+      "access": "Internal watertight door; raised coaming; two hull brackets and outer/side rails"
+    },
+    {
+      "kind": "watertight_door_visual",
+      "name": "NavalHullDoor_1_105",
+      "parent": "HardChineHull",
+      "face": 304,
+      "centre_m": [
+        39.891674,
+        13.8,
+        106.760417
+      ],
+      "normal": [
+        0.9861972,
+        0.1655712,
+        0.0011664
+      ],
+      "width_m": 1.2,
+      "height_m": 2.18,
+      "minimum_surface_clearance_m": 0.018,
+      "maximum_surface_clearance_m": 0.2,
+      "host_plane_error_m": 0.0,
+      "inside_parent_face": true
+    },
+    {
+      "kind": "maintenance_gallery",
+      "name": "NavalHullGallery_1_105",
+      "parent": "HardChineHull",
+      "face": 304,
+      "width_m": 2.1,
+      "depth_m": 0.95,
+      "deck_level_m": 12.72,
+      "access": "Internal watertight door; raised coaming; two hull brackets and outer/side rails"
+    }
+  ],
+  "limitations": [
+    "Raised visual fittings; no hull or island apertures are cut.",
+    "Door hardware and maintenance balconies are illustrative, not structural or watertight certification.",
+    "In-game materials and lighting require visual confirmation."
+  ],
+  "version": "0.8.5-naval-details",
+  "obj_sha256": "d7cb53a1b91b5cc309707e78eafd8cc17e7b09bd24eeb6a79909bdf56ff6b157",
+  "ini_sha256": "76bb0ee1af04e1671c5b7c928fcafa51d7e19c3bacb6fc7cb78846a30b73e391"
+}

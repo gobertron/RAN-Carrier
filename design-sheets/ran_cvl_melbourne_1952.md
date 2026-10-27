@@ -1,5 +1,7 @@
 # Melbourne class — 1950s early
 
+> Historical fleet-design study. The current Australis 2030 test build and installation guide are in [australis-2030](../australis-2030/README.md). Figures on this page describe this earlier edition.
+
 **Sea Power design edition:** 1950s early (1952); steam propulsion; 30 aircraft.
 
 The hull is original geometry using British Majestic; straight flight deck as a design cue. The proposed ship is alternate history. Length 211 m, flight-deck width 34 m, estimated displacement 19,000 t, design speed 25 kn. The deck plan has 2 physical lifts and 1 indicated catapult tracks. These positions still need native taxi, launch and recovery routing.

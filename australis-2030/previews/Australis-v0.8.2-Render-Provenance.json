@@ -1,0 +1,33 @@
+{
+  "version": "0.8.2-lift-lighting",
+  "revision": "c6f74183cff1",
+  "source": "Actual exported Sea Power OBJ and INI transforms",
+  "obj_sha256": "cea47680a8cec6d40d26b9299c776f6ab728d37c3ec0bbb6b46d18a004fc2fbe",
+  "ini_sha256": "a1467251414d7c216b8ea3f2410b8bb4225e2196e6c3c78f5eedf912376405dd",
+  "visible_parts": 182,
+  "triangles": 37273,
+  "rendered_lighting": "Studio surface shading only; no Unity runtime lighting simulation",
+  "omitted": [
+    "stock runtime flag",
+    "collision-only mesh"
+  ],
+  "artifacts": [
+    "Australis-v0.8.2-Full-Ship-3D.html",
+    "Australis-v0.8.2-Full-Ship.png"
+  ],
+  "lift_cutaway": {
+    "source_obj_sha256": "cea47680a8cec6d40d26b9299c776f6ab728d37c3ec0bbb6b46d18a004fc2fbe",
+    "source_ini_sha256": "a1467251414d7c216b8ea3f2410b8bb4225e2196e6c3c78f5eedf912376405dd",
+    "crop_bounds": "First lift only; surrounding hull/deck omitted",
+    "rendered_triangles": [
+      326,
+      326
+    ],
+    "lighting": "Illustrative Lambert spotlight shading using actual fixture profiles; no Unity renderer, shadows or gameplay validation",
+    "states_m": [
+      11.8,
+      22.002
+    ],
+    "fixture_count": 8
+  }
+}

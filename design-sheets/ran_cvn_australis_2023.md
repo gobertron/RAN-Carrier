@@ -1,5 +1,7 @@
 # Australis class — 2020s early
 
+> Historical 2023 fleet study. For the current playable-test project, see [Australis 2030 v0.8.2](../australis-2030/README.md). These historical dimensions and systems are not the current build.
+
 **Sea Power design edition:** 2020s early (2023); nuclear propulsion; 99 aircraft.
 
 The hull is original geometry using Original Australian design; integrated mast, EMALS concept and laser mounts as a design cue. The proposed ship is alternate history. Length 370 m, flight-deck width 102 m, estimated displacement 125,000 t, design speed 32 kn. The deck plan has 4 physical lifts and 4 indicated catapult tracks. These positions still need native taxi, launch and recovery routing.

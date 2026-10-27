@@ -1,0 +1,296 @@
+{
+  "schema": 2,
+  "native_submodel": "HullNumbers",
+  "atlas_width": 1024,
+  "atlas_height": 1024,
+  "regions": {
+    "deck": {
+      "pixel_bounds": [
+        0,
+        0,
+        1024,
+        512
+      ],
+      "background": "#394953"
+    },
+    "island": {
+      "pixel_bounds": [
+        0,
+        512,
+        1024,
+        1024
+      ],
+      "background": "#9aacb3"
+    }
+  },
+  "paint_color": "#dfebea",
+  "outline_color": "#253843",
+  "panels": [
+    {
+      "name": "BowDeckNumber",
+      "region": "deck",
+      "vertices_m": [
+        [
+          14.6,
+          22.012,
+          144.6
+        ],
+        [
+          14.6,
+          22.012,
+          153.4
+        ],
+        [
+          25.4,
+          22.012,
+          153.4
+        ],
+        [
+          25.4,
+          22.012,
+          144.6
+        ]
+      ],
+      "uv": [
+        [
+          0,
+          0.5
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0.5
+        ]
+      ],
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "offset_m": 0.012,
+      "panel_width_m": 10.8,
+      "panel_height_m": 8.8,
+      "glyph_width_m": 8.4375,
+      "glyph_height_m": 6.531250000000001,
+      "triangle_indices": [
+        0,
+        1
+      ]
+    },
+    {
+      "name": "PortIslandNumber",
+      "region": "island",
+      "vertices_m": [
+        [
+          24.609050809471512,
+          27.50130483141455,
+          2.8
+        ],
+        [
+          24.609050809471512,
+          27.50130483141455,
+          12.4
+        ],
+        [
+          25.01606918810709,
+          33.10130483141455,
+          12.4
+        ],
+        [
+          25.01606918810709,
+          33.10130483141455,
+          2.8
+        ]
+      ],
+      "uv": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0.5
+        ],
+        [
+          1,
+          0.5
+        ]
+      ],
+      "normal": [
+        -0.9973690931454314,
+        0.07249063414165925,
+        0.0
+      ],
+      "support_point_m": [
+        24.83051264246592,
+        30.3,
+        7.6
+      ],
+      "offset_m": 0.018,
+      "support_error_m": 3.552713678800501e-15,
+      "panel_width_m": 9.6,
+      "panel_height_m": 5.6,
+      "glyph_width_m": 7.6875,
+      "glyph_height_m": 4.199999999999999,
+      "triangle_indices": [
+        2,
+        3
+      ]
+    },
+    {
+      "name": "StarboardIslandNumber",
+      "region": "island",
+      "vertices_m": [
+        [
+          35.959081305759284,
+          27.50130483141455,
+          12.399999999999999
+        ],
+        [
+          35.959081305759284,
+          27.50130483141455,
+          2.799999999999999
+        ],
+        [
+          35.5520629271237,
+          33.10130483141455,
+          2.799999999999999
+        ],
+        [
+          35.5520629271237,
+          33.10130483141455,
+          12.399999999999999
+        ]
+      ],
+      "uv": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0.5
+        ],
+        [
+          1,
+          0.5
+        ]
+      ],
+      "normal": [
+        0.9973690931454313,
+        0.0724906341416595,
+        -0.0
+      ],
+      "support_point_m": [
+        35.73761947276488,
+        30.3,
+        7.6
+      ],
+      "offset_m": 0.018,
+      "support_error_m": 7.105427357601002e-15,
+      "panel_width_m": 9.6,
+      "panel_height_m": 5.6,
+      "glyph_width_m": 7.6875,
+      "glyph_height_m": 4.199999999999999,
+      "triangle_indices": [
+        4,
+        5
+      ]
+    }
+  ],
+  "source_obj_without_number_panels_sha256": "d2d856e4648c3f23a663463584fd2be5b05047802ea69f0eabef087219da7972",
+  "variants": [
+    {
+      "number": 91,
+      "texture": "hullnumber_91.png",
+      "sha256": "c5e6eb9dea21108973abd64d7a5319484e7ed705488572bfe1afedc773cce802",
+      "glyph_pixel_bounds": {
+        "deck": [
+          112,
+          66,
+          912,
+          446
+        ],
+        "island": [
+          102,
+          576,
+          922,
+          960
+        ]
+      }
+    },
+    {
+      "number": 92,
+      "texture": "hullnumber_92.png",
+      "sha256": "50e6a5feb5c7d09dfcda65e962c9725927debc1201e1cb2c397987add622595e",
+      "glyph_pixel_bounds": {
+        "deck": [
+          112,
+          66,
+          912,
+          446
+        ],
+        "island": [
+          102,
+          576,
+          922,
+          960
+        ]
+      }
+    },
+    {
+      "number": 93,
+      "texture": "hullnumber_93.png",
+      "sha256": "1bd6457c4f40b22b9476351b28b18787825eabe8d81d0b08982d10cd4f596a89",
+      "glyph_pixel_bounds": {
+        "deck": [
+          112,
+          66,
+          912,
+          446
+        ],
+        "island": [
+          102,
+          576,
+          922,
+          960
+        ]
+      }
+    },
+    {
+      "number": 94,
+      "texture": "hullnumber_94.png",
+      "sha256": "4caa1d0b461954a50526883a62603b1e9900503dd5528ebada54a85bae9aefb7",
+      "glyph_pixel_bounds": {
+        "deck": [
+          112,
+          66,
+          912,
+          446
+        ],
+        "island": [
+          102,
+          576,
+          922,
+          960
+        ]
+      }
+    }
+  ],
+  "obj_sha256": "d7cb53a1b91b5cc309707e78eafd8cc17e7b09bd24eeb6a79909bdf56ff6b157"
+}

@@ -1,0 +1,15 @@
+{
+  "source_obj_sha256": "cea47680a8cec6d40d26b9299c776f6ab728d37c3ec0bbb6b46d18a004fc2fbe",
+  "source_ini_sha256": "a1467251414d7c216b8ea3f2410b8bb4225e2196e6c3c78f5eedf912376405dd",
+  "crop_bounds": "First lift only; surrounding hull/deck omitted",
+  "rendered_triangles": [
+    326,
+    326
+  ],
+  "lighting": "Illustrative Lambert spotlight shading using actual fixture profiles; no Unity renderer, shadows or gameplay validation",
+  "states_m": [
+    11.8,
+    22.002
+  ],
+  "fixture_count": 8
+}
