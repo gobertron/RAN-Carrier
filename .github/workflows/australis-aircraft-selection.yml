@@ -1,0 +1,34 @@
+name: Australis aircraft selection regression
+on:
+  push:
+    branches:
+      - fix/australis-v1.2.9-modded-aircraft
+    paths:
+      - updates/v1.2.9/**
+      - .github/workflows/australis-aircraft-selection.yml
+permissions:
+  contents: read
+jobs:
+  windows-powershell-51:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch the exact public source commit
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          git init .
+          if ($LASTEXITCODE) { throw 'git init failed' }
+          git remote add origin "https://github.com/${{ github.repository }}.git"
+          if ($LASTEXITCODE) { throw 'git remote failed' }
+          git fetch --depth 1 origin "${{ github.sha }}"
+          if ($LASTEXITCODE) { throw 'git fetch failed' }
+          git checkout --detach FETCH_HEAD
+          if ($LASTEXITCODE) { throw 'git checkout failed' }
+      - name: Run actual Windows PowerShell 5.1 regression fixtures
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if ($PSVersionTable.PSVersion.Major -ne 5) { throw 'Windows PowerShell 5.1 is required for this job' }
+          Write-Host ('Runtime: ' + $PSVersionTable.PSVersion)
+          & '.\updates\v1.2.9\Source-and-Checks\Test-Mod-Aircraft.ps1'
