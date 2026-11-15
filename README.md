@@ -4,18 +4,21 @@ Alternate-history Royal Australian Navy aircraft carrier development for *Sea Po
 
 **[Complete Australis version-and-changes table](docs/AUSTRALIS_VERSION_HISTORY.md)** · [CSV](docs/AUSTRALIS_VERSION_HISTORY.csv) · [All saved artifacts](docs/AUSTRALIS_ARTIFACT_INDEX.md)
 
-Documentation reconciled **15 November 2026**. The record covers the early concepts, recovery builds, v0.8.x–v0.10.x evolution and Windows 11 packages through **v1.2.8**. Current operating-system target: **Windows 11**.
+**[Download v1.2.9 modded-aircraft selection fix](builds/HMAS-Australis-v1.2.9-Modded-Aircraft-Selection-Fix-Windows11.zip)** · [Install instructions](updates/v1.2.9/README.txt)
+
+Documentation reconciled **15 November 2026**. The record covers the early concepts, recovery builds, v0.8.x–v0.10.x evolution and Windows 11 packages through **v1.2.9**. Current operating-system target: **Windows 11**.
 
 | Record | Version / location | Meaning |
 |---|---|---|
-| Latest documented delivery | v1.2.8 — In-Game Info Sheet | Adds Mod Manager and ship encyclopedia descriptions; updater, not a full carrier archive. |
-| Latest source/build tracked in GitHub | [v0.8.5 on the Australis development branch](https://github.com/gobertron/RAN-Carrier/tree/feature/australis-2050-concept) | The later packages are catalogued here but their implementation binaries have not been uploaded by this documentation update. |
-| Default branch | Original fleet concepts plus this history | The design files below are historical proposals, not the v1.2.8 game model. |
+| Latest documented delivery | [v1.2.9 — Modded Aircraft Selection Fix](builds/HMAS-Australis-v1.2.9-Modded-Aircraft-Selection-Fix-Windows11.zip) | Adds enabled local/Workshop aircraft to selection; repeatable patch for an existing full carrier. |
+| Complete carrier source archive | [v0.8.5 on the Australis development branch](https://github.com/gobertron/RAN-Carrier/tree/feature/australis-2050-concept) | Later full carrier builds are catalogued separately; the v1.2.9 selection patch source and package are included under updates/v1.2.9 and builds. |
+| Default branch | Original fleet concepts plus this history | The design files below remain historical proposals; the selection patch is separate from the full game model. |
 
 ## Recent Windows deliveries
 
 | Version | What changed | Package scope |
 |---|---|---|
+| v1.2.9 | Discovers enabled modded aircraft and refreshes the selection list. | Existing carrier required; preserves air wing/routes/base version; verified backups. |
 | v1.2.8 | In-game carrier info sheet in Mod Manager and ship encyclopedia. | Updater; retains v1.2.7 controller repair. |
 | v1.2.7 | Controller startup/preloader timing repair for CIWS6, ICCS and weapon-bay operation. | Repair updater; live mechanism retest not confirmed. |
 | v1.2.6 | Catalogue expanded to all stock aircraft categories. | Updater; listing does not prove every aircraft can launch/land. |

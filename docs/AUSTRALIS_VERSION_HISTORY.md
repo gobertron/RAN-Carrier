@@ -4,7 +4,7 @@ Reconciled **15 November 2026** for *Sea Power: Naval Combat in the Missile Age*
 
 This table brings together the saved Australis artifacts, their release/installation notes, relevant source packages and the dedicated GitHub development branch. It includes earlier HMSCS naming, Australis 2030/2050 concepts, four-ship fleet variants and the Windows 11 rebuild. The current display-name preference is **RAN / HMAS Australis**.
 
-**Latest documented delivery: v1.2.8 — In-Game Info Sheet.** This is an updater, not a self-contained carrier rebuild. **Latest complete carrier-source/build version found in GitHub: v0.8.5**, on `feature/australis-2050-concept`. This documentation update records the later deliveries; it does not upload or recreate their model, controller or installer binaries.
+**Latest documented delivery: v1.2.9 — Modded Aircraft Selection Fix.** This is an updater, not a self-contained carrier rebuild. **Latest complete carrier-source/build version found in GitHub: v0.8.5**, on `feature/australis-2050-concept`. The v1.2.9 patch source and Windows package are tracked here. Earlier later-version full models/controllers/installers remain catalogued separately from the complete source branch.
 
 The audit found **no GitHub Release objects or version tags**. Version headings below describe development/delivery labels, not newly created tags or releases. No Steam Workshop publication or live game pass is inferred from an archive, preview or successful installer.
 
@@ -85,8 +85,13 @@ Downloads and related lists:
 | [v1.2.6](#version-v1-2-6) — All Stock Aircraft | 2026-11-13 | Included every readable original-game Aircraft/STOL/VTOL/Helicopter definition, including land aircraft/bombers; removed roster/year/nationality/size and missing-squad-file exclusions; Read only General/UnitType to tolerate repeated decorative sections; preserved existing air wing/custom IDs, 99 capacity, geometry, routes and lighting. | Cumulative archive updater with all-stock selection catalogue | Archive delivery; matching GitHub build not verified |
 | [v1.2.7](#version-v1-2-7) — Controller Startup Repair | 2026-11-13 | Diagnosed 'Could not find AnchorChain chainloader' with stale controller timestamps; replaced supported old preloader with verified official AnchorChain 1.2.0 discovery/retry DLL; Backed up/restored preloader and local ship folders as one recovery transaction; retained all-stock catalogue and lighting controller; Included mechanism diagnostic collection for confirming fresh bindings and CIWS6/ICCS/weapon bay behavior. | Cumulative ship updater plus official preloader repair | Archive delivery; matching GitHub build not verified |
 | [v1.2.8](#version-v1-2-8) — In-Game Info Sheet | 2026-11-13 | Wrote ship information sheet to _info.ini Language_en Description and language_en/vessel_names.ini DefaultDescription for the existing class/variants; Documented fictional naval strike/sea control role, configured dimensions/displacement/speed/propulsion, 99 capacity, four catapults/four lifts/three pads, layered defence/sensors and four hull identities; Included matching readable Australis-Info-Sheet.txt and retained lighting, all-stock catalogue, archiving and official preloader repair. | Cumulative ship updater with Mod Manager and encyclopedia descriptions | Archive delivery; matching GitHub build not verified |
+| [v1.2.9](#version-v1-2-9) — Modded Aircraft Selection Fix | 2026-11-15 | Discovers aircraft from enabled local/Workshop mods and the user tree; refreshes AircraftSupported on every run while preserving the existing air wing, routes and base version; verified backup/restore and ownership-hash updates. | Windows selection-list patch; existing carrier required | [Source and package](../updates/v1.2.9/README.txt) |
+
+
 
 ## Latest Windows delivery relationship
+
+[v1.2.9 download](../builds/HMAS-Australis-v1.2.9-Modded-Aircraft-Selection-Fix-Windows11.zip) adds enabled mod aircraft to the selection list of an existing full local carrier. Enable the aircraft mods, exit the game, run Refresh, then restart with a new carrier. It is repeatable after adding more mods and retains the underlying carrier version label.
 
 The original Basic Shell, Flight Deck Stage 1 and Full Restore packages have different scopes. v1.2.2 is a **read-only compatibility checker**. v1.2.3 has both a **lighting-only patch for v1.2.0** and a separate **archive/update tool**. v1.2.4–v1.2.8 are updates applied to a detected existing Australis installation, not complete standalone model archives. Follow each package's own prerequisites; the version numbers alone do not establish an installation chain.
 
@@ -719,3 +724,12 @@ Prerequisites: Compatible original v0.10.26 model or existing v1.2.5/v1.2.6/v1.2
 
 Limits: Recorded copied-fixture description/hash/restore checks only; actual Windows/Sea Power text rendering and mechanisms remain unverified. Latest delivered updater, not a standalone complete carrier download.
 
+<a id="version-v1-2-9"></a>
+
+### v1.2.9 — Modded Aircraft Selection Fix
+
+Discovers aircraft from enabled local/Workshop mods and the user tree; refreshes AircraftSupported on every run while preserving the existing air wing, routes and base version; verified backup/restore and ownership-hash updates.
+
+[Windows package](../builds/HMAS-Australis-v1.2.9-Modded-Aircraft-Selection-Fix-Windows11.zip) · [Source and instructions](../updates/v1.2.9/README.txt) · [Regression results](../updates/v1.2.9/TEST-RESULTS.json).
+
+Enable the desired aircraft mods in Mod Manager before refreshing. The source resolves saved enabled local and Workshop roots, reports disabled/unreadable entries and retains existing supported/embarked IDs. No flight-route, geometry or DLL changes are included. Patch state is separate from the preserved base carrier VERSION.

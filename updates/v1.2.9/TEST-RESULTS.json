@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "tool": "Australis modded aircraft selection regression tests",
+  "version": "1.2.9",
+  "passed": true,
+  "test_count": 15,
+  "failed_count": 0,
+  "tests": [
+    {
+      "name": "Discovers stock, always-loaded user, enabled local and enabled Workshop aircraft",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "name": "Does not advertise disabled local or Workshop aircraft",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "name": "Accepts mod aircraft without squadron files and with unrelated repeated sections",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "name": "Deduplicates aircraft identifiers case-insensitively",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "name": "Deduplicates repeated enabled root entries without duplicate aircraft",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "name": "Refuses unresolved enabled Workshop roots instead of publishing an incomplete catalogue",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "name": "Refuses traversal in enabled local mod directory",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "name": "Refuses ambiguous enabled Workshop mod found in two Steam libraries",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "name": "Changes only the whitelist line and preserves embarked/custom IDs",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "name": "Rejects duplicate FlightDeck or repeated whitelist keys",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "name": "Repeated catalogue refresh discovers newly added mod aircraft",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "name": "Check mode does not change any game files",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "name": "Install, later refresh, conflict refusal and both restore transactions execute against real files",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "name": "Restores interrupted transactions containing a mix of before and after file states",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "name": "Preserves UTF-8 BOM and UTF-16 little-endian encoding through install and exact-byte restore",
+      "passed": true,
+      "error": ""
+    }
+  ],
+  "game_runtime_tested": false,
+  "test_runtime": "PowerShell 7.4.6 / Linux isolated filesystem fixtures; Windows PowerShell 5.1-compatible source",
+  "native_windows_validation": {
+    "passed": true,
+    "test_count": 15,
+    "failed_count": 0,
+    "powershell": "5.1.26100.33648",
+    "os": "Windows Server 2025 (native Windows PowerShell 5.1)",
+    "commit": "d473a6382ea1cb130d2cdaa9ff2c4cd9bd759443",
+    "url": "https://github.com/gobertron/RAN-Carrier/actions/runs/43677612766",
+    "game_runtime_tested": false
+  },
+  "launcher_payload_validation": "All three launcher payloads hash-match their source; embedded PowerShell AST checked separately."
+}

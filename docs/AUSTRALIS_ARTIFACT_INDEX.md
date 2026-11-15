@@ -1,8 +1,8 @@
 # Australis artifact index
 
-Reconciled 15 November 2026. **296 distinct saved files** were resolved: 286 with Australis in the name, plus 10 shared RAN carrier/restart reference inputs. This is a filename/metadata inventory; selected release notes and packages were inspected to build the [version history](AUSTRALIS_VERSION_HISTORY.md).
+Reconciled 15 November 2026. **297 artifact files** are indexed: 296 historical saved files (286 Australis-named files and 10 shared carrier/restart inputs), plus the tracked v1.2.9 selection-fix package. This is a filename/metadata inventory; selected release notes and packages were inspected to build the [version history](AUSTRALIS_VERSION_HISTORY.md).
 
-File dates use Australia/Sydney. Same-name files are retained as separate rows where the archive contains distinct items. File size is saved metadata. ZIP-directory readability is not a full CRC, install or game test. Supporting diagnostics and references are included for traceability, not counted as authored carrier releases. The following files were **not uploaded as binaries by this documentation update**.
+File dates use Australia/Sydney. Same-name files are retained as separate rows where the archive contains distinct items. File size is saved metadata. ZIP-directory readability is not a full CRC, install or game test. Supporting diagnostics and references are included for traceability, not counted as authored carrier releases. The historical archive rows were not uploaded as binaries by the history update. The new v1.2.9 selection-fix package is tracked in builds and linked below.
 
 [Download CSV](AUSTRALIS_ARTIFACT_INDEX.csv).
 
@@ -337,3 +337,8 @@ File dates use Australia/Sydney. Same-name files are retained as separate rows w
 | RAN_Australis_v0.10.11_Native_Model_Reference.jpg | v0.10.11 | 2026-11-02 | Metadata inventoried; bytes not inspected |
 | Weathered RAN Australis Class Carrier.jpg | Unversioned | 2026-11-05 | Metadata inventoried; bytes not inspected |
 
+## New tracked patch package
+
+| File | Version | Date | Status |
+|---|---|---|---|
+| [HMAS-Australis-v1.2.9-Modded-Aircraft-Selection-Fix-Windows11.zip](../builds/HMAS-Australis-v1.2.9-Modded-Aircraft-Selection-Fix-Windows11.zip) | v1.2.9 | 2026-11-15 | Enabled modded-aircraft discovery/refresh; source and regression checks included. |

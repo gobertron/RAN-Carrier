@@ -1,0 +1,8 @@
+196d2cb4dc3798ce2dab572176201967dcb84ca0a7661341896b452cc2036446  Check-Australis-Mod-Aircraft-v1.2.9.cmd
+8423deb5814c447af3ec93e577b069e2b88416acd35c123539643c35034ec9e0  README.txt
+d3c1875cf4db86b3d664ee4c014975a21a8902a9f19a21f743bad3d021069bfb  Refresh-Australis-Mod-Aircraft-v1.2.9.cmd
+b49f0a49eba5d6bc328683b9244c00d3bc9a3731a160b0700b5e4e053a9431be  Restore-Australis-Mod-Aircraft-v1.2.9.cmd
+81217a0d30ec00750f915f4909cbb629a4263593d41200e62377848d577c676b  Source-and-Checks/Apply-Mod-Aircraft.ps1
+47ca95e11154a4f07bbc219f3e62a91dc1e2d08f3b3b918f9d1ab3f4c50864aa  Source-and-Checks/Mod-Aircraft-Catalog.ps1
+88332fd48cdcbc443035499a31a6fe5370a647d89db0a642cbfcf51111bf73b0  Source-and-Checks/Test-Mod-Aircraft.ps1
+4e90268b32949f55170e87cb6d9a2cd05a2ee81e56a65e59645a0dab3cb959d4  TEST-RESULTS.json

@@ -2,11 +2,11 @@
   "as_of": "2026-11-15",
   "timezone": "Australia/Sydney",
   "scope": "RAN / HMAS Australis, Sea Power carrier project",
-  "latest_documented_delivery": "v1.2.8",
+  "latest_documented_delivery": "v1.2.9",
   "latest_tracked_implementation": "v0.8.5",
   "tracked_implementation_branch": "feature/australis-2050-concept",
-  "archived_file_count": 296,
-  "version_count": 62,
+  "archived_file_count": 297,
+  "version_count": 63,
   "versions": [
     {
       "version": "v0.4.0",
@@ -1969,6 +1969,40 @@
       ],
       "github_artifacts": [],
       "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v1.2.9",
+      "title": "Modded Aircraft Selection Fix",
+      "date": "2026-11-15",
+      "date_basis": "Source and Windows patch delivery date",
+      "summary": "Discovers aircraft from enabled local/Workshop mods and the user tree; refreshes AircraftSupported on every run while preserving the existing air wing, routes and base version; verified backup/restore and ownership-hash updates.",
+      "kind": "Windows selection-list patch; existing carrier required",
+      "evidence": [
+        "updates/v1.2.9/Source-and-Checks/Mod-Aircraft-Catalog.ps1",
+        "updates/v1.2.9/Source-and-Checks/Apply-Mod-Aircraft.ps1",
+        "updates/v1.2.9/TEST-RESULTS.json"
+      ],
+      "github_status": "Selection patch source and Windows package tracked; complete carrier base separate",
+      "github_sources": [
+        {
+          "path": "updates/v1.2.9/Source-and-Checks/Mod-Aircraft-Catalog.ps1",
+          "url": "https://github.com/gobertron/RAN-Carrier/blob/main/updates/v1.2.9/Source-and-Checks/Mod-Aircraft-Catalog.ps1"
+        }
+      ],
+      "dependencies": [
+        "An installed full local Australis carrier",
+        "Desired aircraft mods enabled in Sea Power Mod Manager; game closed before refresh"
+      ],
+      "caveats": [
+        "Selection fix only; live Sea Power aircraft operations untested. The underlying carrier VERSION/description remains unchanged; patch version recorded separately."
+      ],
+      "archive_artifacts": [
+        "HMAS-Australis-v1.2.9-Modded-Aircraft-Selection-Fix-Windows11.zip"
+      ],
+      "github_artifacts": [
+        "builds/HMAS-Australis-v1.2.9-Modded-Aircraft-Selection-Fix-Windows11.zip"
+      ],
+      "verification": "Actual PowerShell fixture regressions passed; see TEST-RESULTS.json for exact runtimes; no live game pass claimed"
     }
   ],
   "unversioned_milestones": [
@@ -2362,5 +2396,6 @@
         "url": "https://github.com/gobertron/RAN-Carrier/commit/82e49fb95189f3914a79e9eab388a2f022fd89f8"
       }
     }
-  ]
+  ],
+  "latest_tracked_patch": "v1.2.9"
 }
