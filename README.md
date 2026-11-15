@@ -1,4 +1,40 @@
-# Royal Australian Navy carrier game design — 8 October 2026
+# RAN / HMAS Australis — Sea Power
+
+Alternate-history Royal Australian Navy aircraft carrier development for *Sea Power: Naval Combat in the Missile Age*.
+
+**[Complete Australis version-and-changes table](docs/AUSTRALIS_VERSION_HISTORY.md)** · [CSV](docs/AUSTRALIS_VERSION_HISTORY.csv) · [All saved artifacts](docs/AUSTRALIS_ARTIFACT_INDEX.md)
+
+Documentation reconciled **15 November 2026**. The record covers the early concepts, recovery builds, v0.8.x–v0.10.x evolution and Windows 11 packages through **v1.2.8**. Current operating-system target: **Windows 11**.
+
+| Record | Version / location | Meaning |
+|---|---|---|
+| Latest documented delivery | v1.2.8 — In-Game Info Sheet | Adds Mod Manager and ship encyclopedia descriptions; updater, not a full carrier archive. |
+| Latest source/build tracked in GitHub | [v0.8.5 on the Australis development branch](https://github.com/gobertron/RAN-Carrier/tree/feature/australis-2050-concept) | The later packages are catalogued here but their implementation binaries have not been uploaded by this documentation update. |
+| Default branch | Original fleet concepts plus this history | The design files below are historical proposals, not the v1.2.8 game model. |
+
+## Recent Windows deliveries
+
+| Version | What changed | Package scope |
+|---|---|---|
+| v1.2.8 | In-game carrier info sheet in Mod Manager and ship encyclopedia. | Updater; retains v1.2.7 controller repair. |
+| v1.2.7 | Controller startup/preloader timing repair for CIWS6, ICCS and weapon-bay operation. | Repair updater; live mechanism retest not confirmed. |
+| v1.2.6 | Catalogue expanded to all stock aircraft categories. | Updater; listing does not prove every aircraft can launch/land. |
+| v1.2.5 | Detection fixes for legacy model names, paths and missing runtime inventory. | Archive/update tool. |
+| v1.2.4 | Carrier-capable, VTOL and helicopter catalogue expansion. | Archive/update tool. |
+| v1.2.3 | Task-lighting correction and archive/update workflow. | Separate lighting patch and updater packages. |
+| v1.2.2 | Captures compatibility evidence for the installed game assemblies. | Read-only checker, not a model update. |
+| v1.2.1 | Full Restore installer hardening and checks. | Full embedded package; one recorded install stopped before writes on assembly mismatch. |
+| v1.2.0 | Restored the complete v0.10.26 requirements baseline. | Full Restore package; night 3D view is a separate preview. |
+| v1.1.0 | Flight Deck Stage 1 build from the Basic Shell. | Test package; later notes report landing failure. |
+| Basic Shell v1.0 / installer v1.0.1–v1.0.2 | Reduced baseline and Windows bootstrap/installer revisions. | Installer version and model version are separate labels. |
+
+The [full table](docs/AUSTRALIS_VERSION_HISTORY.md) records exact packages, prerequisites, recovered source evidence and history gaps. Historical Linux installers, previews and diagnostics are labelled separately. No live game pass or Steam publication is inferred from installation or offline checks.
+
+## Original fleet design archive
+
+The following preserves the repository's 8 October fleet-design documentation. Its systems, aircraft totals and next steps describe that original design snapshot.
+
+### Royal Australian Navy carrier game design — 8 October 2026
 
 Fourteen original Sea Power carrier **designs** covering every edition in the brief. The models and gameplay figures are proposals for an alternate-history RAN fleet. They are not tested as a playable mod.
 
@@ -33,3 +69,4 @@ The next native integration step is to inspect the **actual installed** carrier 
 
 - Sea Power carrier INI format, navigation fields and ECM key names were checked against the local Project Southern Cross examples supplied earlier in this conversation. They are used as schema reference only.
 - The [Project Southern Cross Workshop page](https://steamcommunity.com/sharedfiles/filedetails/?id=3574957049) credits Peter Garrett. Specific third-party models would require their own permission and contributor checks if incorporated later.
+

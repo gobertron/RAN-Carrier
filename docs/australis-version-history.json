@@ -1,0 +1,2366 @@
+{
+  "as_of": "2026-11-15",
+  "timezone": "Australia/Sydney",
+  "scope": "RAN / HMAS Australis, Sea Power carrier project",
+  "latest_documented_delivery": "v1.2.8",
+  "latest_tracked_implementation": "v0.8.5",
+  "tracked_implementation_branch": "feature/australis-2050-concept",
+  "archived_file_count": 296,
+  "version_count": 62,
+  "versions": [
+    {
+      "version": "v0.4.0",
+      "title": "Historical reference",
+      "date": "Unknown",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Current spec credits original v0.4.0 lift positions and 22 x 26 m platforms as retained.",
+      "kind": "Reference only",
+      "evidence": [
+        "australis-2030/spec.json"
+      ],
+      "github_status": "Reference in GitHub; release artifact not recovered",
+      "github_sources": [
+        {
+          "path": "australis-2030/spec.json",
+          "branch": "feature/australis-2050-concept",
+          "ref": "6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "repo_relative_url": "/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/australis-2030/spec.json",
+          "url": "https://github.com/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/australis-2030/spec.json"
+        }
+      ],
+      "dependencies": [],
+      "caveats": [],
+      "archive_artifacts": [],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.5.0",
+      "title": "Historical reference",
+      "date": "Unknown",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Listed as previous_version in v0.5.1 release metadata; no change summary or named artifact found in inspected current branch.",
+      "kind": "Reference only",
+      "evidence": [
+        "builds/Australis-v0.5.1-release.json"
+      ],
+      "github_status": "Reference in GitHub; release artifact not recovered",
+      "github_sources": [
+        {
+          "path": "builds/Australis-v0.5.1-release.json",
+          "branch": "feature/australis-2050-concept",
+          "ref": "6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "repo_relative_url": "/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/builds/Australis-v0.5.1-release.json",
+          "url": "https://github.com/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/builds/Australis-v0.5.1-release.json"
+        }
+      ],
+      "dependencies": [],
+      "caveats": [],
+      "archive_artifacts": [],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.5.1",
+      "title": "Five Repair Teams",
+      "date": "2026-10-25",
+      "date_basis": "Publication commit timestamp 2026-10-25T07:32:20Z",
+      "summary": "Five native repair teams; Dedicated ship page.",
+      "kind": "Published artifact and source",
+      "evidence": [
+        "builds/Australis-v0.5.1-release.json",
+        "builds/README.md",
+        "a8dc55b2980cb3682c42179decb372e2f6b704b6"
+      ],
+      "github_status": "Source and named build tracked",
+      "github_sources": [
+        {
+          "path": "builds/Australis-v0.5.1-release.json",
+          "branch": "feature/australis-2050-concept",
+          "ref": "6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "repo_relative_url": "/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/builds/Australis-v0.5.1-release.json",
+          "url": "https://github.com/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/builds/Australis-v0.5.1-release.json"
+        },
+        {
+          "path": "builds/README.md",
+          "branch": "feature/australis-2050-concept",
+          "ref": "6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "repo_relative_url": "/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/builds/README.md",
+          "url": "https://github.com/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/builds/README.md"
+        },
+        {
+          "sha": "a8dc55b2980cb3682c42179decb372e2f6b704b6",
+          "repo_relative_url": "/gobertron/RAN-Carrier/commit/a8dc55b2980cb3682c42179decb372e2f6b704b6",
+          "url": "https://github.com/gobertron/RAN-Carrier/commit/a8dc55b2980cb3682c42179decb372e2f6b704b6"
+        }
+      ],
+      "dependencies": [],
+      "caveats": [],
+      "changes": [
+        "Five native repair teams.",
+        "Dedicated ship page."
+      ],
+      "github_artifacts": [
+        "builds/RAN-Carrier-Australis-v0.5.1-Five-Repair-Teams.zip",
+        "builds/install-ran-australis-v0.5.1.sh"
+      ],
+      "archive_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.5.3",
+      "title": "Independent Carrier Prototype",
+      "date": "2026-10-25",
+      "date_basis": "Earlier consolidated history, current document dated 1 November 2026; exact release date not recovered",
+      "summary": "Installed independent Australis package with verified controller/preloader dependency detection; Audited four lifts, the earlier three-bow/two-waist launch-track prototype, 80 VLS cells, 21 weapon systems, 11 sensors, two towed decoys and five damage-control teams; Verified game model bindings, stores and installer output; live combat/flight/animation tests remained pending.",
+      "kind": "Historical release notes",
+      "evidence": [
+        "RAN_Australis_Full_Version_History.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Original detailed source/package not recovered for every historical row; offline checks are not live game confirmation."
+      ],
+      "changes": [
+        "Installed independent Australis package with verified controller/preloader dependency detection.",
+        "Audited four lifts, the earlier three-bow/two-waist launch-track prototype, 80 VLS cells, 21 weapon systems, 11 sensors, two towed decoys and five damage-control teams.",
+        "Verified game model bindings, stores and installer output; live combat/flight/animation tests remained pending."
+      ],
+      "archive_artifacts": [],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.5.9",
+      "title": "Defensive Platforms and Helicopter Operations",
+      "date": "2026-10-25",
+      "date_basis": "Release-notes commit timestamp 2026-10-25T11:08:43Z",
+      "summary": "Defensive platforms stop 0.08 m above flight deck instead of a 24 m base; deploy 0.75 simulation seconds after committed aviation clears, hold 300 seconds after last shot, stow over 10 seconds; CIWS count rises from three to five with two roof-retracting mounts; between-tower mount moves starboard; shared 20 mm ammunition rises to 20,000; Helicopter pad priority aft, front, middle; independent pads retain shared-lift and same-pad conflicts; Native taxi speeds forward 15, backward -10, slow 10; LaunchDelay=1 and SpawnInterval=1.",
+      "kind": "Archived release notes only in current branch",
+      "evidence": [
+        "australis-2030/releases/v0.5.9/README.md",
+        "130e9062206697f5da281f3bdcad2519ab60fadd"
+      ],
+      "github_status": "Release notes tracked; named build absent",
+      "github_sources": [
+        {
+          "path": "australis-2030/releases/v0.5.9/README.md",
+          "branch": "feature/australis-2050-concept",
+          "ref": "6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "repo_relative_url": "/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/australis-2030/releases/v0.5.9/README.md",
+          "url": "https://github.com/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/australis-2030/releases/v0.5.9/README.md"
+        },
+        {
+          "sha": "130e9062206697f5da281f3bdcad2519ab60fadd",
+          "repo_relative_url": "/gobertron/RAN-Carrier/commit/130e9062206697f5da281f3bdcad2519ab60fadd",
+          "url": "https://github.com/gobertron/RAN-Carrier/commit/130e9062206697f5da281f3bdcad2519ab60fadd"
+        }
+      ],
+      "dependencies": [],
+      "caveats": [
+        "The current branch has archived notes but no v0.5.9-named standalone ZIP/installer. Do not imply that those artifacts are available there."
+      ],
+      "changes": [
+        "Defensive platforms stop 0.08 m above flight deck instead of a 24 m base; deploy 0.75 simulation seconds after committed aviation clears, hold 300 seconds after last shot, stow over 10 seconds.",
+        "CIWS count rises from three to five with two roof-retracting mounts; between-tower mount moves starboard; shared 20 mm ammunition rises to 20,000.",
+        "Helicopter pad priority aft, front, middle; independent pads retain shared-lift and same-pad conflicts.",
+        "Native taxi speeds forward 15, backward -10, slow 10; LaunchDelay=1 and SpawnInterval=1."
+      ],
+      "github_artifacts": [],
+      "archive_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.6.0",
+      "title": "Historical reference",
+      "date": "Unknown",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Installer described as lost; recovery build reconstructs subsequent requested features from recoverable v0.5.1 and is not a byte-for-byte restoration.",
+      "kind": "Reference only",
+      "evidence": [
+        "builds/README.md",
+        "australis-2030/README.md",
+        "game-mod/RAN-Carrier-Australis-2030/recovery-release.json"
+      ],
+      "github_status": "Reference in GitHub; release artifact not recovered",
+      "github_sources": [
+        {
+          "path": "builds/README.md",
+          "branch": "feature/australis-2050-concept",
+          "ref": "6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "repo_relative_url": "/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/builds/README.md",
+          "url": "https://github.com/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/builds/README.md"
+        },
+        {
+          "path": "australis-2030/README.md",
+          "branch": "feature/australis-2050-concept",
+          "ref": "6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "repo_relative_url": "/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/australis-2030/README.md",
+          "url": "https://github.com/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/australis-2030/README.md"
+        },
+        {
+          "path": "game-mod/RAN-Carrier-Australis-2030/recovery-release.json",
+          "branch": "feature/australis-2050-concept",
+          "ref": "6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "repo_relative_url": "/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/game-mod/RAN-Carrier-Australis-2030/recovery-release.json",
+          "url": "https://github.com/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/game-mod/RAN-Carrier-Australis-2030/recovery-release.json"
+        }
+      ],
+      "dependencies": [],
+      "caveats": [],
+      "archive_artifacts": [],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.6.1",
+      "title": "Recovery reconstruction",
+      "date": "2026-10-26",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Rebuilt from recoverable v0.5.1 and v0.5.9 notes; four hulls, three catapults, four internal lifts, three helipads, five CIWS and five repair teams; six-second native lift travel and revised light fittings.",
+      "kind": "Recovery game package",
+      "evidence": [
+        "RAN-Carrier-Australis-v0.6.1-Recovery.zip / RECOVERY-README.md"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Reconstruction, not a byte-for-byte restoration of lost v0.6.0. Live game testing unconfirmed."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.6.1-Recovery-3D.html",
+        "Australis-v0.6.1-Recovery-Deck.png",
+        "Australis-v0.6.1-Recovery-Exterior.png",
+        "install-ran-australis-v0.6.1-recovery.sh",
+        "RAN-Carrier-Australis-v0.6.1-Recovery.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.6.2",
+      "title": "Forward CIWS recovery adjustment",
+      "date": "2026-10-26",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Recovery artifact and bow-CIWS preview survive; later v0.7.0 README confirms the forward CIWS had moved to port with covers clear of its catapult.",
+      "kind": "Recovery package / partial evidence",
+      "evidence": [
+        "RAN-Carrier-Australis-v0.6.2-Recovery.zip (filename only)",
+        "Australis-v0.6.2-Bow-CIWS.png (filename only)",
+        "RAN-Carrier-Australis-v0.7.0-Recovery.zip / RECOVERY-README.md"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "The saved v0.6.2 ZIP central directory could not be read. Detailed changes are limited to the subsequent v0.7.0 note; archive not repaired."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.6.2-Bow-CIWS.png",
+        "Australis-v0.6.2-Recovery-3D.html",
+        "install-ran-australis-v0.6.2-recovery.sh",
+        "RAN-Carrier-Australis-v0.6.2-Recovery.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.7.0",
+      "title": "Symmetric underwater hull",
+      "date": "2026-10-26",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Replaced asymmetric underwater body with a symmetric 110-station hull; added paired shafts, five-blade propellers, rudders and bilge keels; hull-shaped convex collider and approximately 112,000 t geometric displacement.",
+      "kind": "Recovery game package",
+      "evidence": [
+        "RAN-Carrier-Australis-v0.7.0-Recovery.zip / RECOVERY-README.md"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Geometric/conditional hydrostatic values and game settings only; live waterline, handling and aviation not confirmed."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.7.0-Full-Ship-3D.html",
+        "Australis-v0.7.0-Hull-Lines.png",
+        "Australis-v0.7.0-side.png",
+        "Australis-v0.7.0-stern.png",
+        "Australis-v0.7.0-underbody.png",
+        "Australis-v0.7.0-Underwater-3D.html",
+        "install-ran-australis-v0.7.0-recovery.sh",
+        "RAN-Carrier-Australis-v0.7.0-Recovery.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.8.0",
+      "title": "Eight-waterjet prototype",
+      "date": "2026-10-26",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Broadened stern for eight outlets, underside intakes and internal wet ducts; four steering nozzles and four fixed boosters; recalibrated net wet displacement near 112,000 t.",
+      "kind": "Experimental game package / engineering study",
+      "evidence": [
+        "Australis-v0.8.0-Engineering-Review.md",
+        "RAN_Australis_Full_Version_History.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Saved ZIP central directory could not be read; changes corroborated by standalone engineering review and subsequent readable packages. Native aggregate propulsion does not model eight independent thrust systems."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.8.0-Engineering-Review.md",
+        "Australis-v0.8.0-Full-Ship-3D.html",
+        "Australis-v0.8.0-Hull-Lines.png",
+        "Australis-v0.8.0-stern-detail.png",
+        "Australis-v0.8.0-underbody.png",
+        "Australis-v0.8.0-Waterjets-3D.html",
+        "install-ran-australis-v0.8.0-waterjets.sh",
+        "RAN-Carrier-Australis-v0.8.0-Waterjet-Prototype.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.8.1",
+      "title": "Standard air operations speed",
+      "date": "2026-10-26",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Configured native telegraph ladder: Astern -7, Stop 0, Creep 6, Slow 12, Standard 20, Full 30 and Flank 30 knots; retained native aircraft eligibility and deck conflict rules.",
+      "kind": "Game configuration package",
+      "evidence": [
+        "RAN-Carrier-Australis-v0.8.1-Standard-Air-Ops.zip / RECOVERY-README.md"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [],
+      "archive_artifacts": [
+        "install-ran-australis-v0.8.1-standard-air-ops.sh",
+        "RAN-Carrier-Australis-v0.8.1-Standard-Air-Ops.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.8.2",
+      "title": "Lift Lighting",
+      "date": "2026-10-26",
+      "date_basis": "Explicit release-note date and publication commit 2026-10-26T04:44:17Z",
+      "summary": "Eight recessed warm-white lights per shaft, 32 total, independently driven by actual lift height during day and night; fade from 0.60 m below deck and off within 0.10 m; Standard 20 kn, Full 30 kn and Flank 30 kn; Eight-waterjet broad-stern prototype with intake/outlet openings and wet ducts; four steering nozzles and four fixed boosters; flooded ducts accounted for in 112,000 t geometric displacement; Carries four numbered hulls, three catapults, four internal lifts, three helicopter pads, five retractable CIWS and five repair teams; six-second lift animations.",
+      "kind": "Published artifact and source",
+      "evidence": [
+        "australis-2030/releases/v0.8.2/README.md",
+        "builds/README.md",
+        "7a201850ff180213ca766dcbbb9bceaedb6c7e94"
+      ],
+      "github_status": "Source and named build tracked",
+      "github_sources": [
+        {
+          "path": "australis-2030/releases/v0.8.2/README.md",
+          "branch": "feature/australis-2050-concept",
+          "ref": "6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "repo_relative_url": "/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/australis-2030/releases/v0.8.2/README.md",
+          "url": "https://github.com/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/australis-2030/releases/v0.8.2/README.md"
+        },
+        {
+          "path": "builds/README.md",
+          "branch": "feature/australis-2050-concept",
+          "ref": "6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "repo_relative_url": "/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/builds/README.md",
+          "url": "https://github.com/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/builds/README.md"
+        },
+        {
+          "sha": "7a201850ff180213ca766dcbbb9bceaedb6c7e94",
+          "repo_relative_url": "/gobertron/RAN-Carrier/commit/7a201850ff180213ca766dcbbb9bceaedb6c7e94",
+          "url": "https://github.com/gobertron/RAN-Carrier/commit/7a201850ff180213ca766dcbbb9bceaedb6c7e94"
+        }
+      ],
+      "dependencies": [],
+      "caveats": [
+        "Immutable old installer can stop on repeated stock sensors.ini catalogue divider headings. Superseded."
+      ],
+      "changes": [
+        "Eight recessed warm-white lights per shaft, 32 total, independently driven by actual lift height during day and night; fade from 0.60 m below deck and off within 0.10 m.",
+        "Standard 20 kn, Full 30 kn and Flank 30 kn.",
+        "Eight-waterjet broad-stern prototype with intake/outlet openings and wet ducts; four steering nozzles and four fixed boosters; flooded ducts accounted for in 112,000 t geometric displacement.",
+        "Carries four numbered hulls, three catapults, four internal lifts, three helicopter pads, five retractable CIWS and five repair teams; six-second lift animations."
+      ],
+      "github_artifacts": [
+        "builds/RAN-Carrier-Australis-v0.8.2-Lift-Lighting.zip",
+        "builds/install-ran-australis-v0.8.2-lift-lighting.sh"
+      ],
+      "archive_artifacts": [
+        "Australis-v0.8.2-Full-Ship-3D.html",
+        "Australis-v0.8.2-Full-Ship.png",
+        "Australis-v0.8.2-Lift-Cutaway.png",
+        "Australis-v0.8.2-Render-Provenance.json",
+        "install-ran-australis-v0.8.2-lift-lighting.sh",
+        "RAN-Carrier-Australis-v0.8.2-Lift-Lighting.zip"
+      ],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.8.3",
+      "title": "Stock-Catalogue Installer Fix",
+      "date": "2026-10-26",
+      "date_basis": "No explicit date in inspected release notes; first present in 27 October branch head",
+      "summary": "Allows repeated catalogue divider headers in stock sensors.ini, resolving precheck failure at 40%; authored mod INIs remain strict; Retains v0.8.2 model, speeds and controller; separate ship definitions still produced dated submenus.",
+      "kind": "Archived package/installer; GitHub publication interrupted",
+      "evidence": [
+        "australis-2030/releases/v0.8.3/README.md"
+      ],
+      "github_status": "Release notes tracked; named build absent",
+      "github_sources": [
+        {
+          "path": "australis-2030/releases/v0.8.3/README.md",
+          "branch": "feature/australis-2050-concept",
+          "ref": "6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "repo_relative_url": "/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/australis-2030/releases/v0.8.3/README.md",
+          "url": "https://github.com/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/australis-2030/releases/v0.8.3/README.md"
+        }
+      ],
+      "dependencies": [],
+      "caveats": [
+        "Notes explicitly say GitHub installer publication was interrupted. Correction included in v0.8.4. No v0.8.3 standalone installer in current tree."
+      ],
+      "changes": [
+        "Allows repeated catalogue divider headers in stock sensors.ini, resolving precheck failure at 40%; authored mod INIs remain strict.",
+        "Retains v0.8.2 model, speeds and controller; separate ship definitions still produced dated submenus."
+      ],
+      "github_artifacts": [],
+      "archive_artifacts": [
+        "install-ran-australis-v0.8.3-stock-catalogue-fix.sh",
+        "install-ran-australis-v0.8.3-stock-catalogue-fix.sh",
+        "RAN-Carrier-Australis-v0.8.3-Stock-Catalogue-Fix.zip"
+      ],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.8.4",
+      "title": "Class and Flight Deck Fix",
+      "date": "2026-10-27",
+      "date_basis": "Explicit release-note date",
+      "summary": "Consolidates Australis-class into one vessel definition with four native variants: HMSCS Australis 91, Southern Cross 92, Federation 93 and Commonwealth 94; Lifts idle at flight-deck level 22.002 m, lower on demand and return upper; resolves lower-home busy-state conflict; All four lifts support fixed-wing routes: 12 lift-to-catapult, four arrested-recovery-to-lift, three helicopter launch and three helicopter recovery routes, 22 total; Three dedicated pads become helicopter-only; carrier-capable VTOL/STOL use catapult and arrested recovery; Retains v0.8.3 repeated stock catalogue header fix and compiled controller v0.8.2.",
+      "kind": "Published network installer and notes",
+      "evidence": [
+        "australis-2030/releases/v0.8.4/README.md",
+        "builds/README.md"
+      ],
+      "github_status": "Source and named build tracked",
+      "github_sources": [
+        {
+          "path": "australis-2030/releases/v0.8.4/README.md",
+          "branch": "feature/australis-2050-concept",
+          "ref": "6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "repo_relative_url": "/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/australis-2030/releases/v0.8.4/README.md",
+          "url": "https://github.com/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/australis-2030/releases/v0.8.4/README.md"
+        },
+        {
+          "path": "builds/README.md",
+          "branch": "feature/australis-2050-concept",
+          "ref": "6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "repo_relative_url": "/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/builds/README.md",
+          "url": "https://github.com/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/builds/README.md"
+        }
+      ],
+      "dependencies": [],
+      "caveats": [
+        "No v0.8.4 ZIP/offline installer in current branch tree; source notes call them separate deliverables. Native state simulation passed 20 cycles per lift, but live testing unconfirmed."
+      ],
+      "changes": [
+        "Consolidates Australis-class into one vessel definition with four native variants: HMSCS Australis 91, Southern Cross 92, Federation 93 and Commonwealth 94.",
+        "Lifts idle at flight-deck level 22.002 m, lower on demand and return upper; resolves lower-home busy-state conflict.",
+        "All four lifts support fixed-wing routes: 12 lift-to-catapult, four arrested-recovery-to-lift, three helicopter launch and three helicopter recovery routes, 22 total.",
+        "Three dedicated pads become helicopter-only; carrier-capable VTOL/STOL use catapult and arrested recovery.",
+        "Retains v0.8.3 repeated stock catalogue header fix and compiled controller v0.8.2."
+      ],
+      "github_artifacts": [
+        "builds/install-ran-australis-v0.8.4-class-list-fix.sh"
+      ],
+      "archive_artifacts": [
+        "install-ran-australis-v0.8.4-class-list-fix-offline.sh"
+      ],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.8.5",
+      "title": "Naval Details",
+      "date": "2026-10-27",
+      "date_basis": "Explicit release-note date and publication commit 2026-10-27T04:36:04Z",
+      "summary": "Enlarges hull numbers 91-94 on flight deck and main-island sides using native per-variant textures; Adds individual framed naval-style windows and decorative watertight-style doors aligned to actual surfaces; Updates four-ship viewer and matching renders from exported model geometry and number atlases; Retains v0.8.4 class/flight-deck fixes, 22 taxi routes, upper-home lifts and controller v0.8.2.",
+      "kind": "Published artifact and source",
+      "evidence": [
+        "australis-2030/releases/v0.8.5/README.md",
+        "README.md",
+        "VERSION",
+        "6f3e5010dec72eded4a69bfcccb77c6c054c67b1"
+      ],
+      "github_status": "Source and named build tracked",
+      "github_sources": [
+        {
+          "path": "australis-2030/releases/v0.8.5/README.md",
+          "branch": "feature/australis-2050-concept",
+          "ref": "6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "repo_relative_url": "/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/australis-2030/releases/v0.8.5/README.md",
+          "url": "https://github.com/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/australis-2030/releases/v0.8.5/README.md"
+        },
+        {
+          "path": "README.md",
+          "branch": "feature/australis-2050-concept",
+          "ref": "6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "repo_relative_url": "/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/README.md",
+          "url": "https://github.com/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/README.md"
+        },
+        {
+          "path": "VERSION",
+          "branch": "feature/australis-2050-concept",
+          "ref": "6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "repo_relative_url": "/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/VERSION",
+          "url": "https://github.com/gobertron/RAN-Carrier/blob/6f3e5010dec72eded4a69bfcccb77c6c054c67b1/VERSION"
+        },
+        {
+          "sha": "6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "repo_relative_url": "/gobertron/RAN-Carrier/commit/6f3e5010dec72eded4a69bfcccb77c6c054c67b1",
+          "url": "https://github.com/gobertron/RAN-Carrier/commit/6f3e5010dec72eded4a69bfcccb77c6c054c67b1"
+        }
+      ],
+      "dependencies": [],
+      "caveats": [
+        "Latest source/artifacts on this GitHub branch at audit time; this does not mean latest delivery across user conversations."
+      ],
+      "changes": [
+        "Enlarges hull numbers 91-94 on flight deck and main-island sides using native per-variant textures.",
+        "Adds individual framed naval-style windows and decorative watertight-style doors aligned to actual surfaces.",
+        "Updates four-ship viewer and matching renders from exported model geometry and number atlases.",
+        "Retains v0.8.4 class/flight-deck fixes, 22 taxi routes, upper-home lifts and controller v0.8.2."
+      ],
+      "github_artifacts": [
+        "builds/RAN-Carrier-Australis-v0.8.5-Naval-Details.zip",
+        "builds/install-ran-australis-v0.8.5-naval-details-offline.sh",
+        "builds/install-ran-australis-v0.8.5-naval-details.sh"
+      ],
+      "archive_artifacts": [
+        "Australis-v0.8.5-Fleet-3D.html",
+        "Australis-v0.8.5-Hull-Numbers.png",
+        "Australis-v0.8.5-Naval-Details.png",
+        "install-ran-australis-v0.8.5-naval-details-offline.sh"
+      ],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.8.6",
+      "title": "Deck Systems",
+      "date": "2026-10-27",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Added three native task-driven hinged blast deflectors (2.5 s to 65 degrees), aircraft-position-based landing display and supported/recessed light fittings; attached lift markings to moving platforms.",
+      "kind": "Game package / offline installer",
+      "evidence": [
+        "install-ran-australis-v0.8.6-deck-systems-offline.sh / embedded RECOVERY-README.md"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Embedded payload inspected without executing installer; visual and flight behavior require live checks."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.8.6-Fleet-3D.html",
+        "Australis-v0.8.6-Flight-Deck-Equipment.png",
+        "Australis-v0.8.6-Full-Ship.png",
+        "Australis-v0.8.6-Light-Mountings.png",
+        "install-ran-australis-v0.8.6-deck-systems-offline.sh"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.8.7",
+      "title": "Tower integration",
+      "date": "2026-10-27",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "A version-labelled visual artifact survives for tower integration. Exact code/model changes and a standalone game release are not established.",
+      "kind": "Visual artifact names only",
+      "evidence": [
+        "Australis-v0.8.7-Tower-Integration.png"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Metadata inventory only; no gameplay or implementation claim is inferred from the image filename."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.8.7-Tower-Integration.png"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.8.9",
+      "title": "Hull, Towers, Flight Routing and Weapons",
+      "date": "2026-10-29",
+      "date_basis": "Earlier consolidated history, current document dated 1 November 2026; exact release date not recovered",
+      "summary": "Main/aft tower alignment, flat/angular surfaces, sightlines and roof weapons refined; ensign repositioned; Integrated revised bulbous bow detail; Revised lift-to-catapult preferences: L1→C2, L2→C1/C2, L3→C2, L4→C3 (earlier three-catapult layout; superseded later).",
+      "kind": "Historical release notes",
+      "evidence": [
+        "RAN_Australis_Full_Version_History.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Original detailed source/package not recovered for every historical row; offline checks are not live game confirmation."
+      ],
+      "changes": [
+        "Main/aft tower alignment, flat/angular surfaces, sightlines and roof weapons refined; ensign repositioned.",
+        "Integrated revised bulbous bow detail.",
+        "Revised lift-to-catapult preferences: L1→C2, L2→C1/C2, L3→C2, L4→C3 (earlier three-catapult layout; superseded later).",
+        "Selected weapon profiles configured for approximately 30% more range and 20% more positive warhead effect than the stock reference.",
+        "Threat-triggered defence behaviour revised. Offline geometry, policy and installer checks passed; in-game checks remained."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.8.9-Tower-Integration.png"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.9.4",
+      "title": "Combat clearance / concurrent operations",
+      "date": "2026-10-29",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "A version-labelled visual artifact survives for combat clearance / concurrent operations. Exact code/model changes and a standalone game release are not established.",
+      "kind": "Visual artifact names only",
+      "evidence": [
+        "Australis-v0.9.4-Combat-Clearance.png",
+        "Australis-v0.9.4-Concurrent-Operations.png"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Metadata inventory only; no gameplay or implementation claim is inferred from the image filename."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.9.4-Combat-Clearance.png",
+        "Australis-v0.9.4-Concurrent-Operations.png"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.9.5",
+      "title": "Night lighting",
+      "date": "2026-10-29",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "A version-labelled visual artifact survives for night lighting. Exact code/model changes and a standalone game release are not established.",
+      "kind": "Visual artifact names only",
+      "evidence": [
+        "Australis-v0.9.5-Night-Lighting.png"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Metadata inventory only; no gameplay or implementation claim is inferred from the image filename."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.9.5-Night-Lighting.png"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.9.6",
+      "title": "Crew stations",
+      "date": "2026-10-29",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "A version-labelled visual artifact survives for crew stations. Exact code/model changes and a standalone game release are not established.",
+      "kind": "Visual artifact names only",
+      "evidence": [
+        "Australis-v0.9.6-Crew-Stations.png"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Metadata inventory only; no gameplay or implementation claim is inferred from the image filename."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.9.6-Crew-Stations.png"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.9.7",
+      "title": "Tower alignment",
+      "date": "2026-10-29",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "A version-labelled visual artifact survives for tower alignment. Exact code/model changes and a standalone game release are not established.",
+      "kind": "Visual artifact names only",
+      "evidence": [
+        "Australis-v0.9.7-Tower-Alignment.png"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Metadata inventory only; no gameplay or implementation claim is inferred from the image filename."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.9.7-Tower-Alignment.png"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.9.8",
+      "title": "Weapon finish",
+      "date": "2026-10-29",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "A version-labelled visual artifact survives for weapon finish. Exact code/model changes and a standalone game release are not established.",
+      "kind": "Visual artifact names only",
+      "evidence": [
+        "Australis-v0.9.8-Weapon-Finish.png"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Metadata inventory only; no gameplay or implementation claim is inferred from the image filename."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.9.8-Weapon-Finish.png"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.9.9",
+      "title": "Hangar operations",
+      "date": "2026-10-29",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "A version-labelled visual artifact survives for hangar operations. Exact code/model changes and a standalone game release are not established.",
+      "kind": "Visual artifact names only",
+      "evidence": [
+        "Australis-v0.9.9-Hangar-Operations.png"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Metadata inventory only; no gameplay or implementation claim is inferred from the image filename."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.9.9-Hangar-Operations.png"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.0",
+      "title": "Hull / radar fit",
+      "date": "2026-10-30",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "A version-labelled visual artifact survives for hull / radar fit. Exact code/model changes and a standalone game release are not established.",
+      "kind": "Visual artifact names only",
+      "evidence": [
+        "Australis-v0.10.0-Hull-Radar-Fit.png"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Metadata inventory only; no gameplay or implementation claim is inferred from the image filename."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.10.0-Hull-Radar-Fit.png"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.4",
+      "title": "Vertical CIWS Deployment",
+      "date": "By 2026-11-01",
+      "date_basis": "Earlier consolidated history, current document dated 1 November 2026; exact release date not recovered",
+      "summary": "Five CIWS changed to a staged housing/roof/gun vertical deployment design; Target deployment time 4.5 seconds; retraction about 300 seconds after a quiet period; Threat/Free Fire deployment and automatic missile self-defence under Hold Fire designed into controller logic.",
+      "kind": "Historical release notes",
+      "evidence": [
+        "RAN_Australis_Full_Version_History.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Original detailed source/package not recovered for every historical row; offline checks are not live game confirmation."
+      ],
+      "changes": [
+        "Five CIWS changed to a staged housing/roof/gun vertical deployment design.",
+        "Target deployment time 4.5 seconds; retraction about 300 seconds after a quiet period.",
+        "Threat/Free Fire deployment and automatic missile self-defence under Hold Fire designed into controller logic.",
+        "Intended to keep mounts clear of the flight-deck operating envelope; live combat verification still needed."
+      ],
+      "archive_artifacts": [],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.5",
+      "title": "Raised CIWS Housings",
+      "date": "By 2026-11-01",
+      "date_basis": "Earlier consolidated history, current document dated 1 November 2026; exact release date not recovered",
+      "summary": "All five CIWS housings raised by approximately 4.7 m into the dark-grey hull band immediately beneath the flight deck; Vertical deployment concept, firing policy and retraction timing retained.",
+      "kind": "Historical release notes",
+      "evidence": [
+        "RAN_Australis_Full_Version_History.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Original detailed source/package not recovered for every historical row; offline checks are not live game confirmation."
+      ],
+      "changes": [
+        "All five CIWS housings raised by approximately 4.7 m into the dark-grey hull band immediately beneath the flight deck.",
+        "Vertical deployment concept, firing policy and retraction timing retained."
+      ],
+      "archive_artifacts": [],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.6",
+      "title": "Four-Catapult Controller",
+      "date": "By 2026-11-01",
+      "date_basis": "Earlier consolidated history, current document dated 1 November 2026; exact release date not recovered",
+      "summary": "Added a fourth usable launch lane: two bow and two waist catapults; Added queueing of conflicting deck movements and recovery interlocks for C3/C4; Previously raised CIWS housings retained. In-game verification outstanding.",
+      "kind": "Historical release notes",
+      "evidence": [
+        "RAN_Australis_Full_Version_History.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Original detailed source/package not recovered for every historical row; offline checks are not live game confirmation."
+      ],
+      "changes": [
+        "Added a fourth usable launch lane: two bow and two waist catapults.",
+        "Added queueing of conflicting deck movements and recovery interlocks for C3/C4.",
+        "Previously raised CIWS housings retained. In-game verification outstanding."
+      ],
+      "archive_artifacts": [],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.7",
+      "title": "Compact Waist Zone / Stern Recovery",
+      "date": "By 2026-11-01",
+      "date_basis": "Earlier consolidated history, current document dated 1 November 2026; exact release date not recovered",
+      "summary": "C3/C4 regrouped into a compact shared waist area, taking turns to avoid conflicts; Their planned paths cleared C1/C2; The angled landing area extended to the aft edge of the ship; waist launch lockout during recovery retained.",
+      "kind": "Historical release notes",
+      "evidence": [
+        "RAN_Australis_Full_Version_History.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Original detailed source/package not recovered for every historical row; offline checks are not live game confirmation."
+      ],
+      "changes": [
+        "C3/C4 regrouped into a compact shared waist area, taking turns to avoid conflicts.",
+        "Their planned paths cleared C1/C2.",
+        "The angled landing area extended to the aft edge of the ship; waist launch lockout during recovery retained."
+      ],
+      "archive_artifacts": [],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.8",
+      "title": "Forward Waist-Catapult Relocation",
+      "date": "By 2026-11-01",
+      "date_basis": "Earlier consolidated history, current document dated 1 November 2026; exact release date not recovered",
+      "summary": "C3/C4 moved toward the forward/port weapons area and away from helicopter pads, lifts and recovery lanes; Shared aircraft routes queued; landing lockout retained. Offline checks passed, live tests pending.",
+      "kind": "Historical release notes",
+      "evidence": [
+        "RAN_Australis_Full_Version_History.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Original detailed source/package not recovered for every historical row; offline checks are not live game confirmation."
+      ],
+      "changes": [
+        "C3/C4 moved toward the forward/port weapons area and away from helicopter pads, lifts and recovery lanes.",
+        "Shared aircraft routes queued; landing lockout retained. Offline checks passed, live tests pending."
+      ],
+      "archive_artifacts": [],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.9",
+      "title": "Staggered Waist Catapult Study",
+      "date": "By 2026-11-01",
+      "date_basis": "Earlier consolidated history, current document dated 1 November 2026; exact release date not recovered",
+      "summary": "Ford-inspired staggered C3/C4 placement, approximately 24 m apart, with angled tracks behind the bow pair; Deck traffic queuing, combined launch controls and landing interlocks refined; Offline tests passed. Superseded by the distinct outboard launch lanes of v0.10.10.",
+      "kind": "Historical release notes",
+      "evidence": [
+        "RAN_Australis_Full_Version_History.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Original detailed source/package not recovered for every historical row; offline checks are not live game confirmation."
+      ],
+      "changes": [
+        "Ford-inspired staggered C3/C4 placement, approximately 24 m apart, with angled tracks behind the bow pair.",
+        "Deck traffic queuing, combined launch controls and landing interlocks refined.",
+        "Offline tests passed. Superseded by the distinct outboard launch lanes of v0.10.10."
+      ],
+      "archive_artifacts": [],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.10",
+      "title": "Outboard Waist Deck",
+      "date": "By 2026-11-01",
+      "date_basis": "Earlier consolidated history, current document dated 1 November 2026; exact release date not recovered",
+      "summary": "C1/C2 bow catapults retained in their established arrangement; C3/C4 rebuilt as distinct, physically supported launch lanes on a port/outboard deck extension; C3/C4 clear the bow tracks; conflicting taxi and launch movements queue.",
+      "kind": "Historical release notes",
+      "evidence": [
+        "RAN_Australis_Full_Version_History.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Original detailed source/package not recovered for every historical row; offline checks are not live game confirmation."
+      ],
+      "changes": [
+        "C1/C2 bow catapults retained in their established arrangement.",
+        "C3/C4 rebuilt as distinct, physically supported launch lanes on a port/outboard deck extension.",
+        "C3/C4 clear the bow tracks; conflicting taxi and launch movements queue.",
+        "C3/C4 remain locked during landing operations.",
+        "Installer, source, model preview, deck plan and offline validation supplied; in-game launch testing pending."
+      ],
+      "archive_artifacts": [],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.11",
+      "title": "Touching Forward Lifts",
+      "date": "By 2026-11-01",
+      "date_basis": "Earlier consolidated history, current document dated 1 November 2026; exact release date not recovered",
+      "summary": "Lift 1 and Lift 2 brought together at a clean common edge; independent lift travel retained; Native model, hangar/shaft interfaces, deck paint and adjacent structural clearances revised; Four-track outboard deck, stern landing route, traffic queuing and CIWS provisions retained.",
+      "kind": "Complete game package and offline installer",
+      "evidence": [
+        "RAN_Australis_Full_Version_History.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [],
+      "caveats": [
+        "Original detailed source/package not recovered for every historical row; offline checks are not live game confirmation."
+      ],
+      "changes": [
+        "Lift 1 and Lift 2 brought together at a clean common edge; independent lift travel retained.",
+        "Native model, hangar/shaft interfaces, deck paint and adjacent structural clearances revised.",
+        "Four-track outboard deck, stern landing route, traffic queuing and CIWS provisions retained.",
+        "Complete v0.10.11 package/installer and visual assets delivered; 697 manifest files, source/native geometry and upgrade/restore/re-upgrade checks passed offline.",
+        "Live Sea Power aircraft, combat and animation trials remain pending."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.10.11-Final-Validation.json",
+        "Australis-v0.10.11-Fleet-3D.html",
+        "Australis-v0.10.11-Forward-Lifts-Deck-Plan.png",
+        "Australis-v0.10.11-Full-Ship-3D.png",
+        "Australis-v0.10.11-Rendering-Sources.zip",
+        "install-ran-australis-v0.10.11-touching-forward-lifts-offline.sh",
+        "RAN-Carrier-Australis-v0.10.11-Touching-Forward-Lifts.zip",
+        "RAN_Australis_Steam_Update_v0.10.11.txt",
+        "RAN_Australis_v0.10.11_Actual_Model_512.jpg",
+        "RAN_Australis_v0.10.11_Actual_Model_Workshop.jpg",
+        "RAN_Australis_v0.10.11_Exact_Deck_Plan.jpg",
+        "RAN_Australis_v0.10.11_Native_Model_Reference.jpg",
+        "RAN_Australis_Workshop_Description_v0.10.11.txt"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.11-W1",
+      "title": "Naval Grey and Weathered Finish",
+      "date": "2026-11-05",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Applied naval-grey service-wear textures, darker non-skid deck and revised UV mapping to the actual game model; retained geometry and gameplay.",
+      "kind": "Appearance patch",
+      "evidence": [
+        "RAN-Australis-W1-Change-Notes.txt",
+        "RAN-Australis-W1-Installation.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Existing v0.10.11 Touching Forward Lifts mod"
+      ],
+      "caveats": [
+        "Separate visual revision, not a new controller/game-compatibility version. Native asset and installer fixtures passed; live appearance/flight/combat verification pending."
+      ],
+      "changes": [
+        "Updated actual native game textures/materials: naval-grey hull and upperworks, charcoal non-skid deck, restrained salt/rust, paint repairs, tyre scuffs, tie-down details and reduced blue/teal equipment/specular highlights.",
+        "Reworked deck/upright UV mapping and number-texture backgrounds for ships 91–94; geometry, collision, flight/weapon/controller behavior and metadata preserved."
+      ],
+      "archive_artifacts": [
+        "RAN-Australis-v0.10.11-W1-Game-Model-Patch.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.12",
+      "title": "Naval Bow Update",
+      "date": "2026-11-05",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Reshaped the dry bow while retaining the calibrated underwater hull; checked mesh displacement, draft and configured centre of mass offline.",
+      "kind": "Native-model patch",
+      "evidence": [
+        "Australis-v0.10.12-Installation.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Existing v0.10.11, clean or W1"
+      ],
+      "caveats": [
+        "Offline geometry checks only; no separate ballast-tank simulation; live flotation/handling/gameplay pending."
+      ],
+      "changes": [
+        "Reshaped dry bow toward a naval entry while retaining calibrated underwater body.",
+        "Checked displacement, waterline, draft and configured centre of mass against exported mesh; retained flight routing, lifts, sensors, weapons and controller."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.10.12-3D.html",
+        "Australis-v0.10.12-Bow-Closeup.png",
+        "Australis-v0.10.12-Full-Ship.png",
+        "Australis-v0.10.12-Installation.txt",
+        "Australis-v0.10.12-Validation.json",
+        "RAN-Australis-v0.10.12-Naval-Bow-Update.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.13",
+      "title": "Maintained Service / Fixed CIWS",
+      "date": "2026-11-05",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Applied maintained service-grey Option A finish and five fixed elevated CIWS platforms with matching mounts/controller; introduced Windows PowerShell installer and controller-placement cleanup.",
+      "kind": "Windows updater and complete mod",
+      "evidence": [
+        "Australis-v0.10.13-Windows-Installation.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Existing AnchorChain / ACPreloader"
+      ],
+      "caveats": [
+        "Offline package, controller and upgrade/restore checks; PowerShell exercised on Linux, not Windows 11 or live Sea Power."
+      ],
+      "changes": [
+        "Applied selected Option A maintained service-grey native model and textures.",
+        "Replaced earlier retractable arrangement with five fixed elevated CIWS platforms, matching weapon mounts and v0.10.13 controller.",
+        "Introduced Windows PowerShell update without Python; placed controller at mod root and transactionally removed known obsolete global copies."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.10.13-3D.html",
+        "Australis-v0.10.13-Maintained-Service-3D.png",
+        "Australis-v0.10.13-Release-Validation.json",
+        "Australis-v0.10.13-Windows-Installation.txt",
+        "RAN-Australis-v0.10.13-Maintained-Service-Fixed-CIWS-Windows-Update.zip",
+        "RAN-HMAS-Australis-v0.10.13-Complete-Mod.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.14",
+      "title": "Option C Finish",
+      "date": "2026-11-07",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Applied Option C material colours: darker charcoal deck, lighter upperworks and cool-grey hull; retained wear textures and geometry.",
+      "kind": "Windows updater and complete mod",
+      "evidence": [
+        "Australis-v0.10.14-Windows-Installation.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Updater requires v0.10.13; complete mod available for earlier/new installs; AnchorChain / ACPreloader"
+      ],
+      "caveats": [
+        "Preview procedural overlay was not part of native shader patch. Offline native materials/hash checks; live visual/operational verification pending."
+      ],
+      "changes": [
+        "Changed six native material colour settings to a darker charcoal working deck, lighter upperworks and cool-grey hull.",
+        "Retained service-wear textures, geometry, controller, catapults, touching lifts and five fixed CIWS."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.10.14-Option-C-3D.html",
+        "Australis-v0.10.14-Option-C-3D.png",
+        "Australis-v0.10.14-Option-C-Source.zip",
+        "Australis-v0.10.14-Option-C-Validation.json",
+        "Australis-v0.10.14-Windows-Installation.txt",
+        "RAN-Australis-v0.10.14-Option-C-Windows-Update.zip",
+        "RAN-HMAS-Australis-v0.10.14-Option-C-Complete-Mod.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.15",
+      "title": "Hull-Integrated Revision",
+      "date": "2026-11-07",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Integrated curved deck/CIWS supports into the hull, increased bow stem rake and added individual ship identification bands; retained nominal hull dimensions and wet-volume/trim values.",
+      "kind": "Windows updater and complete mod",
+      "evidence": [
+        "Australis-v0.10.15-Windows-Installation.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Updater accepts v0.10.13 or v0.10.14; AnchorChain / ACPreloader"
+      ],
+      "caveats": [
+        "Geometry/installer checks ran offline; PowerShell 7.4.6 on Linux, not Windows PowerShell 5.1 or live game."
+      ],
+      "changes": [
+        "Replaced thin deck knees and CIWS brackets with enclosed curved hull-integrated support bodies; kept mount heights.",
+        "Increased stem rake from about 10.33° to 18.27°, moved waterline stem aft 3 m and reduced bulb prominence; retained nominal 370 m hull length, 41 m beam, 11.5 m draft and 112,000 t displacement with wet volume/centroid.",
+        "Added fictional pale identification bands to both islands for ships 91–94 and revised collision proxies."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.10.15-Bow-Comparison-3D.png",
+        "Australis-v0.10.15-CIWS-Integrated-3D.png",
+        "Australis-v0.10.15-Four-Ship-Identity-3D.png",
+        "Australis-v0.10.15-Hull-Integrated-3D.html",
+        "Australis-v0.10.15-Hull-Integrated-Source.zip",
+        "Australis-v0.10.15-Release-Validation.json",
+        "Australis-v0.10.15-Windows-Installation.txt",
+        "RAN-Australis-v0.10.15-Hull-Integrated-Windows-Update.zip",
+        "RAN-HMAS-Australis-v0.10.15-Hull-Integrated-Complete-Mod.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.16",
+      "title": "Bridge, ICCS Bubble and Galleries",
+      "date": "2026-11-07",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Added all-round aft-bridge glazing, retracting ICCS bubble between C1/C2 and hull-integrated weapon galleries.",
+      "kind": "Windows updater and complete mod",
+      "evidence": [
+        "Australis-v0.10.16-Windows-Installation.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Updater requires v0.10.15; complete mod for earlier/new installs; AnchorChain / ACPreloader"
+      ],
+      "caveats": [
+        "No live Windows 11 / Sea Power acceptance is established by these notes."
+      ],
+      "changes": [
+        "Added aft-bridge glazing on all four sides.",
+        "Raised ICCS bubble between C1/C2 with visual retracting mechanism in the mod controller.",
+        "Integrated fixed weapon galleries into hull sides; retained Option C and ship identification paint."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.10.16-Aft-Bridge-Four-Sides-3D.png",
+        "Australis-v0.10.16-Bridge-Bubble-Galleries-3D.html",
+        "Australis-v0.10.16-Bridge-Bubble-Galleries-Source.zip",
+        "Australis-v0.10.16-ICCS-Between-Catapults-3D.png",
+        "Australis-v0.10.16-Package-Validation.json",
+        "Australis-v0.10.16-Release-Validation.json",
+        "Australis-v0.10.16-Review-Board-3D.png",
+        "Australis-v0.10.16-Windows-Installation.txt",
+        "RAN-Australis-v0.10.16-Bridge-Bubble-Galleries-Windows-Update.zip",
+        "RAN-HMAS-Australis-v0.10.16-Bridge-Bubble-Galleries-Complete-Mod.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.17",
+      "title": "Quality of Life",
+      "date": "2026-11-07",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Added decorative crew safety/service fittings, readable controller admission feedback and optional read-only Deck Watcher.",
+      "kind": "Windows updater and complete mod",
+      "evidence": [
+        "Australis-v0.10.17-Windows-Installation.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Updater requires v0.10.16; AnchorChain / ACPreloader"
+      ],
+      "caveats": [
+        "Decorative safety details do not add simulated rescue/firefighting rules. Watcher displays last observations/admission, not native launch completion or continuous occupancy. Offline fixtures only."
+      ],
+      "changes": [
+        "Added decorative crew safety, emergency/service details and gallery maintenance equipment.",
+        "Added readable controller binding and launch/recovery admission feedback plus optional read-only Deck Watcher.",
+        "Retained native routes, weapon behavior and v16 ICCS mechanism."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.10.17-Crew-Starboard-3D.png",
+        "Australis-v0.10.17-Gallery-Service-3D.png",
+        "Australis-v0.10.17-Package-Validation.json",
+        "Australis-v0.10.17-Quality-of-Life-3D.html",
+        "Australis-v0.10.17-Quality-of-Life-Source.zip",
+        "Australis-v0.10.17-Release-Validation.json",
+        "Australis-v0.10.17-Review-Board-3D.png",
+        "Australis-v0.10.17-Windows-Installation.txt",
+        "RAN-Australis-v0.10.17-Quality-of-Life-Windows-Update.zip",
+        "RAN-HMAS-Australis-v0.10.17-Quality-of-Life-Complete-Mod.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.18",
+      "title": "Forward Retracting CIWS",
+      "date": "2026-11-07",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Added retracting forward-port sixth CIWS with C3/C4 interlocks and state feedback; retained five fixed mounts and ICCS.",
+      "kind": "Windows updater and complete mod",
+      "evidence": [
+        "Australis-v0.10.18-Windows-Installation.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Updater requires v0.10.17; mod controller and AnchorChain / ACPreloader required, no supported native fallback"
+      ],
+      "caveats": [
+        "Nominal four-second mechanical stow does not guarantee four-second route release. Missing clearance/faults hold operation. Live firing, tracking, collision and aviation tests pending."
+      ],
+      "changes": [
+        "Added sixth forward-port CIWS with retracting lift/roof mechanism and C3/C4 admission interlocks; retained original five fixed mounts and ICCS.",
+        "Deployment requires two seconds positive clearance then roof opening and station raise; aviation demand stops burst and requests measured stow before affected routes are admitted.",
+        "Extended optional Deck Watcher with CIWS6 state observations."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.10.18-CIWS6-Context-Board-3D.png",
+        "Australis-v0.10.18-CIWS6-Deployed-3D.png",
+        "Australis-v0.10.18-CIWS6-Stowed-3D.png",
+        "Australis-v0.10.18-Forward-Retracting-CIWS-3D.html",
+        "Australis-v0.10.18-Forward-Retracting-CIWS-Source.zip",
+        "Australis-v0.10.18-Package-Validation.json",
+        "Australis-v0.10.18-Release-Validation.json",
+        "Australis-v0.10.18-Review-Board-3D.png",
+        "Australis-v0.10.18-Windows-Installation.txt",
+        "RAN-Australis-v0.10.18-Forward-Retracting-CIWS-Windows-Update.zip",
+        "RAN-HMAS-Australis-v0.10.18-Forward-Retracting-CIWS-Complete-Mod.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.19",
+      "title": "Crew Safety and Stern Loading Concept",
+      "date": "2026-11-07",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Previewed extra raft racks, catch nets, crew access/lighting and rounded CIWS surround, plus rear folding-ramp/vestibule concept; playable v0.10.18 unchanged.",
+      "kind": "3D design preview only",
+      "evidence": [
+        "Australis-v0.10.19-Design-Notes.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Built from v0.10.18 model"
+      ],
+      "caveats": [
+        "v0.10.18 playable mod unchanged; no new controller or installer. Ramp controls, game collision/animation integration and dock loading deferred. Props are inactive weapons."
+      ],
+      "changes": [
+        "Added 72 raft canisters in 12 racks, 54 deck-edge catch-net sections, six crew-well net extensions, four inactive .50-cal props, access/service details and 35 lighting fixtures.",
+        "Previewed rear-only two-panel folding ramp, vestibule/inner door and hangar transfer route with approximately 12.16 × 6.02 m clear opening.",
+        "Replaced square stationary forward CIWS outer casing with rounded conventional fairings."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.10.19-3D-Design-Review-Package.zip",
+        "Australis-v0.10.19-Crew-Safety-Detail-Board-3D.png",
+        "Australis-v0.10.19-Design-Notes.txt",
+        "Australis-v0.10.19-Design-Validation.json",
+        "Australis-v0.10.19-Package-Validation.json",
+        "Australis-v0.10.19-Quality-of-Life-Design-3D.html",
+        "Australis-v0.10.19-Quality-of-Life-Review-Board-3D.png",
+        "Australis-v0.10.19-Stern-Ramp-Review-Board-3D.png"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.20",
+      "title": "Enlarged Stern Loading Review",
+      "date": "2026-11-07",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Enlarged preview stern opening to 28 × 8 m and widened the enclosed loading route with matching ramp/barriers; game loading integration deferred.",
+      "kind": "3D design preview only",
+      "evidence": [
+        "Australis-v0.10.20-Loading-Design-Notes.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "v0.10.19 preview baseline"
+      ],
+      "caveats": [
+        "Prior playable mod kept separately; game loading, collision/animation and structural/watertight behavior not implemented. AirGroup list empty in these design assets."
+      ],
+      "changes": [
+        "Enlarged stern opening to 28 × 8 m; widened ramp, vestibule, barriers, transfer passage and rear hangar portal together.",
+        "Added reinforced ramp/framing/hinge details and illustrative 3° matching-high-berth pose with aircraft envelope guide."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.10.20-3D-Design-Review-Package.zip",
+        "Australis-v0.10.20-Enlarged-Stern-Review-Board-3D.png",
+        "Australis-v0.10.20-Loading-Design-Notes.txt",
+        "Australis-v0.10.20-Loading-Design-Validation.json",
+        "Australis-v0.10.20-Loading-Route-Detail-Board-3D.png",
+        "Australis-v0.10.20-Package-Validation.json",
+        "Australis-v0.10.20-Quality-of-Life-Design-3D.html",
+        "Australis-v0.10.20-Stern-Size-Comparison-3D.png"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.21",
+      "title": "Fixed Closed Rear Doors",
+      "date": "2026-11-07",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Replaced opening-ramp concept with decorative fixed-closed 28 × 8 m rear doors; removed loading/opening controls.",
+      "kind": "3D design preview only",
+      "evidence": [
+        "Australis-v0.10.21-Fixed-Doors-Notes.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "v0.10.20 preview"
+      ],
+      "caveats": [
+        "Supersedes opening-door/deployable-ramp concept. No aircraft loading simulation, door animations or game installer."
+      ],
+      "changes": [
+        "Made enlarged 28 × 8 m rear access doors decorative fixed-closed details.",
+        "Removed door-opening, ramp-deployment and dock-loading controls; retained frame, hinges and seals."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.10.21-Fixed-Doors-3D.html",
+        "Australis-v0.10.21-Fixed-Doors-Notes.txt",
+        "Australis-v0.10.21-Fixed-Doors-Preview-Package.zip",
+        "Australis-v0.10.21-Fixed-Doors-Validation.json",
+        "Australis-v0.10.21-Fixed-Rear-Doors-3D.png",
+        "Australis-v0.10.21-Package-Validation.json"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.22",
+      "title": "Exterior Survival and Landing Lights",
+      "date": "2026-11-07",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Previewed 288 raft canisters, six rescue stations and eighteen additional landing-strip inset lights, with nominal 7,200 raft places.",
+      "kind": "3D design preview only",
+      "evidence": [
+        "Australis-v0.10.22-Design-Notes.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "v0.10.21 preview baseline"
+      ],
+      "caveats": [
+        "Nominal raft capacity is a planning assumption, not certified installation or simulated evacuation. Editable OBJ/INI, viewer, renders/source/validation supplied; no live game/browser rendering claimed."
+      ],
+      "changes": [
+        "Replaced 72 banked raft cans with 288 individually modelled full-size canisters in 24 banks; six older singles remain supplementary.",
+        "Added six accessible crew rescue stations and eighteen low-profile landing-strip side insets, yielding 59 side-row fixtures including existing lights.",
+        "Recorded nominal 7,200 raft places versus 5,300-person design complement."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.10.22-Design-Notes.txt",
+        "Australis-v0.10.22-Exterior-Survival-Review-3D.png",
+        "Australis-v0.10.22-Landing-Lights-Review-3D.png",
+        "Australis-v0.10.22-Package-Validation.json",
+        "Australis-v0.10.22-Survival-Lighting-3D.html",
+        "Australis-v0.10.22-Survival-Lighting-Preview-Package.zip",
+        "Australis-v0.10.22-Survival-Lighting-Validation.json"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.23",
+      "title": "Flush Raft Cradles and CIWS Surround",
+      "date": "2026-11-07",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Made raft cradles follow the hull and cleaned forward-CIWS surround mesh/UV defects; retained canister size/count.",
+      "kind": "3D design preview only",
+      "evidence": [
+        "Australis-v0.10.23-Design-Notes.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "v0.10.22 preview baseline"
+      ],
+      "caveats": [
+        "Static raft fittings without deployment animation; prior preview pose controls and fixed closed stern doors retained. Offline model/shader/viewer checks only."
+      ],
+      "changes": [
+        "Replaced long stepped-out raft brackets with compact hull-following cradles and conforming backplates; retained 288 canister sizes and capacity basis.",
+        "Corrected overlapping contact faces, sliver triangles and texture repeats around forward CIWS rounded surround."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.10.23-CIWS-Edging-Comparison-3D.png",
+        "Australis-v0.10.23-Design-Notes.txt",
+        "Australis-v0.10.23-Flush-Mounts-CIWS-Review-3D.png",
+        "Australis-v0.10.23-Flush-Rafts-CIWS-3D.html",
+        "Australis-v0.10.23-Flush-Rafts-CIWS-Preview-Package.zip",
+        "Australis-v0.10.23-Package-Validation.json",
+        "Australis-v0.10.23-Validation.json"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.24",
+      "title": "Hull Alignment / Windows Game Build",
+      "date": "2026-11-07",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Aligned hull/CIWS supports and tower arrays, cleared hatches and packaged the approved model with stock-air-wing derivation and Windows installer fixes; per-face sensor sectors remain design-only.",
+      "kind": "3D design preview, then complete Windows game package",
+      "evidence": [
+        "Australis-v0.10.24-Design-Notes.txt",
+        "RAN-HMAS-Australis-v0.10.24-Windows11-Guide.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "AnchorChain Workshop core required separately"
+      ],
+      "caveats": [
+        "Do not confuse design preview sensor requirement with native per-face scanning: independent per-face native scanning not implemented. 99 aircraft is design capacity; actual embarked wing derives from installed data. No live Windows/game execution."
+      ],
+      "changes": [
+        "Aligned port catapult shoulder/CIWS fairings, closed unintended gaps, integrated gallery supports and shortened/tapered stationary CIWS6 skirt from 20.6 to 16.4 m.",
+        "Removed two obstructed decorative hatches and moved conflicting raft stations while retaining 288 counted canisters; aligned fixed radar/ECM panels flush to tower faces.",
+        "Packaged approved v24 model/data/controller and official preloader files with Windows installer/startup compatibility fixes; derived stock air wing from installed game files.",
+        "Full-package sensor scope: offensive ECM aimed cone 175°; native EASR stays one 360° composite, with per-face 175° sectors recorded as design requirements."
+      ],
+      "archive_artifacts": [
+        "Australis-v0.10.24-20261107-233757-4457275.json",
+        "Australis-v0.10.24-20261107-233757-4457275.log",
+        "Australis-v0.10.24-20261107-233834-2642244.json",
+        "Australis-v0.10.24-20261107-233834-2642244.log",
+        "Australis-v0.10.24-20261107-233853-1730793.log",
+        "Australis-v0.10.24-Design-Notes.txt",
+        "Australis-v0.10.24-Hull-Access-Review-3D.png",
+        "Australis-v0.10.24-Hull-Alignment-3D.html",
+        "Australis-v0.10.24-Hull-Alignment-Preview-Package.zip",
+        "Australis-v0.10.24-Package-Validation.json",
+        "Australis-v0.10.24-Tower-Sensor-Review-3D.png",
+        "Australis-v0.10.24-Validation.json",
+        "Australis-v0.10.24-Windows-Path-Fix.zip",
+        "RAN-HMAS-Australis-v0.10.24-Release-Validation.json",
+        "RAN-HMAS-Australis-v0.10.24-SHA256.txt",
+        "RAN-HMAS-Australis-v0.10.24-Windows11-Guide.txt",
+        "RAN-HMAS-Australis-v0.10.24-Windows11.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.25",
+      "title": "Native Model Hotfix",
+      "date": "2026-11-08",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Registered 99 omitted native model parts to restore CIWS/enclosure references, closed forward hull seam and separated rear-tower glazing; retained v0.10.24 controller.",
+      "kind": "Complete Windows game package / native-model hotfix",
+      "evidence": [
+        "RAN-HMAS-Australis-v0.10.25-Windows11-Guide.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "AnchorChain core"
+      ],
+      "caveats": [
+        "Missing native parts establish a concrete null-reference path, but generic GameMain popups may have other causes; live Windows/game success unverified."
+      ],
+      "changes": [
+        "Registered 99 declared model parts omitted from native Submodels list, affecting 159 of 279 native/controller references; parent-first hierarchy loads all twelve CIWS mount/gun objects and restores enclosure bindings.",
+        "Closed 2.873 m forward-starboard hull/station-1 underside seam and separated rear observation glass/frames to reduce flicker.",
+        "Bundled standalone runtime diagnostic collector; retained controller component v0.10.24 and existing flight/weapon data."
+      ],
+      "archive_artifacts": [
+        "RAN-HMAS-Australis-v0.10.25-SHA256.txt",
+        "RAN-HMAS-Australis-v0.10.25-Validation.json",
+        "RAN-HMAS-Australis-v0.10.25-Windows11-Guide.txt",
+        "RAN-HMAS-Australis-v0.10.25-Windows11.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v0.10.26",
+      "title": "Rear Tower Model Repair",
+      "date": "2026-11-08",
+      "date_basis": "First saved artifact date in Australia/Sydney; not a certified release date",
+      "summary": "Corrected rear-tower face directions/normals and shell joins; retained previous model hotfixes and did not claim a script-startup-timeout fix.",
+      "kind": "Complete Windows game package / tower geometry hotfix",
+      "evidence": [
+        "RAN-HMAS-Australis-v0.10.26-Windows11-Guide.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "AnchorChain core"
+      ],
+      "caveats": [
+        "Repairs geometry; does not demonstrate a fix for separate Script runtime startup failed after 10 heartbeat attempts timeout. Runtime cause/flicker acceptance still require local evidence."
+      ],
+      "changes": [
+        "Corrected inward lower-rear-tower side triangles, upward bottom and matching normals; aligned section boundaries as an aggregate shell.",
+        "Retained hull/tower dimensions, v0.10.25 registration/seam fixes, 288 raft cans, static closed stern doors and v0.10.24 controller."
+      ],
+      "archive_artifacts": [
+        "RAN-HMAS-Australis-v0.10.26-SHA256.txt",
+        "RAN-HMAS-Australis-v0.10.26-Validation.json",
+        "RAN-HMAS-Australis-v0.10.26-Windows11-Guide.txt",
+        "RAN-HMAS-Australis-v0.10.26-Windows11.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v1.0",
+      "title": "Basic Shell",
+      "date": "2026-11-08",
+      "date_basis": "Date stated in inspected Windows package audit; see per-version evidence",
+      "summary": "Reduced to unarmed static hull, deck and islands with native movement/physics; no aircraft operations, weapon, operating sensor, decoy or custom controller; Kept independent unit ID ran_australis_basic_shell and approximately 370 m / 112,000 tonne / 30 knot game configuration.",
+      "kind": "Independent native-only reduced carrier package",
+      "evidence": [
+        "RAN-Australis-Basic-Shell-Installer-v1.0.1-Windows11.zip -> embedded payload SHELL-MANIFEST.json (version 1.0.0), _info.ini and vessels/ran_australis_basic_shell.ini"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Native-only model; no custom controller required."
+      ],
+      "caveats": [
+        "Original v1.0 ZIP not materialized in this audit; exact model v1.0.0 is recovered from the later v1.0.1 installer payload."
+      ],
+      "changes": [
+        "Reduced to unarmed static hull, deck and islands with native movement/physics; no aircraft operations, weapon, operating sensor, decoy or custom controller.",
+        "Kept independent unit ID ran_australis_basic_shell and approximately 370 m / 112,000 tonne / 30 knot game configuration."
+      ],
+      "archive_artifacts": [
+        "RAN-Australis-Basic-Shell-v1.0-Windows11.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v1.0.1",
+      "title": "Basic Shell installer (model v1.0.0)",
+      "date": "2026-11-08",
+      "date_basis": "Date stated in inspected Windows package audit; see per-version evidence",
+      "summary": "One self-contained Windows CMD with embedded verified model ZIP, explicit installer/game path handling, phase-specific failure reporting and transcript logs; Installer v1.0.1 carries Basic Shell model v1.0.0 and checks its complete hash manifest before installation.",
+      "kind": "Single-CMD installer revision, not new model version",
+      "evidence": [
+        "Install-Australis-Basic-Shell-v1.0.1.cmd -> InstallerVersion=1.0.1 / ModelVersion=1.0.0 and embedded SHELL-MANIFEST.json"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Existing Windows Sea Power installation."
+      ],
+      "caveats": [
+        "CMD source and embedded package inspected; execution not repeated here."
+      ],
+      "changes": [
+        "One self-contained Windows CMD with embedded verified model ZIP, explicit installer/game path handling, phase-specific failure reporting and transcript logs.",
+        "Installer v1.0.1 carries Basic Shell model v1.0.0 and checks its complete hash manifest before installation."
+      ],
+      "archive_artifacts": [
+        "RAN-Australis-Basic-Shell-Installer-v1.0.1-Windows11.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v1.0.2",
+      "title": "Basic Shell",
+      "date": "2026-11-08",
+      "date_basis": "Date stated in inspected Windows package audit; see per-version evidence",
+      "summary": "Corrected shell model and matching v1.0.2 identity/manifest in a self-contained installer; Recognizes an unmodified v1.0.0 shell, stages the replacement, backs up the old shell, verifies activation and restores it on failure; modified or unknown prior shells are refused.",
+      "kind": "Corrected native-only shell plus installer",
+      "evidence": [
+        "Install-Australis-Basic-Shell-v1.0.2.cmd -> InstallerVersion/ModelVersion=1.0.2, SHELL-MANIFEST.json, ManifestTable/VerifyAgainst and upgrade transaction source",
+        "Australis-Stage1-v1.1.0-Test-Plan.txt -> user-confirmed working v1.0.2 baseline",
+        "RAN-Australis-Stage1-v1.1.0-Source-and-Checks.zip -> BUILD-INPUTS.json confirms user validation date 2026-11-13"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Native-only shell; no controller/flight systems."
+      ],
+      "caveats": [
+        "Later Stage1 source records user-confirmed game load/work on 13 November. Precise geometry correction rationale was not recovered from the single-CMD package, so not invented."
+      ],
+      "changes": [
+        "Corrected shell model and matching v1.0.2 identity/manifest in a self-contained installer.",
+        "Recognizes an unmodified v1.0.0 shell, stages the replacement, backs up the old shell, verifies activation and restores it on failure; modified or unknown prior shells are refused."
+      ],
+      "archive_artifacts": [
+        "HMAS-Australis-Basic-Shell-v1.0.2-3D.html",
+        "HMAS-Australis-Basic-Shell-v1.0.2.png",
+        "RAN-Australis-Basic-Shell-Installer-v1.0.2-Windows11.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v1.1.0",
+      "title": "Flight Deck Stage 1",
+      "date": "2026-11-13",
+      "date_basis": "Date stated in inspected Windows package audit; see per-version evidence",
+      "summary": "Restored four animated lifts, four catapult lanes and blast deflectors, angled arrested recovery area and return taxi routes on the working Basic Shell; Added combined carrier plus four isolated C1/C2/C3/C4 calibration entries, with a small installed-stock-aircraft test wing; Still unarmed; operating sensors, helicopter operations and old custom deck-controller remain excluded.",
+      "kind": "Independent controlled flight-deck test package",
+      "evidence": [
+        "Australis-Stage1-v1.1.0-Test-Plan.txt",
+        "RAN-Australis-Stage1-v1.1.0-Source-and-Checks.zip -> package/payload/README.txt, package/PACKAGE-BUILD.json and BUILD-INPUTS.json",
+        "RAN-Australis-Full-Restore-v1.2.0-Source-and-Checks.zip -> aviation/LANDING-REGRESSION-AUDIT.json"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Installer derives supported original-game aircraft; separate Basic Shell fallback preserved."
+      ],
+      "caveats": [
+        "Full Restore audit records user confirmation that Stage1 loads and launches but aircraft do not land. That report supersedes a blanket untested description but is not full flight-deck acceptance."
+      ],
+      "changes": [
+        "Restored four animated lifts, four catapult lanes and blast deflectors, angled arrested recovery area and return taxi routes on the working Basic Shell.",
+        "Added combined carrier plus four isolated C1/C2/C3/C4 calibration entries, with a small installed-stock-aircraft test wing.",
+        "Still unarmed; operating sensors, helicopter operations and old custom deck-controller remain excluded."
+      ],
+      "archive_artifacts": [
+        "Australis-Stage1-v1.1.0-Test-Plan.txt",
+        "HMAS-Australis-Stage1-v1.1.0-3D.html",
+        "HMAS-Australis-Stage1-v1.1.0.png",
+        "RAN-Australis-Flight-Deck-Stage1-v1.1.0-Windows11.zip",
+        "RAN-Australis-Stage1-v1.1.0-Source-and-Checks.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v1.2.0",
+      "title": "Full Restore",
+      "date": "2026-11-13",
+      "date_basis": "Date stated in inspected Windows package audit; see per-version evidence",
+      "summary": "Restored v0.10.26 systems: 4 lifts, 4 catapults and 3 vertical pads; 1 arrested and 3 vertical recovery points, 15 taxi routes and 16 deck zones; Restored 24 weapon entries including 6 CIWS, 12 sensors, 66 enclosed-bay mechanisms, forward CIWS6, ICCS, lighting, safety fittings, 8 waterjets and 4 steering units; Provided Full99 mixed wing (72 fixed-wing/STOL, 15 helicopter, 12 VTOL) and Test24 profile (16/4/4), derived from installed stock definitions; Batched only unreferenced static geometry: registered visual parts 1,687 to 529 while preserving 380,558 triangles, mechanism aliases and audited controller bytes; repaired aft-bridge glow alias partition.",
+      "kind": "Full carrier restoration package",
+      "evidence": [
+        "RAN-Australis-Full-Restore-v1.2.0-Source-and-Checks.zip -> package/payload/README.txt, aviation/AVIATION-INDEX.json and model/INDEPENDENT-GEOMETRY-REVIEW.json",
+        "Australis-Full-Restore-v1.2.0-Test-Plan.txt",
+        "HMAS-Australis-v1.2.3-Lighting-Patch-for-v1.2.0.zip -> CHANGE-REVIEW.json"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Audited AnchorChain Workshop core and preloader; pinned game/core hashes; original controller internal component version remains 0.10.24."
+      ],
+      "caveats": [
+        "Later lighting-patch review records a user-reported working v1.2.0 baseline. Native recovery, mechanism completeness and FPS are not established by that general report; original build checks are offline only. No measured FPS gain claimed."
+      ],
+      "changes": [
+        "Restored v0.10.26 systems: 4 lifts, 4 catapults and 3 vertical pads; 1 arrested and 3 vertical recovery points, 15 taxi routes and 16 deck zones.",
+        "Restored 24 weapon entries including 6 CIWS, 12 sensors, 66 enclosed-bay mechanisms, forward CIWS6, ICCS, lighting, safety fittings, 8 waterjets and 4 steering units.",
+        "Provided Full99 mixed wing (72 fixed-wing/STOL, 15 helicopter, 12 VTOL) and Test24 profile (16/4/4), derived from installed stock definitions.",
+        "Batched only unreferenced static geometry: registered visual parts 1,687 to 529 while preserving 380,558 triangles, mechanism aliases and audited controller bytes; repaired aft-bridge glow alias partition."
+      ],
+      "archive_artifacts": [
+        "Australis-Full-Restore-v1.2.0-Test-Plan.txt",
+        "HMAS-Australis-Full-Restore-v1.2.0-3D.html",
+        "HMAS-Australis-Full-Restore-v1.2.0.png",
+        "HMAS-Australis-v1.2.0-Night-3D.html",
+        "HMAS-Australis-v1.2.3-Lighting-Patch-for-v1.2.0.zip",
+        "RAN-Australis-Full-Restore-v1.2.0-Source-and-Checks.zip",
+        "RAN-Australis-Full-Restore-v1.2.0-Windows11.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v1.2.1",
+      "title": "Full Restore reliability",
+      "date": "2026-11-13",
+      "date_basis": "Date stated in inspected Windows package audit; see per-version evidence",
+      "summary": "Added missing generic VTOL CircuitWaypoints and ExitPosition at the three existing vertical recovery pads; retained fixed-wing recovery geometry and controller; Added aviation route/circuit/count preflight, protected edited/unowned files on upgrade and journaled obsolete-owned-file retirement; Expanded duplicate native-ID reporting across local mods and Workshop; included session Collect mode with scoped CPU/memory/log capture.",
+      "kind": "Full restoration reliability revision",
+      "evidence": [
+        "Australis-Full-Restore-v1.2.1-Lessons-and-Changes.txt",
+        "RAN-Australis-Full-Restore-v1.2.1-Source-and-Checks.zip -> documentation/README.txt and aviation/AVIATION-LESSONS.txt",
+        "Australis-Compatibility-Check-v1.2.2-Source-and-Checks.zip -> DIAGNOSIS.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Same complete v0.10.26 model/controller feature contract; audited native game/core required."
+      ],
+      "caveats": [
+        "Subsequent diagnostic review confirms Windows installer launched and payload hash checks passed, then stopped on an unaudited game assembly hash before mod/game writes. VTOL configuration completeness is not proof of fixed-wing landing repair. Runtime performance proposal was UNCOMPILED_NOT_APPLIED and excluded from installation."
+      ],
+      "changes": [
+        "Added missing generic VTOL CircuitWaypoints and ExitPosition at the three existing vertical recovery pads; retained fixed-wing recovery geometry and controller.",
+        "Added aviation route/circuit/count preflight, protected edited/unowned files on upgrade and journaled obsolete-owned-file retirement.",
+        "Expanded duplicate native-ID reporting across local mods and Workshop; included session Collect mode with scoped CPU/memory/log capture."
+      ],
+      "archive_artifacts": [
+        "Australis-Full-Restore-v1.2.1-bootstrap-20261113-150754-0596132.log",
+        "Australis-Full-Restore-v1.2.1-Lessons-and-Changes.txt",
+        "Australis-Full-Restore-v1.2.1-Test-Plan.txt",
+        "Australis-v1.2.1-20261113-150759-8506290.json",
+        "Australis-v1.2.1-20261113-150759-8506290.log",
+        "RAN-Australis-Full-Restore-v1.2.1-Source-and-Checks.zip",
+        "RAN-Australis-Full-Restore-v1.2.1-Windows11.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v1.2.2",
+      "title": "Compatibility Check",
+      "date": "2026-11-13",
+      "date_basis": "Date stated in inspected Windows package audit; see per-version evidence",
+      "summary": "Collected actual game/core/preloader/controller hashes, Steam build identity, native metadata/signature/fingerprint evidence, relevant mod/load-order and carrier configuration; Used a pinned metadata reader to inspect the newly observed game assembly without executing target DLL code or bypassing the installer compatibility gate.",
+      "kind": "Read-only diagnostics; not carrier-model update",
+      "evidence": [
+        "Australis-Compatibility-Check-v1.2.2-Source-and-Checks.zip -> DIAGNOSIS.txt and installer/README.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Sea Power closed, existing installation to inspect."
+      ],
+      "caveats": [
+        "Does not install a ship or approve the new assembly hash. Structural metadata matches cannot establish runtime behavior or FPS."
+      ],
+      "changes": [
+        "Collected actual game/core/preloader/controller hashes, Steam build identity, native metadata/signature/fingerprint evidence, relevant mod/load-order and carrier configuration.",
+        "Used a pinned metadata reader to inspect the newly observed game assembly without executing target DLL code or bypassing the installer compatibility gate."
+      ],
+      "archive_artifacts": [
+        "Australis-Compatibility-Check-v1.2.2-Source-and-Checks.zip",
+        "Australis-Compatibility-Check-v1.2.2-Windows11.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v1.2.3",
+      "title": "Lighting Patch / Archive and Update",
+      "date": "2026-11-13",
+      "date_basis": "Date stated in inspected Windows package audit; see per-version evidence",
+      "summary": "Corrected dense storm/fog and below-horizon activation, unlit lens/window visibility, per-pixel mounted lamps, retry after temporary lamp initialization failures and lighting diagnostics; Changed only NightLights.cs and LowLightPolicy.cs; retained geometry, aviation, weapons, sensors and other controller mechanisms; Base mod still identifies as v1.2.0; v1.2.3 identifies the patch; Staged and verified installed full ship, applied v1.2.3 lighting DLL and metadata, moved recognized local Australis copies outside active StreamingAssets and activated one canonical full copy; Added repeat-safe operation, transaction recovery and exact previous-folder restoration; preserved user air wing and unrelated mods.",
+      "kind": "Controller lighting-only patch for v1.2.0 / Archive-before-update installer carrying the same lighting patch",
+      "evidence": [
+        "HMAS-Australis-v1.2.3-Lighting-Patch-for-v1.2.0.zip -> README.txt, CHANGE-REVIEW.json, TEST-RESULTS.json and INSTALLER-TEST-RESULTS.json",
+        "HMAS-Australis-v1.2.3-Archive-and-Update-Windows11.zip -> README.txt and included installer test results"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Working Full Restore v1.2.0 installed; existing AnchorChain."
+      ],
+      "caveats": [
+        "README records 334 isolated/native-shaped controller checks and PowerShell 7.4.6/Linux install/restore fixtures; no Windows CMD/5.1 or Unity/Sea Power lighting/FPS test.",
+        "Recorded PowerShell/Linux staging/archive/rollback/restore fixtures only; actual lighting rendering/FPS remains pending."
+      ],
+      "changes": [
+        "Corrected dense storm/fog and below-horizon activation, unlit lens/window visibility, per-pixel mounted lamps, retry after temporary lamp initialization failures and lighting diagnostics.",
+        "Changed only NightLights.cs and LowLightPolicy.cs; retained geometry, aviation, weapons, sensors and other controller mechanisms.",
+        "Base mod still identifies as v1.2.0; v1.2.3 identifies the patch."
+      ],
+      "archive_artifacts": [
+        "HMAS-Australis-v1.2.3-Archive-and-Update-Windows11.zip",
+        "HMAS-Australis-v1.2.3-Lighting-Patch-for-v1.2.0.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v1.2.4",
+      "title": "All Carrier Aircraft",
+      "date": "2026-11-13",
+      "date_basis": "Date stated in inspected Windows package audit; see per-version evidence",
+      "summary": "Expanded AircraftSupported to validated original carrier/amphib fixed-wing/STOL plus all validated stock VTOL/helicopters; retained custom supported/embarked IDs; Recognized native-only Basic Shell copies for duplicate archiving; kept v1.2.3 lighting, existing air wing, 99 capacity and flight geometry/routes.",
+      "kind": "Cumulative archive updater and catalogue expansion",
+      "evidence": [
+        "HMAS-Australis-v1.2.4-All-Carrier-Aircraft-Archive-Update-Windows11.zip -> README.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Working compatible Full Restore v1.2.0/v1.2.3 installed; not standalone ship package."
+      ],
+      "caveats": [
+        "Catalogue fixtures recorded; selection compatibility is not automatic embarkation or live launch/recovery proof. Land-only bombers excluded at this version."
+      ],
+      "changes": [
+        "Expanded AircraftSupported to validated original carrier/amphib fixed-wing/STOL plus all validated stock VTOL/helicopters; retained custom supported/embarked IDs.",
+        "Recognized native-only Basic Shell copies for duplicate archiving; kept v1.2.3 lighting, existing air wing, 99 capacity and flight geometry/routes."
+      ],
+      "archive_artifacts": [
+        "HMAS-Australis-v1.2.4-All-Carrier-Aircraft-Archive-Update-Windows11.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v1.2.5",
+      "title": "Detection Fix",
+      "date": "2026-11-13",
+      "date_basis": "Date stated in inspected Windows package audit; see per-version evidence",
+      "summary": "Accepted both audited original v0.10.26 and Full Restore model hashes plus supported lighting controllers; Created missing RUNTIME-FILES.json only in staged copy; supported game-root or StreamingAssets input; canonical active folder changed to RAN-HMAS-Australis; Retained lighting and carrier/VTOL/helicopter catalogue; printed detected versions/hashes before mutation.",
+      "kind": "Cumulative archive updater with legacy installation compatibility",
+      "evidence": [
+        "HMAS-Australis-v1.2.5-Detection-Fix-Archive-Update-Windows11.zip -> README.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Installed verified v0.10.26 or Full Restore v1.2.0/v1.2.1, with or without v1.2.3/v1.2.4 updates."
+      ],
+      "caveats": [
+        "Recorded copied-fixture upgrade/restoration of actual original v0.10.26 payload with no inventory; not native game acceptance."
+      ],
+      "changes": [
+        "Accepted both audited original v0.10.26 and Full Restore model hashes plus supported lighting controllers.",
+        "Created missing RUNTIME-FILES.json only in staged copy; supported game-root or StreamingAssets input; canonical active folder changed to RAN-HMAS-Australis.",
+        "Retained lighting and carrier/VTOL/helicopter catalogue; printed detected versions/hashes before mutation."
+      ],
+      "archive_artifacts": [
+        "HMAS-Australis-v1.2.5-Detection-Fix-Archive-Update-Windows11.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v1.2.6",
+      "title": "All Stock Aircraft",
+      "date": "2026-11-13",
+      "date_basis": "Date stated in inspected Windows package audit; see per-version evidence",
+      "summary": "Included every readable original-game Aircraft/STOL/VTOL/Helicopter definition, including land aircraft/bombers; removed roster/year/nationality/size and missing-squad-file exclusions; Read only General/UnitType to tolerate repeated decorative sections; preserved existing air wing/custom IDs, 99 capacity, geometry, routes and lighting.",
+      "kind": "Cumulative archive updater with all-stock selection catalogue",
+      "evidence": [
+        "HMAS-Australis-v1.2.6-All-Aircraft-Archive-Update-Windows11.zip -> README.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Compatible installed full carrier, directly over v1.2.5 or supported original/Full Restore models."
+      ],
+      "caveats": [
+        "Selection catalogue only: does not make land-only aircraft fit, launch or recover. Fixture tests do not establish Windows/Sea Power behavior."
+      ],
+      "changes": [
+        "Included every readable original-game Aircraft/STOL/VTOL/Helicopter definition, including land aircraft/bombers; removed roster/year/nationality/size and missing-squad-file exclusions.",
+        "Read only General/UnitType to tolerate repeated decorative sections; preserved existing air wing/custom IDs, 99 capacity, geometry, routes and lighting."
+      ],
+      "archive_artifacts": [
+        "HMAS-Australis-v1.2.6-All-Aircraft-Archive-Update-Windows11.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v1.2.7",
+      "title": "Controller Startup Repair",
+      "date": "2026-11-13",
+      "date_basis": "Date stated in inspected Windows package audit; see per-version evidence",
+      "summary": "Diagnosed 'Could not find AnchorChain chainloader' with stale controller timestamps; replaced supported old preloader with verified official AnchorChain 1.2.0 discovery/retry DLL; Backed up/restored preloader and local ship folders as one recovery transaction; retained all-stock catalogue and lighting controller; Included mechanism diagnostic collection for confirming fresh bindings and CIWS6/ICCS/weapon bay behavior.",
+      "kind": "Cumulative ship updater plus official preloader repair",
+      "evidence": [
+        "HMAS-Australis-v1.2.7-Controller-Startup-Repair-Windows11.zip -> README.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Existing full carrier and verified official AnchorChain 1.2.0 core; known supported preloader hashes only."
+      ],
+      "caveats": [
+        "Targets confirmed startup/discovery fault; no motion-formula rewrite. Actual startup, mechanism operation and FPS still require game confirmation. Linux fixture tests cover install/rollback/restoration but not Windows/Mono."
+      ],
+      "changes": [
+        "Diagnosed 'Could not find AnchorChain chainloader' with stale controller timestamps; replaced supported old preloader with verified official AnchorChain 1.2.0 discovery/retry DLL.",
+        "Backed up/restored preloader and local ship folders as one recovery transaction; retained all-stock catalogue and lighting controller.",
+        "Included mechanism diagnostic collection for confirming fresh bindings and CIWS6/ICCS/weapon bay behavior."
+      ],
+      "archive_artifacts": [
+        "HMAS-Australis-v1.2.7-Controller-Startup-Repair-Windows11.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    },
+    {
+      "version": "v1.2.8",
+      "title": "In-Game Info Sheet",
+      "date": "2026-11-13",
+      "date_basis": "Date stated in inspected Windows package audit; see per-version evidence",
+      "summary": "Wrote ship information sheet to _info.ini Language_en Description and language_en/vessel_names.ini DefaultDescription for the existing class/variants; Documented fictional naval strike/sea control role, configured dimensions/displacement/speed/propulsion, 99 capacity, four catapults/four lifts/three pads, layered defence/sensors and four hull identities; Included matching readable Australis-Info-Sheet.txt and retained lighting, all-stock catalogue, archiving and official preloader repair.",
+      "kind": "Cumulative ship updater with Mod Manager and encyclopedia descriptions",
+      "evidence": [
+        "HMAS-Australis-v1.2.8-In-Game-Info-Sheet-Windows11.zip -> README.txt and Australis-Info-Sheet.txt"
+      ],
+      "github_status": "Archive delivery; matching GitHub build not verified",
+      "github_sources": [],
+      "dependencies": [
+        "Compatible original v0.10.26 model or existing v1.2.5/v1.2.6/v1.2.7 update and verified AnchorChain 1.2.0 core."
+      ],
+      "caveats": [
+        "Recorded copied-fixture description/hash/restore checks only; actual Windows/Sea Power text rendering and mechanisms remain unverified. Latest delivered updater, not a standalone complete carrier download."
+      ],
+      "changes": [
+        "Wrote ship information sheet to _info.ini Language_en Description and language_en/vessel_names.ini DefaultDescription for the existing class/variants.",
+        "Documented fictional naval strike/sea control role, configured dimensions/displacement/speed/propulsion, 99 capacity, four catapults/four lifts/three pads, layered defence/sensors and four hull identities.",
+        "Included matching readable Australis-Info-Sheet.txt and retained lighting, all-stock catalogue, archiving and official preloader repair."
+      ],
+      "archive_artifacts": [
+        "HMAS-Australis-v1.2.8-In-Game-Info-Sheet-Windows11.zip"
+      ],
+      "github_artifacts": [],
+      "verification": "Historical/offline evidence; live game pass not established by this audit"
+    }
+  ],
+  "unversioned_milestones": [
+    {
+      "version": null,
+      "date_utc": "2026-10-24T07:56:43Z",
+      "name": "Package retractable-CIWS Australis build with verified installer",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "005fd729dd7b20be09f1958d7af78bb7a93be7f0",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/005fd729dd7b20be09f1958d7af78bb7a93be7f0",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/005fd729dd7b20be09f1958d7af78bb7a93be7f0"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-24T07:54:27Z",
+      "name": "Add engagement-driven retractable CIWS to Australis",
+      "changes": "Conceal three mounts in covered deck-edge wells. Bind native open/close\nanimations to independent lifts and doors: covers open in 0.1 seconds,\nthen turrets rise by 5 m over 0.3 seconds before CIWS permits firing.\nPreserve yaw/barrel transforms, clear adjacent decoys, and update the\ncurrent-model photos and interactive deployment preview.",
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "6bd0366bde6667178909198f43b0ed68c24c355f",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/6bd0366bde6667178909198f43b0ed68c24c355f",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/6bd0366bde6667178909198f43b0ed68c24c355f"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-24T07:30:23Z",
+      "name": "Package verified Australis carrier build for installation",
+      "changes": "Distribute the 38-file native mod with its standard-library installer,\nvalidator, SHA256 inventory and installation/rollback instructions.\nVerify the extracted ZIP against stock references and exercise isolated\ninstall, repeat install, backup/removal and reinstallation.",
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "16200d73ac2aad762114bf9114f04fb8b8c64d21",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/16200d73ac2aad762114bf9114f04fb8b8c64d21",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/16200d73ac2aad762114bf9114f04fb8b8c64d21"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-24T06:57:38Z",
+      "name": "Refresh Australis viewer with matching current-model photos",
+      "changes": "Embed four revision-checked model views, retain full-colour PNG originals,\nand publish a compact self-contained viewer with exact compressed geometry.\nMatch camera handedness to the model renders and correct equipment layers.\nPreserve the carrier game package and aircraft support configuration.",
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "e04142174e9e3ee41dd5b5dcf85d385133de5cf3",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/e04142174e9e3ee41dd5b5dcf85d385133de5cf3",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/e04142174e9e3ee41dd5b5dcf85d385133de5cf3"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-23T13:37:22Z",
+      "name": "Enable broad carrier aircraft support and clear larger waist approaches",
+      "changes": "Remove the A-7E waist restriction, include native STOL on rolling lanes,\nand explicitly support all aircraft size declarations at every deck point.\nMove the outer waist catapult 6.2 m inboard, check staging and aligned\napproaches with A-7E/F-14A/25x30 m references, and extend vertical/waist\ninterlocks. Keep aircraft selection independent of third-party packs.",
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "9629c2a35af83290ffa6762d74bba09caf817f2a",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/9629c2a35af83290ffa6762d74bba09caf817f2a",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/9629c2a35af83290ffa6762d74bba09caf817f2a"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-23T13:14:45Z",
+      "name": "Rebuild Australis with near-flush aircraft contact surfaces",
+      "changes": "Replace raised lift platforms, helipads and deck markings with near-flush surfaces and matching native contact positions. Lower stowed deflectors and closed laser covers while avoiding coplanar flicker.\n\nRebuild all model/preview outputs and the independent package from the 23 October brief, retaining the gun barrel fix, six-million-point aviation reserve, defensive deck fit and revised rear island/flight layout. Add surface geometry and contact regression checks.",
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "a4b5656605434e75a6e0e80c33744308e0df4a99",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/a4b5656605434e75a6e0e80c33744308e0df4a99",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/a4b5656605434e75a6e0e80c33744308e0df4a99"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-23T03:47:39Z",
+      "name": "Fix Australis gun barrel references and aircraft deck contact; revise defensive deck fit",
+      "changes": "Register original yaw/elevation meshes and use NumberOfGuns/Gun1 for the 30 mm guns. Match aircraft contact heights to the deck, pads and lifts; increase aviation stores to 6,000,000 points.\n\nMove defensive VLS/missile housings to marked deck positions, remove RIM-66E/RGM-109, shrink and glaze the rear island, move helicopter pairs forward, and rotate recovery to nine degrees port. Rebuild models, previews and native package; validate stock references and installer behavior.",
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "fb57038ffa0fa2a6834d39fef567aad2ad61f633",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/fb57038ffa0fa2a6834d39fef567aad2ad61f633",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/fb57038ffa0fa2a6834d39fef567aad2ad61f633"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-22T13:25:57Z",
+      "name": "Refine Australis waist catapults and deck fittings",
+      "changes": "Use a shallow six-degree port heading and stagger the waist launch starts\nby 21 m. Move the port lift beside the aft part of the main island so the\nlaunch run clears it. Add flush metal tracks, small shuttles, white guides\nand segmented stowed deflectors, with deck-edge clipping for the guides.\n\nRegenerate the model, previews and native package; add a port-waist view.\nValidation: 353 closed components, measured track/shuttle/deflector alignment,\nA-7E staging and F-14A lift envelopes pass. In-game flight QA remains.",
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "d4e9b151fa8f127607f2e2da2bba4955cfa11c6b",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/d4e9b151fa8f127607f2e2da2bba4955cfa11c6b",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/d4e9b151fa8f127607f2e2da2bba4955cfa11c6b"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-22T12:57:28Z",
+      "name": "Australis: place three catapults at bow and two on port waist",
+      "changes": "Angle the waist pair 15 degrees to port and align native launch points,\ndeflectors, runway zones and taxi approaches with the source geometry.\nRetain arrested recovery and all four lifts/helicopter spots. Add\nbow/waist interlocks and regenerate the previews and offline 3D viewer.\n\nValidation: closed source geometry and native package checks pass;\nin-game flight operations remain to be tested.",
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "016fde6f9b6daeb598a4d0a674eea84a88850921",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/016fde6f9b6daeb598a4d0a674eea84a88850921",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/016fde6f9b6daeb598a4d0a674eea84a88850921"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-22T06:11:31Z",
+      "name": "Build five-lane Australis CATOBAR layout and declared combat fit",
+      "changes": "Add three middle and two outboard 95 m steam-design catapult tracks with\nadjacent-lane interlocks, broaden the bow deck and clear the forward lift.\nDefine the 112000 t, 5300-person concept budget and 5800-berth allowance.\n\nAdd original peripheral VLS, launcher, gun and decoy geometry with explicit\nstock-compatible weapon/sensor/EW adapters and two Nixie decoys. Declare\nmodern performance gaps, preserve the Foam loading fix and independent\ninstallation, and validate installed stock dependencies before staging.\nRegenerate models/previews/viewer and document flight/combat QA and rollback.",
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "fae6b9d1238a3c59f3884fe031270c0cd95dc838",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/fae6b9d1238a3c59f3884fe031270c0cd95dc838",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/fae6b9d1238a3c59f3884fe031270c0cd95dc838"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-22T05:35:08Z",
+      "name": "Size Australis lifts for F-14A and centre aircraft ride positions",
+      "changes": "Use four 22 m by 26 m platforms with fore-and-aft parking, centred native\nspawn/ride positions and revised inboard taxi joins. Retain the 82 m main\ndeck and paired catapult layout. Measure exported lift geometry in the\nvalidator and check stock F-14A and A-7E reference footprints. Regenerate\nmodels, previews and viewer; document fresh-carrier game testing.",
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "74e378eee0a4dc20920af45316ff61ee43620c2b",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/74e378eee0a4dc20920af45316ff61ee43620c2b",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/74e378eee0a4dc20920af45316ff61ee43620c2b"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-22T04:56:46Z",
+      "name": "Space Australis catapults and enable paired launch scheduling",
+      "changes": "Slim the deck to 82 m, align native launch axes with the exported tracks,\nand separate the outer pair from the forward centre catapult. Remove\naft-spot forward launch blocks and reduce the shared launch interval to\none second. Regenerate models and previews, measure track alignment in\nthe validator, and document the required in-game flight checks.",
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "26b5cc1fa1eef9db1234c4973cc37c815629ae8a",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/26b5cc1fa1eef9db1234c4973cc37c815629ae8a",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/26b5cc1fa1eef9db1234c4973cc37c815629ae8a"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-22T03:40:11Z",
+      "name": "Refine Australis flag, bow fairing and port lift placement",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "e587b60a21d0dd6c75f9b90df0f154624610493e",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/e587b60a21d0dd6c75f9b90df0f154624610493e",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/e587b60a21d0dd6c75f9b90df0f154624610493e"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-12T07:09:59Z",
+      "name": "Initialize Australis stern foam trail for rudder setup",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "cbdaef47ac4852d358ed4b6abb327d8008c0063c",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/cbdaef47ac4852d358ed4b6abb327d8008c0063c",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/cbdaef47ac4852d358ed4b6abb327d8008c0063c"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-12T06:43:25Z",
+      "name": "Add Australis collision mesh and resolve editor effect reference",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "4eb69f75a68503ec7cf8facaad7c2ccac5cf83c0",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/4eb69f75a68503ec7cf8facaad7c2ccac5cf83c0",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/4eb69f75a68503ec7cf8facaad7c2ccac5cf83c0"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-12T06:09:53Z",
+      "name": "Export Australis OBJ with UV and normal face indices",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "e2f432d090d1f705c23bf8dbc957a124c54a813a",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/e2f432d090d1f705c23bf8dbc957a124c54a813a",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/e2f432d090d1f705c23bf8dbc957a124c54a813a"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-12T06:05:41Z",
+      "name": "Add Australis editor diagnostics and correct checkout instructions",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "44a4084ecf4599c0d7ee1a97c2b3b8a608bb41d0",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/44a4084ecf4599c0d7ee1a97c2b3b8a608bb41d0",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/44a4084ecf4599c0d7ee1a97c2b3b8a608bb41d0"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-10T06:39:11Z",
+      "name": "Add standalone Australis 2030 editor-test package and safe installer",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "c280d5979055bf9b522776d1109c8a4127503773",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/c280d5979055bf9b522776d1109c8a4127503773",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/c280d5979055bf9b522776d1109c8a4127503773"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-10T04:20:40Z",
+      "name": "Refine Australis hull and carrier deck with retractable laser study",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "d6d2e7314b137558635fd3014018fac2ef981fc2",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/d6d2e7314b137558635fd3014018fac2ef981fc2",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/d6d2e7314b137558635fd3014018fac2ef981fc2"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-10T04:06:22Z",
+      "name": "Taper Australis bow to waterline stem and add bow preview",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "289b308805c0057a49bd7e2b8a79478a15d6110b",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/289b308805c0057a49bd7e2b8a79478a15d6110b",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/289b308805c0057a49bd7e2b8a79478a15d6110b"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-10T03:57:29Z",
+      "name": "Join Australis hull to full flight-deck perimeter",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "86aa0463a1546504fa072799f3ad6dbf8037a383",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/86aa0463a1546504fa072799f3ad6dbf8037a383",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/86aa0463a1546504fa072799f3ad6dbf8037a383"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-10T03:48:33Z",
+      "name": "Add offline interactive 3D viewer for Australis 2030",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "7461b81e5fd6d9f658f17042677a7e9ed66629f6",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/7461b81e5fd6d9f658f17042677a7e9ed66629f6",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/7461b81e5fd6d9f658f17042677a7e9ed66629f6"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-10T03:35:16Z",
+      "name": "Revise Australis as 2030 with starboard catapult and midship lift",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "7d314ad3541c3f6cee492907db54b923bfbde90f",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/7d314ad3541c3f6cee492907db54b923bfbde90f",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/7d314ad3541c3f6cee492907db54b923bfbde90f"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-10T02:47:54Z",
+      "name": "Separate Australis launch and VTOL lanes from lifts and islands",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "3cd9c86acbdb9a131d70e80817386773bfc3a743",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/3cd9c86acbdb9a131d70e80817386773bfc3a743",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/3cd9c86acbdb9a131d70e80817386773bfc3a743"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-10T02:12:57Z",
+      "name": "Give Australis 2050 two islands and staggered angled VTOL pads",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "1c2654dd6018de1c3689ed6c3e05b1b51889f74e",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/1c2654dd6018de1c3689ed6c3e05b1b51889f74e",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/1c2654dd6018de1c3689ed6c3e05b1b51889f74e"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-10T02:06:39Z",
+      "name": "Add four aft VTOL helicopter spots and three catapults to Australis",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "9aa99c6a99ca65b9e9559ba57f4787e7e2b966d8",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/9aa99c6a99ca65b9e9559ba57f4787e7e2b966d8",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/9aa99c6a99ca65b9e9559ba57f4787e7e2b966d8"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-10T01:26:43Z",
+      "name": "Align Australis dimensions with the 370 by 104 metre concept",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "560c159e285d4428d359e56d2f438b46c7eeda24",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/560c159e285d4428d359e56d2f438b46c7eeda24",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/560c159e285d4428d359e56d2f438b46c7eeda24"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-10T01:24:39Z",
+      "name": "Keep Australis concept build isolated from parent cache files",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "807ebd98bf9a0b21b28442893cb225f6e5f676a8",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/807ebd98bf9a0b21b28442893cb225f6e5f676a8",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/807ebd98bf9a0b21b28442893cb225f6e5f676a8"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-10T01:22:55Z",
+      "name": "Add original faceted Australis 2050 carrier concept",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "a3e8560fe6f4128bb3dcf4fa8acc905871eaf05e",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/a3e8560fe6f4128bb3dcf4fa8acc905871eaf05e",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/a3e8560fe6f4128bb3dcf4fa8acc905871eaf05e"
+      }
+    },
+    {
+      "version": null,
+      "date_utc": "2026-10-08T22:27:13Z",
+      "name": "Add 14 Royal Australian Navy carrier design concepts",
+      "changes": null,
+      "kind": "unversioned_commit_milestone",
+      "branch": "feature/australis-2050-concept",
+      "source": {
+        "sha": "82e49fb95189f3914a79e9eab388a2f022fd89f8",
+        "repo_relative_url": "/gobertron/RAN-Carrier/commit/82e49fb95189f3914a79e9eab388a2f022fd89f8",
+        "url": "https://github.com/gobertron/RAN-Carrier/commit/82e49fb95189f3914a79e9eab388a2f022fd89f8"
+      }
+    }
+  ]
+}
