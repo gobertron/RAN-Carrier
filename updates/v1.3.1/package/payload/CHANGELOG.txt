@@ -1,0 +1,63 @@
+v1.3.1 - single class and conservative mesh batching repair
+Retires the separate 24-aircraft test definition, retaining the canonical
+99-aircraft class, stable ID and sister variants 91-94. Splits five oversized
+static batches while preserving triangles, materials, shape, root bounds,
+waterline, colliders and moving references. Retains two 579m Nixie cables,
+lighting/controller and enabled modded aircraft selection. Installer includes
+intact-repeat detection plus migration and rollback checks. Source batch risk
+confirmed; black spike explanation requires live Sea Power retest. Native
+Windows and Sea Power execution remain outstanding.
+
+v1.3.0 TEST - consolidated full carrier test payload
+Complete v0.10.26 / Full Restore model retained; v1.2.3 lighting controller,
+v1.2.7 official preloader repair, v1.2.8 information sheet and v1.2.9
+enabled-mod selection integration supplied through the new installer.
+
+RAN / HMAS Australis - Full Restore v1.2.1
+Reliability update from v1.2.0; full-feature baseline v0.10.26.
+
+APPLIED
+1. Vertical recovery inputs: RecoveryPoint2-4 now contain generic
+   CircuitWaypoints for VTOL as used by the captured original Tarawa, and an
+   explicit ExitPosition at each existing pad. Helicopter circuits, fixed-wing
+   RP1, every native point pose and the four-lift/seven-launch/four-recovery
+   controller contract are retained.
+2. Aviation preflight now validates recovery circuits, finite coordinates,
+   associated lifts, actual taxi connections, native counts and C3/C4 exclusions
+   before deriving either the Full99 or Test24 aircraft roster.
+3. Owned upgrades check existing file hashes against the previous install
+   marker, refuse edited files or collisions with unowned extras, and retire
+   obsolete owned files through the backed-up transaction and restore journal.
+4. Duplicate full Australis native-ID detection includes local mods and Workshop.
+   It reports duplicates; it does not change Workshop files or guess enablement.
+5. The same CMD includes Collect mode: capture before launch, during the session
+   and after exit; scoped game/child CPU and memory samples, active load-order
+   evidence, game/mod hashes and logs. CPU/memory samples are not FPS measurements.
+
+RECHECKED AND RETAINED
+- Original full ship features, 99-aircraft and 24-aircraft mixed test wings,
+  24 weapons (six CIWS), 12 sensors, propulsion, steering, colours and lighting.
+- Byte-identical audited controller and 529-part model. No uncompiled runtime
+  source or changed DLL is installed.
+- Focused geometry regression: closed rear tower, separated aft glazing,
+  integrated CIWS seam, real mechanism and gun meshes. The scan found no exact
+  same-facing duplicate triangles. These checks do not prove native rendering.
+- Versioned single-CMD packaging, complete embedded payload, pinned dependency
+  and game hashes, protected Basic Shell/Stage1, backup and same-CMD restore.
+
+LESSONS / REMAINING EVIDENCE
+File presence and archive hashes are not proof of native behavior. The new
+VTOL inputs are a configuration completeness repair, not proof of a fixed-wing
+landing fix. The original JBD3/4 clearance rules remain: deleting the early
+recovery guard alone would not unblock any delivered route and would not be a
+defensible correction.
+
+The original controller still drives 124 Unity lights and mechanism updates.
+Its repeated reflection/pose work is a performance investigation item. A source
+proposal is clearly marked UNCOMPILED_NOT_APPLIED in the separate source/checks
+archive; it is excluded from the installer. No FPS gain is claimed for v1.2.1.
+
+No local PowerShell, Windows or Sea Power runtime was available for this build.
+PowerShell execution/install, native recovery and FPS remain unverified. Use
+the session capture and first-error logs to continue diagnosis, rather than
+assuming the whole historical feature set has passed in-game.

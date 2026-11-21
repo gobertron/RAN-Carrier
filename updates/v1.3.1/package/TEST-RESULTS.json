@@ -1,0 +1,188 @@
+{
+  "runtime": "PowerShell 7.4.13 / Linux",
+  "native_windows_tested": false,
+  "sea_power_tested": false,
+  "passed": 23,
+  "failed": 0,
+  "test_source_sha256": "fbc7c073ec942b45d1c641826618cf217c169396a418f54b784550de252feb70",
+  "installer_sha256": "0def08a9a95f6aff75f42fb3fae34cc6136731dd523267907b42828a66a82781",
+  "helpers_sha256": "ec0170cdc900434a9f90ac8ff831b88b77a22dae8f902a4717f4f233a035f089",
+  "restore_sha256": "1763d8335cb248130948e08fb56402c8aa93fa21142a42361cf9f1da54b08c80",
+  "tests": [
+    {
+      "name": "successful_cleanup_install_and_exact_restore",
+      "passed": true,
+      "detail": {
+        "aircraft_ids": [
+          "local_plane",
+          "stock_fixed",
+          "stock_helo",
+          "user_plane",
+          "workshop_plane"
+        ],
+        "exact_restore_and_repeat_restore": true
+      },
+      "seconds": 9.393,
+      "rerun_reason": "Test assertion corrected to read ship names from localization; variants contain hull texture references.",
+      "test_source_sha256": "fbc7c073ec942b45d1c641826618cf217c169396a418f54b784550de252feb70"
+    },
+    {
+      "name": "repeat_install_is_noop_preserves_single_class_and_airwing",
+      "passed": true,
+      "detail": {
+        "no_game_settings_or_archive_writes": true
+      },
+      "seconds": 5.721
+    },
+    {
+      "name": "corrupt_installed_texture_is_backed_up_and_repaired",
+      "passed": true,
+      "detail": null,
+      "seconds": 9.495
+    },
+    {
+      "name": "new_enabled_aircraft_refreshes_then_repeat_is_noop",
+      "passed": true,
+      "detail": null,
+      "seconds": 9.104
+    },
+    {
+      "name": "secondary_steam_library_detected_from_vdf",
+      "passed": true,
+      "detail": {
+        "libraryfolders_vdf_secondary_library": true
+      },
+      "seconds": 0.513
+    },
+    {
+      "name": "clean_install_with_synthetic_audited_game_and_native_airwing",
+      "passed": true,
+      "detail": {
+        "synthetic_audited_game_only": true,
+        "full_native_99_aircraft_profile": true,
+        "production_allowlist_unmodified": true
+      },
+      "seconds": 5.637
+    },
+    {
+      "name": "check_mode_has_no_active_writes",
+      "passed": true,
+      "detail": null,
+      "seconds": 2.345
+    },
+    {
+      "name": "unknown_fresh_game_refuses_before_archive",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.538
+    },
+    {
+      "name": "malformed_settings_refuses_before_archive",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.862
+    },
+    {
+      "name": "symlinked_old_content_refuses_before_archive",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.537
+    },
+    {
+      "name": "tampered_payload_refuses_before_archive",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.12
+    },
+    {
+      "name": "unknown_shared_loader_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.91
+    },
+    {
+      "name": "unknown_preloader_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.905
+    },
+    {
+      "name": "rollback_after_first_archive_move_restores_exact_state",
+      "passed": true,
+      "detail": null,
+      "seconds": 5.751
+    },
+    {
+      "name": "rollback_after_activation_restores_exact_state",
+      "passed": true,
+      "detail": null,
+      "seconds": 6.474
+    },
+    {
+      "name": "interrupted_automatic_rollback_retains_journal_and_resumes",
+      "passed": true,
+      "detail": {
+        "latest_held_inventory_preserved": true,
+        "manual_resume_restores_exact_original": true
+      },
+      "seconds": 9.628
+    },
+    {
+      "name": "restore_refuses_concurrent_settings_change_then_recovers",
+      "passed": true,
+      "detail": null,
+      "seconds": 9.752
+    },
+    {
+      "name": "restore_refuses_modified_test_build",
+      "passed": true,
+      "detail": null,
+      "seconds": 6.261
+    },
+    {
+      "name": "mixed_ship_pack_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.415
+    },
+    {
+      "name": "missing_core_refuses_before_archive",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.768
+    },
+    {
+      "name": "mixed_workshop_pack_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.581
+    },
+    {
+      "name": "disabled_doorstop_config_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.962
+    },
+    {
+      "name": "missing_loader_dependencies_installed_and_exactly_restored",
+      "passed": true,
+      "detail": null,
+      "seconds": 7.04
+    }
+  ],
+  "verification_runs": [
+    {
+      "passed": 22,
+      "failed": 1,
+      "failure": "A test looked for sister-ship names in the variants INI; names are stored in localization."
+    },
+    {
+      "passed": 1,
+      "failed": 0,
+      "selection": "successful_cleanup_install_and_exact_restore",
+      "change": "Corrected that assertion and verified current production model is in accepted source hashes."
+    }
+  ],
+  "final_model_sha256": "df050f9f730242db5045afad7aa24540c3db22eb13af0b1b01a2b3c21cfbde65",
+  "production_model_source_hash_asserted": true
+}

@@ -1,0 +1,38 @@
+{
+  "runtime": "/workspace/scratch/b2fa80479743/portable-pwsh/runtime/pwsh",
+  "tests": [
+    {
+      "case": "valid_package",
+      "passed": true
+    },
+    {
+      "case": "checksum_corruption",
+      "passed": true
+    },
+    {
+      "case": "unsafe_zip_path",
+      "passed": true
+    },
+    {
+      "case": "manifest_corruption",
+      "passed": true
+    },
+    {
+      "case": "case_collision",
+      "passed": true
+    },
+    {
+      "case": "prerelease_rejection",
+      "passed": true
+    },
+    {
+      "case": "foreign_asset_rejection",
+      "passed": true
+    }
+  ],
+  "passed": 7,
+  "failed": 0,
+  "http_mocked": true,
+  "game_files_modified": false,
+  "live_game_tested": false
+}

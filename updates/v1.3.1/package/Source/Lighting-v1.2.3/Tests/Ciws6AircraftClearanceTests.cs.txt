@@ -1,0 +1,104 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using RAN.Australis;
+namespace UnityEngine {
+ public class Object {
+  public bool UnityDestroyed;
+  public static bool operator==(Object a,Object b)=>(ReferenceEquals(a,null)||a.UnityDestroyed)&&(ReferenceEquals(b,null)||b.UnityDestroyed)||ReferenceEquals(a,b);
+  public static bool operator!=(Object a,Object b)=>!(a==b);
+  public override bool Equals(object other)=>ReferenceEquals(this,other);public override int GetHashCode()=>RuntimeHelpers.GetHashCode(this);
+ }
+ public struct Vector3 {public float x,y,z;public Vector3(float x,float y,float z){this.x=x;this.y=y;this.z=z;}}
+ public struct Bounds {public Vector3 center,extents;public Bounds(Vector3 c,Vector3 e){center=c;extents=e;}}
+ public class Renderer:Object {public Bounds Value;public int Reads;public Bounds bounds {get{Reads++;return Value;}}}
+ public class MeshRenderer:Renderer{} public class SkinnedMeshRenderer:Renderer{} public class ParticleSystemRenderer:Renderer{}
+ public class GameObject:Object {
+  public Renderer[] Renderers=new Renderer[0];public bool IncludedInactive;public int Queries;
+  public Renderer[] GetComponentsInChildren(Type type,bool inactive){if(type!=typeof(Renderer))throw new Exception("Wrong renderer type");IncludedInactive=inactive;Queries++;return Renderers;}
+ }
+ public class Transform:Object {
+  public Vector3 lossyScale=new Vector3(1,1,1),Position;public double Yaw;public bool BreakInverse;
+  public int Reads,SetterCalls;
+  public Vector3 TransformPoint(Vector3 local){Reads++;double c=Math.Cos(Yaw),s=Math.Sin(Yaw),x=local.x*lossyScale.x,z=local.z*lossyScale.z;return new Vector3((float)(Position.x+x*c+z*s),Position.y+local.y*lossyScale.y,(float)(Position.z-x*s+z*c));}
+  public Vector3 InverseTransformPoint(Vector3 world){Reads++;if(BreakInverse)return new Vector3(0,0,0);double c=Math.Cos(Yaw),s=Math.Sin(Yaw),x=world.x-Position.x,z=world.z-Position.z;return new Vector3((float)((x*c-z*s)/lossyScale.x),(world.y-Position.y)/lossyScale.y,(float)((x*s+z*c)/lossyScale.z));}
+ }
+}
+namespace SeaPower {
+ public class Singleton<T>:UnityEngine.Object where T:class {
+  static T _instance;public static int GetterCalls;public static T Instance {get{GetterCalls++;throw new Exception("Creating singleton getter must not be called");}}
+  public static void SetTestInstance(T value){_instance=value;}
+ }
+ public class ObjectsManager:Singleton<ObjectsManager>{public ArrayList _listOfAllAircraftObjects=new ArrayList();}
+ public class ObjectBase:UnityEngine.Object {
+  public bool Destroyed;public ArrayList _childAircraft=new ArrayList();public UnityEngine.GameObject Root=new UnityEngine.GameObject();
+  public bool IsDestroyed=>Destroyed;public bool IsAirUnit=>this is Aircraft||this is Helicopter;
+  public UnityEngine.GameObject getRootGameObject()=>Root;
+ }
+ public class Aircraft:ObjectBase {public bool _isInFlight;}public class Helicopter:ObjectBase{}
+ public class FlightDeckTask {public ObjectBase Vehicle {get;set;}}
+ public class FlightDeckPoint {public ObjectBase OccupyingObject {get;set;}public bool IsOccupied {get;set;}public ArrayList _incomingObjects=new ArrayList();}
+ public class FlightDeck {
+  public ArrayList FlightDeckTasks=new ArrayList(),_flightDeckTasksToAdd=new ArrayList(),_flightDeckTasksToRemove=new ArrayList();
+  public ArrayList _elevators=new ArrayList(),_launchPoints=new ArrayList(),_recoveryPoints=new ArrayList(),_taxiPoints=new ArrayList(),_landingQueue=new ArrayList(),_holdingQueue=new ArrayList();
+ }
+}
+static class Ciws6AircraftClearanceTests {
+ static int checks;
+ static void Check(bool good,string label){checks++;if(!good)throw new Exception(label);}
+ static readonly Ciws6SweepVolume Sweep=new Ciws6SweepVolume(-54,12.3,142,-46,26,157);
+ static UnityEngine.Vector3 Vec(double x,double y,double z)=>new UnityEngine.Vector3((float)x,(float)y,(float)z);
+ static SeaPower.Aircraft Plane(UnityEngine.Transform frame,double x,double y,double z,double ex=1,double ey=1,double ez=1){
+  var p=new SeaPower.Aircraft();var center=frame.TransformPoint(Vec(x/Ciws6AircraftClearance.MetresPerUnit,y/Ciws6AircraftClearance.MetresPerUnit,z/Ciws6AircraftClearance.MetresPerUnit));
+  p.Root.Renderers=new[]{new UnityEngine.MeshRenderer{Value=new UnityEngine.Bounds(center,Vec(ex/Ciws6AircraftClearance.MetresPerUnit,ey/Ciws6AircraftClearance.MetresPerUnit,ez/Ciws6AircraftClearance.MetresPerUnit))}};return p;
+ }
+ static bool Clear(SeaPower.ObjectBase owner,SeaPower.FlightDeck deck,UnityEngine.Transform frame,out string why)=>Ciws6AircraftClearance.Clear(owner,deck,frame,Sweep,out why);
+ static void Main(){
+  var manager=new SeaPower.ObjectsManager();SeaPower.ObjectsManager.SetTestInstance(manager);var owner=new SeaPower.ObjectBase();var deck=new SeaPower.FlightDeck();var frame=new UnityEngine.Transform();
+  Check(Clear(owner,deck,frame,out string why)&&why==null,"Complete known empty aircraft union clears");
+  Check(SeaPower.Singleton<SeaPower.ObjectsManager>.GetterCalls==0,"Singleton creating getter never invoked");
+  var parked=Plane(frame,-50,22,149);manager._listOfAllAircraftObjects.Add(parked);
+  Check(!Clear(owner,deck,frame,out why)&&why=="AIRCRAFT_SWEEP_OCCUPIED","Global parked aircraft alone blocks deployment");
+  Check(parked.Root.IncludedInactive,"Inactive child LOD renderers included");manager._listOfAllAircraftObjects.Clear();
+  var departing=Plane(frame,-50,23,151);departing._isInFlight=true;owner._childAircraft.Add(departing);
+  Check(!Clear(owner,deck,frame,out why),"Departing airborne child retained after task and launchpoint release");owner._childAircraft.Clear();
+  var far=Plane(frame,250,22,149);manager._listOfAllAircraftObjects.Add(far);owner._childAircraft.Add(far);deck.FlightDeckTasks.Add(new SeaPower.FlightDeckTask{Vehicle=far});deck._flightDeckTasksToAdd.Add(new SeaPower.FlightDeckTask{Vehicle=far});deck._flightDeckTasksToRemove.Add(new SeaPower.FlightDeckTask{Vehicle=far});
+  var point=new SeaPower.FlightDeckPoint{OccupyingObject=far,IsOccupied=true};point._incomingObjects.Add(far);deck._elevators.Add(point);deck._landingQueue.Add(far);deck._holdingQueue.Add(far);
+  Check(Clear(owner,deck,frame,out why),"Faraway aircraft geometry clear across all union sources");
+  Check(far.Root.Queries==1&&far.Root.Renderers[0].Reads==1,"Reference identity deduplicates bounds query across sources");
+  var savedBounds=far.Root.Renderers[0].Value;far.Root.Renderers[0].Value=parked.Root.Renderers[0].Value;Check(!Clear(owner,deck,frame,out why),"Cached reflection handles still read freshly moved current bounds");far.Root.Renderers[0].Value=savedBounds;
+  Check(SeaPower.Singleton<SeaPower.ObjectsManager>.GetterCalls==0&&frame.SetterCalls==0,"Read-only probes perform no scene setters");
+  manager._listOfAllAircraftObjects.Clear();owner._childAircraft.Clear();deck=new SeaPower.FlightDeck();
+  foreach(var list in new[]{deck.FlightDeckTasks,deck._flightDeckTasksToAdd,deck._flightDeckTasksToRemove}){list.Add(new SeaPower.FlightDeckTask{Vehicle=parked});Check(!Clear(owner,deck,frame,out why),"Every active/pending/removing task supplies aircraft");list.Clear();}
+  foreach(var list in new[]{deck._elevators,deck._launchPoints,deck._recoveryPoints,deck._taxiPoints}){list.Add(new SeaPower.FlightDeckPoint{OccupyingObject=parked,IsOccupied=true});Check(!Clear(owner,deck,frame,out why),"Every point group owner supplies aircraft");list.Clear();var incoming=new SeaPower.FlightDeckPoint();incoming._incomingObjects.Add(parked);list.Add(incoming);Check(!Clear(owner,deck,frame,out why),"Every point incoming reservation supplies aircraft");list.Clear();}
+  foreach(var list in new[]{deck._landingQueue,deck._holdingQueue}){list.Add(parked);Check(!Clear(owner,deck,frame,out why),"Landing/holding queue supplies aircraft");list.Clear();}
+  frame.Position=Vec(7,3,-4);frame.lossyScale=Vec(2,3,.5);frame.Yaw=Math.PI/3;
+  var transformed=Plane(frame,-50,22,149,.01,.01,.01);manager._listOfAllAircraftObjects.Add(transformed);
+  Check(!Clear(owner,deck,frame,out why)&&why=="AIRCRAFT_SWEEP_OCCUPIED","Rotated translated nonuniformly scaled model frame catches overlap");
+  manager._listOfAllAircraftObjects.Clear();manager._listOfAllAircraftObjects.Add(Plane(frame,250,22,149,.01,.01,.01));Check(Clear(owner,deck,frame,out why),"Transformed faraway bounds remain clear");
+  frame=new UnityEngine.Transform();manager._listOfAllAircraftObjects.Clear();
+  var offCenter=Plane(frame,0,0,0);offCenter.Root.Renderers=new UnityEngine.Renderer[]{new UnityEngine.MeshRenderer{Value=new UnityEngine.Bounds(Vec(100,100,100),Vec(.1,.1,.1))},parked.Root.Renderers[0]};manager._listOfAllAircraftObjects.Add(offCenter);
+  frame.Reads=0;Check(!Clear(owner,deck,frame,out why),"Multiple renderer offset centers preserve a wing/part overlap");
+  Check(frame.Reads==16,"World renderer union transforms only8corners plus8read-only roundtrips");
+  offCenter.Root.Renderers=new UnityEngine.Renderer[]{Plane(frame,-60,22,149).Root.Renderers[0],Plane(frame,-40,22,149).Root.Renderers[0]};Check(!Clear(owner,deck,frame,out why),"World renderer union conservatively covers gaps between meshes");
+  manager._listOfAllAircraftObjects.Clear();var noBounds=new SeaPower.Aircraft();manager._listOfAllAircraftObjects.Add(noBounds);Check(!Clear(owner,deck,frame,out why)&&why.StartsWith("AIRCRAFT_CLEARANCE_UNVERIFIED"),"Missing live airframe bounds inhibit");
+  noBounds.Root.Renderers=new UnityEngine.Renderer[]{new UnityEngine.MeshRenderer{Value=new UnityEngine.Bounds(Vec(100,100,100),Vec(0,0,0))}};Check(!Clear(owner,deck,frame,out why),"Zero live mesh bounds are not clearance proof");
+  noBounds.Root.Renderers[0].Value=new UnityEngine.Bounds(Vec(double.NaN,100,100),Vec(1,1,1));Check(!Clear(owner,deck,frame,out why),"Nonfinite bounds inhibit");
+  noBounds.Root.Renderers[0].Value=new UnityEngine.Bounds(Vec(100,100,100),Vec(-1,1,1));Check(!Clear(owner,deck,frame,out why),"Negative bounds extents inhibit");
+  noBounds.Root=null;Check(!Clear(owner,deck,frame,out why),"Missing live aircraft root inhibits");
+  noBounds.Destroyed=true;Check(Clear(owner,deck,frame,out why),"Native destroyed object safely excluded");noBounds.Destroyed=false;noBounds.UnityDestroyed=true;Check(Clear(owner,deck,frame,out why),"Destroyed Unity wrapper excluded before querying missing root");
+  manager._listOfAllAircraftObjects.Clear();manager._listOfAllAircraftObjects.Add(null);Check(!Clear(owner,deck,frame,out why),"Unverified raw global entry inhibits");
+  manager._listOfAllAircraftObjects.Clear();manager._listOfAllAircraftObjects.Add(new SeaPower.ObjectBase());Check(!Clear(owner,deck,frame,out why),"Unexpected nonaircraft schema inhibits");
+  manager._listOfAllAircraftObjects.Clear();deck.FlightDeckTasks.Add(new SeaPower.FlightDeckTask());Check(!Clear(owner,deck,frame,out why),"Pending task with unpublished airframe inhibits");deck.FlightDeckTasks.Clear();
+  deck._taxiPoints.Add(new SeaPower.FlightDeckPoint{IsOccupied=true});Check(!Clear(owner,deck,frame,out why),"Occupied point without owner is unverified");deck._taxiPoints.Clear();
+  manager._listOfAllAircraftObjects=null;Check(!Clear(owner,deck,frame,out why),"Missing global list inhibits");manager._listOfAllAircraftObjects=new ArrayList();
+  SeaPower.ObjectsManager.SetTestInstance(null);Check(!Clear(owner,deck,frame,out why)&&SeaPower.Singleton<SeaPower.ObjectsManager>.GetterCalls==0,"Missing singleton fails without creating one");SeaPower.ObjectsManager.SetTestInstance(manager);
+  manager.UnityDestroyed=true;Check(!Clear(owner,deck,frame,out why),"Destroyed singleton wrapper with stale empty aircraft list cannot prove clearance");manager.UnityDestroyed=false;Check(Clear(owner,deck,frame,out why),"Fresh live singleton is rechecked after stale wrapper rejection");
+  frame.lossyScale=Vec(0,1,1);Check(!Clear(owner,deck,frame,out why),"Degenerate model scale inhibits");frame.lossyScale=Vec(1,1,1);frame.BreakInverse=true;manager._listOfAllAircraftObjects.Add(far);Check(!Clear(owner,deck,frame,out why),"Inconsistent model frame roundtrip inhibits");
+  frame.BreakInverse=false;manager._listOfAllAircraftObjects.Clear();Check(!Ciws6AircraftClearance.Clear(owner,deck,frame,new Ciws6SweepVolume(0,0,0,0,1,1),out why),"Invalid swept volume inhibits");
+  Check(!Ciws6AircraftClearance.Clear(owner,deck,frame,new Ciws6SweepVolume(0,0,0,double.NaN,1,1),out why),"Nonfinite swept volume inhibits");
+  Check(SeaPower.Singleton<SeaPower.ObjectsManager>.GetterCalls==0,"No test invoked side-effecting singleton getter");
+  Console.WriteLine("[PASS] "+checks+" native-shaped aircraft union, read-only bounds and model-frame clearance checks");
+ }
+}

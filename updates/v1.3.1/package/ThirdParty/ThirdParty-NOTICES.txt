@@ -1,0 +1,79 @@
+THIRD-PARTY SOFTWARE — AUSTRALIS v0.10.24
+
+The optional bundled loader is the unmodified ACPreloader.zip asset from
+AnchorChain V1.1.0:
+https://github.com/SeaPower-Modders/AnchorChain/releases/tag/V1.1.0
+https://github.com/SeaPower-Modders/AnchorChain/releases/download/V1.1.0/ACPreloader.zip
+SHA-256: 6fe07835a56e0e401af580cfb9167cd460973f066c162f7e69dfc256b1f9a90d
+All bundled loader DLLs are byte-identical to that asset. They are separate
+from the Australis controller. These notices do not license Sea Power or
+Unity; no game/Unity assemblies, developer reference assemblies or offline
+test DLLs are included in this third-party folder.
+
+AnchorChain Preloader — MIT
+  Distributed in AnchorChain release V1.1.0. The preloader's embedded
+  assembly version is 1.0.0.0; its product metadata identifies source commit
+  6983e634922d31cb44a5ce6f19aea09769261261. The release tag resolves to
+  28d225be917533fcc25e19cf8f25ac44010f8abd, whose license file is LICENSE.md.
+  Copyright (c) 2025 SeaPower-Modders. Full text: AnchorChain-MIT.txt.
+  https://github.com/SeaPower-Modders/AnchorChain/tree/V1.1.0
+
+BepInEx — 5.4.23.2 — MIT
+  Covers BepInEx.dll, BepInEx.Preloader.dll and their XML documentation.
+  The versions were read from the bundled assemblies. The exact upstream
+  v5.4.23.2 tag resolves to eda9ae89dd2c8bc9c7824d3658c13bcff4e5336e;
+  its LICENSE is MIT. Copyright (c) 2018 Bepis.
+  Full text: BepInEx-MIT.txt.
+  https://github.com/BepInEx/BepInEx/tree/v5.4.23.2
+  The AnchorChain V1.1.0 README describes bundled BepInEx as LGPL v2.1.
+  That statement conflicts with the exact BepInEx release's MIT LICENSE.
+  This package uses the verified version-specific upstream license. The
+  LGPL-licensed component in this loader is UnityDoorstop, below.
+
+BepInEx.Harmony and compatibility shims — MIT
+  BepInEx.Harmony.dll 2.0.0.0, HarmonyXInterop.dll 1.0.0.0 and the
+  0Harmony20.dll compatibility assembly 2.0.0.0 are supplied by the
+  BepInEx.Harmony submodule pinned by BepInEx 5.4.23.2 to commit
+  0d24abfed64596ee88b4242b9c7e3daa849d6d28. The upstream 2019 copyright
+  notice is preserved exactly, including its blank author field.
+  Full text: BepInEx.Harmony-MIT.txt; also see Harmony-LICENSE.txt for
+  the original Harmony code attribution.
+  https://github.com/BepInEx/BepInEx.Harmony/tree/0d24abfed64596ee88b4242b9c7e3daa849d6d28
+
+HarmonyX — 2.9.0 — MIT
+  0Harmony.dll 2.9.0.0 and its XML documentation.
+  Copyright (c) 2020 BepInEx; original Harmony code copyright (c) 2017
+  Andreas Pardeike. Full texts: HarmonyX-LICENSE.txt and Harmony-LICENSE.txt.
+  https://github.com/BepInEx/HarmonyX/tree/v2.9.0
+
+MonoMod — 22.01.29.01 — MIT
+  MonoMod.RuntimeDetour.dll and MonoMod.Utils.dll, assembly version
+  22.1.29.1, and their XML documentation.
+  Copyright (c) 2015 - 2020 0x0ade. Full text: MonoMod-LICENSE.txt.
+  https://github.com/MonoMod/MonoMod/tree/v22.01.29.01
+
+Mono.Cecil — 0.10.4 — MIT
+  Mono.Cecil.dll, Mono.Cecil.Mdb.dll, Mono.Cecil.Pdb.dll and
+  Mono.Cecil.Rocks.dll, assembly version 0.10.4.0.
+  Copyright (c) 2008 - 2015 Jb Evain; copyright (c) 2008 - 2011 Novell, Inc.
+  Full text: Mono.Cecil-LICENSE.txt.
+  https://github.com/jbevain/cecil/tree/98ec890d44643ad88d573e97be0e120435eda732
+
+UnityDoorstop — 4.3.0 — GNU Lesser General Public License v2.1
+  winhttp.dll; its product version and .doorstop_version both report 4.3.0.
+  Full text: UnityDoorstop-LICENSE.txt.
+  An unmodified complete source archive from the official v4.3.0 commit,
+  including license and build scripts, is provided beside these notices:
+  UnityDoorstop-4.3.0-source.zip.
+  It contains no executable, DLL or PDB files. The upstream source is also
+  available at:
+  https://github.com/NeighTools/UnityDoorstop/tree/v4.3.0
+  https://codeload.github.com/NeighTools/UnityDoorstop/zip/d061d7eabe9fc36140e7239955515801e2b9db12
+  The library may be replaced with an interface-compatible modified build;
+  replacement loader files must be managed separately from the installer's
+  matching-official-file checks. No additional restriction is placed here
+  on reverse engineering needed to debug modifications to this library.
+
+LICENSE-PROVENANCE.json lists exact upstream text URLs, pinned revisions
+and checksums. Bundled-Component-Versions.json records inspected DLL
+versions and SHA-256 hashes against the official preloader archive.

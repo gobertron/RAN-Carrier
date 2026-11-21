@@ -1,0 +1,193 @@
+{
+  "official_release": "V1.1.0",
+  "official_source_url": "https://github.com/SeaPower-Modders/AnchorChain/releases/download/V1.1.0/ACPreloader.zip",
+  "official_asset_sha256": "6fe07835a56e0e401af580cfb9167cd460973f066c162f7e69dfc256b1f9a90d",
+  "bepinex_exact_version": "5.4.23.2",
+  "bepinex_exact_version_source_revision": "eda9ae89dd2c8bc9c7824d3658c13bcff4e5336e",
+  "bepinex_exact_version_license": "MIT",
+  "anchorchain_release_license_filename": "LICENSE.md",
+  "doorstop_version_file": "4.3.0",
+  "components": [
+    {
+      "path": "BepInEx/core/0Harmony.dll",
+      "sha256": "1a21cc03424fc82c3dd1346905d16494536b9595ae4162228d99fb7c285c1031",
+      "bytes": 204800,
+      "matches_official_acpreloader_zip_exactly": true,
+      "assembly_name": "0Harmony",
+      "assembly_version": "2.9.0.0",
+      "product_metadata": {
+        "FileVersion": "2.9.0.0",
+        "LegalCopyright": "Copyright \u00a9 BepInEx 2022",
+        "ProductVersion": "2.9.0"
+      }
+    },
+    {
+      "path": "BepInEx/core/0Harmony20.dll",
+      "sha256": "d256c5373692a184018f171144712460ced1a6f01562fde26e742b077b36cbd6",
+      "bytes": 111616,
+      "matches_official_acpreloader_zip_exactly": true,
+      "assembly_name": "0Harmony20",
+      "assembly_version": "2.0.0.0",
+      "product_metadata": {
+        "FileVersion": "2.0.0.0",
+        "LegalCopyright": "Copyright \u00a9  2020",
+        "ProductVersion": "2.0.0.0"
+      }
+    },
+    {
+      "path": "BepInEx/core/BepInEx.Harmony.dll",
+      "sha256": "d0739c4a13f369094cb164c205ee4cca5392bdd7241b9f242ee13f0d4c0b1856",
+      "bytes": 5632,
+      "matches_official_acpreloader_zip_exactly": true,
+      "assembly_name": "BepInEx.Harmony",
+      "assembly_version": "2.0.0.0",
+      "product_metadata": {
+        "FileVersion": "2.0.0.0",
+        "LegalCopyright": "Copyright \u00a9 Bepis 2019",
+        "ProductVersion": "2.0.0.0"
+      }
+    },
+    {
+      "path": "BepInEx/core/BepInEx.Preloader.dll",
+      "sha256": "116f8b879b1b87566f5ce30106fc5d5718da69d3870315d184a4460379a765c7",
+      "bytes": 42496,
+      "matches_official_acpreloader_zip_exactly": true,
+      "assembly_name": "BepInEx.Preloader",
+      "assembly_version": "5.4.23.2",
+      "product_metadata": {
+        "FileVersion": "5.4.23.2",
+        "LegalCopyright": "Copyright \u00a9  2019",
+        "ProductVersion": "5.4.23.2"
+      }
+    },
+    {
+      "path": "BepInEx/core/BepInEx.dll",
+      "sha256": "c65b42034bc8ffb9f0b336e416dc3884e3f99fc5a5a89eb1f2ff7868412322cd",
+      "bytes": 127488,
+      "matches_official_acpreloader_zip_exactly": true,
+      "assembly_name": "BepInEx",
+      "assembly_version": "5.4.23.2",
+      "product_metadata": {
+        "FileVersion": "5.4.23.2",
+        "LegalCopyright": "Copyright \u00a9 Bepis 2018",
+        "ProductVersion": "5.4.23.2"
+      }
+    },
+    {
+      "path": "BepInEx/core/HarmonyXInterop.dll",
+      "sha256": "4d6175fa6dfee743423380f62fb5cc7f1811b469748538bd1b974ded34f3f907",
+      "bytes": 23552,
+      "matches_official_acpreloader_zip_exactly": true,
+      "assembly_name": "HarmonyXInterop",
+      "assembly_version": "1.0.0.0",
+      "product_metadata": {
+        "FileVersion": "1.0.0.0",
+        "LegalCopyright": "Copyright \u00a9  2020",
+        "ProductVersion": "1.0.0.0"
+      }
+    },
+    {
+      "path": "BepInEx/core/Mono.Cecil.Mdb.dll",
+      "sha256": "5896d1898f616701fff18f3b2c71e6b844d2390ef9f41e1c5fccce8cb27c698e",
+      "bytes": 43008,
+      "matches_official_acpreloader_zip_exactly": true,
+      "assembly_name": "Mono.Cecil.Mdb",
+      "assembly_version": "0.10.4.0",
+      "product_metadata": {
+        "FileVersion": "0.10.4.0",
+        "LegalCopyright": "Copyright \u00a9 2008 - 2018 Jb Evain",
+        "ProductVersion": "0.10.4.0"
+      }
+    },
+    {
+      "path": "BepInEx/core/Mono.Cecil.Pdb.dll",
+      "sha256": "174db44a067f58561510af746f3caeb032037762c57a31c8d9ee32db25174984",
+      "bytes": 86528,
+      "matches_official_acpreloader_zip_exactly": true,
+      "assembly_name": "Mono.Cecil.Pdb",
+      "assembly_version": "0.10.4.0",
+      "product_metadata": {
+        "FileVersion": "0.10.4.0",
+        "LegalCopyright": "Copyright \u00a9 2008 - 2018 Jb Evain",
+        "ProductVersion": "0.10.4.0"
+      }
+    },
+    {
+      "path": "BepInEx/core/Mono.Cecil.Rocks.dll",
+      "sha256": "54ac539fb5ddc8b44c0e9acd0fcb7324f89d1a072edf8ebc1b06dd691e3d3927",
+      "bytes": 27648,
+      "matches_official_acpreloader_zip_exactly": true,
+      "assembly_name": "Mono.Cecil.Rocks",
+      "assembly_version": "0.10.4.0",
+      "product_metadata": {
+        "FileVersion": "0.10.4.0",
+        "LegalCopyright": "Copyright \u00a9 2008 - 2018 Jb Evain",
+        "ProductVersion": "0.10.4.0"
+      }
+    },
+    {
+      "path": "BepInEx/core/Mono.Cecil.dll",
+      "sha256": "7ae470288fff4a402899c254d0a76cefef55877f5c54f96e83c797cc5bb6e2f6",
+      "bytes": 339456,
+      "matches_official_acpreloader_zip_exactly": true,
+      "assembly_name": "Mono.Cecil",
+      "assembly_version": "0.10.4.0",
+      "product_metadata": {
+        "FileVersion": "0.10.4.0",
+        "LegalCopyright": "Copyright \u00a9 2008 - 2018 Jb Evain",
+        "ProductVersion": "0.10.4.0"
+      }
+    },
+    {
+      "path": "BepInEx/core/MonoMod.RuntimeDetour.dll",
+      "sha256": "40e49bb314391cd7bddc2644f8553eeba92c194b940836b103df16955c464e0c",
+      "bytes": 105984,
+      "matches_official_acpreloader_zip_exactly": true,
+      "assembly_name": "MonoMod.RuntimeDetour",
+      "assembly_version": "22.1.29.1",
+      "product_metadata": {
+        "FileVersion": "22.1.29.1",
+        "LegalCopyright": "Copyright 2022 0x0ade",
+        "ProductVersion": "22.01.29.01"
+      }
+    },
+    {
+      "path": "BepInEx/core/MonoMod.Utils.dll",
+      "sha256": "9d1495f147ac93c4f81f84538c1a326e8f8a6aefc78d6289d798f3ce1162c5e9",
+      "bytes": 187904,
+      "matches_official_acpreloader_zip_exactly": true,
+      "assembly_name": "MonoMod.Utils",
+      "assembly_version": "22.1.29.1",
+      "product_metadata": {
+        "FileVersion": "22.1.29.1",
+        "LegalCopyright": "Copyright 2022 0x0ade",
+        "ProductVersion": "22.01.29.01"
+      }
+    },
+    {
+      "path": "BepInEx/plugins/AnchorChain.Preloader.dll",
+      "sha256": "1ee1570f1e7f457ffa63c24ee4085b2cdea8069ea8cebf146de5ef027eaa3984",
+      "bytes": 7168,
+      "matches_official_acpreloader_zip_exactly": true,
+      "assembly_name": "AnchorChain.Preloader",
+      "assembly_version": "1.0.0.0",
+      "product_metadata": {
+        "FileVersion": "1.0.0.0",
+        "LegalCopyright": " ",
+        "ProductVersion": "1.0.0+6983e634922d31cb44a5ce6f19aea09769261261"
+      }
+    },
+    {
+      "path": "winhttp.dll",
+      "sha256": "d3b62f4c9c3e2196ef82603c52d6b98c043a0d6c125c081fd33d7ca3798b41b8",
+      "bytes": 26112,
+      "matches_official_acpreloader_zip_exactly": true,
+      "product_metadata": {
+        "FileVersion": "4.3.0.0",
+        "ProductVersion": "4.3.0"
+      }
+    }
+  ],
+  "redistributed_game_or_unity_assemblies": false,
+  "third_party_source_archive_executables_or_assemblies": false
+}

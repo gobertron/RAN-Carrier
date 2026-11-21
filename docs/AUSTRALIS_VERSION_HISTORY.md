@@ -1,3 +1,5 @@
+> **21 November 2026 — v1.3.1:** split five oversized static batches while retaining all 385,026 triangle faces and dimensions; remove the separate 24-aircraft test class, retain the canonical ID and four sister ships; add intact repeat-install no-op, recovery journal repair and a stable release launcher. [Release](https://github.com/gobertron/RAN-Carrier/releases/tag/v1.3.1) · [Source/evidence](../updates/v1.3.1/). 23 local filesystem regression checks passed; native Windows and live game results must be read separately from the release Actions run.
+
 # RAN / HMAS Australis — development version history
 
 Reconciled **15 November 2026** for *Sea Power: Naval Combat in the Missile Age*.

@@ -1,0 +1,118 @@
+name: Build and publish Australis v1.3.1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - updates/v1.3.1/**
+      - Install-Australis.cmd
+      - scripts/build_australis_release.py
+      - scripts/test_australis_bootstrap.py
+      - scripts/test_australis_release_builder.py
+      - scripts/AUSTRALIS-RELEASE.md
+      - .github/workflows/australis-release.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: australis-release-v1.3.1
+  cancel-in-progress: false
+
+jobs:
+  windows-powershell-51:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse the launcher and installer in Windows PowerShell 5.1
+        shell: powershell
+        run: |
+          $ErrorActionPreference='Stop'
+          if($PSVersionTable.PSVersion.Major -ne 5){throw 'Windows PowerShell 5.1 is required.'}
+          $files=@(Get-Item 'updates/v1.3.1/package/Clean-Install-Australis.ps1')
+          $files+=@(Get-ChildItem 'updates/v1.3.1/package/Helpers' -Filter '*.ps1' -File)
+          foreach($file in $files){
+            $tokens=$null;$errors=$null
+            [void][Management.Automation.Language.Parser]::ParseFile($file.FullName,[ref]$tokens,[ref]$errors)
+            if($errors.Count){$errors | Format-List | Out-String | Write-Host;throw ('PowerShell syntax failed: '+$file.Name)}
+          }
+          $launcher=[IO.File]::ReadAllText((Join-Path $pwd 'Install-Australis.cmd'))
+          $matches=[regex]::Matches($launcher,'(?ms)^#__AUSTRALIS_BOOTSTRAP_BEGIN__\r?\n(?<code>.*?)^#__AUSTRALIS_BOOTSTRAP_END__\r?$')
+          if($matches.Count -ne 1){throw 'Launcher block is incomplete.'}
+          $tokens=$null;$errors=$null
+          [void][Management.Automation.Language.Parser]::ParseInput($matches[0].Groups['code'].Value,[ref]$tokens,[ref]$errors)
+          if($errors.Count){$errors | Format-List | Out-String | Write-Host;throw 'Launcher PowerShell syntax failed.'}
+          Write-Host 'Windows PowerShell 5.1 parsing passed. No live game test was performed.'
+      - name: Exercise bootstrap verification with harmless HTTP fixtures
+        shell: powershell
+        run: |
+          python scripts/test_australis_bootstrap.py --pwsh powershell --output bootstrap-windows-results.json
+          if($LASTEXITCODE){throw 'Bootstrap verification regression failed.'}
+
+  release:
+    needs: windows-powershell-51
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      AUSTRALIS_VERSION: 1.3.1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check raw and gzip source packaging fixtures
+        run: python3 scripts/test_australis_release_builder.py
+      - name: Validate all package hashes and build the complete release
+        run: python3 scripts/build_australis_release.py --version "$AUSTRALIS_VERSION"
+      - name: Create or resume a draft release
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="v$AUSTRALIS_VERSION"
+          cat > release-assets/RELEASE-NOTES.txt <<'NOTES'
+          Repairs the Australis carrier model and retires its separate 24-aircraft test class. The canonical Australis platform and four normal sister-ship variants are retained.
+
+          Save Install-Australis.cmd once, close Sea Power, and double-click the launcher for installation and future stable updates. It downloads and verifies the complete package; the installer stages the replacement and preserves rollback information.
+
+          Release packaging validates all manifest hashes, paths and the single carrier class. Windows PowerShell 5.1 syntax is checked by this workflow. This is not a live Sea Power or full Windows installation test; scenario loading, geometry, aircraft operations, mechanisms and lighting still require an in-game check.
+          NOTES
+          if gh release view "$tag" --json isDraft,targetCommitish > release-state.json 2>/dev/null; then
+            if [[ "$(jq -r .isDraft release-state.json)" == false ]]; then
+              mkdir -p published-assets
+              for asset in "Australis-$tag-Windows11.zip" SHA256SUMS.txt Install-Australis.cmd; do
+                gh release download "$tag" --pattern "$asset" --dir published-assets
+                cmp "release-assets/$asset" "published-assets/$asset" || {
+                  echo 'The stable release already exists with different bytes. Bump the version before publishing a changed package.' >&2
+                  exit 1
+                }
+              done
+              echo 'AUSTRALIS_RELEASE_ALREADY_VERIFIED=true' >> "$GITHUB_ENV"
+              exit 0
+            fi
+            if [[ "$(jq -r .targetCommitish release-state.json)" != "$GITHUB_SHA" ]]; then
+              echo 'An existing draft targets another source commit. Use a new version or review the draft before retrying.' >&2
+              exit 1
+            fi
+          else
+            gh release create "$tag" --draft --target "$GITHUB_SHA" --title "RAN / HMAS Australis $tag" --notes-file release-assets/RELEASE-NOTES.txt
+          fi
+          gh release upload "$tag" \
+            "release-assets/Australis-$tag-Windows11.zip" \
+            release-assets/SHA256SUMS.txt \
+            release-assets/Install-Australis.cmd \
+            release-assets/RELEASE-CHECKS.json --clobber
+      - name: Verify uploaded bytes and publish the stable release
+        if: env.AUSTRALIS_RELEASE_ALREADY_VERIFIED != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="v$AUSTRALIS_VERSION"
+          mkdir -p uploaded-assets
+          for asset in "Australis-$tag-Windows11.zip" SHA256SUMS.txt Install-Australis.cmd RELEASE-CHECKS.json; do
+            gh release download "$tag" --pattern "$asset" --dir uploaded-assets
+            cmp "release-assets/$asset" "uploaded-assets/$asset"
+          done
+          (cd uploaded-assets && sha256sum --check SHA256SUMS.txt)
+          gh release edit "$tag" --draft=false --latest --notes-file release-assets/RELEASE-NOTES.txt
+          gh release view "$tag" --json url,isDraft,isPrerelease

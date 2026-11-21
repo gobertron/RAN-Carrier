@@ -1,0 +1,13 @@
+{
+  "tests": {
+    "valid_complete_layout": true,
+    "deterministic_zip_bytes": true,
+    "changed_file_rejected": true,
+    "duplicate_vessel_rejected": true,
+    "unsafe_windows_paths_rejected": true
+  },
+  "passed": 5,
+  "failed": 0,
+  "fixture_only": true,
+  "live_game_tested": false
+}

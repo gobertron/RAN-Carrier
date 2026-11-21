@@ -1,0 +1,144 @@
+{
+  "schema": 1,
+  "version": "1.3.1",
+  "kind": "Australis single-class mesh repair",
+  "repository": "gobertron/RAN-Carrier",
+  "canonical_ship_id": "ran_cvn_australis_2030",
+  "model_baseline": "Full Restore v1.2.1 / v0.10.26, consolidated in v1.3.0",
+  "last_user_confirmed_working_version": "1.2.0",
+  "last_working_version_limits": "Loading confirmed; lights, aircraft and mechanisms had outstanding checks",
+  "model_sha256_before": "a017c86cfac2491c791712e55571db3adbe48ca344a68b477c90a78d5ee05627",
+  "model_sha256_after": "df050f9f730242db5045afad7aa24540c3db22eb13af0b1b01a2b3c21cfbde65",
+  "mesh_repair": {
+    "objects_before": 586,
+    "objects_after": 598,
+    "triangle_count_preserved": 385026,
+    "all_triangle_material_records_preserved": true,
+    "coordinate_uv_normal_tables_preserved": true,
+    "root_hull_bounds_preserved": true,
+    "max_expanded_face_corners_per_mesh": 60000,
+    "new_static_meshes": [
+      {
+        "source": "Hull",
+        "name": "Hull__Chunk02",
+        "material": "hull_exterior"
+      },
+      {
+        "source": "Hull",
+        "name": "Hull__Chunk03",
+        "material": "hull_exterior"
+      },
+      {
+        "source": "FullBatch_edge",
+        "name": "FullBatch_edge__Chunk02",
+        "material": "edge"
+      },
+      {
+        "source": "FullBatch_edge",
+        "name": "FullBatch_edge__Chunk03",
+        "material": "edge"
+      },
+      {
+        "source": "FullBatch_edge",
+        "name": "FullBatch_edge__Chunk04",
+        "material": "edge"
+      },
+      {
+        "source": "FullBatch_edge",
+        "name": "FullBatch_edge__Chunk05",
+        "material": "edge"
+      },
+      {
+        "source": "FullBatch_edge",
+        "name": "FullBatch_edge__Chunk06",
+        "material": "edge"
+      },
+      {
+        "source": "FullBatch_edge",
+        "name": "FullBatch_edge__Chunk07",
+        "material": "edge"
+      },
+      {
+        "source": "FullBatch_hangar_white",
+        "name": "FullBatch_hangar_white__Chunk02",
+        "material": "hangar_white"
+      },
+      {
+        "source": "FullBatch_dark",
+        "name": "FullBatch_dark__Chunk02",
+        "material": "dark"
+      },
+      {
+        "source": "FullBatch_hull_exterior",
+        "name": "FullBatch_hull_exterior__Chunk02",
+        "material": "hull_exterior"
+      },
+      {
+        "source": "FullBatch_hull_exterior",
+        "name": "FullBatch_hull_exterior__Chunk03",
+        "material": "hull_exterior"
+      }
+    ],
+    "cause_status": "Oversized batch demonstrated; importer overflow remains a likely explanation until a live game retest"
+  },
+  "single_class_repair": {
+    "schema": 1,
+    "canonical_id": "ran_cvn_australis_2030",
+    "retired_test_id": "ran_cvn_southern_cross_2030",
+    "class_count": 1,
+    "class_ids": [
+      "ran_cvn_australis_2030"
+    ],
+    "aircraft_capacity": 99,
+    "sister_ships": [
+      "HMAS Australis 91",
+      "HMAS Southern Cross 92",
+      "HMAS Federation 93",
+      "HMAS Commonwealth 94"
+    ],
+    "removed_files": [
+      {
+        "path": "vessels/ran_cvn_southern_cross_2030.ini",
+        "sha256": "ae96c304e7f773a3f92f4b32c8d21f06c8ce3097a2f7f041d4b95b2c808d2951"
+      },
+      {
+        "path": "vessels/ran_cvn_southern_cross_2030_variants.ini",
+        "sha256": "937d67da7ca13c7b3da78fccb8e91312ee3e276a4e7d2d1c2ab1955d67b30331"
+      }
+    ],
+    "localization_before_sha256": "f57fdd9752f316a8b195342625e0febd8b147f4e0c423c720d62849c7401532e",
+    "localization_after_sha256": "12b1ce506c33fc530cae9ba941f9f5ca7bbe0eeadc79121762e260dd4aecf158",
+    "canonical_vessel_and_variants_unchanged": true,
+    "old_test_scenarios_require_reselecting_normal_class": true,
+    "live_game_tested": false
+  },
+  "native_nixie_decoys": {
+    "count": 2,
+    "cable_length_m": 579,
+    "retained": true
+  },
+  "controller_sha256": "fdfc08fd97bdd86e89b9b5ef86e96451299e503be164783a9bc1ad7fa696f75b",
+  "controller_source": "v1.2.3 corrected lighting source retained in v1.2.8",
+  "official_preloader_sha256": "bb99176970b0cc59f60722ee00e9cb82ae715807379ea14d229379a4fc9aca25",
+  "official_workshop_core": {
+    "item_id": "3380210757",
+    "version": "1.2.0",
+    "bundled": false,
+    "sha256": "17abaf4b006f2fe984807f62661cf8b78f7b01e60bb04ae16046bda0620dd614"
+  },
+  "supported_game_assembly_sha256": [
+    "3b193dcb71fcbae2f8ede15484223b139948e2b9bd3ae66fc7d45db104350297",
+    "eab2297ba92c6013958bdb2cf16d5794a4731330818ce353f89dc2241e16a3bd"
+  ],
+  "reported_prior_game_assembly_sha256": "46d765d07124c80149a3fc84aa5e4899efe85acf479a6e32f08d5c0bec3c9c16",
+  "reported_game_hash_added_to_allowlist": false,
+  "game_build_checked": "Prior user logs and original compatibility manifest; no new game runtime executed",
+  "native_windows_tested": false,
+  "live_game_tested": false,
+  "regression_report_included": true,
+  "geometry_and_class_reports": [
+    "Source-and-Checks/model-repair/MODEL-REPAIR-REPORT.json",
+    "Source-and-Checks/model-repair/INDEPENDENT-CHECKS.json",
+    "Source-and-Checks/class-repair/CLASS-REPAIR-TESTS.json"
+  ]
+}

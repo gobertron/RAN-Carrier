@@ -1,0 +1,161 @@
+using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.Reflection;
+using System.Linq;
+using System.Numerics;
+using RAN.Australis;
+namespace UnityEngine {
+ public class Object {
+  public bool destroyed;public string name{get;set;}
+  public static bool operator==(Object a,Object b)=>ReferenceEquals(a,b)||(ReferenceEquals(a,null)&&!ReferenceEquals(b,null)&&b.destroyed)||(ReferenceEquals(b,null)&&!ReferenceEquals(a,null)&&a.destroyed);
+  public static bool operator!=(Object a,Object b)=>!(a==b);
+  public override bool Equals(object b)=>ReferenceEquals(this,b);public override int GetHashCode()=>base.GetHashCode();
+ }
+ public struct Vector3 {public float x,y,z;public Vector3(float a,float b,float c){x=a;y=b;z=c;}public static implicit operator System.Numerics.Vector3(Vector3 v)=>new System.Numerics.Vector3(v.x,v.y,v.z);public static implicit operator Vector3(System.Numerics.Vector3 v)=>new Vector3(v.X,v.Y,v.Z);}
+ public class Component:Object {public GameObject gameObject;public Transform transform=>gameObject.transform;}
+ public class Transform:Component {
+  public Transform parent;public List<Transform> kids=new List<Transform>();Vector3 pos;public bool ThrowOnPositionSet;public Vector3 localPosition {get=>pos;set{if(ThrowOnPositionSet){Events.Log.Add("move_fail:"+name);throw new Exception("Synthetic position setter failure");}pos=value;writes++;Events.Log.Add((float.IsNaN(value.x)||float.IsNaN(value.y)||float.IsNaN(value.z)||float.IsInfinity(value.x)||float.IsInfinity(value.y)||float.IsInfinity(value.z)?"nonfinite:":"move:")+name);}}public Vector3 localEulerAngles {get;set;}public Vector3 lossyScale {get{Matrix4x4.Decompose(World,out var scale,out var rotation,out var position);return scale;}}public Vector3 localScale=new Vector3(1,1,1);public Quaternion rotation=Quaternion.Identity;public int writes;
+  public new string name=>gameObject.name;public int childCount=>kids.Count;public Transform GetChild(int i)=>kids[i];
+  public Matrix4x4 World=>Matrix4x4.CreateScale(localScale)*Matrix4x4.CreateFromQuaternion(rotation)*Matrix4x4.CreateTranslation(localPosition)*(parent==null?Matrix4x4.Identity:parent.World);
+  public Vector3 TransformPoint(Vector3 v)=>System.Numerics.Vector3.Transform(v,World);
+  public Vector3 InverseTransformPoint(Vector3 v){Matrix4x4.Invert(World,out var inverse);return System.Numerics.Vector3.Transform(v,inverse);}
+  public Vector3 position=>TransformPoint(new Vector3());
+  public void Add(Transform child){child.parent=this;kids.Add(child);}
+ }
+ public class GameObject:Object {
+  public Transform transform;public bool activeSelf=true;public bool activeInHierarchy=>activeSelf&&(transform.parent==null||transform.parent.gameObject.activeInHierarchy);public List<Component> components=new List<Component>();
+  public GameObject(string n){name=n;transform=new Transform{gameObject=this};}
+  public Component[] GetComponents(Type t)=>components.FindAll(c=>t.IsAssignableFrom(c.GetType())).ToArray();
+  public Component[] GetComponentsInChildren(Type t,bool inactive){var list=new List<Component>();void Walk(Transform tr){list.AddRange(tr.gameObject.components.Where(c=>t.IsAssignableFrom(c.GetType())));foreach(var child in tr.kids)Walk(child);}Walk(transform);return list.ToArray();}
+  public T Add<T>() where T:Component,new(){var c=new T{gameObject=this};components.Add(c);return c;}
+ }
+ public struct Bounds {public Vector3 center,size;public Vector3 extents=>(System.Numerics.Vector3)size/2;}
+ public class Renderer:Component {public Bounds bounds{get;set;}}public class MeshRenderer:Renderer{}public class SkinnedMeshRenderer:Renderer{}
+ public class Mesh:Object {public Bounds bounds;}
+ public class Collider:Component {bool state=true;public int enableWrites;public bool enabled{get=>state;set{state=value;enableWrites++;Events.Log.Add("collider:"+transform.name);}}}
+ public class MeshCollider:Collider {public bool convex=true;public Mesh sharedMesh;}
+ public class BoxCollider:Collider {public Vector3 center=new Vector3(),size=new Vector3(1,1,1);}
+ public static class Physics {public static int calls;public static bool fail;public static void SyncTransforms(){calls++;Events.Log.Add("physics");if(fail)throw new Exception("Synthetic physics synchronization failure");}}
+}
+static class Events {public static List<string> Log=new List<string>();}
+namespace SeaPower {
+ public class ObjectBase:UnityEngine.Component {public UnityEngine.GameObject statedRoot;public string _weaponStatus="Hold";public ArrayList _threats=new ArrayList(),_childAircraft=new ArrayList();public Hashtable _ammunitionToWeaponSystemsDictionary=new Hashtable();public bool IsDestroyed=>destroyed;public bool IsAirUnit=>this is Aircraft;public UnityEngine.GameObject getRootGameObject()=>statedRoot;public string getObjectIniName()=>"ran_cvn_australis_2030";}
+ public class Aircraft:ObjectBase{public bool _isInFlight;}public class Missile:ObjectBase{}
+ public class WeaponParameters {public string _sectionName,_systemName="MK15_Blk1";public UnityEngine.GameObject _mountObject;public WeaponSystemCIWS _weaponSystem;}
+ public class CIWS {public WeaponSystemCIWS _baseSystem;public ObjectBase _baseObject;public UnityEngine.GameObject _gunObject;public WeaponParameters _vwp;}
+ public class HitBox {public string _name;public UnityEngine.GameObject _go;public UnityEngine.Vector3 _position;}
+ public class WeaponSystemCIWS {public ObjectBase _baseObject;public string _sectionName;public UnityEngine.GameObject _mountObject;public CIWS _ciws;public WeaponParameters _vwp;public object _currentClosestTarget;public bool _isFiring;public List<HitBox> _colliders=new List<HitBox>();public UnityEngine.Vector3 AimPointPosition=>_baseObject.transform.TransformPoint(_colliders[0]._position);public void StopFire(){Events.Log.Add("stop:"+_sectionName);_isFiring=false;}}
+ public class Singleton<T>:UnityEngine.Object where T:class {static T _instance;public static void SetTestInstance(T value){_instance=value;}}
+ public class ObjectsManager:Singleton<ObjectsManager>{public ArrayList _listOfAllAircraftObjects=new ArrayList();}
+ public class FlightDeckTask {public ObjectBase Vehicle{get;set;}}
+ public class FlightDeckPoint {public ObjectBase OccupyingObject{get;set;}public bool IsBusy,IsOccupied;public ArrayList _incomingObjects=new ArrayList();}
+ public class FlightDeck {public ArrayList FlightDeckTasks=new ArrayList(),_flightDeckTasksToAdd=new ArrayList(),_flightDeckTasksToRemove=new ArrayList(),_elevators=new ArrayList(),_launchPoints=new ArrayList(),_recoveryPoints=new ArrayList(),_taxiPoints=new ArrayList(),_landingQueue=new ArrayList(),_holdingQueue=new ArrayList();public FlightDeck(){foreach(var row in new[]{Tuple.Create(_elevators,4),Tuple.Create(_launchPoints,7),Tuple.Create(_recoveryPoints,4)})for(int i=0;i<row.Item2;i++)row.Item1.Add(new FlightDeckPoint());}}
+}
+
+static class IntegrationClock {public static double Now;public static double Read()=>Now;}
+static class Ciws6IntegrationTests {
+ static int checks;static readonly double U=RetractableCiws6.Units;
+ static void Check(bool value,string name){checks++;if(!value)throw new Exception(name);}
+ static UnityEngine.Vector3 V(double x,double y,double z)=>new UnityEngine.Vector3((float)x,(float)y,(float)z);
+ sealed class Fixture {
+  internal UnityEngine.GameObject root,model,colliders,kinetics,systems,lift,fore,aft,mesh,damage;
+  internal UnityEngine.MeshCollider mc;internal UnityEngine.BoxCollider dc;
+  internal SeaPower.ObjectBase owner;internal SeaPower.FlightDeck deck;internal SeaPower.ObjectsManager manager;
+  internal SeaPower.WeaponSystemCIWS[] stations=new SeaPower.WeaponSystemCIWS[6];internal SeaPower.Missile missile;
+  internal Carrier carrier;internal RetractableCiws6 six;
+ }
+ static UnityEngine.GameObject Child(UnityEngine.GameObject parent,string name){var result=new UnityEngine.GameObject(name);parent.transform.Add(result.transform);return result;}
+ static void Match(UnityEngine.Transform tr,UnityEngine.Transform model,double[] origin,double[] scale){
+  tr.localPosition=tr.parent.InverseTransformPoint(model.TransformPoint(V(origin[0],origin[1],origin[2])));
+  Matrix4x4.Invert(tr.parent.World,out var inverse);Matrix4x4.Decompose(model.World*inverse,out var s,out var r,out var t);tr.rotation=r;tr.localScale=V(s.X*scale[0],s.Y*scale[1],s.Z*scale[2]);
+ }
+ static Fixture Make(bool nativeIdentity=true){
+  var f=new Fixture();f.root=new UnityEngine.GameObject("runtime vessel");f.root.transform.localPosition=V(1000,55,-500);f.root.transform.rotation=Quaternion.CreateFromYawPitchRoll(.32f,.08f,.04f);f.root.transform.localScale=V(U,U,U);
+  f.owner=f.root.Add<SeaPower.ObjectBase>();f.owner.statedRoot=f.root;f.deck=new SeaPower.FlightDeck();f.carrier=new Carrier(f.owner,"ran_cvn_australis_2030"){Deck=f.deck,Bound=true};
+  f.model=Child(f.root,"model frame");f.model.transform.rotation=Quaternion.CreateFromYawPitchRoll(-.21f,.04f,.03f);f.model.transform.localScale=V(.9,.9,.9);f.model.transform.localPosition=V(.1,.2,-.1);
+  f.colliders=Child(f.root,"Colliders");f.kinetics=Child(f.colliders,"kinematiccolliders");f.systems=Child(f.colliders,"systemcolliders");f.systems.activeSelf=false;
+  f.kinetics.transform.rotation=Quaternion.CreateFromYawPitchRoll(.44f,-.17f,.1f);f.kinetics.transform.localScale=V(.7,.7,.7);f.kinetics.transform.localPosition=V(-.2,.3,.4);
+  f.systems.transform.rotation=Quaternion.CreateFromYawPitchRoll(-.4f,.2f,.06f);f.systems.transform.localScale=V(1.1,1.1,1.1);f.systems.transform.localPosition=V(.4,-.1,-.2);
+  f.lift=Child(f.model,RetractableCiws6.Root);f.lift.transform.localPosition=V(-50/U,13.2/U,149.5/U);
+  f.fore=Child(f.model,RetractableCiws6.Fore);f.fore.transform.localPosition=V(-50/U,19.15/U,151.05/U);
+  f.aft=Child(f.model,RetractableCiws6.Aft);f.aft.transform.localPosition=V(-50/U,19.15/U,147.95/U);
+  f.mesh=Child(f.kinetics,Ciws6ColliderSync.MeshAlias);f.damage=Child(f.systems,Ciws6ColliderSync.DamageAlias);f.mc=f.mesh.Add<UnityEngine.MeshCollider>();f.dc=f.damage.Add<UnityEngine.BoxCollider>();
+  f.mc.sharedMesh=new UnityEngine.Mesh{bounds=new UnityEngine.Bounds{center=V(-50/U,15.7515940881427/U,149.5/U),size=V(6.02/U,6.0631881762855/U,6.02/U)}};
+  Match(f.mesh.transform,f.model.transform,new double[3],new[]{1d,1d,1d});Match(f.damage.transform,f.model.transform,new[]{-50/U,15.7515940881427/U,149.5/U},new[]{6.02/U,6.0631881762855/U,6.02/U});
+  f.missile=new SeaPower.Missile();f.owner._threats.Add(f.missile);var all=new ArrayList();
+  for(int i=1;i<=6;i++){
+   var mount=Child(i==6?f.lift:f.model,"CIWS_Mount_"+i);if(i==6)mount.transform.localPosition=V(0,2.7/U,0);
+   var gun=Child(mount,"CIWS_Gun_"+i);var station=new SeaPower.WeaponSystemCIWS{_baseObject=f.owner,_sectionName=i==6?(nativeIdentity?"WeaponSystem24":"UnknownSystem"):"WeaponSystem"+(i+8),_mountObject=mount,_currentClosestTarget=f.missile};
+   station._vwp=new SeaPower.WeaponParameters{_sectionName=station._sectionName,_mountObject=mount,_weaponSystem=station};station._ciws=new SeaPower.CIWS{_baseSystem=station,_baseObject=f.owner,_gunObject=gun,_vwp=station._vwp};
+   if(i==6)station._colliders.Add(new SeaPower.HitBox{_name=Ciws6ColliderSync.DamageAlias,_go=f.damage,_position=f.owner.transform.InverseTransformPoint(f.damage.transform.position)});
+   f.stations[i-1]=station;all.Add(station);
+  }
+  f.owner._ammunitionToWeaponSystemsDictionary["shared20mm"]=all;
+  for(int i=1;i<=4;i++){var jbd=Child(f.model,"JBD"+i);jbd.transform.localEulerAngles=V(0,i==3?-6:i==4?-10:0,0);}
+  void Register(UnityEngine.Transform tr){f.carrier.Models[tr.name]=tr;foreach(var child in tr.kids)Register(child);}Register(f.model.transform);
+  f.six=(RetractableCiws6)typeof(Carrier).GetField("sixth",BindingFlags.NonPublic|BindingFlags.Instance).GetValue(f.carrier);
+  ((System.Runtime.CompilerServices.ConditionalWeakTable<object,Carrier>)typeof(Bridge).GetField("carriers",BindingFlags.NonPublic|BindingFlags.Static).GetValue(null)).Add(f.owner,f.carrier);
+  f.manager=new SeaPower.ObjectsManager();SeaPower.ObjectsManager.SetTestInstance(f.manager);Events.Log.Clear();return f;
+ }
+ static void Tick(Fixture f,double now){IntegrationClock.Now=now;f.six.Tick(f.carrier,now);}
+ static void Deploy(Fixture f){for(int i=0;i<=80;i++)Tick(f,i*.1);}
+ static bool NativeStartGate(Fixture f)=>Convert.ToBoolean(typeof(Bridge).GetMethod("SixthStartFire",BindingFlags.NonPublic|BindingFlags.Static).Invoke(null,new object[]{f.stations[5]}));
+ static void StopBeforeWrites(string label){
+  int stop=Events.Log.FindIndex(e=>e=="stop:WeaponSystem24"),write=Events.Log.FindIndex(e=>e.StartsWith("move:")||e.StartsWith("collider:"));
+  Check(stop>=0&&write>=0&&stop<write,label+"; events="+string.Join(",",Events.Log.Take(8)));
+ }
+ static SeaPower.Aircraft Parked(Fixture f){
+  var root=new UnityEngine.GameObject("parked airframe");var aircraft=root.Add<SeaPower.Aircraft>();aircraft.statedRoot=root;
+  var renderer=root.Add<UnityEngine.MeshRenderer>();renderer.bounds=new UnityEngine.Bounds{center=f.model.transform.TransformPoint(V(-50/U,22/U,149.5/U)),size=V(1,1,1)};return aircraft;
+ }
+ static void Main(){
+  typeof(Bridge).GetField("clock",BindingFlags.NonPublic|BindingFlags.Static).SetValue(null,typeof(IntegrationClock).GetMethod("Read",BindingFlags.Public|BindingFlags.Static));
+  var f=Make();Check(!f.carrier.CiwsMayFire(f.stations[5],0),"Stowed6 denied even with native incoming missile demand");
+  Check(!f.carrier.CiwsStartAllowed(f.stations[5],0)&&!NativeStartGate(f),"Stowed sixth final native StartFire guard denies emission");
+  Check(f.six.Identify(f.carrier,f.stations[5])==CiwsStationKind.RetractableSix,"Unique owner/mount/attacher native6 identity binds");
+  for(int i=0;i<5;i++)Check(f.six.Identify(f.carrier,f.stations[i])==CiwsStationKind.OriginalFixed,"Original fixed station identity retained");
+  Deploy(f);Check(f.six.Phase==Ciws6Phase.Deployed,"Native-shaped module deploys after clear dwell: "+f.six.Reason);
+  Check(f.carrier.CiwsMayFire(f.stations[5],8),"Only verified deployed6 admits native missile firing: "+f.six.Reason);
+  Check(f.carrier.CiwsStartAllowed(f.stations[5],8)&&NativeStartGate(f),"Verified deployed sixth passes final native StartFire guard");
+  Check(f.mc.enabled&&f.dc.enabled,"Deployed owned proxies enabled");
+  Check(System.Numerics.Vector3.Distance(f.stations[5].AimPointPosition,f.damage.transform.position)<.002,"Native deployed aim getter follows runtime damage proxy in differing model/owner frames");
+  Check(f.carrier.DeflectorFlat(1)&&f.carrier.DeflectorFlat(2),"C1/C2 remain eligible while6raised");
+  Check(!f.carrier.DeflectorFlat(3)&&!f.carrier.DeflectorFlat(4),"C3/C4 require measured6stow");
+  f.stations[5]._isFiring=true;Events.Log.Clear();IntegrationClock.Now=8.1;f.six.AviationRequest(f.carrier,8.1);StopBeforeWrites("Aviation request stops6burst before all geometry/collider writes");
+  Check(!f.carrier.CiwsStartAllowed(f.stations[5],8.1)&&!NativeStartGate(f),"Queued native StartFire is denied immediately after stale-deployed aviation demand");
+  for(int i=2;i<=46;i++){double now=8+i*.1;IntegrationClock.Now=now;f.six.AviationRequest(f.carrier,now);}
+  Check(f.carrier.DeflectorFlat(3)&&f.carrier.DeflectorFlat(4),"Repeated pending demands complete finite stow and release C3/C4: "+f.six.Reason);
+  Check(!f.mc.enabled&&!f.dc.enabled,"Stowed owned proxies disabled");Check(!f.carrier.CiwsMayFire(f.stations[5],12.6),"Pending aviation keeps6firedenied");
+  Check(System.Numerics.Vector3.Distance(f.stations[5].AimPointPosition,f.damage.transform.position)<.002,"Native stowed aim getter follows runtime damage proxy after lowering");
+  for(int i=0;i<5;i++)Check(f.carrier.CiwsMayFire(f.stations[i],12.6),"Original5 firing unchanged during6trafficstow");
+  for(int i=0;i<5;i++)Check(f.carrier.CiwsStartAllowed(f.stations[i],12.6),"Original5 final native StartFire path unchanged");
+  var parked=Make();Deploy(parked);Check(parked.carrier.CiwsMayFire(parked.stations[5],8),"Parked fixture initially deploys");
+  parked.manager._listOfAllAircraftObjects.Add(Parked(parked));parked.stations[5]._isFiring=true;Events.Log.Clear();Tick(parked,8.1);StopBeforeWrites("Global parked aircraft stops6beforestowwrites");Check(!parked.carrier.CiwsMayFire(parked.stations[5],8.1),"Global parked aircraft prevents6fire");
+  var departure=Make();Deploy(departure);var departed=Parked(departure);departed._isInFlight=true;departure.owner._childAircraft.Add(departed);Check(!departure.carrier.CiwsMayFire(departure.stations[5],8.1),"Airborne child still overlapping sweep after task and point release blocks6");
+  var managerDeath=Make();Deploy(managerDeath);managerDeath.manager.destroyed=true;Check(!managerDeath.carrier.CiwsMayFire(managerDeath.stations[5],8.1),"Destroyed global manager with stale empty list cannot preserve sixth firing readiness");
+  var unknownAirframe=Make();Deploy(unknownAirframe);var unknownRoot=new UnityEngine.GameObject("unproven airframe");var unknown=unknownRoot.Add<SeaPower.Aircraft>();unknown.statedRoot=unknownRoot;unknownAirframe.manager._listOfAllAircraftObjects.Add(unknown);Check(!unknownAirframe.carrier.CiwsMayFire(unknownAirframe.stations[5],8.1),"Any live airframe with unpublished bounds inhibits sixth firing");
+  var fault=Make();Deploy(fault);fault.lift.transform.localEulerAngles=V(0,1,0);fault.stations[5]._isFiring=true;Check(!fault.carrier.CiwsMayFire(fault.stations[5],8.1),"Fresh off-axis pose denies6fire");Check(!fault.carrier.Fault,"Local6posefault doesnotfault wholecarrier");
+  for(int i=0;i<5;i++)Check(fault.carrier.CiwsMayFire(fault.stations[i],8.1),"Original5 fireguard unchanged through6localfault");
+  Check(fault.carrier.DeflectorFlat(1)&&fault.carrier.DeflectorFlat(2),"Local6fault doesnotgloballylockbowroutes");
+  foreach(var station in fault.stations.Take(5)){station._currentClosestTarget=new SeaPower.Aircraft();Check(!fault.carrier.CiwsMayFire(station,8.2),"Original5Holdstillrejectsaircraft after6fault");}
+  var identity=Make(false);Tick(identity,0);Check(!identity.carrier.CiwsMayFire(identity.stations[5],0),"Unidentified sixth never fires");Check(identity.carrier.DeflectorFlat(3)&&identity.carrier.DeflectorFlat(4),"Missing6identity doesnotpermanentlyholdphysicallystowedroutes: "+identity.six.Reason);
+  Check(!identity.carrier.Fault,"Missing6identity remains isolated fromcontroller");
+  var partialStart=Make();for(int i=0;i<=40;i++)Tick(partialStart,i*.1);Check(!partialStart.carrier.CiwsStartAllowed(partialStart.stations[5],4),"Partly deployed sixth cannot begin a queued native burst");
+  var unbound=Make();Deploy(unbound);unbound.carrier.Bound=false;IntegrationClock.Now=8.1;Check(!NativeStartGate(unbound),"Unbound controller cannot begin sixth native emission even at deployed pose");
+  var missingRoot=Make();missingRoot.carrier.Models.Remove(RetractableCiws6.Root);Check(!missingRoot.carrier.CiwsStartAllowed(missingRoot.stations[5],0),"Missing root with native sixth evidence denies emission");Check(!missingRoot.carrier.DeflectorFlat(3)&&!missingRoot.carrier.DeflectorFlat(4),"Missing root with mount6 present is not treated as absent legacy feature");
+  var wrongParameters=Make();wrongParameters.stations[5]._ciws._vwp=new SeaPower.WeaponParameters();Check(wrongParameters.six.Identify(wrongParameters.carrier,wrongParameters.stations[5])==CiwsStationKind.Unknown,"Attacher/system weapon-parameter mismatch rejects sixth identity");
+  var wrongOwner=Make();wrongOwner.stations[5]._vwp._weaponSystem=wrongOwner.stations[0];Check(wrongOwner.six.Identify(wrongOwner.carrier,wrongOwner.stations[5])==CiwsStationKind.Unknown,"Bidirectional native parameter ownership is required");
+  var wrongHierarchy=Make();wrongHierarchy.stations[5]._ciws._gunObject.transform.parent=wrongHierarchy.model.transform;Check(wrongHierarchy.six.Identify(wrongHierarchy.carrier,wrongHierarchy.stations[5])==CiwsStationKind.Unknown,"Gun must remain child of the exact native sixth mount");
+  var nan=Make();Deploy(nan);var np=nan.lift.transform.localPosition;nan.lift.transform.localPosition=V(np.x,double.NaN,np.z);nan.stations[5]._isFiring=true;Events.Log.Clear();Check(!nan.carrier.CiwsMayFire(nan.stations[5],8.1),"NaN measured lift position denies6");Check(!Events.Log.Any(e=>e.StartsWith("nonfinite:")),"Invalid lift measurement never reaches any position setter");Check(!nan.mc.enabled&&!nan.dc.enabled,"Invalid lift fault disables only sixth proxies");
+  var held=Make();Deploy(held);held.fore.transform.localPosition=V(-50/U,19.15/U,151.05/U);Events.Log.Clear();IntegrationClock.Now=8.1;held.six.AviationRequest(held.carrier,8.1);Check(!Events.Log.Any(e=>e=="move:"+RetractableCiws6.Root),"LiftTargetnull holds root while an unverified-open roof is opened");
+  var partial=Make();Deploy(partial);partial.lift.transform.localPosition=V(-50/U,13.2/U,149.5/U);partial.aft.transform.ThrowOnPositionSet=true;partial.stations[5]._isFiring=true;Events.Log.Clear();IntegrationClock.Now=8.1;partial.six.AviationRequest(partial.carrier,8.1);Check(Events.Log.IndexOf("stop:WeaponSystem24")>=0&&Events.Log.IndexOf("stop:WeaponSystem24")<Events.Log.FindIndex(e=>e.StartsWith("move_fail:")),"Partial setter failure still stops sixth before attempted motion");Check(!partial.mc.enabled&&!partial.dc.enabled,"Partial motion failure disables owned sixth proxies");Check(!partial.carrier.CiwsMayFire(partial.stations[5],8.2)&&!partial.carrier.Fault,"Partial motion failure denies6 without faulting carrier");
+  for(int i=0;i<5;i++)Check(partial.carrier.CiwsMayFire(partial.stations[i],8.2),"Original5 remains admitted after sixth partial setter failure");
+  foreach(bool fireFirst in new[]{false,true}){
+   var ambiguous=Make();var original=ambiguous.stations[5];var duplicate=new SeaPower.WeaponSystemCIWS{_baseObject=ambiguous.owner,_sectionName=original._sectionName,_mountObject=original._mountObject,_currentClosestTarget=ambiguous.missile};duplicate._vwp=new SeaPower.WeaponParameters{_sectionName=duplicate._sectionName,_mountObject=duplicate._mountObject,_weaponSystem=duplicate};duplicate._ciws=new SeaPower.CIWS{_baseSystem=duplicate,_baseObject=ambiguous.owner,_gunObject=original._ciws._gunObject,_vwp=duplicate._vwp};duplicate._colliders=original._colliders;((ArrayList)ambiguous.owner._ammunitionToWeaponSystemsDictionary["shared20mm"]).Add(duplicate);
+   bool first=fireFirst&&ambiguous.carrier.CiwsMayFire(original,0);Deploy(ambiguous);Check(!first&&!ambiguous.carrier.CiwsMayFire(original,8)&&!ambiguous.carrier.CiwsMayFire(duplicate,8),"Ambiguous native6map denies both candidates regardless first entry path");Check(ambiguous.six.PhysicallyStowed(ambiguous.carrier),"Ambiguous station identity can still release physically stowed routes");
+  }
+  Console.WriteLine("[PASS] "+checks+" native-shaped CIWS6 mechanism, gate, firing-origin and retained-five integration checks");
+ }
+}
+

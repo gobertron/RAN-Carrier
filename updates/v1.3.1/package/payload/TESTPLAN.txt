@@ -1,0 +1,13 @@
+AUSTRALIS v1.3.1 IN-GAME RETEST
+
+1. Restart Sea Power and create a NEW 2030 scenario.
+2. Confirm one normal 99-aircraft class and four sister-ship variants.
+3. Reselect normal Southern Cross in scenarios using the removed test ID.
+4. Inspect hull and both islands from each side for the former black spike.
+5. Stow/deploy the two 579m Nixie decoys and check their native pale cables.
+6. Test enabled modded aircraft selection and intended airframe deck fit.
+7. Test launch/recovery, helicopters, VTOL, lifts and catapults.
+8. Test dusk/night/storm lights, weapon bays, ICCS bubble and CIWS6.
+9. Keep installer log, JSON report and game log for any failure.
+
+Offline checks are not a live game pass.
