@@ -1,0 +1,318 @@
+
+newmtl hull
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd hull.png
+map_Ks hull_specular.png
+norm hull_normal.png
+
+newmtl underwater
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd underwater.png
+map_Ks underwater_specular.png
+norm underwater_normal.png
+
+newmtl deck
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd deck.png
+map_Ks deck_specular.png
+norm deck_normal.png
+
+newmtl island
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd island.png
+map_Ks island_specular.png
+norm island_normal.png
+
+newmtl glass
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd glass.png
+map_Ks glass_specular.png
+norm glass_normal.png
+
+newmtl white
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd white.png
+map_Ks white_specular.png
+norm white_normal.png
+
+newmtl gold
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd gold.png
+map_Ks gold_specular.png
+norm gold_normal.png
+
+newmtl dark
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd dark.png
+map_Ks dark_specular.png
+norm dark_normal.png
+
+newmtl laser
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd laser.png
+map_Ks laser_specular.png
+norm laser_normal.png
+
+newmtl edge
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd edge.png
+map_Ks edge_specular.png
+norm edge_normal.png
+
+newmtl sensor
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd sensor.png
+map_Ks sensor_specular.png
+norm sensor_normal.png
+
+newmtl hatch
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd hatch.png
+map_Ks hatch_specular.png
+norm hatch_normal.png
+
+newmtl track
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd track.png
+map_Ks track_specular.png
+norm track_normal.png
+
+newmtl weapon_ciws
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd weapon_ciws.png
+map_Ks weapon_ciws_specular.png
+
+newmtl weapon_30mm
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd weapon_30mm.png
+map_Ks weapon_30mm_specular.png
+
+newmtl weapon_launcher
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd weapon_launcher.png
+map_Ks weapon_launcher_specular.png
+
+newmtl weapon_hatch
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd weapon_hatch.png
+map_Ks weapon_hatch_specular.png
+
+newmtl weapon_decoy
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd weapon_decoy.png
+map_Ks weapon_decoy_specular.png
+
+newmtl hull_exterior
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd hull_exterior.png
+map_Ks hull_exterior_specular.png
+norm hull_exterior_normal.png
+
+newmtl flag
+Kd 1.00000 1.00000 1.00000
+Ka 0.15 0.15 0.15
+Ks 0.1 0.1 0.1
+Ns 20
+
+newmtl ols_green
+Kd 0.43922 0.78824 0.60784
+Ka 0.15 0.15 0.15
+Ks 0.1 0.1 0.1
+Ns 20
+
+newmtl ols_amber
+Kd 0.89804 0.71373 0.36078
+Ka 0.15 0.15 0.15
+Ks 0.1 0.1 0.1
+Ns 20
+
+newmtl ols_red
+Kd 0.86275 0.29804 0.27843
+Ka 0.15 0.15 0.15
+Ks 0.1 0.1 0.1
+Ns 20
+
+newmtl hangar_floor
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd hangar_floor.png
+map_Ks hangar_floor_specular.png
+norm hangar_floor_normal.png
+
+newmtl hangar_wall
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd hangar_wall.png
+map_Ks hangar_wall_specular.png
+norm hangar_wall_normal.png
+
+newmtl hangar_roof
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd hangar_roof.png
+map_Ks hangar_roof_specular.png
+norm hangar_roof_normal.png
+
+newmtl hangar_frame
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd hangar_frame.png
+map_Ks hangar_frame_specular.png
+norm hangar_frame_normal.png
+
+newmtl hangar_blue
+Kd 0.45098 0.62745 0.69412
+Ka 0.15 0.15 0.15
+Ks 0.1 0.1 0.1
+Ns 20
+
+newmtl hangar_green
+Kd 0.44706 0.64706 0.55686
+Ka 0.15 0.15 0.15
+Ks 0.1 0.1 0.1
+Ns 20
+
+newmtl hangar_walk
+Kd 0.23137 0.46275 0.40392
+Ka 0.15 0.15 0.15
+Ks 0.1 0.1 0.1
+Ns 20
+
+newmtl hangar_yellow
+Kd 0.84314 0.72157 0.36863
+Ka 0.15 0.15 0.15
+Ks 0.1 0.1 0.1
+Ns 20
+
+newmtl hangar_white
+Kd 0.86275 0.89412 0.89020
+Ka 0.15 0.15 0.15
+Ks 0.1 0.1 0.1
+Ns 20
+
+newmtl hangar_sign
+Kd 0.14902 0.24706 0.29804
+Ka 0.15 0.15 0.15
+Ks 0.1 0.1 0.1
+Ns 20
+
+newmtl hangar_red
+Kd 0.61961 0.28627 0.25490
+Ka 0.15 0.15 0.15
+Ks 0.1 0.1 0.1
+Ns 20
+
+newmtl hangar_metal
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd hangar_metal.png
+map_Ks hangar_metal_specular.png
+norm hangar_metal_normal.png
+
+newmtl crew_mark
+
+Ka 0.15 0.15 0.15
+Kd 1 1 1
+Ks 0.08 0.08 0.08
+Ns 16
+map_Kd crew_mark.png
+map_Ks crew_mark_specular.png
+norm crew_mark_normal.png
+
+newmtl hullnumber
+Kd 1 1 1
+Ka 0.15 0.15 0.15
+Ks 0.1 0.1 0.1
+Ns 20
+map_Kd hullnumber_91.png

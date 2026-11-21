@@ -1,0 +1,38 @@
+AUSTRALIS-CLASS CVN
+Royal Australian Navy - fictional alternative-history carrier
+
+ROLE
+Naval strike, fleet air defence and long-range sea control across the Pacific and Indian Oceans. The Australis class represents an alternative Australian carrier programme developed after the Second World War and Korean War, with an emphasis on sustained operations, crew protection and enclosed aviation facilities.
+
+SHIP PARTICULARS
+Length: 370 m
+Configured displacement: approximately 112,000 tonnes
+Maximum speed: 30 knots
+Propulsion: nuclear power, 280,000 hp and eight waterjet propulsion units
+Scenario service window: 2025-2055
+
+AIR OPERATIONS
+Capacity: up to 99 aircraft in total
+Four 95 m catapults: two forward and two on the port waist
+Four aircraft lifts, an angled arrested-recovery lane and three helicopter/VTOL pads
+Enclosed hangar and lift arrangements for operations in exposed ocean conditions
+Expanded stock-aircraft catalogue covering fixed-wing, STOL, VTOL and helicopters; actual deck compatibility varies by airframe
+
+DEFENCE AND SENSORS
+Six CIWS stations: five fixed and one forward retractable station
+Two 30 mm gun mounts, layered surface-to-air missile launchers and four VLS groups
+Chaff countermeasures and two towed decoys
+Air and surface search, aviation-control radar, fire-control directors, electronic support and defensive/offensive electronic countermeasures
+
+DECK SYSTEMS
+Controller-managed weapon bays, forward CIWS6 and ICCS deck-control bubble
+Landing guidance, navigation lights and deck, hangar, lift-well and tower lighting for night and low-light operations
+
+CLASS MEMBERS
+HMAS Australis 91
+HMAS Southern Cross 92
+HMAS Federation 93
+HMAS Commonwealth 94
+
+OPERATIONAL NOTES
+Requires AnchorChain and its current official preloader. Existing air wings are preserved; 99 is capacity, not an automatic embarked total. Missile and sensor performance follows the configured Sea Power definitions. Mechanisms depend on controller startup and their native threat/flight-traffic conditions.

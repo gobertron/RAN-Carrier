@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "version": "1.4.0",
+  "kind": "Australis official Keel loader migration",
+  "repository": "gobertron/RAN-Carrier",
+  "canonical_ship_id": "ran_cvn_australis_2030",
+  "previous_release": "1.3.2",
+  "model_sha256_before": "705258092c28e3b3282ce264b5ceb889ee1c8a56b8b528714c280df6f100ec60",
+  "model_sha256_after": "705258092c28e3b3282ce264b5ceb889ee1c8a56b8b528714c280df6f100ec60",
+  "retained_asset_and_gameplay_file_count": 147,
+  "model_assets_and_gameplay_vessels_unchanged": true,
+  "controller_sha256": "fdfc08fd97bdd86e89b9b5ef86e96451299e503be164783a9bc1ad7fa696f75b",
+  "controller_unchanged": true,
+  "keel_dependency": {
+    "workshop_item_id": "3835527459",
+    "tested_version": "0.7.0",
+    "tested_versions": [
+      "0.6.0",
+      "0.7.0"
+    ],
+    "core_dll_sha256": [
+      "cc3902e37cd541ced9152e0cc7e9e468fa34d88ca227a668b9697d0fafebd7ba",
+      "ea03d6ff33514bed3fdd8c32f0cfa480da0b70fcf2f265bade5c48e6cdf54801"
+    ],
+    "compatibility_library_sha256": [
+      "e272811050698640a8936834363da91769dbc83e017637e3629c21bca6bea764"
+    ],
+    "stub_dll_sha256": [
+      "4a875f0842dbf836cfae5b75d5c5bb10f24ae48e724f5bd1b29dc7b4ba0dc10b",
+      "d99c3e57e650ea014b81c75d8a1c9929e10ef77c22d6913d7bb0b19a612dfb5b"
+    ],
+    "patcher_dll_sha256": [
+      "aabe792f0c3058f78d0eca1626875f420fe5325a5d5071db46d4874909a876bc",
+      "89b732c2f3ddbd6b091caaa6a0db1e124d7413ca874842c9ed8a020bfa0caf0e"
+    ],
+    "core_versions": {
+      "cc3902e37cd541ced9152e0cc7e9e468fa34d88ca227a668b9697d0fafebd7ba": "0.7.0",
+      "ea03d6ff33514bed3fdd8c32f0cfa480da0b70fcf2f265bade5c48e6cdf54801": "0.6.0"
+    }
+  },
+  "keel_primary_sources": {
+    "release": "https://github.com/struckl/SeaPowerKeel/releases/tag/v0.7.0",
+    "release_commit": "8c2bcc2f9b90bc2b3ea12c8a62247d588207dba9",
+    "release_zip_sha256": "9f0a7bd1a9cea705792fbbb2adef0b249b57beaa77e832d3ff0b616aad755e0e",
+    "v0.6.0_zip_sha256": "073fe63431572e97d012f043c70c8391a468c9d9c36289d7691725338a19456b",
+    "author_guide": "https://github.com/struckl/SeaPowerKeel/blob/v0.7.0/docs/for-mod-authors.md",
+    "installation": "https://github.com/struckl/SeaPowerKeel/blob/v0.7.0/docs/install.md",
+    "takeover": "https://github.com/struckl/SeaPowerKeel/blob/v0.7.0/docs/how-it-works.md"
+  },
+  "keel_binary_or_code_redistributed": false,
+  "standalone_anchorchain_item_required": false,
+  "bundled_bepinex_loader": false,
+  "supported_game_assembly_sha256": [
+    "3b193dcb71fcbae2f8ede15484223b139948e2b9bd3ae66fc7d45db104350297",
+    "eab2297ba92c6013958bdb2cf16d5794a4731330818ce353f89dc2241e16a3bd"
+  ],
+  "game_build_checked": "Original allowlist and prior user logs; no new live runtime",
+  "last_user_confirmed_loaded_version": "1.3.1",
+  "last_user_confirmation": {
+    "version": "1.3.1",
+    "single_class_loads": true,
+    "black_window_strip_persists": true,
+    "full_functional_success_confirmed": false
+  },
+  "previous_window_repair_visual_result_confirmed": false,
+  "keel_abi_evidence_present": true,
+  "installer_regression_matches_current_sources": true,
+  "installer_regression_summary": "40 passed, 0 failed; PowerShell 7.4.13 / Linux.",
+  "native_windows_tested": false,
+  "live_game_tested": false,
+  "historical_evidence": "Source-and-Checks/historical/v1.3.2"
+}

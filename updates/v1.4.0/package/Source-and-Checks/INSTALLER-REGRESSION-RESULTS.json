@@ -1,0 +1,305 @@
+{
+  "version": "1.4.0",
+  "runtime": "PowerShell 7.4.13 / Linux",
+  "native_windows_tested": false,
+  "sea_power_tested": false,
+  "dependency_bytes": "Synthetic Keel fixture hashes only; official ABI checked separately",
+  "passed": 40,
+  "failed": 0,
+  "test_source_sha256": "2aeb036f8f0c3db670248476353e2fbf08466b53edb3958d1f1ae30ceb1f4d09",
+  "installer_sha256": "89004a769b611ed4c8d3a3a929bb10ba2c5a675629c99f5b3937b9e04afaee38",
+  "helpers_sha256": "ec0170cdc900434a9f90ac8ff831b88b77a22dae8f902a4717f4f233a035f089",
+  "restore_sha256": "89d7eb3c1bb77b2b906dda1671a2a1adfe8a54a85e39e5077a016ea3a23199b7",
+  "keel_dependency_sha256": "916e2afd97cf05a87d9c0ea72fd8c9f73e37e6c19e9eb94c1c0f5d8e555f5e97",
+  "tests": [
+    {
+      "name": "successful_cleanup_install_and_exact_restore",
+      "passed": true,
+      "detail": {
+        "aircraft_ids": [
+          "local_plane",
+          "stock_fixed",
+          "stock_helo",
+          "user_plane",
+          "workshop_plane"
+        ],
+        "exact_restore_and_repeat_restore": true
+      },
+      "seconds": 9.934
+    },
+    {
+      "name": "repeat_install_is_noop_preserves_single_class_and_airwing",
+      "passed": true,
+      "detail": {
+        "no_game_settings_or_archive_writes": true
+      },
+      "seconds": 6.077
+    },
+    {
+      "name": "upgrade_from132_to140_preserves_model_and_exact_restore",
+      "passed": true,
+      "detail": {
+        "upgrade_from132_preserves_actual_model_and_airwing": true
+      },
+      "seconds": 6.953
+    },
+    {
+      "name": "corrupt_installed_texture_is_backed_up_and_repaired",
+      "passed": true,
+      "detail": null,
+      "seconds": 8.86
+    },
+    {
+      "name": "new_enabled_aircraft_refreshes_then_repeat_is_noop",
+      "passed": true,
+      "detail": null,
+      "seconds": 8.579
+    },
+    {
+      "name": "secondary_steam_library_detected_from_vdf",
+      "passed": true,
+      "detail": {
+        "libraryfolders_vdf_secondary_library": true
+      },
+      "seconds": 0.51
+    },
+    {
+      "name": "clean_install_with_synthetic_audited_game_and_native_airwing",
+      "passed": true,
+      "detail": {
+        "synthetic_audited_game_only": true,
+        "full_native_99_aircraft_profile": true,
+        "production_allowlist_unmodified": true
+      },
+      "seconds": 5.711
+    },
+    {
+      "name": "check_mode_has_no_active_writes",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.823
+    },
+    {
+      "name": "unknown_fresh_game_refuses_before_archive",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.532
+    },
+    {
+      "name": "malformed_settings_refuses_before_archive",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.822
+    },
+    {
+      "name": "symlinked_old_content_refuses_before_archive",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.602
+    },
+    {
+      "name": "tampered_payload_refuses_before_archive",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.152
+    },
+    {
+      "name": "invalid_existing_harmony_is_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 2.01
+    },
+    {
+      "name": "unrelated_anchorchain_preloader_preserved",
+      "passed": true,
+      "detail": {
+        "unrelated_loader_bytes_untouched": true
+      },
+      "seconds": 6.475
+    },
+    {
+      "name": "rollback_after_first_archive_move_restores_exact_state",
+      "passed": true,
+      "detail": null,
+      "seconds": 5.774
+    },
+    {
+      "name": "rollback_after_activation_restores_exact_state",
+      "passed": true,
+      "detail": null,
+      "seconds": 6.171
+    },
+    {
+      "name": "interrupted_automatic_rollback_retains_journal_and_resumes",
+      "passed": true,
+      "detail": {
+        "latest_held_inventory_preserved": true,
+        "manual_resume_restores_exact_original": true
+      },
+      "seconds": 9.206
+    },
+    {
+      "name": "restore_refuses_concurrent_settings_change_then_recovers",
+      "passed": true,
+      "detail": null,
+      "seconds": 9.559
+    },
+    {
+      "name": "restore_refuses_modified_test_build",
+      "passed": true,
+      "detail": null,
+      "seconds": 6.653
+    },
+    {
+      "name": "mixed_ship_pack_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.471
+    },
+    {
+      "name": "mixed_workshop_pack_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.553
+    },
+    {
+      "name": "disabled_doorstop_config_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.961
+    },
+    {
+      "name": "missing_existing_runtime_requires_official_setup_without_writes",
+      "passed": true,
+      "detail": {
+        "missing_existing_runtime_not_replaced": true
+      },
+      "seconds": 2.035
+    },
+    {
+      "name": "keel_missing_refuses_before_archive",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.889
+    },
+    {
+      "name": "keel_disabled_refuses_before_archive",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.916
+    },
+    {
+      "name": "unknown_keel_core_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 2.012
+    },
+    {
+      "name": "missing_keel_compatibility_library_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 2.259
+    },
+    {
+      "name": "missing_keel_starter_copied_and_restored",
+      "passed": true,
+      "detail": {
+        "copied_from_verified_installed_keel": true,
+        "repeat_noop_then_exact_restore": true
+      },
+      "seconds": 10.388
+    },
+    {
+      "name": "missing_keel_patcher_copied_and_restored",
+      "passed": true,
+      "detail": {
+        "copied_from_verified_installed_keel": true,
+        "repeat_noop_then_exact_restore": true
+      },
+      "seconds": 10.346
+    },
+    {
+      "name": "missing_keel_starter_and_patcher_copied_and_restored",
+      "passed": true,
+      "detail": {
+        "copied_from_verified_installed_keel": true,
+        "repeat_noop_then_exact_restore": true
+      },
+      "seconds": 9.54
+    },
+    {
+      "name": "unknown_existing_keel_starter_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.855
+    },
+    {
+      "name": "unknown_existing_keel_patcher_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.999
+    },
+    {
+      "name": "check_mode_does_not_write_missing_keel_startup",
+      "passed": true,
+      "detail": {
+        "dependency_repairs_planned_but_not_written_in_check_mode": true
+      },
+      "seconds": 2.035
+    },
+    {
+      "name": "rollback_removes_only_new_keel_startup_files",
+      "passed": true,
+      "detail": {
+        "new_shared_starter_and_patcher_removed_by_rollback": true
+      },
+      "seconds": 6.533
+    },
+    {
+      "name": "no_separate_anchorchain_core_required",
+      "passed": true,
+      "detail": {
+        "no_anchorchain_workshop_subscription_required": true
+      },
+      "seconds": 7.036
+    },
+    {
+      "name": "enabled_local_keel_detected",
+      "passed": true,
+      "detail": {
+        "enabled_local_keel_detected": true
+      },
+      "seconds": 6.967
+    },
+    {
+      "name": "secondary_workshop_keel_detected",
+      "passed": true,
+      "detail": {
+        "keel_workshop_in_secondary_steam_library": true
+      },
+      "seconds": 6.932
+    },
+    {
+      "name": "explicit_takeover_false_is_preserved_and_refused",
+      "passed": true,
+      "detail": null,
+      "seconds": 2.217
+    },
+    {
+      "name": "unrelated_takeover_key_does_not_block",
+      "passed": true,
+      "detail": {
+        "takeover_setting_read_from_loading_section_only": true
+      },
+      "seconds": 7.22
+    },
+    {
+      "name": "dependency_configuration_change_refreshes_receipt",
+      "passed": true,
+      "detail": {
+        "dependency_config_signature_refreshes_receipt": true
+      },
+      "seconds": 9.515
+    }
+  ]
+}

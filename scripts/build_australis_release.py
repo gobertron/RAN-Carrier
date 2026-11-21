@@ -62,6 +62,12 @@ def verify_package(package: Path, version: str) -> dict:
     ):
         assert required in files, f"Missing {required}"
     assert (package / "payload/VERSION").read_text().strip() == version
+    if tuple(int(part) for part in version.split(".")) >= (1, 4, 0):
+        assert "Helpers/Keel-Dependency.ps1" in files, "Missing Keel dependency checks"
+        assert manifest["keel"]["workshop_item_id"] == "3835527459"
+        assert "anchorchain_workshop_item_id" not in manifest, "Obsolete standalone AnchorChain requirement"
+        assert not any(name.startswith("loader/") for name in files), "Loader binaries must not be bundled"
+        assert not any(Path(name).name.casefold().startswith("seapowerkeel") for name in files), "Keel must come from its official release"
     vessel_roots = []
     for path in (package / "payload/vessels").glob("*.ini"):
         text = path.read_text(encoding="utf-8-sig")
@@ -151,7 +157,7 @@ def build(package: Path, launcher: Path, output: Path, version: str) -> dict:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     root = Path(__file__).resolve().parents[1]
-    parser.add_argument("--version", default="1.3.2")
+    parser.add_argument("--version", default="1.4.0")
     parser.add_argument("--package", type=Path)
     parser.add_argument("--output", type=Path, default=root / "release-assets")
     args = parser.parse_args()

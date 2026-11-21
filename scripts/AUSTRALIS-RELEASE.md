@@ -1,10 +1,10 @@
 # Australis release packaging
 
-Run `python3 scripts/build_australis_release.py --version 1.3.2` from the
+Run `python3 scripts/build_australis_release.py --version 1.4.0` from the
 repository root. The release workflow runs the same builder.
 
 The repository stores the large model at
-`updates/v1.3.2/package/payload/ships/ran_cvn_australis_2030/ran_cvn_australis_2030.obj.gz`
+`updates/v1.4.0/package/payload/ships/ran_cvn_australis_2030/ran_cvn_australis_2030.obj.gz`
 to fit repository upload limits. This is the only compressed source placeholder
 the builder supports. The package manifest continues to name and checksum the
 uncompressed `ran_cvn_australis_2030.obj`.
@@ -22,3 +22,7 @@ To create a reproducible compressed source manually, use Python's
 `gzip.compress(raw_bytes, compresslevel=9, mtime=0)`. Keep the raw model's hash in
 the manifest. Run `python3 scripts/test_australis_release_builder.py` to check raw
 and compressed source equivalence, corruption and size limits.
+
+The1.4.0 carrier package contains no Keel binaries or bundled BepInEx loader.
+The manifest records verified official Keel dependency hashes; installed copies
+are checked by Helpers/Keel-Dependency.ps1. Keep Keel in its own official folder.

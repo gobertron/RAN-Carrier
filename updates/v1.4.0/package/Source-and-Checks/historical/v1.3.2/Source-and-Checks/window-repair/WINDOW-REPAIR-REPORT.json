@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "repair": "Window-only UV and glazing material repair",
+  "before_obj_sha256": "df050f9f730242db5045afad7aa24540c3db22eb13af0b1b01a2b3c21cfbde65",
+  "after_obj_sha256": "705258092c28e3b3282ce264b5ceb889ee1c8a56b8b528714c280df6f100ec60",
+  "window_groups_repaired": 66,
+  "window_triangle_count": 3928,
+  "degenerate_uv_triangles_before": 244,
+  "degenerate_uv_triangles_after": 0,
+  "minimum_abs_uv_determinant_after": 0.011430417216587108,
+  "new_uv_entries": 11784,
+  "window_global_uv_index_range": [
+    1,
+    11784
+  ],
+  "positions_preserved": true,
+  "normals_preserved": true,
+  "triangle_position_indices_preserved": true,
+  "triangle_normal_indices_preserved": true,
+  "all_obj_material_assignments_and_object_names_preserved": true,
+  "nonwindow_uv_semantics_preserved": true,
+  "original_uv_values_preserved": true,
+  "previous_mesh_batches_within_60000_expanded_corners": true,
+  "before_material_sha256": "a369d6fc1d25a3d69a2b77ded2d0274b46914dcbbd124541f72d6a977917cf6d",
+  "after_material_sha256": "dbd3f54bab59ed59797b39e508c8ad39576d01e120ad0a2c43e1462bbc2d13a0",
+  "fittings_material_sha256": "a369d6fc1d25a3d69a2b77ded2d0274b46914dcbbd124541f72d6a977917cf6d",
+  "window_material_shader": "Marmoset/Bumped Specular IBL",
+  "removed_window_material_bindings": [
+    "_BumpMap",
+    "_SpecTex"
+  ],
+  "window_main_texture_and_opaque_alpha_preserved": true,
+  "nonwindow_glass_material_preserved_as": "glass_fittings_mat.ini",
+  "nonwindow_glass_submodels": [
+    "FullBatch_glass",
+    "FullBatch_ICCS_Bubble_Lift__glass"
+  ],
+  "window_material_reference_count": 66,
+  "fittings_material_reference_count": 2,
+  "controller_and_glow_names_unchanged": true,
+  "before_vessel_sha256": "1ea97422659d1168ebdfe78b1142815f8bc12405a18699384ee90e0ac26cad13",
+  "after_vessel_sha256": "72fd3edba6a2a77b0d3414975155ed3ee248a80b32d15b232c5a02bb9af95a37",
+  "diagnosis": "Degenerate UVs confirmed; relationship to persistent strip requires runtime retest",
+  "native_windows_tested": false,
+  "live_game_tested": false
+}

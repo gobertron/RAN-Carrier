@@ -1,0 +1,17 @@
+{
+  "controller_sha256": "fdfc08fd97bdd86e89b9b5ef86e96451299e503be164783a9bc1ad7fa696f75b",
+  "compatibility_library_sha256": "e272811050698640a8936834363da91769dbc83e017637e3629c21bca6bea764",
+  "library_identity": "AnchorChain, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null",
+  "references": [
+    "netstandard, Version=2.1.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51",
+    "AnchorChain, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null",
+    "0Harmony, Version=2.9.0.0, Culture=neutral, PublicKeyToken=null"
+  ],
+  "public_acplugin": true,
+  "interface_binding": true,
+  "plugin_constructed": true,
+  "entry_point_invoked": false,
+  "game_hooks_tested": false,
+  "keel_runtime_tested": false,
+  "runtime": "7.4.13"
+}

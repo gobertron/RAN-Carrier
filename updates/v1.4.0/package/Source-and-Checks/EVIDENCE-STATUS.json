@@ -1,0 +1,14 @@
+{
+  "release_version": "1.4.0",
+  "installer_regression_matches_current_sources": true,
+  "installer_source_sha256": {
+    "installer_sha256": "89004a769b611ed4c8d3a3a929bb10ba2c5a675629c99f5b3937b9e04afaee38",
+    "helpers_sha256": "ec0170cdc900434a9f90ac8ff831b88b77a22dae8f902a4717f4f233a035f089",
+    "restore_sha256": "89d7eb3c1bb77b2b906dda1671a2a1adfe8a54a85e39e5077a016ea3a23199b7",
+    "test_source_sha256": "2aeb036f8f0c3db670248476353e2fbf08466b53edb3958d1f1ae30ceb1f4d09",
+    "keel_dependency_sha256": "916e2afd97cf05a87d9c0ea72fd8c9f73e37e6c19e9eb94c1c0f5d8e555f5e97"
+  },
+  "status": "40 passed, 0 failed; PowerShell 7.4.13 / Linux.",
+  "keel_abi_evidence_present": true,
+  "live_game_tested": false
+}

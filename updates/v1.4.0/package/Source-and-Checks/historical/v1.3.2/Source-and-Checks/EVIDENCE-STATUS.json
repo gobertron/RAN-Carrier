@@ -1,0 +1,13 @@
+{
+  "release_version": "1.3.2",
+  "installer_regression_matches_current_sources": true,
+  "installer_source_sha256": {
+    "installer_sha256": "c9cb3fa18dc14a7a68a13aef27bbb83fea71a3011c47b3ca297b00e1118127cb",
+    "helpers_sha256": "ec0170cdc900434a9f90ac8ff831b88b77a22dae8f902a4717f4f233a035f089",
+    "restore_sha256": "deee1217ef6ffffb36cfd908d080a669cdfd7e2bb9689cb56f3803fb7c2ecef3",
+    "test_source_sha256": "7316f8c7d13036a40845ffbf7d3747373dc9016fecc036048b6373d8e0c315a8"
+  },
+  "status": "23 passed, 0 failed; PowerShell 7.4.13 / Linux.",
+  "historical_evidence": "historical/v1.3.1",
+  "live_game_tested": false
+}

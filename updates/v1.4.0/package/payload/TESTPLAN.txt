@@ -1,0 +1,8 @@
+AUSTRALIS v1.4.0 / KEEL IN-GAME RETEST
+1. Enable official R.A.T.S. Keel, close the game and run Install-Australis.cmd.
+2. Restart Sea Power; follow a second-restart request from Keel if displayed.
+3. Ctrl+Shift+K: verify RAN Australis Enclosed Deck starts once. Its unchanged legacy controller label can show 0.10.24 while this carrier package is 1.4.0. Save Keel's report/log and takeover report.
+4. Check fresh RAN-Australis-DeckController.log for Installed audited route/lift hooks and Bound; NOT ACTIVE means hooks failed even if Keel says RUNNING.
+5. Create a new 2030 mission. Verify one class, four variants, intended aircraft selection, fixed-wing launch/recovery, VTOL/helicopters, lifts and catapults.
+6. Test CIWS6, ICCS, weapon bays, day/night/storm lights and the outstanding black-window-strip visual repair.
+No live game success is inferred from package, ABI or installer checks.

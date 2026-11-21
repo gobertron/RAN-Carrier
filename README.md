@@ -1,8 +1,8 @@
 # RAN / HMAS Australis — Sea Power
 
-**Latest stable update: v1.3.2** — corrected bridge-window UV mapping and simplified window materials; retains one 99-aircraft class and the reusable Windows installer.
+**Latest stable update: v1.4.0** — R.A.T.S. Keel loader support, retaining the 99-aircraft carrier, window repair and reusable Windows installer.
 
-[Download Install-Australis.cmd](https://github.com/gobertron/RAN-Carrier/releases/latest/download/Install-Australis.cmd) · [Release v1.3.2](https://github.com/gobertron/RAN-Carrier/releases/tag/v1.3.2) · [Source and installation notes](updates/v1.3.2/README.txt)
+[Download Install-Australis.cmd](https://github.com/gobertron/RAN-Carrier/releases/latest/download/Install-Australis.cmd) · [Release v1.4.0](https://github.com/gobertron/RAN-Carrier/releases/tag/v1.4.0) · [Source and installation notes](updates/v1.4.0/README.txt)
 
 The separate 24-aircraft test class is retired; all four normal sister ships remain. Existing scenarios using the retired test ID need the normal Southern Cross selected again. The main platform ID is unchanged. Source geometry and 23 installer filesystem checks passed. Visual rendering, aviation and mechanisms still require a live Sea Power retest. Last user-confirmed full-carrier baseline was v1.2.0 with remaining issues. Detailed evidence accompanies the package.
 

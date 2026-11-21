@@ -1,0 +1,28 @@
+{
+  "passed": 2,
+  "failed": 0,
+  "profiles": [
+    {
+      "official_version": "0.6.0",
+      "core_sha256": "ea03d6ff33514bed3fdd8c32f0cfa480da0b70fcf2f265bade5c48e6cdf54801",
+      "compatibility_library_sha256": "e272811050698640a8936834363da91769dbc83e017637e3629c21bca6bea764",
+      "missing_files_repaired": 2,
+      "repeat_plans": 0,
+      "dependency_signature_stable": true,
+      "existing_anchorchain_preloader_preserved": true,
+      "production_manifest_used": true
+    },
+    {
+      "official_version": "0.7.0",
+      "core_sha256": "cc3902e37cd541ced9152e0cc7e9e468fa34d88ca227a668b9697d0fafebd7ba",
+      "compatibility_library_sha256": "e272811050698640a8936834363da91769dbc83e017637e3629c21bca6bea764",
+      "missing_files_repaired": 2,
+      "repeat_plans": 0,
+      "dependency_signature_stable": true,
+      "existing_anchorchain_preloader_preserved": true,
+      "production_manifest_used": true
+    }
+  ],
+  "game_runtime_tested": false,
+  "runtime": "7.4.13"
+}

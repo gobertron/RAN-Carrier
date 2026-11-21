@@ -1,0 +1,14 @@
+{
+  "glass_alpha_min_max": [
+    255,
+    255
+  ],
+  "glass_texture_size": [
+    512,
+    512
+  ],
+  "all_other_model_folder_assets_match_prior_package_manifest": true,
+  "unchanged_asset_count": 141,
+  "mtl_unchanged": true,
+  "controller_sha256": "fdfc08fd97bdd86e89b9b5ef86e96451299e503be164783a9bc1ad7fa696f75b"
+}

@@ -1,0 +1,47 @@
+{
+  "mesh_repair_idempotent": true,
+  "independent_baseline_triangle_material_multiset_comparison": true,
+  "independent_baseline_coordinate_uv_normal_comparison": true,
+  "all_original_ini_sections_except_submodels_byte_equivalent": true,
+  "baseline_obj_unmodified": true,
+  "root_models_section_and_collider_unchanged": true,
+  "root_hull_local_bounds_unchanged": [
+    [
+      -0.613163,
+      0.59363
+    ],
+    [
+      0.0,
+      0.295797
+    ],
+    [
+      -2.695686,
+      2.695686
+    ]
+  ],
+  "full_shape_bounds_unchanged": [
+    [
+      -0.890258660111,
+      0.715158250719
+    ],
+    [
+      -0.167934281912,
+      0.846591
+    ],
+    [
+      -2.71710577524,
+      2.74071499584
+    ]
+  ],
+  "original_moving_part_names_and_hierarchy_unchanged": true,
+  "additional_static_parts_match_loaded_baseline_native_schema": true,
+  "general_dimensions_and_waterline_coordinates_unchanged": true,
+  "objects_before": 586,
+  "objects_after": 598,
+  "triangles_preserved": 385026,
+  "max_expanded_face_corners": 60000,
+  "max_unique_tuples": 47878,
+  "stock_game_files_available_for_new_comparison": false,
+  "reference": "Full Restore v1.2.1 source and the model shown loaded in user screenshots",
+  "live_game_tested": false
+}
