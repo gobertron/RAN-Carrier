@@ -1,10 +1,10 @@
 # Australis release packaging
 
-Run `python3 scripts/build_australis_release.py --version 1.3.1` from the
+Run `python3 scripts/build_australis_release.py --version 1.3.2` from the
 repository root. The release workflow runs the same builder.
 
 The repository stores the large model at
-`updates/v1.3.1/package/payload/ships/ran_cvn_australis_2030/ran_cvn_australis_2030.obj.gz`
+`updates/v1.3.2/package/payload/ships/ran_cvn_australis_2030/ran_cvn_australis_2030.obj.gz`
 to fit repository upload limits. This is the only compressed source placeholder
 the builder supports. The package manifest continues to name and checksum the
 uncompressed `ran_cvn_australis_2030.obj`.

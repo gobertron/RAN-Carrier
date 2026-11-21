@@ -1,0 +1,14 @@
+AUSTRALIS v1.3.2 IN-GAME RETEST
+
+1. Close/restart Sea Power, then create a NEW 2030 scenario and carrier.
+2. Confirm one normal 99-aircraft class and four sister-ship variants.
+3. Inspect both islands from each side, close up and at distance, for the black window strip.
+4. Check windows and existing lighting in daylight, dusk, night and storm conditions.
+5. Stow/deploy the two 579m Nixie decoys and assess their native pale cables separately.
+6. Test enabled modded aircraft selection and the intended airframe's deck fit.
+7. Test fixed-wing launch/recovery, helicopters, VTOL, lifts and catapults.
+8. Test CIWS6, the ICCS bubble and weapon bays under applicable native conditions.
+9. If the strip remains, retain a close-up screenshot, installer log/JSON and game log.
+
+The source UV/material corrections are verified offline. Visual and functional
+success in Sea Power remain unconfirmed for v1.3.2.

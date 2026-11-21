@@ -151,7 +151,7 @@ def build(package: Path, launcher: Path, output: Path, version: str) -> dict:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     root = Path(__file__).resolve().parents[1]
-    parser.add_argument("--version", default="1.3.1")
+    parser.add_argument("--version", default="1.3.2")
     parser.add_argument("--package", type=Path)
     parser.add_argument("--output", type=Path, default=root / "release-assets")
     args = parser.parse_args()

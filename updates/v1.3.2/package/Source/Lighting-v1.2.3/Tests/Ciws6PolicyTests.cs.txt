@@ -1,0 +1,67 @@
+using System;
+using RAN.Australis;
+static class Ciws6PolicyTests {
+    static int checks;
+    static void Check(bool good,string label){checks++;if(!good)throw new Exception(label);}
+    static Ciws6Observation Clear()=>new Ciws6Observation{FixedAxesVerified=true,LiftKnown=true,RoofKnown=true,ColliderPoseVerified=true,TrafficKnown=true,TrafficClear=true,AviationDemand=false,ControllerHealthy=true,StationIdentityVerified=true,NativeFiringOriginVerified=true};
+    static void Near(double a,double b,string label)=>Check(Math.Abs(a-b)<1e-6,label);
+    static double Move(double value,double target,double step)=>value<target?Math.Min(target,value+step):Math.Max(target,value-step);
+    // Fictional bounded actuator for policy tests, not a Unity/game adapter.
+    static void Follow(Ciws6Policy policy,Ciws6Observation sample,double dt){
+        sample.RoofFore=Move(sample.RoofFore,policy.RoofTarget,dt);sample.RoofAft=Move(sample.RoofAft,policy.RoofTarget,dt);
+        if(policy.LiftTarget.HasValue)sample.Lift=Move(sample.Lift,policy.LiftTarget.Value,dt/3);
+    }
+    static void Main(){
+        var p=new Ciws6Policy();var s=Clear();p.Tick(0,s);
+        Check(p.AviationClear&&!p.CanFire&&p.StopFireRequested,"Known stowed startup clear but no fire");
+        Near(p.LiftTarget.Value,0,"Startup lift down");Near(p.RoofTarget,0,"Startup roof closed");
+        var cached=new Ciws6Policy();cached.Tick(0,s);cached.AviationRequest(0);Check(!cached.AviationClear,"Aviation request invalidates cached clearance until fresh measurement");cached.Tick(0,s);Check(cached.AviationClear,"Fresh measured stow can release affected admission immediately");
+        s.NativeDefenceDemand=true;p.Tick(.1,s);p.Tick(1.99,s);
+        Check(!p.CanFire&&p.RoofTarget==0,"Positive quiet dwell required");
+        p.Tick(2,s);Check(p.RoofTarget==1&&!p.LiftTarget.HasValue,"Roof opens before lift can rise");
+        s.RoofFore=1;s.RoofAft=.5;p.Tick(2.1,s);Check(!p.LiftTarget.HasValue,"Both actual roof halves must open");
+        s.RoofAft=1;p.Tick(2.2,s);Check(p.LiftTarget==1&&p.Phase==Ciws6Phase.Raising&&!p.CanFire,"Lift target1 is not fire proof");
+        s.Lift=.99;p.Tick(2.3,s);Check(!p.CanFire,"Almost deployed is not deployed");
+        s.Lift=1;p.Tick(2.4,s);Check(p.CanFire&&!p.AviationClear&&p.Phase==Ciws6Phase.Deployed,"Measured raised with open roofs permits6");
+        p.AviationRequest(2.5);Check(!p.CanFire&&p.StopFireRequested,"Aviation notification denies fire before next pose tick");
+        p.Tick(2.5,s);Check(p.LiftTarget==0&&p.RoofTarget==1&&!p.CanFire,"Traffic lowers first and holds roofs open");
+        double start=2.5;
+        for(int i=1;i<=45;i++){
+            double now=start+i*.1;p.AviationRequest(now);p.Tick(now,s);
+            if(s.Lift>Ciws6Policy.PoseTolerance)Check(p.RoofTarget==1,"Roof never closes onto partly raised station");
+            Follow(p,s,.1);
+        }
+        p.Tick(7.1,s);
+        Check(s.Lift==0&&s.RoofFore==0&&s.RoofAft==0,"Repeated demands do not restart bounded stow movement");
+        Check(p.AviationClear&&!p.CanFire,"C3/C4 may proceed after actual stow despite continuing demand");
+        s.Lift=.01;p.Tick(7.2,s);Check(!p.AviationClear,"Commanded down or elapsed time does not prove actual stow");
+        s.Lift=0;s.RoofFore=.01;p.Tick(7.3,s);Check(!p.AviationClear,"One displaced roof denies physical flight clearance");
+        s.RoofFore=0;s.ColliderPoseVerified=false;p.Tick(7.4,s);Check(!p.AviationClear&&!p.CanFire&&p.Phase==Ciws6Phase.Fault,"Unverified collider pose denies both safety claims");
+        s.ColliderPoseVerified=true;s.ControllerHealthy=false;p.Tick(7.5,s);Check(p.AviationClear&&!p.CanFire,"Verified physical stow remains flight-clear during local fault");
+        s.ControllerHealthy=true;s.StationIdentityVerified=false;p.Tick(7.6,s);Check(p.AviationClear&&!p.CanFire,"Unknown identity cannot enable6 or manufacture flight lock if physically stowed");
+        s.StationIdentityVerified=true;s.LiftKnown=false;s.RoofFore=s.RoofAft=0;p.Tick(7.7,s);
+        Check(!p.AviationClear&&!p.CanFire&&p.LiftTarget==null&&p.RoofTarget==1,"Unknown lift holds lift until roof opens");
+        s.LiftKnown=true;s.Lift=double.NaN;p.Tick(7.8,s);Check(!p.AviationClear&&!p.CanFire,"Nonfinite measured pose rejected");
+        s.Lift=2;p.Tick(7.9,s);Check(!p.AviationClear&&!p.CanFire,"Out-of-range measured pose rejected");
+        s.Lift=0;s.FixedAxesVerified=false;p.Tick(8,s);Check(!p.AviationClear&&!p.CanFire,"Off-axis or heading mismatch cannot count as stow");
+        s=Clear();s.NativeDefenceDemand=true;s.TrafficKnown=false;p.Tick(10,s);p.Tick(20,s);
+        Check(p.LiftTarget==0&&p.RoofTarget==0&&!p.CanFire,"Unknown parked-aircraft coverage holds down");
+        s.TrafficKnown=true;s.TrafficClear=false;p.Tick(30,s);p.Tick(40,s);
+        Check(!p.CanFire&&p.RoofTarget==0,"Parked taxi recovery or postendpoint departing overlap holds down");
+        s.TrafficClear=true;s.AviationDemand=true;p.Tick(41,s);Check(!p.CanFire&&p.LiftTarget==0,"Published pending or active aviation demand holds down");s.AviationDemand=false;
+        s.TrafficClear=true;p.Tick(50,s);p.Tick(52,s);s.RoofFore=s.RoofAft=s.Lift=1;p.Tick(53,s);Check(p.CanFire,"Later positive clearance recovers deployment");
+        p.Tick(1,s);Check(!p.CanFire&&p.LiftTarget==0&&p.RoofTarget==1,"Clock rewind stops fire and requests safe stow");
+        foreach(var invalid in new[]{double.NaN,double.PositiveInfinity,double.NegativeInfinity,-1d}){p.Tick(invalid,s);Check(!p.CanFire&&p.StopFireRequested,"Invalid clock denies6");}
+        p.AviationRequest(double.NaN);p.Tick(2,s);Check(!p.CanFire&&p.Phase==Ciws6Phase.Fault,"Invalid notification clock requests safe stow");p.Tick(3,s);p.Tick(5,s);Check(p.CanFire,"Valid positive clearance recovers from transient invalid clock");
+        p.Tick(2,null);Check(!p.CanFire&&!p.AviationClear&&p.LiftTarget==null,"Missing observation safely holds lift and opens roof");
+        for(int station=1;station<=5;station++)foreach(bool original in new[]{false,true})foreach(bool six in new[]{false,true})Check(Ciws6Policy.WeaponAllowed(CiwsStationKind.OriginalFixed,original,six)==original,"Original five native guard unchanged");
+        foreach(bool guard in new[]{false,true})foreach(bool ready in new[]{false,true})Check(Ciws6Policy.WeaponAllowed(CiwsStationKind.RetractableSix,guard,ready)==(guard&&ready),"Only6 requires independent readiness plus native guard");
+        Check(!Ciws6Policy.WeaponAllowed(CiwsStationKind.Unknown,true,true),"Unidentified system never assumed6ready or originalfixed");
+        var hold=new Ciws6Policy();var held=Clear();held.NativeDefenceDemand=true;hold.Tick(0,held);hold.Tick(2,held);held.RoofFore=held.RoofAft=held.Lift=1;hold.Tick(3,held);Check(hold.CanFire,"Independent hold fixture deployed");
+        held.NativeDefenceDemand=false;hold.Tick(3.1,held);Check(!hold.CanFire&&hold.LiftTarget==1&&hold.RoofTarget==1,"Lost native demand stops firing immediately during deployed hold");
+        hold.Tick(8.1,held);Check(!hold.CanFire&&hold.LiftTarget==0&&hold.RoofTarget==1,"Expired demand stows lift before closing roofs");
+        held.Lift=.5;held.ColliderPoseVerified=false;hold.Tick(8.2,held);Check(!hold.CanFire&&!hold.AviationClear&&hold.LiftTarget==0&&hold.RoofTarget==1,"Collider fault during partial lift keeps roofs open and requests lowering");
+        held.ColliderPoseVerified=true;held.RoofKnown=false;hold.Tick(8.3,held);Check(hold.LiftTarget==null&&hold.RoofTarget==1&&!hold.CanFire,"Unknown roof halts lift until opening verified");
+        Console.WriteLine("[PASS] "+checks+" pure CIWS6 sequencing, pose, demand, fault and five-station-retention checks");
+    }
+}

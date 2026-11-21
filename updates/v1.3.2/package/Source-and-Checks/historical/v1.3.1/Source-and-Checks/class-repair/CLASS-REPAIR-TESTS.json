@@ -1,0 +1,13 @@
+{
+  "tests": {
+    "baseline_two_classes_consolidated": true,
+    "canonical_vessel_unchanged": true,
+    "four_existing_sister_variants_retained": true,
+    "repeat_repair_idempotent": true,
+    "test_id_removed_from_localization": true,
+    "original_fixture_unchanged": true
+  },
+  "passed": 6,
+  "failed": 0,
+  "live_game_tested": false
+}

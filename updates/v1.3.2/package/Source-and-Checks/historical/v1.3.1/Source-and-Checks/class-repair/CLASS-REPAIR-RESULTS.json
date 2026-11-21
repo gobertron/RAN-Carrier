@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "canonical_id": "ran_cvn_australis_2030",
+  "retired_test_id": "ran_cvn_southern_cross_2030",
+  "class_count": 1,
+  "class_ids": [
+    "ran_cvn_australis_2030"
+  ],
+  "aircraft_capacity": 99,
+  "sister_ships": [
+    "HMAS Australis 91",
+    "HMAS Southern Cross 92",
+    "HMAS Federation 93",
+    "HMAS Commonwealth 94"
+  ],
+  "removed_files": [
+    {
+      "path": "vessels/ran_cvn_southern_cross_2030.ini",
+      "sha256": "ae96c304e7f773a3f92f4b32c8d21f06c8ce3097a2f7f041d4b95b2c808d2951"
+    },
+    {
+      "path": "vessels/ran_cvn_southern_cross_2030_variants.ini",
+      "sha256": "937d67da7ca13c7b3da78fccb8e91312ee3e276a4e7d2d1c2ab1955d67b30331"
+    }
+  ],
+  "localization_before_sha256": "f57fdd9752f316a8b195342625e0febd8b147f4e0c423c720d62849c7401532e",
+  "localization_after_sha256": "12b1ce506c33fc530cae9ba941f9f5ca7bbe0eeadc79121762e260dd4aecf158",
+  "canonical_vessel_and_variants_unchanged": true,
+  "old_test_scenarios_require_reselecting_normal_class": true,
+  "live_game_tested": false
+}

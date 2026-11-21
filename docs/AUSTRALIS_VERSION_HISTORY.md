@@ -1,3 +1,5 @@
+> **21 November 2026 — v1.3.2:** targeted bridge-window texture-coordinate and material repair after the v1.3.1 in-game retest showed the black strip persisted. Tower geometry, stable platform ID, aircraft configuration and night-lighting controller remain intact. [Release](https://github.com/gobertron/RAN-Carrier/releases/tag/v1.3.2) · [Source/evidence](../updates/v1.3.2/). Runtime visual correction still needs an in-game retest; package and installer results are recorded separately.
+
 > **21 November 2026 — v1.3.1:** split five oversized static batches while retaining all 385,026 triangle faces and dimensions; remove the separate 24-aircraft test class, retain the canonical ID and four sister ships; add intact repeat-install no-op, recovery journal repair and a stable release launcher. [Release](https://github.com/gobertron/RAN-Carrier/releases/tag/v1.3.1) · [Source/evidence](../updates/v1.3.1/). 23 local filesystem regression checks passed; native Windows and live game results must be read separately from the release Actions run.
 
 # RAN / HMAS Australis — development version history

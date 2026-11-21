@@ -1,0 +1,107 @@
+using System;
+using System.Collections.Generic;
+using System.Numerics;
+using RAN.Australis;
+namespace UnityEngine {
+ public class Object {
+  public bool destroyed;public string name{get;set;}
+  public static bool operator==(Object a,Object b)=>ReferenceEquals(a,b)||(ReferenceEquals(a,null)&&!ReferenceEquals(b,null)&&b.destroyed)||(ReferenceEquals(b,null)&&!ReferenceEquals(a,null)&&a.destroyed);
+  public static bool operator!=(Object a,Object b)=>!(a==b);
+  public override bool Equals(object b)=>ReferenceEquals(this,b);public override int GetHashCode()=>base.GetHashCode();
+ }
+ public struct Vector3 {public float x,y,z;public Vector3(float a,float b,float c){x=a;y=b;z=c;}public static implicit operator System.Numerics.Vector3(Vector3 v)=>new System.Numerics.Vector3(v.x,v.y,v.z);public static implicit operator Vector3(System.Numerics.Vector3 v)=>new Vector3(v.X,v.Y,v.Z);}
+ public class Component:Object {public GameObject gameObject;public Transform transform=>gameObject.transform;}
+ public class Transform:Component {
+  public Transform parent;public List<Transform> kids=new List<Transform>();public Vector3 localPosition {get;set;}public Vector3 localScale=new Vector3(1,1,1);public Quaternion rotation=Quaternion.Identity;public int writes;
+  public new string name=>gameObject.name;public int childCount=>kids.Count;public Transform GetChild(int i)=>kids[i];
+  public Matrix4x4 World=>Matrix4x4.CreateScale(localScale)*Matrix4x4.CreateFromQuaternion(rotation)*Matrix4x4.CreateTranslation(localPosition)*(parent==null?Matrix4x4.Identity:parent.World);
+  public Vector3 TransformPoint(Vector3 v)=>System.Numerics.Vector3.Transform(v,World);
+  public Vector3 InverseTransformPoint(Vector3 v){Matrix4x4.Invert(World,out var inverse);return System.Numerics.Vector3.Transform(v,inverse);}
+  public Vector3 position=>TransformPoint(new Vector3());
+  public void Add(Transform child){child.parent=this;kids.Add(child);}
+ }
+ public class GameObject:Object {
+  public Transform transform;public bool activeSelf=true;public bool activeInHierarchy=>activeSelf&&(transform.parent==null||transform.parent.gameObject.activeInHierarchy);public List<Component> components=new List<Component>();
+  public GameObject(string n){name=n;transform=new Transform{gameObject=this};}
+  public Component[] GetComponents(Type t)=>components.FindAll(c=>t.IsAssignableFrom(c.GetType())).ToArray();
+  public T Add<T>() where T:Component,new(){var c=new T{gameObject=this};components.Add(c);return c;}
+ }
+ public struct Bounds {public Vector3 center,size;}
+ public class Mesh:Object {public Bounds bounds;}
+ public class Collider:Component {bool state=true;public int enableWrites;public bool enabled{get=>state;set{state=value;enableWrites++;}}}
+ public class MeshCollider:Collider {public bool convex=true;public Mesh sharedMesh;}
+ public class BoxCollider:Collider {public Vector3 center=new Vector3(),size=new Vector3(1,1,1);}
+ public static class Physics {public static int calls;public static bool fail;public static void SyncTransforms(){calls++;if(fail)throw new Exception("Synthetic physics synchronization failure");}}
+}
+namespace SeaPower {
+ public class ObjectBase:UnityEngine.Component {public UnityEngine.GameObject statedRoot;public UnityEngine.GameObject getRootGameObject()=>statedRoot;}
+ public class HitBox {public string _name;public UnityEngine.GameObject _go;public UnityEngine.Vector3 _position;}
+ public class WeaponSystemCIWS {public ObjectBase _baseObject;public List<HitBox> _colliders=new List<HitBox>();public UnityEngine.Vector3 AimPointPosition=>_baseObject.transform.TransformPoint(_colliders[0]._position);}
+}
+static class Ciws6ColliderSyncTests {
+ static int checks;static void Check(bool b,string label){checks++;if(!b)throw new Exception(label);}static readonly double U=Ciws6ColliderSync.MetresPerUnit;
+ static UnityEngine.Vector3 V(double x,double y,double z)=>new UnityEngine.Vector3((float)x,(float)y,(float)z);
+ sealed class Fixture {
+  internal UnityEngine.GameObject root,model,colliders,kinetics,systems,mesh,damage,prefab;
+  internal SeaPower.ObjectBase owner;internal UnityEngine.MeshCollider mc;internal UnityEngine.BoxCollider dc;internal Ciws6ColliderSync sync=new Ciws6ColliderSync();
+ }
+ static UnityEngine.GameObject Child(UnityEngine.GameObject p,string name){var g=new UnityEngine.GameObject(name);p.transform.Add(g.transform);return g;}
+ static void Match(UnityEngine.Transform tr,UnityEngine.Transform model,double[] origin,double[] scale){
+  var world=model.TransformPoint(V(origin[0],origin[1],origin[2]));tr.localPosition=tr.parent.InverseTransformPoint(world);
+  Matrix4x4.Invert(tr.parent.World,out var inv);var m=model.World*inv;Matrix4x4.Decompose(m,out var s,out var r,out var t);tr.rotation=r;tr.localScale=V(s.X*scale[0],s.Y*scale[1],s.Z*scale[2]);
+ }
+ static Fixture Make(){
+  var f=new Fixture();f.root=new UnityEngine.GameObject("runtime vessel");f.root.transform.localPosition=V(1000,55,-500);f.root.transform.rotation=Quaternion.CreateFromYawPitchRoll(.32f,.08f,.04f);f.root.transform.localScale=V(U,U,U);f.owner=f.root.Add<SeaPower.ObjectBase>();f.owner.statedRoot=f.root;
+  f.model=Child(f.root,"model frame");f.model.transform.rotation=Quaternion.CreateFromYawPitchRoll(-.21f,.04f,.03f);f.model.transform.localScale=V(.9,.9,.9);f.model.transform.localPosition=V(.1,.2,-.1);
+  f.colliders=Child(f.root,"Colliders");f.kinetics=Child(f.colliders,"kinematiccolliders");f.systems=Child(f.colliders,"systemcolliders");f.systems.activeSelf=false;
+  f.kinetics.transform.rotation=Quaternion.CreateFromYawPitchRoll(.44f,-.17f,.1f);f.kinetics.transform.localScale=V(.7,.7,.7);f.kinetics.transform.localPosition=V(-.2,.3,.4);
+  f.systems.transform.rotation=Quaternion.CreateFromYawPitchRoll(-.4f,.2f,.06f);f.systems.transform.localScale=V(1.1,1.1,1.1);f.systems.transform.localPosition=V(.4,-.1,-.2);
+  f.mesh=Child(f.kinetics,Ciws6ColliderSync.MeshAlias);f.damage=Child(f.systems,Ciws6ColliderSync.DamageAlias);f.mc=f.mesh.Add<UnityEngine.MeshCollider>();f.dc=f.damage.Add<UnityEngine.BoxCollider>();
+  f.mc.sharedMesh=new UnityEngine.Mesh{bounds=new UnityEngine.Bounds{center=V(-50/U,15.7515940881427/U,149.5/U),size=V(6.02/U,6.0631881762855/U,6.02/U)}};
+  Match(f.mesh.transform,f.model.transform,new double[3],new[]{1d,1d,1d});Match(f.damage.transform,f.model.transform,new[]{-50/U,15.7515940881427/U,149.5/U},new[]{6.02/U,6.0631881762855/U,6.02/U});
+  f.prefab=new UnityEngine.GameObject("outside shared prefab");return f;
+ }
+ static SeaPower.WeaponSystemCIWS SystemFor(Fixture f)=>new SeaPower.WeaponSystemCIWS{_baseObject=f.owner,_colliders=new List<SeaPower.HitBox>{new SeaPower.HitBox{_name=Ciws6ColliderSync.DamageAlias,_go=f.damage,_position=V(-50/U,15.7515940881427/U,149.5/U)}}};
+ static void Main(){
+  string reason;var f=Make();var fixedGO=Child(f.kinetics,"fixed original CIWS proxy");var fixedCollider=fixedGO.Add<UnityEngine.BoxCollider>();
+  Check(f.sync.Sync(f.owner,f.model.transform,0,false,out reason),"Different parent frames synchronize stowed: "+reason);Check(!f.mc.enabled&&!f.dc.enabled,"Stowed proxies disabled");
+  Check(!f.systems.activeSelf&&!f.systems.activeInHierarchy,"Native inactive damage parent retained");Check(fixedCollider.enabled&&fixedCollider.enableWrites==0,"Existing fixed proxy untouched");
+  Check(f.sync.Sync(f.owner,f.model.transform,3,false,out reason),"Intermediate pose tracks through world frame: "+reason);Check(!f.mc.enabled&&!f.dc.enabled,"Transit proxies disabled");
+  Check(f.sync.Verify(f.owner,f.model.transform,3,false,out reason),"Read-only transit verification: "+reason);
+  Check(f.sync.Sync(f.owner,f.model.transform,6,true,out reason),"Full deployment: "+reason);Check(f.mc.enabled&&f.dc.enabled,"Deployed enables new components");
+  int enables=f.mc.enableWrites+f.dc.enableWrites;int physics=UnityEngine.Physics.calls;
+  Check(f.sync.Sync(f.owner,f.model.transform,6,true,out reason),"Steady deployed sync succeeds");Check(f.mc.enableWrites+f.dc.enableWrites==enables,"Steady deployed sync never flaps enable states");Check(UnityEngine.Physics.calls==physics,"Stable Sync does not flush physics");
+  Check(f.sync.Verify(f.owner,f.model.transform,6,true,out reason),"Fresh deployed verification");Check(UnityEngine.Physics.calls==physics&&f.mc.enableWrites+f.dc.enableWrites==enables,"Verify has no scene/physics setters");
+  f.damage.transform.localPosition=V(.1,.1,.1);Check(!f.sync.Verify(f.owner,f.model.transform,6,true,out reason),"Stale displaced damage proxy blocks readiness");Check(f.mc.enableWrites+f.dc.enableWrites==enables,"Failed Verify also read-only");
+  Check(f.sync.Sync(f.owner,f.model.transform,6,true,out reason),"Repair restores actual world-frame pose: "+reason);Check(UnityEngine.Physics.calls==physics+1,"Repair explicitly flushes native-supported physics");
+  Check(f.sync.Sync(f.owner,f.model.transform,0,false,out reason),"Known stow restores both proxies: "+reason);
+  Check(!f.sync.Sync(f.owner,f.model.transform,2,true,out reason),"Enable before full lift rejected");Check(!f.mc.enabled&&!f.dc.enabled,"Premature enable fault remains disabled");
+  foreach(var bad in new[]{double.NaN,double.PositiveInfinity,-.01,6.1})Check(!f.sync.Sync(f.owner,f.model.transform,bad,false,out reason),"Invalid displacement rejected");
+  var a=Make();var b=Make();Check(a.sync.Sync(a.owner,a.model.transform,0,false,out reason),"First runtime instance binds");int untouched=b.mc.enableWrites;
+  Check(!a.sync.Sync(b.owner,b.model.transform,6,true,out reason),"Different owner rejected");Check(b.mc.enableWrites==untouched,"Other carrier instance never mutated");
+  var p=Make();var outside=new UnityEngine.GameObject("prefab outside owner");Check(!p.sync.Sync(p.owner,outside.transform,0,false,out reason),"Shared/outside model frame rejected");
+  var wrong=Make();wrong.owner.statedRoot=b.root;Check(!wrong.sync.Sync(wrong.owner,b.model.transform,0,false,out reason),"Owner-to-root identity mismatch rejected");
+  var duplicate=Make();Child(duplicate.kinetics,Ciws6ColliderSync.MeshAlias);Check(!duplicate.sync.Sync(duplicate.owner,duplicate.model.transform,0,false,out reason),"Duplicate runtime alias rejected");
+  var missing=Make();missing.mesh.name="wrong alias";Check(!missing.sync.Sync(missing.owner,missing.model.transform,0,false,out reason),"Missing runtime alias rejected");
+  var malformed=Make();malformed.mc.sharedMesh.bounds=new UnityEngine.Bounds{center=new UnityEngine.Vector3(),size=new UnityEngine.Vector3(1,1,1)};Check(!malformed.sync.Sync(malformed.owner,malformed.model.transform,0,false,out reason),"Wrong authored mesh rejected");
+  var basis=Make();basis.damage.transform.localScale=V(1,1,1);Check(!basis.sync.Sync(basis.owner,basis.model.transform,0,false,out reason),"Wrong collider basis rejected");
+  var dead=Make();Check(dead.sync.Sync(dead.owner,dead.model.transform,0,false,out reason),"Lifetime fixture binds");dead.mc.destroyed=true;Check(!dead.sync.Verify(dead.owner,dead.model.transform,0,false,out reason),"Destroyed collider rejected");
+  var sync=Make();UnityEngine.Physics.fail=true;Check(!sync.sync.Sync(sync.owner,sync.model.transform,6,true,out reason),"Physics failure rejects readiness");Check(!sync.mc.enabled&&!sync.dc.enabled,"Physics failure disables only owned components");UnityEngine.Physics.fail=false;
+  Check(fixedCollider.enabled&&fixedCollider.enableWrites==0,"All failure paths retain original fixed station");
+  var aim=Make();var station=SystemFor(aim);Check(aim.sync.Sync(aim.owner,aim.model.transform,0,false,out reason),"Aim fixture physical binding");
+  Check(!aim.sync.VerifyAimPoint(aim.owner,aim.model.transform,station,0,out reason),"Uninitialized native aim point never trusted");
+  Check(aim.sync.SyncAimPoint(aim.owner,aim.model.transform,station,0,out reason),"Stowed aim uses owner frame rather than different model frame: "+reason);
+  Check(aim.sync.VerifyAimPoint(aim.owner,aim.model.transform,station,0,out reason),"Native getter agrees with actual damage world centre");
+  Check(aim.sync.Sync(aim.owner,aim.model.transform,6,true,out reason),"Aim fixture physical deployment");Check(!aim.sync.VerifyAimPoint(aim.owner,aim.model.transform,station,6,out reason),"Old stowed logical aim point blocks fire");
+  Check(aim.sync.SyncAimPoint(aim.owner,aim.model.transform,station,6,out reason),"Native logical aim follows actual six metre rise: "+reason);
+  var stored=station._colliders[0]._position;int beforePhysics=UnityEngine.Physics.calls;
+  Check(aim.sync.VerifyAimPoint(aim.owner,aim.model.transform,station,6,out reason),"Deployed native aim reverified");Check(UnityEngine.Physics.calls==beforePhysics&&station._colliders[0]._position.y==stored.y,"Aim verification is read-only");
+  station._colliders[0]._position=V(0,0,0);Check(!aim.sync.VerifyAimPoint(aim.owner,aim.model.transform,station,6,out reason),"Corrupted logical native point blocks fire");Check(aim.sync.SyncAimPoint(aim.owner,aim.model.transform,station,6,out reason),"Repair only owned logical native point");
+  var two=Make();Check(two.sync.Sync(two.owner,two.model.transform,0,false,out reason),"Shared-HitBox second fixture physical binding");var shared=station._colliders[0];shared._go=two.damage;var sharedSystem=SystemFor(two);sharedSystem._colliders[0]=shared;
+  Check(!two.sync.SyncAimPoint(two.owner,two.model.transform,sharedSystem,0,out reason),"Same HitBox object cannot be claimed by a second owner");
+  var other=SystemFor(two);other._baseObject=aim.owner;Check(!two.sync.SyncAimPoint(two.owner,two.model.transform,other,0,out reason),"Foreign native system owner rejected");
+  var multi=SystemFor(two);multi._colliders.Add(multi._colliders[0]);Check(!two.sync.SyncAimPoint(two.owner,two.model.transform,multi,0,out reason),"Multiple damage HitBoxes rejected because native getter uses first");
+  var foreign=SystemFor(two);foreign._colliders[0]._go=aim.damage;Check(!two.sync.SyncAimPoint(two.owner,two.model.transform,foreign,0,out reason),"HitBox pointing to another runtime instance rejected");
+  Console.WriteLine("[PASS] "+checks+" synthetic matrix, ownership, enable-state and failure checks");
+ }
+}

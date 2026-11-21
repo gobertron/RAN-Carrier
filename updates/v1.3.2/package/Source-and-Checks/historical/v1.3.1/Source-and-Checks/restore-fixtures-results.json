@@ -1,0 +1,21 @@
+{
+  "runtime": "7.4.13",
+  "passed": 14,
+  "tests": [
+    "Empty Prepared transaction",
+    "Installed restore plus idempotent rerun",
+    "Partial Archiving with unarchived canonical",
+    "Partial Activating before new target exists",
+    "New-only install removed reversibly",
+    "Concurrent auxiliary edit blocks before writes",
+    "Concurrent carrier edit blocks before writes",
+    "Interrupted Restoring resumes from verified originals",
+    "Original-game path rejected",
+    "Automatic rollback preserves torn settings and restores carrier",
+    "Full loader whitelist handles absent and torn newly-created dependencies",
+    "Auxiliary backup failure aggregates after restoring valid original carriers",
+    "Automatic rollback retains partial target with resumable held inventory",
+    "Automatic rollback restores a missing original auxiliary file"
+  ],
+  "scope": "PowerShell Core filesystem fixtures; Windows 5.1 and live game untested"
+}

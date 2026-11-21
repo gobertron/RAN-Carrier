@@ -1,0 +1,95 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text.Json;
+using System.Text.RegularExpressions;
+namespace RAN.Australis {
+static class DeckStatusTests {
+    static int checks;
+    static void Check(bool ok,string message){checks++;if(!ok)throw new Exception(message);}
+    static bool Has(string line,string operation,string state,string reason)=>line.Contains(" operation="+operation+" state="+state+" reason="+reason+" ");
+    static string Message(string line)=>JsonSerializer.Deserialize<string>(line.Substring(line.IndexOf(" message=",StringComparison.Ordinal)+9));
+    static void Main(){
+        var lines=new List<string>();var status=new DeckStatus("ran_cvn_australis_2030",lines.Add);
+        status.Tick(0,true,false);
+        Check(lines.Count==3,"Initial controller and two true no-request states");
+        Check(Has(lines[0],"CONTROLLER","READY","MODEL_BOUND"),"READY only bound healthy controller");
+        Check(Message(lines[0]).Contains("route availability is checked per request"),"Ready does not claim route clear");
+        Check(Has(lines[1],"LAUNCH","IDLE","NO_REQUEST_OBSERVED"),"Initial launch idle means no observed request");
+        Check(Has(lines[2],"RECOVERY","IDLE","NO_REQUEST_OBSERVED"),"Initial recovery idle means no observed request");
+        for(int i=0;i<100;i++)status.Tick(i*.001,true,false);
+        Check(lines.Count==3,"No per-frame status spam");
+        status.Admission("LAUNCH",false,null,true,false,.1);
+        Check(lines.Count==3,"Brief wait coalesces rather than immediate spam");
+        status.Admission("LAUNCH",true,null,true,false,.2);
+        status.Tick(1,true,false);
+        Check(lines.Count==4&&Has(lines.Last(),"LAUNCH","ADMITTED","MOD_ADMISSION"),"Latest wait/release coalesces to admitted");
+        Check(Message(lines.Last()).Contains("completion is not confirmed"),"Admitted does not claim native completion");
+        Check(!lines.Any(l=>Has(l,"LAUNCH","WAIT","NO_SAFE_COMPATIBLE_ROUTE")),"Superseded transient wait omitted");
+        status.Admission("LAUNCH",false,null,true,false,1.1);
+        status.Admission("LAUNCH",true,null,true,false,1.2);
+        status.Tick(2,true,false);
+        Check(lines.Count==4,"Return to emitted state cancels pending chatter");
+        status.Admission("LAUNCH",false,null,true,false,2.1);
+        Check(lines.Count==5&&Has(lines.Last(),"LAUNCH","WAIT","NO_SAFE_COMPATIBLE_ROUTE"),"Sustained ordinary wait reported honestly");
+        for(int i=0;i<100;i++)status.Admission("LAUNCH",false,null,true,false,2.1+i*.001);
+        Check(lines.Count==5,"Repeated native waits deduplicated");
+        status.Admission("LAUNCH",true,null,true,false,2.2);
+        status.Tick(3.1,true,false);
+        Check(lines.Count==6&&Has(lines.Last(),"LAUNCH","ADMITTED","MOD_ADMISSION"),"Stable release flushes on normal tick");
+        status.Admission("RECOVERY",false,null,true,false,3.2);
+        Check(lines.Count==7&&Has(lines.Last(),"RECOVERY","WAIT","NO_SAFE_COMPATIBLE_ROUTE"),"Operations have independent channels");
+        status.Admission("RECOVERY",false,"Missing \"field\"\\path\r\nnext\tline",true,false,4.3);
+        string escaped=lines.Last();
+        Check(Has(escaped,"RECOVERY","ERROR","ROUTE_CHECK_ERROR"),"Existing route error classified without native guesses");
+        Check(!escaped.Contains('\n')&&!escaped.Contains('\r')&&!escaped.Contains('\t'),"Structured line has no raw control characters");
+        Check(Message(escaped)=="Missing \"field\"\\path\r\nnext\tline","Message JSON quoting round trips");
+        status.Admission("RECOVERY",false,"Different field",true,false,5.4);
+        Check(Message(lines.Last())=="Different field","Changed error detail remains visible");
+        int count=lines.Count;
+        status.Admission("ALIEN",true,null,true,false,6.5);
+        Check(lines.Count==count,"Unknown operation ignored");
+        status.Tick(double.NaN,true,false);status.Tick(double.PositiveInfinity,true,false);status.Tick(-1,true,false);
+        Check(lines.Count==count,"Invalid clocks cause no misleading status");
+        status.Admission("LAUNCH",false,null,true,false,6.6);
+        int beforeReset=lines.Count;
+        status.Tick(.5,true,false);
+        var reset=lines.Skip(beforeReset).ToArray();
+        Check(reset.Length==3,"Clock rewind resets controller and no-request episode");
+        Check(reset.All(l=>l.Contains(" episode=2 mission=0.500 ")),"Clock rewind creates explicit episode");
+        status.Tick(2,true,false);
+        Check(lines.Count==beforeReset+3,"No pending pre-rewind wait survives reset");
+        var lifecycle=new List<string>();var other=new DeckStatus("ran_cvn_federation_2030",lifecycle.Add);
+        other.Tick(10,false,false);
+        Check(Has(lifecycle[0],"CONTROLLER","BINDING","MODEL_BINDING"),"Binding known accurately");
+        other.Admission("LAUNCH",false,null,false,false,11.1);
+        Check(Has(lifecycle.Last(),"LAUNCH","WAIT","MODEL_BINDING"),"Launch wait reports model binding");
+        other.Admission("RECOVERY",false,null,false,true,11.2);
+        Check(lifecycle.Any(l=>Has(l,"CONTROLLER","FAULT","CONTROLLER_FAULT")),"Controller fault immediate");
+        Check(Has(lifecycle.Last(),"RECOVERY","WAIT","CONTROLLER_FAULT"),"Recovery fault hold reason exact");
+        other.Tick(12.3,true,false);
+        Check(Has(lifecycle.Last(),"CONTROLLER","READY","MODEL_BOUND"),"Healthy binding transition report");
+        string Id(string line)=>Regex.Match(line,@" instance=(\d+) ").Groups[1].Value;
+        Check(Id(lifecycle[0])!=Id(lines[0]),"Process-local IDs distinguish carrier instances");
+        var sameUnit=new List<string>();new DeckStatus("ran_cvn_australis_2030",sameUnit.Add).Tick(0,true,false);
+        Check(Id(sameUnit[0])!=Id(lines[0]),"Same-class carrier copies remain distinguishable");
+        var previous=CultureInfo.CurrentCulture;
+        try{CultureInfo.CurrentCulture=new CultureInfo("de-DE");var invariant=new List<string>();new DeckStatus("ran_cvn_commonwealth_2030",invariant.Add).Tick(12.345,true,false);Check(invariant[0].Contains(" mission=12.345 "),"Invariant mission decimal");}
+        finally{CultureInfo.CurrentCulture=previous;}
+        int attempts=0;var failing=new DeckStatus("ran_cvn_australis_2030",_=>{attempts++;throw new Exception("No log access");});
+        failing.Tick(0,true,false);for(int i=0;i<100;i++)failing.Tick(i*.001,true,false);
+        Check(attempts==3,"Throwing status sink isolated and not retried per frame");
+        failing.Admission("LAUNCH",false,null,true,false,2);failing.Tick(3,true,true);
+        Check(attempts==5,"Faulty sink cannot stop later observed transitions");
+        var sanitized=new List<string>();new DeckStatus("bad\r\n unit=evil",sanitized.Add).Tick(0,true,false);
+        Check(sanitized[0].Contains(" unit=badunitevil ")&&!sanitized[0].Contains('\n'),"Unit token cannot inject fields or lines");
+        Check(double.IsNaN(Bridge.StatusNow()),"Missing status clock isolated");
+        var carrier=new Carrier(new object());carrier.Bound=true;carrier.ReportAdmission("LAUNCH",false,"status-only");
+        Check(!carrier.Fault&&carrier.Bound,"Status clock failure cannot fault/change carrier");
+        Check(DeckCycle.DeploySeconds==4.5&&DeckCycle.HoldSeconds==5&&DeckCycle.StowSeconds==300,"Original cycle timings retained");
+        Console.WriteLine("[PASS] "+checks+" isolated status, coalescing, clock, identity and message checks");
+        Console.WriteLine(lines.First());Console.WriteLine(escaped);
+    }
+}
+}

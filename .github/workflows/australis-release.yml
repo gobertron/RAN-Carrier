@@ -1,10 +1,10 @@
-name: Build and publish Australis v1.3.1
+name: Build and publish Australis v1.3.2
 
 on:
   push:
     branches: [main]
     paths:
-      - updates/v1.3.1/**
+      - updates/v1.3.2/**
       - Install-Australis.cmd
       - scripts/build_australis_release.py
       - scripts/test_australis_bootstrap.py
@@ -17,7 +17,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: australis-release-v1.3.1
+  group: australis-release-v1.3.2
   cancel-in-progress: false
 
 jobs:
@@ -31,8 +31,8 @@ jobs:
         run: |
           $ErrorActionPreference='Stop'
           if($PSVersionTable.PSVersion.Major -ne 5){throw 'Windows PowerShell 5.1 is required.'}
-          $files=@(Get-Item 'updates/v1.3.1/package/Clean-Install-Australis.ps1')
-          $files+=@(Get-ChildItem 'updates/v1.3.1/package/Helpers' -Filter '*.ps1' -File)
+          $files=@(Get-Item 'updates/v1.3.2/package/Clean-Install-Australis.ps1')
+          $files+=@(Get-ChildItem 'updates/v1.3.2/package/Helpers' -Filter '*.ps1' -File)
           foreach($file in $files){
             $tokens=$null;$errors=$null
             [void][Management.Automation.Language.Parser]::ParseFile($file.FullName,[ref]$tokens,[ref]$errors)
@@ -58,7 +58,7 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
-      AUSTRALIS_VERSION: 1.3.1
+      AUSTRALIS_VERSION: 1.3.2
     steps:
       - uses: actions/checkout@v4
       - name: Check raw and gzip source packaging fixtures
@@ -71,7 +71,7 @@ jobs:
           set -euo pipefail
           tag="v$AUSTRALIS_VERSION"
           cat > release-assets/RELEASE-NOTES.txt <<'NOTES'
-          Repairs the Australis carrier model and retires its separate 24-aircraft test class. The canonical Australis platform and four normal sister-ship variants are retained.
+          Updates the existing Australis carrier model. The canonical Australis platform, single 99-aircraft class and four normal sister-ship variants are retained.
 
           Save Install-Australis.cmd once, close Sea Power, and double-click the launcher for installation and future stable updates. It downloads and verifies the complete package; the installer stages the replacement and preserves rollback information.
 

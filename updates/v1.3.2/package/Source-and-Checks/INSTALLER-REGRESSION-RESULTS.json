@@ -1,0 +1,171 @@
+{
+  "runtime": "PowerShell 7.4.13 / Linux",
+  "native_windows_tested": false,
+  "sea_power_tested": false,
+  "passed": 23,
+  "failed": 0,
+  "test_source_sha256": "7316f8c7d13036a40845ffbf7d3747373dc9016fecc036048b6373d8e0c315a8",
+  "installer_sha256": "c9cb3fa18dc14a7a68a13aef27bbb83fea71a3011c47b3ca297b00e1118127cb",
+  "helpers_sha256": "ec0170cdc900434a9f90ac8ff831b88b77a22dae8f902a4717f4f233a035f089",
+  "restore_sha256": "deee1217ef6ffffb36cfd908d080a669cdfd7e2bb9689cb56f3803fb7c2ecef3",
+  "tests": [
+    {
+      "name": "successful_cleanup_install_and_exact_restore",
+      "passed": true,
+      "detail": {
+        "aircraft_ids": [
+          "local_plane",
+          "stock_fixed",
+          "stock_helo",
+          "user_plane",
+          "workshop_plane"
+        ],
+        "exact_restore_and_repeat_restore": true
+      },
+      "seconds": 10.023
+    },
+    {
+      "name": "repeat_install_is_noop_preserves_single_class_and_airwing",
+      "passed": true,
+      "detail": {
+        "no_game_settings_or_archive_writes": true
+      },
+      "seconds": 5.855
+    },
+    {
+      "name": "corrupt_installed_texture_is_backed_up_and_repaired",
+      "passed": true,
+      "detail": null,
+      "seconds": 9.237
+    },
+    {
+      "name": "new_enabled_aircraft_refreshes_then_repeat_is_noop",
+      "passed": true,
+      "detail": null,
+      "seconds": 8.959
+    },
+    {
+      "name": "secondary_steam_library_detected_from_vdf",
+      "passed": true,
+      "detail": {
+        "libraryfolders_vdf_secondary_library": true
+      },
+      "seconds": 0.549
+    },
+    {
+      "name": "clean_install_with_synthetic_audited_game_and_native_airwing",
+      "passed": true,
+      "detail": {
+        "synthetic_audited_game_only": true,
+        "full_native_99_aircraft_profile": true,
+        "production_allowlist_unmodified": true
+      },
+      "seconds": 5.781
+    },
+    {
+      "name": "check_mode_has_no_active_writes",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.873
+    },
+    {
+      "name": "unknown_fresh_game_refuses_before_archive",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.521
+    },
+    {
+      "name": "malformed_settings_refuses_before_archive",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.751
+    },
+    {
+      "name": "symlinked_old_content_refuses_before_archive",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.473
+    },
+    {
+      "name": "tampered_payload_refuses_before_archive",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.269
+    },
+    {
+      "name": "unknown_shared_loader_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.96
+    },
+    {
+      "name": "unknown_preloader_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.796
+    },
+    {
+      "name": "rollback_after_first_archive_move_restores_exact_state",
+      "passed": true,
+      "detail": null,
+      "seconds": 5.861
+    },
+    {
+      "name": "rollback_after_activation_restores_exact_state",
+      "passed": true,
+      "detail": null,
+      "seconds": 5.866
+    },
+    {
+      "name": "interrupted_automatic_rollback_retains_journal_and_resumes",
+      "passed": true,
+      "detail": {
+        "latest_held_inventory_preserved": true,
+        "manual_resume_restores_exact_original": true
+      },
+      "seconds": 9.73
+    },
+    {
+      "name": "restore_refuses_concurrent_settings_change_then_recovers",
+      "passed": true,
+      "detail": null,
+      "seconds": 9.335
+    },
+    {
+      "name": "restore_refuses_modified_test_build",
+      "passed": true,
+      "detail": null,
+      "seconds": 6.67
+    },
+    {
+      "name": "mixed_ship_pack_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.517
+    },
+    {
+      "name": "missing_core_refuses_before_archive",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.78
+    },
+    {
+      "name": "mixed_workshop_pack_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 1.641
+    },
+    {
+      "name": "disabled_doorstop_config_preserved",
+      "passed": true,
+      "detail": null,
+      "seconds": 2.007
+    },
+    {
+      "name": "missing_loader_dependencies_installed_and_exactly_restored",
+      "passed": true,
+      "detail": null,
+      "seconds": 6.93
+    }
+  ]
+}
