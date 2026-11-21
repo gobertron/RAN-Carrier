@@ -64,7 +64,9 @@ jobs:
             Expand-Archive -LiteralPath $zip -DestinationPath (Join-Path $temporary 'official')
             $library=Join-Path $temporary 'official/SeaPowerKeel/lib/AnchorChain.keel.bin'
             if((Get-FileHash -LiteralPath $library -Algorithm SHA256).Hash.ToLowerInvariant() -ne 'e272811050698640a8936834363da91769dbc83e017637e3629c21bca6bea764'){throw 'Official compatibility library checksum differs.'}
-            & './updates/v1.4.0/package/Source-and-Checks/Test-Australis-KeelAbi.ps1' -CompatibilityLibrary $library -HarmonyPath (Join-Path $pwd 'updates/v1.3.2/package/loader/BepInEx/core/0Harmony.dll') -ControllerPath (Join-Path $pwd 'updates/v1.4.0/package/payload/RAN.Australis.DeckController.dll') -OutputPath (Join-Path $temporary 'ABI-Windows.json')
+            $probeHost=(Get-Process -Id $PID).Path
+            & $probeHost -NoLogo -NoProfile -File './updates/v1.4.0/package/Source-and-Checks/Test-Australis-KeelAbi.ps1' -CompatibilityLibrary $library -HarmonyPath (Join-Path $pwd 'updates/v1.3.2/package/loader/BepInEx/core/0Harmony.dll') -ControllerPath (Join-Path $pwd 'updates/v1.4.0/package/payload/RAN.Australis.DeckController.dll') -OutputPath (Join-Path $temporary 'ABI-Windows.json')
+            if($LASTEXITCODE -ne 0){throw 'Controller ABI verification failed.'}
             Write-Host 'Managed controller ABI passed. TriggerEntryPoint and live Sea Power hooks were not executed.'
           }finally{Remove-Item -LiteralPath $temporary -Recurse -Force}
 
